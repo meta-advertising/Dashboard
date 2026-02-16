@@ -83,24 +83,31 @@
         .header-left { display: flex; align-items: center; gap: 16px; }
 
         .logo-infinity {
-            width: 44px; height: 44px;
+            width: 52px; height: 52px;
             display: flex; align-items: center; justify-content: center;
             position: relative;
         }
-        .logo-infinity svg { width: 40px; height: 40px; }
+        .logo-infinity svg { width: 48px; height: 48px; }
         .logo-infinity::after {
             content: '';
-            position: absolute; inset: -4px;
+            position: absolute; inset: -6px;
             background: var(--gradient-main);
             border-radius: 50%;
-            opacity: 0.15;
-            filter: blur(10px);
-            animation: logoPulse 3s ease-in-out infinite;
+            opacity: 0.12;
+            filter: blur(14px);
+            animation: logoPulse 4s ease-in-out infinite;
+        }
+        .infinity-spark {
+            animation: sparkFlow 3.5s linear infinite;
         }
 
         @keyframes logoPulse {
-            0%, 100% { opacity: 0.1; transform: scale(1); }
-            50% { opacity: 0.25; transform: scale(1.15); }
+            0%, 100% { opacity: 0.08; transform: scale(1); }
+            50% { opacity: 0.2; transform: scale(1.12); }
+        }
+        @keyframes sparkFlow {
+            0% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: -520; }
         }
 
         .logo-text {
@@ -554,14 +561,34 @@
                 <div class="logo-infinity">
                     <svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <defs>
-                            <linearGradient id="infinityGrad" x1="0" y1="0" x2="120" y2="60" gradientUnits="userSpaceOnUse">
+                            <linearGradient id="infinityGrad" x1="0" y1="0" x2="120" y2="0" gradientUnits="userSpaceOnUse">
                                 <stop offset="0%" stop-color="#7c3aed"/>
-                                <stop offset="50%" stop-color="#3b82f6"/>
-                                <stop offset="100%" stop-color="#06b6d4"/>
+                                <stop offset="40%" stop-color="#3b82f6"/>
+                                <stop offset="70%" stop-color="#06b6d4"/>
+                                <stop offset="100%" stop-color="#7c3aed"/>
                             </linearGradient>
+                            <linearGradient id="infinityShine" x1="0" y1="0" x2="120" y2="0" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#a78bfa"/>
+                                <stop offset="50%" stop-color="#60a5fa"/>
+                                <stop offset="100%" stop-color="#22d3ee"/>
+                            </linearGradient>
+                            <filter id="infinityGlow">
+                                <feGaussianBlur stdDeviation="3"/>
+                            </filter>
                         </defs>
-                        <path d="M30 30c0-11 9-20 20-20s20 9 20 20-9 20-20 20c-4 0-8-1.2-11.2-3.3L30 30zM90 30c0 11-9 20-20 20s-20-9-20-20 9-20 20-20c4 0 8 1.2 11.2 3.3L90 30z"
-                              stroke="url(#infinityGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <!-- Glow layer -->
+                        <path d="M60,30 C60,8 20,5 15,30 C10,55 60,52 60,30 C60,8 100,5 105,30 C110,55 60,52 60,30"
+                              stroke="url(#infinityGrad)" stroke-width="7" stroke-linecap="round" fill="none" opacity="0.35" filter="url(#infinityGlow)"/>
+                        <!-- Main stroke -->
+                        <path d="M60,30 C60,8 20,5 15,30 C10,55 60,52 60,30 C60,8 100,5 105,30 C110,55 60,52 60,30"
+                              stroke="url(#infinityGrad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <!-- Highlight stroke -->
+                        <path d="M60,30 C60,8 20,5 15,30 C10,55 60,52 60,30 C60,8 100,5 105,30 C110,55 60,52 60,30"
+                              stroke="url(#infinityShine)" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4"/>
+                        <!-- Flowing spark -->
+                        <path class="infinity-spark" d="M60,30 C60,8 20,5 15,30 C10,55 60,52 60,30 C60,8 100,5 105,30 C110,55 60,52 60,30"
+                              stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7"
+                              stroke-dasharray="12 508"/>
                     </svg>
                 </div>
                 <div class="logo-text">
