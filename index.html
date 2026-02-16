@@ -392,6 +392,32 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             padding: 12px 8px 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            transition: color 0.2s var(--ease);
+        }
+        .client-links-title:hover {
+            color: var(--accent-violet-light);
+        }
+        .client-links-title::after {
+            content: '';
+            width: 6px; height: 6px;
+            border-right: 1.5px solid currentColor;
+            border-bottom: 1.5px solid currentColor;
+            transform: rotate(45deg);
+            transition: transform 0.25s var(--ease);
+            flex-shrink: 0;
+        }
+        .client-links-title.section-open::after {
+            transform: rotate(-135deg);
+        }
+        .section-group {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s var(--ease);
         }
 
         .link-item {
@@ -851,35 +877,34 @@ function renderClients(filter = '') {
 
         let linksHtml = '';
         if (dashboardLinks.length > 0) {
-            linksHtml += `<div class="client-links-title">Dashboards</div>`;
-            linksHtml += dashboardLinks.map(renderLink).join('');
+            linksHtml += `<div class="client-links-title section-open" onclick="toggleSection(this, event)">Dashboards</div>`;
+            linksHtml += `<div class="section-group" style="max-height:none">${dashboardLinks.map(renderLink).join('')}</div>`;
         }
         if (reportLinks.length > 0) {
-            // Group reports by section (if available) or year
             const hasSections = reportLinks.some(l => l.section);
             if (hasSections) {
                 const sections = [...new Set(reportLinks.map(l => l.section).filter(Boolean))];
                 sections.forEach(sec => {
                     const secLinks = reportLinks.filter(l => l.section === sec);
-                    linksHtml += `<div class="client-links-title">${sec}</div>`;
-                    linksHtml += secLinks.map(renderLink).join('');
+                    linksHtml += `<div class="client-links-title" onclick="toggleSection(this, event)">${sec}</div>`;
+                    linksHtml += `<div class="section-group">${secLinks.map(renderLink).join('')}</div>`;
                 });
                 const noSec = reportLinks.filter(l => !l.section);
                 if (noSec.length > 0) {
-                    linksHtml += `<div class="client-links-title">Autres rapports</div>`;
-                    linksHtml += noSec.map(renderLink).join('');
+                    linksHtml += `<div class="client-links-title" onclick="toggleSection(this, event)">Autres rapports</div>`;
+                    linksHtml += `<div class="section-group">${noSec.map(renderLink).join('')}</div>`;
                 }
             } else {
                 const years = [...new Set(reportLinks.map(l => l.year).filter(Boolean))].sort().reverse();
                 if (years.length > 0) {
                     years.forEach(year => {
                         const yearLinks = reportLinks.filter(l => l.year === year);
-                        linksHtml += `<div class="client-links-title">Rapports ${year}</div>`;
-                        linksHtml += yearLinks.map(renderLink).join('');
+                        linksHtml += `<div class="client-links-title" onclick="toggleSection(this, event)">${year}</div>`;
+                        linksHtml += `<div class="section-group">${yearLinks.map(renderLink).join('')}</div>`;
                     });
                 } else {
-                    linksHtml += `<div class="client-links-title">Rapports</div>`;
-                    linksHtml += reportLinks.map(renderLink).join('');
+                    linksHtml += `<div class="client-links-title section-open" onclick="toggleSection(this, event)">Rapports</div>`;
+                    linksHtml += `<div class="section-group" style="max-height:none">${reportLinks.map(renderLink).join('')}</div>`;
                 }
             }
         }
@@ -916,11 +941,20 @@ function renderClients(filter = '') {
 }
 
 function toggleCard(card) {
-    const wasExpanded = card.classList.contains('expanded');
-    // Close all others
-    document.querySelectorAll('.client-card.expanded').forEach(c => c.classList.remove('expanded'));
-    if (!wasExpanded) {
-        card.classList.add('expanded');
+    card.classList.toggle('expanded');
+}
+
+function toggleSection(el, e) {
+    e.stopPropagation();
+    const group = el.nextElementSibling;
+    if (!group) return;
+    const isOpen = group.style.maxHeight && group.style.maxHeight !== '0px';
+    if (isOpen) {
+        group.style.maxHeight = '0px';
+        el.classList.remove('section-open');
+    } else {
+        group.style.maxHeight = group.scrollHeight + 'px';
+        el.classList.add('section-open');
     }
 }
 
