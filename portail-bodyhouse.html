@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body House — Portail Marketing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --coral: #F19D76;
+            --coral-light: #f5b99a;
+            --coral-soft: rgba(241,157,118,0.10);
+            --coral-softer: rgba(241,157,118,0.05);
+            --beige: #f1dbcf;
+            --beige-light: #f8ede7;
+            --dark: #242424;
+            --dark-soft: #3a3a3a;
+            --bg: #faf8f6;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b6b6b;
+            --text-tertiary: #9a9a9a;
+            --border: rgba(0,0,0,0.06);
+            --border-hover: rgba(241,157,118,0.3);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
+            --shadow-coral: 0 4px 20px rgba(241,157,118,0.15);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --meta-blue: #1877f2;
+            --meta-soft: rgba(24,119,242,0.08);
+            --google-blue: #4285f4;
+            --google-soft: rgba(66,133,244,0.08);
+            --gmb-green: #34a853;
+            --gmb-soft: rgba(52,168,83,0.08);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* HEADER */
+        .header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 0 32px;
+            height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+        .header-left { display: flex; align-items: center; gap: 14px; }
+        .logo-bh {
+            width: 42px; height: 42px;
+            background: linear-gradient(135deg, var(--coral) 0%, #e8845a 100%);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+            font-weight: 800;
+            font-size: 15px;
+            letter-spacing: -0.5px;
+            box-shadow: 0 2px 8px rgba(241,157,118,0.3);
+        }
+        .logo-text { display: flex; flex-direction: column; }
+        .logo-text-main { font-size: 17px; font-weight: 800; color: var(--dark); letter-spacing: -0.3px; }
+        .logo-text-sub { font-size: 11px; font-weight: 500; color: var(--text-secondary); margin-top: -1px; }
+
+        .year-toggle {
+            display: flex;
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 3px;
+            gap: 2px;
+            border: 1px solid var(--border);
+        }
+        .year-btn {
+            padding: 7px 18px;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            background: transparent;
+            color: var(--text-secondary);
+        }
+        .year-btn.active {
+            background: var(--coral);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(241,157,118,0.3);
+        }
+        .year-btn:hover:not(.active) { background: var(--coral-soft); color: var(--coral); }
+
+        /* MAIN */
+        .main { max-width: 1400px; margin: 0 auto; padding: 28px 32px 60px; }
+
+        /* KPI ROW */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px 22px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .kpi-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-coral);
+            transform: translateY(-2px);
+        }
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            border-radius: 3px 3px 0 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .kpi-card:hover::before { opacity: 1; }
+        .kpi-card.kpi-imp::before { background: var(--meta-blue); }
+        .kpi-card.kpi-clics::before { background: var(--coral); }
+        .kpi-card.kpi-dep::before { background: #ef6c00; }
+        .kpi-card.kpi-ca::before { background: var(--gmb-green); }
+
+        .kpi-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .kpi-icon {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .kpi-icon svg { width: 18px; height: 18px; }
+        .kpi-icon.ico-imp { background: var(--meta-soft); color: var(--meta-blue); }
+        .kpi-icon.ico-clics { background: var(--coral-soft); color: var(--coral); }
+        .kpi-icon.ico-dep { background: rgba(239,108,0,0.08); color: #ef6c00; }
+        .kpi-icon.ico-ca { background: var(--gmb-soft); color: var(--gmb-green); }
+        .kpi-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+        .kpi-value { font-size: 26px; font-weight: 800; color: var(--dark); letter-spacing: -0.5px; }
+        .kpi-sub { font-size: 11px; color: var(--text-tertiary); margin-top: 4px; font-weight: 500; }
+
+        /* SECTION TITLE */
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title .count {
+            background: var(--coral-soft);
+            color: var(--coral);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        /* BOUTIQUES GRID */
+        .boutiques-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+            align-items: start;
+        }
+
+        .boutique-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 22px;
+            transition: all 0.3s ease;
+        }
+        .boutique-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .boutique-card.inactive {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .boutique-card.inactive .card-header::after {
+            content: 'Pas de campagne active';
+            font-size: 10px;
+            background: rgba(0,0,0,0.06);
+            color: var(--text-tertiary);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            gap: 8px;
+        }
+        .card-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        .card-ca {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--gmb-green);
+        }
+        .card-ca-label {
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: right;
+        }
+
+        /* METRICS SECTIONS */
+        .metrics-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .metrics-section {
+            background: var(--bg);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+        }
+        .metrics-section-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .metrics-section-title .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot-meta { background: var(--meta-blue); }
+        .dot-google { background: var(--google-blue); }
+        .dot-gmb { background: var(--gmb-green); }
+        .ms-meta .metrics-section-title { color: var(--meta-blue); }
+        .ms-google .metrics-section-title { color: var(--google-blue); }
+        .ms-gmb .metrics-section-title { color: var(--gmb-green); }
+
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px 12px;
+        }
+        .metrics-row.cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .metric {
+            display: flex;
+            flex-direction: column;
+        }
+        .metric-val {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        .metric-label {
+            font-size: 10px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        /* Budget bar */
+        .budget-bar-wrap { margin-top: 6px; }
+        .budget-bar-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--text-tertiary);
+            margin-bottom: 3px;
+            font-weight: 500;
+        }
+        .budget-bar {
+            height: 4px;
+            background: rgba(0,0,0,0.06);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .budget-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .fill-ok { background: var(--gmb-green); }
+        .fill-warn { background: #ef6c00; }
+        .fill-over { background: #c62828; }
+
+        /* RAPPORTS SECTION */
+        .rapports-section {
+            margin-top: 16px;
+        }
+        .rapports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+        .rapport-subsection {
+            margin-bottom: 24px;
+        }
+        .rapport-subsection-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--dark-soft);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--beige);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .rapport-subsection-title svg { width: 16px; height: 16px; color: var(--coral); }
+
+        .rapport-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+        .rapport-link:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-1px);
+        }
+        .rapport-icon {
+            width: 34px; height: 34px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .rapport-icon.ri-synth { background: var(--coral-soft); color: var(--coral); }
+        .rapport-icon.ri-skeepers { background: rgba(124,58,237,0.08); color: #7c3aed; }
+        .rapport-icon svg { width: 16px; height: 16px; }
+        .rapport-label { font-size: 13px; font-weight: 600; }
+        .rapport-year { font-size: 11px; color: var(--text-tertiary); font-weight: 500; }
+
+        /* Site web section in cards */
+        .card-footer {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-footer-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .card-footer-val { font-size: 13px; font-weight: 700; color: var(--dark); }
+        .card-footer-label { font-size: 9px; color: var(--text-tertiary); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 1100px) {
+            .kpi-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .header { padding: 0 16px; height: 60px; }
+            .main { padding: 20px 16px 40px; }
+            .kpi-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .kpi-value { font-size: 20px; }
+            .boutiques-grid { grid-template-columns: 1fr; }
+            .rapports-grid { grid-template-columns: 1fr; }
+            .logo-text-main { font-size: 15px; }
+        }
+        @media (max-width: 480px) {
+            .kpi-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .kpi-card { padding: 14px 16px; }
+            .kpi-value { font-size: 18px; }
+            .year-btn { padding: 6px 12px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo-bh">BH</div>
+            <div class="logo-text">
+                <div class="logo-text-main">Body House</div>
+                <div class="logo-text-sub">Portail Marketing</div>
+            </div>
+        </div>
+        <div class="year-toggle">
+            <button class="year-btn active" onclick="switchYear('2025')">2025</button>
+            <button class="year-btn" onclick="switchYear('2026')">2026</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+        <!-- KPI ROW -->
+        <div class="kpi-row" id="kpiRow"></div>
+
+        <!-- BOUTIQUES -->
+        <div class="section-title">
+            Performances par boutique <span class="count" id="boutiqueCount">15</span>
+        </div>
+        <div class="boutiques-grid" id="boutiquesGrid"></div>
+
+        <!-- RAPPORTS -->
+        <div class="rapports-section">
+            <div class="section-title">
+                Rapports & Analyses
+            </div>
+
+            <div class="rapport-subsection">
+                <div class="rapport-subsection-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    Syntheses 2025
+                </div>
+                <div class="rapports-grid" id="rapportsSynthGrid"></div>
+            </div>
+
+            <div class="rapport-subsection">
+                <div class="rapport-subsection-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    Skeepers 2025
+                </div>
+                <div class="rapports-grid" id="rapportsSkeepersGrid"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+    // ========= DATA =========
+    const DATA = {
+        "2025": {
+            "Avignon Nord": { meta_imp: 6399073, meta_clics: 57865, meta_eng: 8226, meta_dep: 9024, meta_budget: 8960, google_imp: 104788, google_clics: 24767, google_dep: 5705, gmb_imp: 111089, appels: 833, itineraires: 3632, visites: 47769, ca_ttc: 1399781 },
+            "Avignon Sud": { meta_imp: 6975381, meta_clics: 54522, meta_eng: 7287, meta_dep: 9926, meta_budget: 9455, google_imp: 121855, google_clics: 24313, google_dep: 6010, gmb_imp: 85539, appels: 526, itineraires: 2558, visites: 32744, ca_ttc: 536488 },
+            "Aubiere": { meta_imp: 2876543, meta_clics: 40443, meta_eng: 13516, meta_dep: 10680, meta_budget: 11600, google_imp: 71998, google_clics: 12477, google_dep: 3854, gmb_imp: 42026, appels: 498, itineraires: 2320, visites: 32955, ca_ttc: 557150 },
+            "Biganos": { meta_imp: 1862442, meta_clics: 25745, meta_eng: 13461, meta_dep: 6124, meta_budget: 6100, google_imp: 61390, google_clics: 10482, google_dep: 6868, gmb_imp: 27976, appels: 291, itineraires: 1279, visites: 20582, ca_ttc: 335823 },
+            "Chambery": { meta_imp: 2338797, meta_clics: 40165, meta_eng: 9444, meta_dep: 8367, meta_budget: 7400, google_imp: 73707, google_clics: 13301, google_dep: 5662, gmb_imp: 56568, appels: 432, itineraires: 2690, visites: 34165, ca_ttc: 848024 },
+            "Grenoble": { meta_imp: 2749392, meta_clics: 44115, meta_eng: 9250, meta_dep: 5797, meta_budget: 5995, google_imp: 75869, google_clics: 14450, google_dep: 3914, gmb_imp: 70856, appels: 693, itineraires: 3484, visites: 31776, ca_ttc: 871532 },
+            "Jacou": { meta_imp: 598197, meta_clics: 2699, meta_eng: 564, meta_dep: 929, meta_budget: 900, google_imp: 21747, google_clics: 2942, google_dep: 1101, gmb_imp: 28314, appels: 259, itineraires: 1415, visites: 12166, ca_ttc: 219321 },
+            "Lyon": { meta_imp: 2825592, meta_clics: 61928, meta_eng: 14507, meta_dep: 5662, meta_budget: 5795, google_imp: 90939, google_clics: 16227, google_dep: 3835, gmb_imp: 147535, appels: 915, itineraires: 5018, visites: 48804, ca_ttc: 1111465 },
+            "Montelimar": { meta_imp: 2813692, meta_clics: 42392, meta_eng: 5943, meta_dep: 5849, meta_budget: 5795, google_imp: 46768, google_clics: 9382, google_dep: 3742, gmb_imp: 53329, appels: 429, itineraires: 2452, visites: 22439, ca_ttc: 609907 },
+            "Nimes": { meta_imp: 4289309, meta_clics: 30503, meta_eng: 10858, meta_dep: 7222, meta_budget: 7000, google_imp: 38412, google_clics: 6080, google_dep: 2088, gmb_imp: 47218, appels: 371, itineraires: 2082, visites: 18560, ca_ttc: 302692 },
+            "Sainte-Eulalie": { meta_imp: 3854784, meta_clics: 37371, meta_eng: 18808, meta_dep: 10760, meta_budget: 9900, google_imp: 96516, google_clics: 14838, google_dep: 4547, gmb_imp: 49241, appels: 477, itineraires: 2090, visites: 35797, ca_ttc: 465548 },
+            "Salaise": { meta_imp: 3238677, meta_clics: 33278, meta_eng: 9266, meta_dep: 8531, meta_budget: 7400, google_imp: 67734, google_clics: 12404, google_dep: 4049, gmb_imp: 54211, appels: 381, itineraires: 1808, visites: 22539, ca_ttc: 436862 },
+            "Tignieu": { meta_imp: 955272, meta_clics: 5047, meta_eng: 1306, meta_dep: 1388, meta_budget: 1200, google_imp: 20110, google_clics: 4003, google_dep: 1021, gmb_imp: 28188, appels: 280, itineraires: 967, visites: 8150, ca_ttc: 98295 },
+            "Valence": { meta_imp: 2013552, meta_clics: 31238, meta_eng: 5907, meta_dep: 5097, meta_budget: 4900, google_imp: 59729, google_clics: 13850, google_dep: 4611, gmb_imp: 77172, appels: 735, itineraires: 2700, visites: 31045, ca_ttc: 963011 },
+            "Villefranche": { meta_imp: 4137287, meta_clics: 39330, meta_eng: 11668, meta_dep: 11110, meta_budget: 11200, google_imp: 141653, google_clics: 23927, google_dep: 7036, gmb_imp: 55736, appels: 465, itineraires: 2369, visites: 34590, ca_ttc: 535979 }
+        },
+        "2026": {
+            "Avignon Nord": { meta_imp: 766230, meta_clics: 7048, meta_eng: 1407, meta_dep: 1481, meta_budget: 2900, google_imp: 11334, google_clics: 2713, google_dep: 453, gmb_imp: 20936, appels: 89, itineraires: 499, visites: 4908, ca_ttc: 188865 },
+            "Avignon Sud": { meta_imp: 761734, meta_clics: 6241, meta_eng: 1260, meta_dep: 1466, meta_budget: 2900, google_imp: 11804, google_clics: 2660, google_dep: 466, gmb_imp: 13102, appels: 79, itineraires: 279, visites: 3600, ca_ttc: 69159 },
+            "Aubiere": { meta_imp: 552443, meta_clics: 10669, meta_eng: 3153, meta_dep: 2151, meta_budget: 3000, google_imp: 10342, google_clics: 1960, google_dep: 468, gmb_imp: 5124, appels: 53, itineraires: 374, visites: 4890, ca_ttc: 75125 },
+            "Biganos": { meta_imp: 249215, meta_clics: 5028, meta_eng: 2304, meta_dep: 1115, meta_budget: 2000, google_imp: 8084, google_clics: 1403, google_dep: 766, gmb_imp: 4683, appels: 35, itineraires: 149, visites: 2698, ca_ttc: 43292 },
+            "Chambery": { meta_imp: 361380, meta_clics: 10799, meta_eng: 2010, meta_dep: 1576, meta_budget: 3000, google_imp: 8928, google_clics: 1937, google_dep: 539, gmb_imp: 10218, appels: 47, itineraires: 453, visites: 5047, ca_ttc: 123200 },
+            "Grenoble": { meta_imp: 316214, meta_clics: 4356, meta_eng: 1138, meta_dep: 1100, meta_budget: 2100, google_imp: 10620, google_clics: 2247, google_dep: 465, gmb_imp: 16007, appels: 77, itineraires: 483, visites: 4300, ca_ttc: 116932 },
+            "Jacou": { meta_imp: 0, meta_clics: 0, meta_eng: 0, meta_dep: 0, meta_budget: 0, google_imp: 0, google_clics: 0, google_dep: 0, gmb_imp: 3101, appels: 51, itineraires: 122, visites: 1614, ca_ttc: 29256 },
+            "Lyon": { meta_imp: 502732, meta_clics: 9802, meta_eng: 3490, meta_dep: 1286, meta_budget: 2100, google_imp: 12773, google_clics: 2428, google_dep: 461, gmb_imp: 27113, appels: 95, itineraires: 680, visites: 6131, ca_ttc: 155938 },
+            "Montelimar": { meta_imp: 443294, meta_clics: 7372, meta_eng: 1085, meta_dep: 1106, meta_budget: 2100, google_imp: 6433, google_clics: 1357, google_dep: 469, gmb_imp: 12204, appels: 59, itineraires: 261, visites: 2772, ca_ttc: 77948 },
+            "Nimes": { meta_imp: 811708, meta_clics: 5877, meta_eng: 24684, meta_dep: 1572, meta_budget: 3000, google_imp: 8805, google_clics: 1627, google_dep: 449, gmb_imp: 9730, appels: 74, itineraires: 362, visites: 3047, ca_ttc: 46811 },
+            "Sainte-Eulalie": { meta_imp: 373092, meta_clics: 6751, meta_eng: 2785, meta_dep: 1577, meta_budget: 3000, google_imp: 10467, google_clics: 1977, google_dep: 459, gmb_imp: 6360, appels: 56, itineraires: 242, visites: 4637, ca_ttc: 62590 },
+            "Salaise": { meta_imp: 681303, meta_clics: 4416, meta_eng: 1535, meta_dep: 1699, meta_budget: 11200, google_imp: 12732, google_clics: 2391, google_dep: 870, gmb_imp: 11609, appels: 63, itineraires: 306, visites: 3780, ca_ttc: 51864 },
+            "Tignieu": { meta_imp: 0, meta_clics: 0, meta_eng: 0, meta_dep: 0, meta_budget: 0, google_imp: 0, google_clics: 0, google_dep: 0, gmb_imp: 156, appels: 22, itineraires: 77, visites: 1, ca_ttc: 0 },
+            "Valence": { meta_imp: 125761, meta_clics: 2946, meta_eng: 252, meta_dep: 632, meta_budget: 1200, google_imp: 8147, google_clics: 1902, google_dep: 460, gmb_imp: 20424, appels: 75, itineraires: 277, visites: 3536, ca_ttc: 125994 },
+            "Villefranche": { meta_imp: 420552, meta_clics: 5609, meta_eng: 1716, meta_dep: 1082, meta_budget: 8500, google_imp: 13093, google_clics: 2878, google_dep: 579, gmb_imp: 9920, appels: 49, itineraires: 404, visites: 4480, ca_ttc: 60198 }
+        }
+    };
+
+    const RAPPORTS_SYNTH = [
+        { label: 'Aubiere', file: 'synthese-bodyhouse-aubiere-2025.pdf' },
+        { label: 'Avignon Nord', file: 'synthese-bodyhouse-avignon-nord-2025.pdf' },
+        { label: 'Avignon Sud', file: 'synthese-bodyhouse-avignon-sud-2025.pdf' },
+        { label: 'Biganos', file: 'synthese-bodyhouse-biganos-2025.pdf' },
+        { label: 'Chambery', file: 'synthese-bodyhouse-chambery-2025.pdf' },
+        { label: 'Grenoble', file: 'synthese-bodyhouse-grenoble-2025.pdf' },
+        { label: 'Jacou', file: 'synthese-bodyhouse-jacou-2025.pdf' },
+        { label: 'Lyon', file: 'synthese-bodyhouse-lyon-2025.pdf' },
+        { label: 'Montelimar', file: 'synthese-bodyhouse-montelimar-2025.pdf' },
+        { label: 'Sainte-Eulalie', file: 'synthese-bodyhouse-sainte-eulalie-2025.pdf' },
+        { label: 'Salaise', file: 'synthese-bodyhouse-salaise-2025.pdf' },
+        { label: 'Valence', file: 'synthese-bodyhouse-valence-2025.pdf' },
+        { label: 'Villefranche', file: 'synthese-bodyhouse-villefranche-2025.pdf' }
+    ];
+
+    let currentYear = '2025';
+
+    // ========= HELPERS =========
+    function fmt(n) {
+        if (n == null || isNaN(n)) return '0';
+        return n.toLocaleString('fr-FR');
+    }
+    function fmtEuro(n) {
+        if (n == null || isNaN(n)) return '0 €';
+        return n.toLocaleString('fr-FR') + ' €';
+    }
+    function fmtShort(n) {
+        if (n >= 1000000) return (n / 1000000).toFixed(1).replace('.', ',') + 'M';
+        if (n >= 1000) return (n / 1000).toFixed(0) + 'K';
+        return n.toString();
+    }
+
+    // ========= KPI =========
+    function renderKPIs() {
+        const year = DATA[currentYear];
+        let totalImp = 0, totalClics = 0, totalDep = 0, totalCA = 0;
+        Object.values(year).forEach(b => {
+            totalImp += b.meta_imp;
+            totalClics += b.meta_clics;
+            totalDep += b.meta_dep;
+            totalCA += b.ca_ttc;
+        });
+
+        document.getElementById('kpiRow').innerHTML = `
+            <div class="kpi-card kpi-imp">
+                <div class="kpi-header">
+                    <div class="kpi-icon ico-imp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <span class="kpi-label">Impressions META</span>
+                </div>
+                <div class="kpi-value">${fmtShort(totalImp)}</div>
+                <div class="kpi-sub">${fmt(totalImp)} impressions totales</div>
+            </div>
+            <div class="kpi-card kpi-clics">
+                <div class="kpi-header">
+                    <div class="kpi-icon ico-clics">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"/></svg>
+                    </div>
+                    <span class="kpi-label">Clics META</span>
+                </div>
+                <div class="kpi-value">${fmtShort(totalClics)}</div>
+                <div class="kpi-sub">${fmt(totalClics)} clics totaux</div>
+            </div>
+            <div class="kpi-card kpi-dep">
+                <div class="kpi-header">
+                    <div class="kpi-icon ico-dep">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <span class="kpi-label">Depenses META</span>
+                </div>
+                <div class="kpi-value">${fmtEuro(totalDep)}</div>
+                <div class="kpi-sub">Budget total investi</div>
+            </div>
+            <div class="kpi-card kpi-ca">
+                <div class="kpi-header">
+                    <div class="kpi-icon ico-ca">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <span class="kpi-label">CA TTC</span>
+                </div>
+                <div class="kpi-value">${fmtEuro(totalCA)}</div>
+                <div class="kpi-sub">Chiffre d'affaires toutes boutiques</div>
+            </div>
+        `;
+    }
+
+    // ========= BOUTIQUES =========
+    function renderBoutiques() {
+        const year = DATA[currentYear];
+        const grid = document.getElementById('boutiquesGrid');
+        const sorted = Object.entries(year).sort((a, b) => b[1].ca_ttc - a[1].ca_ttc);
+
+        let activeCount = 0;
+        grid.innerHTML = sorted.map(([name, d]) => {
+            const isInactive = d.meta_imp === 0 && d.google_imp === 0 && d.ca_ttc === 0;
+            if (!isInactive) activeCount++;
+            const budgetPct = d.meta_budget > 0 ? Math.min((d.meta_dep / d.meta_budget) * 100, 120) : 0;
+            const fillClass = budgetPct > 105 ? 'fill-over' : budgetPct > 90 ? 'fill-warn' : 'fill-ok';
+
+            return `
+            <div class="boutique-card ${isInactive ? 'inactive' : ''}">
+                <div class="card-header">
+                    <div class="card-name">${name}</div>
+                    <div style="text-align:right">
+                        <div class="card-ca">${fmtEuro(d.ca_ttc)}</div>
+                        <div class="card-ca-label">CA TTC</div>
+                    </div>
+                </div>
+                <div class="metrics-group">
+                    <div class="metrics-section ms-meta">
+                        <div class="metrics-section-title"><span class="dot dot-meta"></span> META</div>
+                        <div class="metrics-row">
+                            <div class="metric"><div class="metric-val">${fmt(d.meta_imp)}</div><div class="metric-label">Impressions</div></div>
+                            <div class="metric"><div class="metric-val">${fmt(d.meta_clics)}</div><div class="metric-label">Clics</div></div>
+                            <div class="metric"><div class="metric-val">${fmtEuro(d.meta_dep)}</div><div class="metric-label">Depenses</div></div>
+                            <div class="metric"><div class="metric-val">${fmt(d.meta_eng)}</div><div class="metric-label">Engagements</div></div>
+                        </div>
+                        ${d.meta_budget > 0 ? `
+                        <div class="budget-bar-wrap">
+                            <div class="budget-bar-info">
+                                <span>Budget: ${fmtEuro(d.meta_budget)}</span>
+                                <span>${Math.round(budgetPct)}% consomme</span>
+                            </div>
+                            <div class="budget-bar"><div class="budget-bar-fill ${fillClass}" style="width:${Math.min(budgetPct, 100)}%"></div></div>
+                        </div>` : ''}
+                    </div>
+                    <div class="metrics-section ms-google">
+                        <div class="metrics-section-title"><span class="dot dot-google"></span> GOOGLE ADS</div>
+                        <div class="metrics-row cols-3">
+                            <div class="metric"><div class="metric-val">${fmt(d.google_imp)}</div><div class="metric-label">Impressions</div></div>
+                            <div class="metric"><div class="metric-val">${fmt(d.google_clics)}</div><div class="metric-label">Clics</div></div>
+                            <div class="metric"><div class="metric-val">${fmtEuro(d.google_dep)}</div><div class="metric-label">Depenses</div></div>
+                        </div>
+                    </div>
+                    <div class="metrics-section ms-gmb">
+                        <div class="metrics-section-title"><span class="dot dot-gmb"></span> GOOGLE MY BUSINESS</div>
+                        <div class="metrics-row cols-3">
+                            <div class="metric"><div class="metric-val">${fmt(d.gmb_imp)}</div><div class="metric-label">Impressions</div></div>
+                            <div class="metric"><div class="metric-val">${fmt(d.appels)}</div><div class="metric-label">Appels</div></div>
+                            <div class="metric"><div class="metric-val">${fmt(d.itineraires)}</div><div class="metric-label">Itineraires</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="card-footer-item">
+                        <div class="card-footer-val">${fmt(d.visites)}</div>
+                        <div class="card-footer-label">Visites site web</div>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+
+        document.getElementById('boutiqueCount').textContent = activeCount;
+    }
+
+    // ========= RAPPORTS =========
+    function renderRapports() {
+        document.getElementById('rapportsSynthGrid').innerHTML = RAPPORTS_SYNTH.map(r => `
+            <a class="rapport-link" href="${r.file}" target="_blank">
+                <div class="rapport-icon ri-synth">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <div>
+                    <div class="rapport-label">${r.label}</div>
+                    <div class="rapport-year">Synthese 2025</div>
+                </div>
+            </a>
+        `).join('');
+
+        document.getElementById('rapportsSkeepersGrid').innerHTML = `
+            <a class="rapport-link" href="rapport-skeepers-bodyhouse-2025.pdf" target="_blank">
+                <div class="rapport-icon ri-skeepers">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                </div>
+                <div>
+                    <div class="rapport-label">Rapport Performance Skeepers</div>
+                    <div class="rapport-year">Octobre — Decembre 2025</div>
+                </div>
+            </a>
+        `;
+    }
+
+    // ========= YEAR SWITCH =========
+    function switchYear(year) {
+        currentYear = year;
+        document.querySelectorAll('.year-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.textContent === year);
+        });
+        renderKPIs();
+        renderBoutiques();
+    }
+
+    // ========= INIT =========
+    renderKPIs();
+    renderBoutiques();
+    renderRapports();
+    </script>
+</body>
+</html>
