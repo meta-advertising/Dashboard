@@ -242,6 +242,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 20px;
+            align-items: start;
         }
 
         .client-card {
@@ -876,12 +877,19 @@ function renderClients(filter = '') {
             </a>`;
 
         let linksHtml = '';
+        const hasSections = reportLinks.some(l => l.section);
+
         if (dashboardLinks.length > 0) {
-            linksHtml += `<div class="client-links-title section-open" onclick="toggleSection(this, event)">Dashboards</div>`;
-            linksHtml += `<div class="section-group" style="max-height:none">${dashboardLinks.map(renderLink).join('')}</div>`;
+            if (hasSections) {
+                // Client avec sous-sections : on titre aussi les dashboards
+                linksHtml += `<div class="client-links-title section-open" onclick="toggleSection(this, event)">Dashboards</div>`;
+                linksHtml += `<div class="section-group" style="max-height:none">${dashboardLinks.map(renderLink).join('')}</div>`;
+            } else {
+                // Client simple : pas de sous-section, liens directs
+                linksHtml += dashboardLinks.map(renderLink).join('');
+            }
         }
         if (reportLinks.length > 0) {
-            const hasSections = reportLinks.some(l => l.section);
             if (hasSections) {
                 const sections = [...new Set(reportLinks.map(l => l.section).filter(Boolean))];
                 sections.forEach(sec => {
@@ -895,17 +903,8 @@ function renderClients(filter = '') {
                     linksHtml += `<div class="section-group">${noSec.map(renderLink).join('')}</div>`;
                 }
             } else {
-                const years = [...new Set(reportLinks.map(l => l.year).filter(Boolean))].sort().reverse();
-                if (years.length > 0) {
-                    years.forEach(year => {
-                        const yearLinks = reportLinks.filter(l => l.year === year);
-                        linksHtml += `<div class="client-links-title" onclick="toggleSection(this, event)">${year}</div>`;
-                        linksHtml += `<div class="section-group">${yearLinks.map(renderLink).join('')}</div>`;
-                    });
-                } else {
-                    linksHtml += `<div class="client-links-title section-open" onclick="toggleSection(this, event)">Rapports</div>`;
-                    linksHtml += `<div class="section-group" style="max-height:none">${reportLinks.map(renderLink).join('')}</div>`;
-                }
+                // Client simple : liens directs sans sous-sections
+                linksHtml += reportLinks.map(renderLink).join('');
             }
         }
 
