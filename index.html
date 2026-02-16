@@ -699,19 +699,20 @@ const CLIENTS = [
         initials: null,
         color: '#e91e63',
         links: [
-            { label: 'Aubière', type: 'report', year: '2025', url: 'synthese-bodyhouse-aubiere-2025.pdf' },
-            { label: 'Avignon Nord', type: 'report', year: '2025', url: 'synthese-bodyhouse-avignon-nord-2025.pdf' },
-            { label: 'Avignon Sud', type: 'report', year: '2025', url: 'synthese-bodyhouse-avignon-sud-2025.pdf' },
-            { label: 'Biganos', type: 'report', year: '2025', url: 'synthese-bodyhouse-biganos-2025.pdf' },
-            { label: 'Chambéry', type: 'report', year: '2025', url: 'synthese-bodyhouse-chambery-2025.pdf' },
-            { label: 'Grenoble', type: 'report', year: '2025', url: 'synthese-bodyhouse-grenoble-2025.pdf' },
-            { label: 'Jacou', type: 'report', year: '2025', url: 'synthese-bodyhouse-jacou-2025.pdf' },
-            { label: 'Lyon', type: 'report', year: '2025', url: 'synthese-bodyhouse-lyon-2025.pdf' },
-            { label: 'Montélimar', type: 'report', year: '2025', url: 'synthese-bodyhouse-montelimar-2025.pdf' },
-            { label: 'Sainte-Eulalie', type: 'report', year: '2025', url: 'synthese-bodyhouse-sainte-eulalie-2025.pdf' },
-            { label: 'Salaise', type: 'report', year: '2025', url: 'synthese-bodyhouse-salaise-2025.pdf' },
-            { label: 'Valence', type: 'report', year: '2025', url: 'synthese-bodyhouse-valence-2025.pdf' },
-            { label: 'Villefranche', type: 'report', year: '2025', url: 'synthese-bodyhouse-villefranche-2025.pdf' }
+            { label: 'Aubière', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-aubiere-2025.pdf' },
+            { label: 'Avignon Nord', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-avignon-nord-2025.pdf' },
+            { label: 'Avignon Sud', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-avignon-sud-2025.pdf' },
+            { label: 'Biganos', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-biganos-2025.pdf' },
+            { label: 'Chambéry', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-chambery-2025.pdf' },
+            { label: 'Grenoble', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-grenoble-2025.pdf' },
+            { label: 'Jacou', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-jacou-2025.pdf' },
+            { label: 'Lyon', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-lyon-2025.pdf' },
+            { label: 'Montélimar', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-montelimar-2025.pdf' },
+            { label: 'Sainte-Eulalie', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-sainte-eulalie-2025.pdf' },
+            { label: 'Salaise', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-salaise-2025.pdf' },
+            { label: 'Valence', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-valence-2025.pdf' },
+            { label: 'Villefranche', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-villefranche-2025.pdf' },
+            { label: 'Rapport Performance Skeepers', type: 'report', year: '2025', section: 'Skeepers 2025', url: 'rapport-skeepers-bodyhouse-2025.pdf' }
         ]
     },
     {
@@ -854,17 +855,32 @@ function renderClients(filter = '') {
             linksHtml += dashboardLinks.map(renderLink).join('');
         }
         if (reportLinks.length > 0) {
-            // Group reports by year
-            const years = [...new Set(reportLinks.map(l => l.year).filter(Boolean))].sort().reverse();
-            if (years.length > 0) {
-                years.forEach(year => {
-                    const yearLinks = reportLinks.filter(l => l.year === year);
-                    linksHtml += `<div class="client-links-title">Rapports ${year}</div>`;
-                    linksHtml += yearLinks.map(renderLink).join('');
+            // Group reports by section (if available) or year
+            const hasSections = reportLinks.some(l => l.section);
+            if (hasSections) {
+                const sections = [...new Set(reportLinks.map(l => l.section).filter(Boolean))];
+                sections.forEach(sec => {
+                    const secLinks = reportLinks.filter(l => l.section === sec);
+                    linksHtml += `<div class="client-links-title">${sec}</div>`;
+                    linksHtml += secLinks.map(renderLink).join('');
                 });
+                const noSec = reportLinks.filter(l => !l.section);
+                if (noSec.length > 0) {
+                    linksHtml += `<div class="client-links-title">Autres rapports</div>`;
+                    linksHtml += noSec.map(renderLink).join('');
+                }
             } else {
-                linksHtml += `<div class="client-links-title">Rapports</div>`;
-                linksHtml += reportLinks.map(renderLink).join('');
+                const years = [...new Set(reportLinks.map(l => l.year).filter(Boolean))].sort().reverse();
+                if (years.length > 0) {
+                    years.forEach(year => {
+                        const yearLinks = reportLinks.filter(l => l.year === year);
+                        linksHtml += `<div class="client-links-title">Rapports ${year}</div>`;
+                        linksHtml += yearLinks.map(renderLink).join('');
+                    });
+                } else {
+                    linksHtml += `<div class="client-links-title">Rapports</div>`;
+                    linksHtml += reportLinks.map(renderLink).join('');
+                }
             }
         }
 
