@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta Advertising × Ego Glacier — Recrutement de Franchisés</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ego: #3C99BD;
+  --ego-dark: #2e7d9b;
+  --ego-deep: #1863DC;
+  --ego-10: rgba(60,153,189,0.10);
+  --ego-05: rgba(60,153,189,0.05);
+  --ego-bg: #f0f8fb;
+  --text: #1a1a1a;
+  --text2: #4a5568;
+  --text3: #94a3b8;
+  --white: #ffffff;
+  --off: #f7f9fc;
+  --purple: #6366f1;
+  --purple-bg: #eef0ff;
+  --green: #10b981;
+  --green-bg: #ecfdf5;
+  --g-blue: #4285f4;
+  --g-blue-bg: #e8f0fe;
+  --g-yellow: #f9ab00;
+  --g-yellow-bg: #fef9e7;
+  --radius: 20px;
+  --shadow: 0 2px 12px rgba(60,153,189,0.08);
+  --shadow-lg: 0 8px 30px rgba(60,153,189,0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  background: var(--white);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  -webkit-font-smoothing: antialiased;
+}
+
+.slides-container { width: 100vw; height: 100vh; position: relative; }
+
+.slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 36px 70px 60px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--white);
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0) !important;
+  pointer-events: all;
+}
+
+/* === DECORATIVE ILLUSTRATIONS === */
+.deco {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.06;
+  z-index: 0;
+}
+
+.deco-muffin {
+  width: 320px;
+  bottom: -40px;
+  right: -30px;
+}
+
+.deco-cone {
+  width: 280px;
+  top: -30px;
+  left: -15px;
+}
+
+.deco-muffin-sm {
+  width: 220px;
+  bottom: -30px;
+  left: -15px;
+}
+
+.deco-cone-sm {
+  width: 200px;
+  top: -15px;
+  right: -10px;
+}
+
+.deco-muffin-r {
+  width: 200px;
+  top: 20px;
+  right: -10px;
+}
+
+.deco-cone-l {
+  width: 180px;
+  bottom: 10px;
+  left: -5px;
+}
+
+.deco-shake {
+  width: 160px;
+  bottom: -10px;
+  right: 40px;
+}
+
+.slide > *:not(.deco):not(.bg-band) { position: relative; z-index: 1; }
+
+/* === COLORED BAND === */
+.bg-band {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: var(--ego);
+  z-index: 2;
+}
+
+/* === NAV === */
+.nav-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 52px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 100;
+  border-top: 2px solid var(--ego-10);
+}
+
+.slide-counter {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text3);
+  letter-spacing: 2px;
+}
+
+.nav-btn {
+  background: var(--white);
+  border: 2px solid var(--ego-10);
+  color: var(--ego);
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.25s;
+}
+
+.nav-btn:hover { background: var(--ego); color: white; border-color: var(--ego); }
+
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 4px;
+  background: var(--ego);
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 101;
+}
+
+/* === TYPO === */
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ego);
+  margin-bottom: 16px;
+  background: var(--ego-05);
+  padding: 8px 20px;
+  border-radius: 100px;
+  border: 1px solid var(--ego-10);
+}
+
+.title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  max-width: 850px;
+  text-align: center;
+  color: var(--text);
+}
+
+.subtitle {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text2);
+  max-width: 640px;
+  text-align: center;
+  line-height: 1.7;
+}
+
+.hl { color: var(--ego); }
+.hl-p { color: var(--purple); }
+.hl-g { color: var(--g-blue); }
+
+/* === LOGOS === */
+.ma-logo { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+
+.ma-logo .inf {
+  font-size: 60px;
+  background: linear-gradient(135deg, var(--purple), #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  font-weight: 200;
+}
+
+.ma-logo .nm {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.ma-sm .inf { font-size: 42px; }
+.ma-sm .nm { font-size: 11px; letter-spacing: 5px; }
+.ma-nav .inf { font-size: 22px; }
+.ma-nav .nm { font-size: 8px; letter-spacing: 3px; }
+
+.ego-logo img { height: 70px; }
+.ego-logo-sm img { height: 48px; }
+
+.cover-logos { display: flex; align-items: center; gap: 28px; margin-bottom: 34px; }
+.cover-x { color: var(--text3); font-size: 16px; font-weight: 300; }
+
+/* === PILLS === */
+.pills { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+
+.pill {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 100px;
+  border: 1.5px solid;
+}
+
+.pill-ego { background: var(--ego-bg); color: var(--ego-dark); border-color: var(--ego-10); }
+.pill-p { background: var(--purple-bg); color: var(--purple); border-color: rgba(99,102,241,0.15); }
+.pill-g { background: var(--g-blue-bg); color: var(--g-blue); border-color: rgba(66,133,244,0.15); }
+.pill-green { background: var(--green-bg); color: var(--green); border-color: rgba(16,185,129,0.15); }
+.pill-y { background: var(--g-yellow-bg); color: var(--g-yellow); border-color: rgba(249,171,0,0.15); }
+
+/* === FEATURES === */
+.feats { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 860px; }
+
+.ft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--off);
+  border: 1.5px solid transparent;
+  border-radius: 16px;
+  transition: all 0.3s;
+}
+
+.ft:hover { border-color: var(--ego-10); background: var(--ego-bg); transform: translateX(4px); box-shadow: var(--shadow); }
+
+.ft-icon {
+  width: 46px; height: 46px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  border: 1.5px solid;
+}
+
+.ft h4 { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+.ft p { font-size: 14px; color: var(--text3); line-height: 1.6; }
+
+/* === CARDS === */
+.crds { display: grid; gap: 14px; width: 100%; max-width: 1040px; }
+
+.crd {
+  background: var(--off);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.crd::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--crd-c, var(--ego));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s;
+}
+
+.crd:hover { border-color: var(--ego-10); background: var(--white); box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+.crd:hover::after { transform: scaleX(1); }
+
+.crd-icon { font-size: 32px; margin-bottom: 12px; display: block; }
+.crd-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.crd-text { font-size: 13px; color: var(--text3); line-height: 1.75; }
+
+/* === STATS === */
+.stats { display: grid; gap: 14px; width: 100%; max-width: 760px; }
+
+.stat {
+  text-align: center;
+  padding: 20px 14px;
+  background: var(--off);
+  border-radius: var(--radius);
+  border: 1.5px solid transparent;
+  transition: all 0.3s;
+}
+
+.stat:hover { border-color: var(--ego-10); box-shadow: var(--shadow); }
+
+.stat-n {
+  font-family: 'DM Serif Display', serif;
+  font-size: 44px;
+  line-height: 1;
+  margin-bottom: 6px;
+  color: var(--ego);
+}
+
+.stat-l { font-size: 14px; color: var(--text2); font-weight: 500; }
+.stat-s { font-size: 11px; color: var(--text3); margin-top: 3px; }
+
+/* === ABOUT === */
+.about-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  width: 100%;
+  max-width: 860px;
+}
+
+.ab {
+  background: var(--off);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  border-left: 4px solid var(--ab-c, var(--ego));
+}
+
+.ab h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.ab p { font-size: 13px; color: var(--text3); line-height: 1.8; }
+
+/* === SYNERGY === */
+.syn-grid {
+  display: grid;
+  grid-template-columns: 1fr 50px 1fr;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+.syn-box {
+  background: var(--off);
+  border-radius: var(--radius);
+  padding: 22px 18px;
+  text-align: center;
+  border: 1.5px solid transparent;
+  transition: all 0.3s;
+}
+
+.syn-box:hover { border-color: var(--ego-10); box-shadow: var(--shadow); }
+
+.syn-box .syn-icon { font-size: 28px; margin-bottom: 6px; }
+.syn-box h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.syn-box p { font-size: 13px; color: var(--text3); line-height: 1.6; }
+
+.syn-mid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.syn-plus {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--green-bg);
+  border: 2px solid rgba(16,185,129,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--green);
+}
+
+.syn-result {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 12px;
+  padding: 14px 20px;
+  background: var(--green-bg);
+  border: 1.5px solid rgba(16,185,129,0.12);
+  border-radius: 14px;
+  text-align: center;
+}
+
+.syn-result h4 { font-size: 15px; font-weight: 700; color: var(--green); }
+.syn-result p { font-size: 13px; color: var(--text3); }
+
+/* === FUNNEL HORIZONTAL === */
+.funnel-h {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  max-width: 820px;
+  margin-top: 14px;
+}
+
+.fh-step {
+  flex: 1;
+  text-align: center;
+  padding: 12px 6px;
+  border-radius: 12px;
+}
+
+.fh-step .fh-n {
+  width: 24px; height: 24px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  margin: 0 auto 4px;
+}
+
+.fh-step h5 { font-size: 12px; font-weight: 700; }
+.fh-step p { font-size: 10px; color: var(--text3); }
+.fh-arr { color: var(--text3); opacity: 0.2; font-size: 12px; flex-shrink: 0; }
+
+.fh-1 { background: var(--purple-bg); }
+.fh-1 .fh-n { background: rgba(99,102,241,0.15); color: var(--purple); }
+.fh-1 h5 { color: var(--purple); }
+
+.fh-2 { background: var(--ego-bg); }
+.fh-2 .fh-n { background: var(--ego-10); color: var(--ego); }
+.fh-2 h5 { color: var(--ego); }
+
+.fh-3 { background: var(--g-blue-bg); }
+.fh-3 .fh-n { background: rgba(66,133,244,0.12); color: var(--g-blue); }
+.fh-3 h5 { color: var(--g-blue); }
+
+.fh-4 { background: var(--g-yellow-bg); }
+.fh-4 .fh-n { background: rgba(249,171,0,0.12); color: var(--g-yellow); }
+.fh-4 h5 { color: var(--g-yellow); }
+
+.fh-5 { background: var(--green-bg); }
+.fh-5 .fh-n { background: rgba(16,185,129,0.12); color: var(--green); }
+.fh-5 h5 { color: var(--green); }
+
+/* === TRACKING === */
+.trk-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.trk {
+  background: var(--off);
+  border-radius: 16px;
+  padding: 18px 16px;
+  border-left: 4px solid var(--trk-c, var(--ego));
+}
+
+.trk h4 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+.trk .trk-d { font-size: 12px; color: var(--text3); margin-bottom: 10px; }
+
+.kpis { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.kp {
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 10px;
+  padding: 7px 10px;
+  text-align: center;
+  flex: 1;
+  min-width: 55px;
+}
+
+.kp-v { font-size: 15px; font-weight: 800; display: block; }
+.kp-n { font-size: 9px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text3); }
+
+.trk-ego { --trk-c: var(--ego); }
+.trk-ego h4, .trk-ego .kp-v { color: var(--ego); }
+.trk-p { --trk-c: var(--purple); }
+.trk-p h4, .trk-p .kp-v { color: var(--purple); }
+.trk-gb { --trk-c: var(--g-blue); }
+.trk-gb h4, .trk-gb .kp-v { color: var(--g-blue); }
+.trk-gr { --trk-c: var(--green); }
+.trk-gr h4, .trk-gr .kp-v { color: var(--green); }
+
+/* === CTA === */
+.cta {
+  background: var(--ego-bg);
+  border: 2px solid var(--ego-10);
+  border-radius: 28px;
+  padding: 36px 44px;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+.cta .title { font-size: 42px; margin-bottom: 14px; }
+
+/* === RESPONSIVE === */
+@media (max-width: 900px) {
+  .slide { padding: 30px 20px 56px; }
+  .title { font-size: 30px; }
+  .about-row, .trk-grid, .syn-grid { grid-template-columns: 1fr; }
+  .funnel-h { flex-direction: column; }
+}
+
+@media print {
+  .nav-bar, .progress-bar { display: none !important; }
+  .slide { position: relative !important; opacity: 1 !important; visibility: visible !important; transform: none !important; pointer-events: all !important; page-break-after: always; height: auto; min-height: 100vh; overflow: visible; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="slides-container" id="slidesContainer">
+
+  <!-- ===== SLIDE 1 : COVER ===== -->
+  <div class="slide active" data-slide="1">
+    <div class="bg-band"></div>
+    <img src="https://ego-glacier.com/app/uploads/2024/10/ice-cream-01.webp" class="deco deco-cone" alt="">
+    <img src="https://ego-glacier.com/app/uploads/2024/10/muffin-01.webp" class="deco deco-muffin" alt="">
+    <div class="cover-logos">
+      <div class="ma-logo">
+        <span class="inf">∞</span>
+        <span class="nm">Meta Advertising</span>
+      </div>
+      <span class="cover-x">×</span>
+      <div class="ego-logo">
+        <img src="https://ego-glacier.com/app/uploads/2024/10/logo.svg" alt="Ego Glacier">
+      </div>
+    </div>
+    <h1 class="title">Recrutement de<br><span class="hl">Franchisés</span></h1>
+    <div style="width:48px;height:3px;background:var(--ego);border-radius:3px;margin:0 auto 14px;"></div>
+    <p class="subtitle">Stratégie digitale complète pour accélérer le développement du réseau Ego Glacier à travers toute la France.</p>
+    <div class="pills" style="margin-top:22px;">
+      <span class="pill pill-p">Meta Ads</span>
+      <span class="pill pill-g">Google Ads</span>
+      <span class="pill pill-green">Leads Qualifiés</span>
+    </div>
+    <p style="font-size:11px;color:var(--text3);letter-spacing:3px;text-transform:uppercase;font-weight:500;margin-top:24px;">Avril 2026 — Proposition d'accompagnement</p>
+  </div>
+
+  <!-- ===== SLIDE 2 : QUI SOMMES-NOUS ===== -->
+  <div class="slide" data-slide="2">
+    <div class="bg-band"></div>
+    <img src="https://ego-glacier.com/app/uploads/2024/10/muffin-01.webp" class="deco deco-muffin-sm" alt="">
+    <span class="label">Qui sommes-nous</span>
+    <div class="ma-logo ma-sm" style="margin-bottom:12px;">
+      <span class="inf">∞</span>
+      <span class="nm">Meta Advertising</span>
+    </div>
+    <h2 class="title" style="font-size:40px;">Experts en <span class="hl-p">recrutement de franchisés</span><br>& acquisition locale</h2>
+    <p class="subtitle" style="margin-bottom:20px;">Nous aidons les réseaux de franchise à trouver leurs futurs partenaires via Meta & Google.</p>
+    <div class="feats">
+      <div class="ft">
+        <div class="ft-icon" style="background:var(--purple-bg);color:var(--purple);border-color:rgba(99,102,241,0.15);">🎯</div>
+        <div>
+          <h4 style="color:var(--purple);">Génération de leads franchisés</h4>
+          <p>Campagnes Meta & Google conçues pour attirer des porteurs de projets qualifiés, prêts à investir.</p>
+        </div>
+      </div>
+      <div class="ft">
+        <div class="ft-icon" style="background:var(--ego-bg);color:var(--ego);border-color:var(--ego-10);">📊</div>
+        <div>
+          <h4 style="color:var(--ego);">Tunnel de conversion optimisé</h4>
+          <p>Formulaires intégrés et séquences de qualification pour convertir l'intérêt en candidatures concrètes.</p>
+        </div>
+      </div>
+      <div class="ft">
+        <div class="ft-icon" style="background:var(--g-blue-bg);color:var(--g-blue);border-color:rgba(66,133,244,0.12);">🔍</div>
+        <div>
+          <h4 style="color:var(--g-blue);">Acquisition multi-canal</h4>
+          <p>Meta pour la visibilité et l'engagement, Google pour capter les recherches actives.</p>
+        </div>
+      </div>
+      <div class="ft">
+        <div class="ft-icon" style="background:var(--green-bg);color:var(--green);border-color:rgba(16,185,129,0.12);">📈</div>
+        <div>
+          <h4 style="color:var(--green);">Tracking transparent via Metricool</h4>
+          <p>Dashboard accessible en temps réel — vous suivez vos résultats et votre ROI 24h/24.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 3 : EGO GLACIER ===== -->
+  <div class="slide" data-slide="3">
+    <div class="bg-band"></div>
+    <img src="https://ego-glacier.com/app/uploads/2024/10/ice-cream-01.webp" class="deco deco-cone-sm" alt="">
+    <span class="label">Votre enseigne</span>
+    <div class="ego-logo" style="margin-bottom:14px;">
+      <img src="https://ego-glacier.com/app/uploads/2024/10/logo.svg" alt="Ego Glacier" style="height:74px;">
+    </div>
+    <h2 class="title" style="font-size:40px;">Un concept <span class="hl">unique</span> à fort potentiel</h2>
+    <p class="subtitle" style="margin-bottom:20px;">Glaces artisanales en libre-service & coffee shop — un modèle original, convivial et duplicable.</p>
+    <div class="stats" style="grid-template-columns:repeat(3,1fr);">
+      <div class="stat">
+        <div class="stat-n">3</div>
+        <div class="stat-l">Villes actuelles</div>
+        <div class="stat-s">Marseille · Angers · Perpignan</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n" style="color:var(--purple);">∞</div>
+        <div class="stat-l">Potentiel d'expansion</div>
+        <div class="stat-s">Concept duplicable partout en France</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n" style="color:var(--green);">?</div>
+        <div class="stat-l">Prochains franchisés</div>
+        <div class="stat-s">C'est là qu'on intervient</div>
+      </div>
+    </div>
+    <div class="about-row" style="margin-top:16px;">
+      <div class="ab" style="--ab-c:var(--ego);">
+        <h3 style="color:var(--ego);">Vos atouts franchise</h3>
+        <p>Concept différenciant (libre-service + coffee shop) · Modèle éprouvé sur 3 villes · Positionnement artisanal & convivial · Ticket d'entrée accessible</p>
+      </div>
+      <div class="ab" style="--ab-c:var(--purple);">
+        <h3 style="color:var(--purple);">L'enjeu : recruter les bons profils</h3>
+        <p>Toucher des porteurs de projets qualifiés · Générer des candidatures motivées · Couvrir le territoire · Accélérer les ouvertures</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 4 : PROFIL CANDIDAT ===== -->
+  <div class="slide" data-slide="4">
+    <div class="bg-band"></div>
+    <img src="https://ego-glacier.com/app/uploads/2024/10/muffin-01.webp" class="deco deco-muffin-r" alt="">
+    <img src="https://ego-glacier.com/app/uploads/2024/10/ice-cream-01.webp" class="deco deco-cone-l" alt="">
+    <span class="label">Le candidat idéal</span>
+    <h2 class="title" style="font-size:40px;">Qui ciblons-nous <span class="hl">?</span></h2>
+    <p class="subtitle" style="margin-bottom:22px;">Nous avons identifié les profils les plus pertinents pour rejoindre le réseau Ego Glacier.</p>
+    <div class="crds" style="grid-template-columns:repeat(3,1fr);">
+      <div class="crd" style="--crd-c:var(--ego);">
+        <span class="crd-icon">👤</span>
+        <h4 class="crd-title" style="color:var(--ego);">Entrepreneurs en reconversion</h4>
+        <p class="crd-text">Cadres, salariés ou indépendants qui souhaitent <strong>se lancer dans la restauration</strong> avec un concept clé en main et un accompagnement structuré.</p>
+      </div>
+      <div class="crd" style="--crd-c:var(--purple);">
+        <span class="crd-icon">💼</span>
+        <h4 class="crd-title" style="color:var(--purple);">Investisseurs multi-enseignes</h4>
+        <p class="crd-text">Porteurs de projets ayant déjà une expérience en franchise et qui cherchent <strong>un concept différenciant</strong> à ajouter à leur portefeuille.</p>
+      </div>
+      <div class="crd" style="--crd-c:var(--green);">
+        <span class="crd-icon">🏪</span>
+        <h4 class="crd-title" style="color:var(--green);">Commerçants & restaurateurs</h4>
+        <p class="crd-text">Professionnels du secteur food qui veulent <strong>évoluer vers un modèle innovant</strong> — libre-service, artisanal, convivial.</p>
+      </div>
+    </div>
+    <div class="about-row" style="margin-top:16px;">
+      <div class="ab" style="--ab-c:var(--ego);">
+        <h3 style="color:var(--ego);">Ciblage Meta Ads</h3>
+        <p>Intérêts : franchise, entrepreneuriat, création d'entreprise, investissement, restauration · Comportement : engagement sur du contenu business · Âge : 28-55 ans · France entière</p>
+      </div>
+      <div class="ab" style="--ab-c:var(--g-blue);">
+        <h3 style="color:var(--g-blue);">Ciblage Google Ads</h3>
+        <p>Mots-clés : « franchise glacier », « ouvrir un glacier », « franchise restauration rapide », « devenir franchisé » · Page de destination : <strong>ego-glacier.com/devenez-franchise</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 5 : META ADS ===== -->
+  <div class="slide" data-slide="5">
+    <div class="bg-band"></div>
+    <img src="https://ego-glacier.com/app/uploads/2024/10/muffin-01.webp" class="deco deco-muffin" alt="">
+    <img src="https://ego-glacier.com/app/uploads/2024/10/ice-cream-01.webp" class="deco deco-cone-l" alt="">
+    <span class="label">Stratégie Meta Ads</span>
+    <h2 class="title" style="font-size:40px;">Vos campagnes <span class="hl-p">Meta Ads</span></h2>
+    <p class="subtitle" style="margin-bottom:20px;">Instagram & Facebook pour créer la demande et attirer des candidats qui ne cherchaient pas encore.</p>
+    <div class="crds" style="grid-template-columns:repeat(3,1fr);">
+      <div class="crd" style="--crd-c:var(--purple);">
+        <span class="crd-icon">👁️</span>
+        <h4 class="crd-title" style="color:var(--purple);">Notoriété Enseigne</h4>
+        <p class="crd-text">Vidéos et visuels immersifs présentant Ego Glacier comme <strong>opportunité de franchise</strong>. Ciblage : entrepreneurs, investisseurs, reconversion.</p>
+        <div class="pills" style="margin-top:8px;justify-content:flex-start;">
+          <span class="pill pill-p" style="font-size:8px;padding:3px 8px;">Reels</span>
+          <span class="pill pill-p" style="font-size:8px;padding:3px 8px;">Carrousel</span>
+        </div>
+      </div>
+      <div class="crd" style="--crd-c:var(--ego);">
+        <span class="crd-icon">💬</span>
+        <h4 class="crd-title" style="color:var(--ego);">Engagement & Trafic</h4>
+        <p class="crd-text">Contenus engageants qui génèrent <strong>interactions et visibilité</strong>. L'algorithme amplifie votre message auprès de profils similaires.</p>
+        <div class="pills" style="margin-top:8px;justify-content:flex-start;">
+          <span class="pill pill-ego" style="font-size:8px;padding:3px 8px;">Stories</span>
+          <span class="pill pill-ego" style="font-size:8px;padding:3px 8px;">Témoignages</span>
+        </div>
+      </div>
+      <div class="crd" style="--crd-c:var(--green);">
+        <span class="crd-icon">📩</span>
+        <h4 class="crd-title" style="color:var(--green);">Lead Ads</h4>
+        <p class="crd-text">Formulaires intégrés dans Instagram et Facebook. Le candidat postule <strong>sans quitter l'app</strong> — zéro friction.</p>
+        <div class="pills" style="margin-top:8px;justify-content:flex-start;">
+          <span class="pill pill-green" style="font-size:8px;padding:3px 8px;">Lead Forms</span>
+          <span class="pill pill-green" style="font-size:8px;padding:3px 8px;">Instant</span>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:16px;font-size:11px;color:var(--text3);text-align:center;max-width:640px;line-height:1.7;">
+      <strong style="color:var(--purple);">Avantage Meta</strong> · 40M d'utilisateurs actifs · Ciblage par centres d'intérêt · Formats immersifs · Résultats dès la 1ère semaine
+    </p>
+  </div>
+
+  <!-- ===== SLIDE 6 : GOOGLE ADS ===== -->
+  <div class="slide" data-slide="6">
+    <div class="bg-band"></div>
+    <img src="https://ego-glacier.com/app/uploads/2024/10/ice-cream-01.webp" class="deco deco-cone" alt="">
+    <img src="https://ego-glacier.com/app/uploads/2024/10/muffin-01.webp" class="deco deco-muffin-sm" alt="">
+    <span class="label">Stratégie Google Ads</span>
+    <h2 class="title" style="font-size:40px;">Vos campagnes <span class="hl-g">Google Ads</span></h2>
+    <p class="subtitle" style="margin-bottom:20px;">Capter ceux qui cherchent <strong>activement</strong> une franchise — au moment exact où ils sont prêts à agir.</p>
+    <div class="crds" style="grid-template-columns:repeat(2,1fr);max-width:760px;">
+      <div class="crd" style="--crd-c:var(--g-blue);">
+        <span class="crd-icon">🔎</span>
+        <h4 class="crd-title" style="color:var(--g-blue);">Search Ads — Mots-clés intentionnistes</h4>
+        <p class="crd-text">Apparaître en 1ère position sur <strong>« franchise glacier », « ouvrir un glacier », « franchise restauration »</strong>. Chaque clic est un candidat qui vous cherche.</p>
+        <div class="pills" style="margin-top:8px;justify-content:flex-start;">
+          <span class="pill pill-g" style="font-size:8px;padding:3px 8px;">Mots-clés</span>
+          <span class="pill pill-g" style="font-size:8px;padding:3px 8px;">Intention forte</span>
+          <span class="pill pill-g" style="font-size:8px;padding:3px 8px;">Position #1</span>
+        </div>
+      </div>
+      <div class="crd" style="--crd-c:var(--g-yellow);">
+        <span class="crd-icon">🔄</span>
+        <h4 class="crd-title" style="color:var(--g-yellow);">Remarketing — Relance intelligente</h4>
+        <p class="crd-text">Relancer les visiteurs intéressés qui n'ont <strong>pas encore candidaté</strong>. On les suit sur tout l'écosystème Google jusqu'à la conversion.</p>
+        <div class="pills" style="margin-top:8px;justify-content:flex-start;">
+          <span class="pill pill-y" style="font-size:8px;padding:3px 8px;">Retargeting</span>
+          <span class="pill pill-y" style="font-size:8px;padding:3px 8px;">Conversion</span>
+          <span class="pill pill-y" style="font-size:8px;padding:3px 8px;">Zéro perte</span>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:16px;font-size:11px;color:var(--text3);text-align:center;max-width:640px;line-height:1.7;">
+      <strong style="color:var(--g-blue);">Avantage Google</strong> · Intention d'achat maximale · Moteur de recherche n°1 · Complémentaire à Meta Ads
+    </p>
+  </div>
+
+  <!-- ===== SLIDE 7 : SYNERGIE ===== -->
+  <div class="slide" data-slide="7">
+    <div class="bg-band"></div>
+    <img src="https://ego-glacier.com/app/uploads/2024/10/ice-cream-01.webp" class="deco deco-cone-sm" alt="">
+    <img src="https://ego-glacier.com/app/uploads/2024/10/muffin-01.webp" class="deco deco-muffin-sm" alt="" style="opacity:0.04;">
+    <span class="label">La synergie</span>
+    <h2 class="title" style="font-size:40px;">La complémentarité <span class="hl-p">Meta</span> + <span class="hl-g">Google</span></h2>
+    <p class="subtitle" style="margin-bottom:14px;">Deux leviers qui couvrent 100% du parcours d'un candidat franchisé.</p>
+    <div class="syn-grid">
+      <div class="syn-box" style="border-color:rgba(99,102,241,0.08);">
+        <div class="syn-icon" style="color:var(--purple);">∞</div>
+        <h4 style="color:var(--purple);">Meta Ads</h4>
+        <p><strong style="color:var(--text);">Crée la demande</strong><br>Touche des profils qui ne cherchent pas encore mais qui correspondent au candidat idéal</p>
+        <div class="pills" style="margin-top:8px;">
+          <span class="pill pill-p" style="font-size:7px;padding:2px 7px;">Notoriété</span>
+          <span class="pill pill-p" style="font-size:7px;padding:2px 7px;">Engagement</span>
+          <span class="pill pill-p" style="font-size:7px;padding:2px 7px;">Lead Ads</span>
+        </div>
+      </div>
+      <div class="syn-mid"><div class="syn-plus">+</div></div>
+      <div class="syn-box" style="border-color:rgba(66,133,244,0.08);">
+        <div class="syn-icon" style="color:var(--g-blue);font-weight:700;">G</div>
+        <h4 style="color:var(--g-blue);">Google Ads</h4>
+        <p><strong style="color:var(--text);">Capte la demande</strong><br>Intercepte ceux qui recherchent activement une franchise ou un projet entrepreneurial</p>
+        <div class="pills" style="margin-top:8px;">
+          <span class="pill pill-g" style="font-size:7px;padding:2px 7px;">Search</span>
+          <span class="pill pill-g" style="font-size:7px;padding:2px 7px;">Remarketing</span>
+        </div>
+      </div>
+    </div>
+    <div class="syn-result">
+      <h4>= Couverture complète du parcours candidat</h4>
+      <p>De la première impression jusqu'à la candidature qualifiée — aucune opportunité n'est perdue.</p>
+    </div>
+    <div class="funnel-h">
+      <div class="fh-step fh-1"><div class="fh-n">1</div><h5>Notoriété</h5><p>Découverte</p></div>
+      <span class="fh-arr">→</span>
+      <div class="fh-step fh-2"><div class="fh-n">2</div><h5>Engagement</h5><p>Interaction</p></div>
+      <span class="fh-arr">→</span>
+      <div class="fh-step fh-3"><div class="fh-n">3</div><h5>Trafic</h5><p>Visite</p></div>
+      <span class="fh-arr">→</span>
+      <div class="fh-step fh-4"><div class="fh-n">4</div><h5>Candidature</h5><p>Formulaire</p></div>
+      <span class="fh-arr">→</span>
+      <div class="fh-step fh-5"><div class="fh-n">5</div><h5>Qualifié</h5><p>Entretien</p></div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 8 : TRACKING ===== -->
+  <div class="slide" data-slide="8">
+    <div class="bg-band"></div>
+    <img src="https://ego-glacier.com/app/uploads/2024/10/muffin-01.webp" class="deco deco-muffin-r" alt="">
+    <img src="https://ego-glacier.com/app/uploads/2024/10/ice-cream-01.webp" class="deco deco-cone-l" alt="">
+    <span class="label">Suivi & Performance</span>
+    <h2 class="title" style="font-size:40px;">Suivre vos <span class="hl">résultats</span> en temps réel</h2>
+    <p class="subtitle" style="margin-bottom:14px;">Chaque euro investi est traçable. Vous savez combien coûte chaque candidature.</p>
+    <div class="trk-grid">
+      <div class="trk trk-ego">
+        <h4>Visibilité — Portée</h4>
+        <p class="trk-d">Combien de candidats voient vos annonces</p>
+        <div class="kpis">
+          <div class="kp"><span class="kp-v">VUES</span><span class="kp-n">Personnes atteintes</span></div>
+          <div class="kp"><span class="kp-v">CLICS</span><span class="kp-n">Clics sur vos pubs</span></div>
+          <div class="kp"><span class="kp-v">COÛT</span><span class="kp-n">Par résultat</span></div>
+        </div>
+      </div>
+      <div class="trk trk-p">
+        <h4>Leads — Candidatures</h4>
+        <p class="trk-d">Le nombre et le coût de chaque candidature</p>
+        <div class="kpis">
+          <div class="kp"><span class="kp-v">LEADS</span><span class="kp-n">Candidatures</span></div>
+          <div class="kp"><span class="kp-v">CPL</span><span class="kp-n">Coût / candidat</span></div>
+          <div class="kp"><span class="kp-v">TAUX</span><span class="kp-n">Conversion</span></div>
+        </div>
+      </div>
+      <div class="trk trk-gb">
+        <h4>Qualification — Qualité</h4>
+        <p class="trk-d">La pertinence des candidatures générées</p>
+        <div class="kpis">
+          <div class="kp"><span class="kp-v">QUALIFIÉS</span><span class="kp-n">Pertinents</span></div>
+          <div class="kp"><span class="kp-v">RDV</span><span class="kp-n">Entretiens</span></div>
+          <div class="kp"><span class="kp-v">SIGNÉ</span><span class="kp-n">Contrats</span></div>
+        </div>
+      </div>
+      <div class="trk trk-gr">
+        <h4>Reporting via Metricool</h4>
+        <p class="trk-d">Accès temps réel à toutes vos données</p>
+        <div class="kpis">
+          <div class="kp" style="flex:3;"><span class="kp-v" style="font-size:11px;">DASHBOARD 24/7</span><span class="kp-n">Performances Meta & Google, leads, coût par candidature et ROI — accessible à tout moment.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 9 : RÉSULTATS MOYENS ===== -->
+  <div class="slide" data-slide="9">
+    <div class="bg-band"></div>
+    <img src="https://ego-glacier.com/app/uploads/2024/10/ice-cream-01.webp" class="deco deco-cone" alt="">
+    <img src="https://ego-glacier.com/app/uploads/2024/10/muffin-01.webp" class="deco deco-muffin-sm" alt="">
+    <span class="label">Résultats moyens</span>
+    <h2 class="title" style="font-size:40px;">Ce que vous pouvez <span class="hl">attendre</span></h2>
+    <p class="subtitle" style="margin-bottom:22px;">Chiffres moyens constatés sur nos campagnes de recrutement de franchisés dans le secteur food & restauration.</p>
+    <div class="stats" style="grid-template-columns:repeat(4,1fr);max-width:900px;">
+      <div class="stat">
+        <div class="stat-n">15-30€</div>
+        <div class="stat-l">Coût par lead</div>
+        <div class="stat-s">Candidature reçue via formulaire</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n" style="color:var(--purple);">50-80</div>
+        <div class="stat-l">Leads / mois</div>
+        <div class="stat-s">Candidatures générées en moyenne</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n" style="color:var(--g-blue);">25%</div>
+        <div class="stat-l">Taux de qualification</div>
+        <div class="stat-s">Leads pertinents et motivés</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n" style="color:var(--green);">500K+</div>
+        <div class="stat-l">Impressions / mois</div>
+        <div class="stat-s">Personnes atteintes par vos pubs</div>
+      </div>
+    </div>
+    <div class="about-row" style="margin-top:18px;max-width:900px;">
+      <div class="ab" style="--ab-c:var(--ego);">
+        <h3 style="color:var(--ego);">Ce que ça signifie concrètement</h3>
+        <p>Avec un budget mensuel maîtrisé, vous recevez chaque mois entre 50 et 80 candidatures de personnes intéressées par la franchise Ego Glacier. Environ 1 candidat sur 4 est qualifié et débouche sur un entretien approfondi.</p>
+      </div>
+      <div class="ab" style="--ab-c:var(--green);">
+        <h3 style="color:var(--green);">Optimisation dans le temps</h3>
+        <p>Ces chiffres s'améliorent mois après mois grâce à l'optimisation continue des campagnes. Le coût par lead baisse, la qualité des candidatures augmente — c'est la puissance de la data.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 10 : PROCESSUS ===== -->
+  <div class="slide" data-slide="10">
+    <div class="bg-band"></div>
+    <img src="https://ego-glacier.com/app/uploads/2024/10/muffin-01.webp" class="deco deco-muffin" alt="">
+    <img src="https://ego-glacier.com/app/uploads/2024/10/ice-cream-01.webp" class="deco deco-cone-l" alt="">
+    <span class="label">Le processus</span>
+    <h2 class="title" style="font-size:40px;">Comment ça se <span class="hl">passe</span> ?</h2>
+    <p class="subtitle" style="margin-bottom:22px;">Un processus clair et structuré, de la mise en place jusqu'aux premiers candidats qualifiés.</p>
+    <div class="crds" style="grid-template-columns:repeat(4,1fr);">
+      <div class="crd" style="--crd-c:var(--ego);">
+        <span class="crd-icon">📋</span>
+        <h4 class="crd-title" style="color:var(--ego);">Semaine 1-2</h4>
+        <p class="crd-text"><strong>Cadrage & Setup</strong><br>Définition du candidat idéal, création des audiences, configuration du Business Manager, rédaction des formulaires.</p>
+      </div>
+      <div class="crd" style="--crd-c:var(--purple);">
+        <span class="crd-icon">🚀</span>
+        <h4 class="crd-title" style="color:var(--purple);">Semaine 3-4</h4>
+        <p class="crd-text"><strong>Lancement</strong><br>Premières campagnes Meta & Google. Tests A/B sur les visuels, les audiences et les messages. Premiers leads reçus.</p>
+      </div>
+      <div class="crd" style="--crd-c:var(--g-blue);">
+        <span class="crd-icon">📊</span>
+        <h4 class="crd-title" style="color:var(--g-blue);">Mois 2</h4>
+        <p class="crd-text"><strong>Optimisation</strong><br>Analyse des résultats, réallocation des budgets sur les campagnes les plus performantes, ajout du remarketing.</p>
+      </div>
+      <div class="crd" style="--crd-c:var(--green);">
+        <span class="crd-icon">📈</span>
+        <h4 class="crd-title" style="color:var(--green);">Mois 3+</h4>
+        <p class="crd-text"><strong>Scaling</strong><br>Augmentation progressive du budget. Extension géographique. Le coût par lead baisse, la qualité augmente.</p>
+      </div>
+    </div>
+    <p style="margin-top:16px;font-size:13px;color:var(--text2);text-align:center;max-width:640px;line-height:1.7;">
+      Tout le trafic qualifié est dirigé vers votre page existante <strong style="color:var(--ego);">ego-glacier.com/devenez-franchise</strong>
+    </p>
+  </div>
+
+  <!-- ===== SLIDE 11 : CTA ===== -->
+  <div class="slide" data-slide="11">
+    <div class="bg-band"></div>
+    <img src="https://ego-glacier.com/app/uploads/2024/10/ice-cream-01.webp" class="deco deco-cone" alt="" style="opacity:0.04;">
+    <img src="https://ego-glacier.com/app/uploads/2024/10/muffin-01.webp" class="deco deco-muffin-sm" alt="" style="opacity:0.04;">
+    <div class="cover-logos" style="margin-bottom:20px;">
+      <div class="ma-logo ma-sm">
+        <span class="inf">∞</span>
+        <span class="nm">Meta Advertising</span>
+      </div>
+      <span class="cover-x">×</span>
+      <div class="ego-logo-sm">
+        <img src="https://ego-glacier.com/app/uploads/2024/10/logo.svg" alt="Ego Glacier">
+      </div>
+    </div>
+    <div class="cta">
+      <h2 class="title" style="font-size:40px;">Avez-vous des<br><span class="hl">questions</span> ?</h2>
+      <p class="subtitle">Votre concept est solide, votre marque est différenciante. Il ne manque plus qu'une stratégie digitale pour accélérer votre développement en franchise.</p>
+      <div class="pills" style="margin-top:18px;">
+        <span class="pill pill-p">Meta Ads</span>
+        <span class="pill pill-g">Google Ads</span>
+        <span class="pill pill-green">Leads Qualifiés</span>
+        <span class="pill pill-ego">ROI Mesurable</span>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--text3);letter-spacing:4px;text-transform:uppercase;font-weight:500;margin-top:22px;">meta-advertising.io</p>
+  </div>
+
+</div>
+
+<!-- NAV -->
+<div class="nav-bar">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <div class="ma-logo ma-nav">
+      <span class="inf">∞</span>
+      <span class="nm">Meta Advertising</span>
+    </div>
+    <span style="color:var(--text3);font-size:10px;opacity:0.3;">×</span>
+    <div class="ego-logo-sm"><img src="https://ego-glacier.com/app/uploads/2024/10/logo.svg" alt="Ego" style="height:18px;"></div>
+    <span class="slide-counter" id="slideCounter">01 / 11</span>
+  </div>
+  <div style="display:flex;gap:8px;">
+    <button class="nav-btn" onclick="changeSlide(-1)">&#8592;</button>
+    <button class="nav-btn" onclick="changeSlide(1)">&#8594;</button>
+  </div>
+</div>
+
+<script>
+let currentSlide = 1;
+const totalSlides = 11;
+let isAnimating = false;
+
+function changeSlide(direction) {
+  if (isAnimating) return;
+  const next = currentSlide + direction;
+  if (next < 1 || next > totalSlides) return;
+  isAnimating = true;
+
+  const currentEl = document.querySelector('.slide[data-slide="' + currentSlide + '"]');
+  const nextEl = document.querySelector('.slide[data-slide="' + next + '"]');
+
+  nextEl.style.transition = 'none';
+  nextEl.style.transform = direction > 0 ? 'translateX(50px)' : 'translateX(-50px)';
+  nextEl.style.opacity = '0';
+  nextEl.style.visibility = 'visible';
+  nextEl.offsetHeight;
+
+  nextEl.style.transition = '';
+  currentEl.style.transition = '';
+
+  currentEl.classList.remove('active');
+  currentEl.style.transform = direction > 0 ? 'translateX(-50px)' : 'translateX(50px)';
+  currentEl.style.opacity = '0';
+
+  nextEl.classList.add('active');
+  nextEl.style.transform = 'translateX(0)';
+  nextEl.style.opacity = '1';
+
+  currentSlide = next;
+  updateUI();
+
+  setTimeout(function() {
+    currentEl.style.visibility = 'hidden';
+    currentEl.style.transform = '';
+    currentEl.style.opacity = '';
+    isAnimating = false;
+  }, 550);
+}
+
+function updateUI() {
+  document.getElementById('slideCounter').textContent =
+    String(currentSlide).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+  document.getElementById('progress').style.width =
+    ((currentSlide / totalSlides) * 100) + '%';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+});
+
+var touchStartX = 0;
+document.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', function(e) {
+  var diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+});
+
+updateUI();
+</script>
+
+</body>
+</html>
