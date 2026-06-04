@@ -585,8 +585,6 @@ function enterPortal(){
   p.classList.add('hidden');
   setTimeout(function(){
     p.style.display='none';
-    p.style.animationPlayState='paused';
-    p.querySelectorAll('*').forEach(function(el){el.style.animationPlayState='paused'});
     document.getElementById('app').classList.add('show');
   },600);
 }
@@ -596,8 +594,6 @@ function backToPortal(){
   var p=document.getElementById('portal');
   p.style.display='';
   p.classList.remove('hidden');
-  p.style.animationPlayState='';
-  p.querySelectorAll('*').forEach(function(el){el.style.animationPlayState=''});
   setTimeout(function(){document.getElementById('app').style.display=''},100);
 }
 
