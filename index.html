@@ -34,6 +34,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.energy-orb,.speed-line,.db-star,.sharingan-tomoe,.mangekyo,.sharingan-ring,.sharingan-ring-2,.sharingan-outer,.sharingan-core,.susanoo-aura,.susanoo-aura-2,.jutsu-seal,.jutsu-seal-2,.chakra-p,.app-kunai{transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
 
 /* ═══ PORTAL ═══ */
 .portal{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity .7s,transform .7s}
@@ -561,9 +562,12 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 
 /* ═══ Portal ═══ */
 function enterPortal(){
-  document.getElementById('portal').classList.add('hidden');
+  var p=document.getElementById('portal');
+  p.classList.add('hidden');
   setTimeout(function(){
-    document.getElementById('portal').style.display='none';
+    p.style.display='none';
+    p.style.animationPlayState='paused';
+    p.querySelectorAll('*').forEach(function(el){el.style.animationPlayState='paused'});
     document.getElementById('app').classList.add('show');
   },600);
 }
@@ -573,6 +577,8 @@ function backToPortal(){
   var p=document.getElementById('portal');
   p.style.display='';
   p.classList.remove('hidden');
+  p.style.animationPlayState='';
+  p.querySelectorAll('*').forEach(function(el){el.style.animationPlayState=''});
   setTimeout(function(){document.getElementById('app').style.display=''},100);
 }
 
@@ -650,7 +656,8 @@ const CLIENTS = [
     { id: 'ocargo', name: 'ÔCargo', sector: 'Food Court · Multi-villes', status: 'active', logo: 'https://www.ocargofoodcourt.com/wp-content/uploads/2024/12/300-min.png', initials: null, color: '#e67e22', links: [{ label: 'Dashboard Campagnes', type: 'dashboard', url: 'https://ocargo-dashboard.vercel.app/' }] },
     { id: 'sooner', name: 'Sooner', sector: 'Streaming VOD · SVOD/TVOD', status: 'active', logo: 'https://sooner-france.github.io/dashboard/sooner-logo-white.png', logoBg: 'dark', initials: null, color: '#6366f1', links: [{ label: 'Portail Sooner', type: 'dashboard', url: 'https://sooner-france.github.io/dashboard/' }] },
     { id: 'franchise-board', name: 'Franchise Board', sector: 'Cabinet Conseil · Franchise', status: 'active', logo: 'https://www.franchise-board.fr/wp-content/uploads/2024/06/franchise-board-logo.svg', logoBg: 'light', initials: null, color: '#0ea5e9', links: [{ label: 'Dashboard Campagnes', type: 'dashboard', url: 'https://franchise-board.github.io/dashboard/' }] },
-    { id: 'forum-des-images', name: 'Forum des Images', sector: 'Culture · Cinéma · Paris', status: 'active', logo: 'https://www.forumdesimages.fr/themes/custom/parasite/logo.svg', logoBg: 'light', initials: null, color: '#ec4899', links: [{ label: 'Dashboard Marketing', type: 'dashboard', url: 'https://forum-des-images-dashboard.vercel.app/' }] }
+    { id: 'forum-des-images', name: 'Forum des Images', sector: 'Culture · Cinéma · Paris', status: 'active', logo: 'https://www.forumdesimages.fr/themes/custom/parasite/logo.svg', logoBg: 'light', initials: null, color: '#ec4899', links: [{ label: 'Dashboard Marketing', type: 'dashboard', url: 'https://forum-des-images-dashboard.vercel.app/' }] },
+    { id: 'mother-daughter', name: 'Mother & Daughter', sector: 'Bijoux de Créateurs · Franchise', status: 'active', logo: 'https://mother-daughter.fr/cdn/shop/files/LOGO-MD-Icone-Rose-Bleu.png?v=1688027307', initials: null, color: '#d66895', links: [{ label: 'Dashboard Marketing', type: 'dashboard', url: 'https://mother-daughter-dashboard.vercel.app/' }] }
 ];
 
 /* Floating kunai in dashboard */
