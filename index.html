@@ -34,7 +34,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-.energy-orb,.speed-line,.db-star,.sharingan-tomoe,.mangekyo,.sharingan-ring,.sharingan-ring-2,.sharingan-outer,.sharingan-core,.susanoo-aura,.susanoo-aura-2,.jutsu-seal,.jutsu-seal-2,.chakra-p,.app-kunai{transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.energy-orb,.speed-line,.db-star,.chakra-p,.app-kunai{will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 
 /* ═══ PORTAL ═══ */
 .portal{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity .7s,transform .7s}
@@ -676,7 +676,7 @@ const CLIENTS = [
     { id: 'sooner', name: 'Sooner', sector: 'Streaming VOD · SVOD/TVOD', status: 'active', logo: 'https://sooner-france.github.io/dashboard/sooner-logo-white.png', logoBg: 'dark', initials: null, color: '#6366f1', links: [{ label: 'Portail Sooner', type: 'dashboard', url: 'https://sooner-france.github.io/dashboard/' }] },
     { id: 'franchise-board', name: 'Franchise Board', sector: 'Cabinet Conseil · Franchise', status: 'active', logo: 'https://www.franchise-board.fr/wp-content/uploads/2024/06/franchise-board-logo.svg', logoBg: 'light', initials: null, color: '#0ea5e9', links: [{ label: 'Dashboard Campagnes', type: 'dashboard', url: 'https://franchise-board.github.io/dashboard/' }] },
     { id: 'forum-des-images', name: 'Forum des Images', sector: 'Culture · Cinéma · Paris', status: 'active', logo: 'https://www.forumdesimages.fr/themes/custom/parasite/logo.svg', logoBg: 'light', initials: null, color: '#ec4899', links: [{ label: 'Dashboard Marketing', type: 'dashboard', url: 'https://forum-des-images-dashboard.vercel.app/' }] },
-    { id: 'mother-daughter', name: 'Mother & Daughter', sector: 'Bijoux de Créateurs · Franchise', status: 'active', logo: 'https://mother-daughter.fr/cdn/shop/files/LOGO-MD-Nom-Baseline-Bleu-rose_c2b8ddf7-f88e-441f-9d36-b5bcccaa9f73.png?v=1688025581', logoBg: 'light', initials: null, color: '#d66895', links: [{ label: 'Dashboard Marketing', type: 'dashboard', url: 'https://mother-daughter-dashboard.vercel.app/' }] }
+    { id: 'mother-daughter', name: 'Mother & Daughter', sector: 'Bijoux de Créateurs · Franchise', status: 'active', logo: 'https://mother-daughter.fr/cdn/shop/files/LOGO-MD-Icone-Blanc.png?v=1688025827', logoBg: 'dark', initials: null, color: '#d66895', links: [{ label: 'Dashboard Marketing', type: 'dashboard', url: 'https://mother-daughter-dashboard.vercel.app/' }] }
 ];
 
 /* Floating kunai in dashboard */
