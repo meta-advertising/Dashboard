@@ -47,11 +47,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 
 /* Energy field */
 .energy-field{position:absolute;inset:0;pointer-events:none}
-.energy-orb{position:absolute;border-radius:50%;filter:blur(100px)}
-.orb-kamehameha{width:500px;height:500px;top:-150px;right:-100px;background:rgba(79,195,247,.08);animation:orbFloat 15s ease-in-out infinite}
-.orb-rasengan{width:400px;height:400px;bottom:-100px;left:-50px;background:rgba(79,195,247,.06);animation:orbFloat 18s ease-in-out infinite reverse}
-.orb-ki{width:450px;height:450px;top:40%;left:45%;background:rgba(255,107,0,.06);animation:orbFloat 20s ease-in-out infinite}
-@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-40px) scale(1.1)}66%{transform:translate(-20px,25px) scale(.93)}}
+.energy-field{display:none}
 
 /* Dragon ball stars */
 .db-stars{position:absolute;inset:0;pointer-events:none}
@@ -372,6 +368,24 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 /* Grid entrance — stagger with bounce */
 .clients-grid .client-card{animation:cardEntrance .6s cubic-bezier(.34,1.56,.64,1) both}
 @keyframes cardEntrance{0%{opacity:0;transform:translateY(40px) scale(.9)}100%{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Counter animation on stat values */
+.stat-val{transition:all .3s}
+
+/* Card entrance stagger */
+.client-card{opacity:0;transform:translateY(20px)}
+.client-card.visible{opacity:1;transform:translateY(0);transition:opacity .5s ease,transform .5s ease}
+
+/* Active dot pulse on sidebar */
+.sb-nav a.active .dot{animation:dotPulse 2s ease-in-out infinite}
+@keyframes dotPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,0,.3)}50%{box-shadow:0 0 0 4px rgba(255,107,0,.08)}}
+
+/* Search results highlight */
+.client-name mark{background:rgba(255,107,0,.15);color:var(--orange);padding:0 2px;border-radius:2px}
+
+/* Smooth page transitions */
+.app-wrapper.show .main{animation:mainIn .6s cubic-bezier(.22,1,.36,1)}
+@keyframes mainIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
 /* Animations */
 .animate-in{animation:fadeInUp .5s cubic-bezier(.25,.46,.45,.94) both}
@@ -743,6 +757,36 @@ document.getElementById('searchInput').addEventListener('input',function(){rende
 document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();document.getElementById('searchInput').focus()}if(e.key==='Escape'){document.getElementById('searchInput').value='';document.getElementById('searchInput').blur();renderClients()}});
 
 renderClients();
+
+/* Intersection Observer — cards appear on scroll */
+function observeCards(){
+  var cards=document.querySelectorAll('.client-card');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e,i){
+      if(e.isIntersecting){
+        setTimeout(function(){e.target.classList.add('visible')},i*60);
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:.1});
+  cards.forEach(function(c){obs.observe(c)});
+}
+observeCards();
+
+/* Animated counter for stat values */
+function animateCounters(){
+  document.querySelectorAll('.stat-val').forEach(function(el){
+    var target=parseInt(el.textContent);
+    if(isNaN(target)||target===0)return;
+    var current=0;var step=Math.max(1,Math.ceil(target/30));
+    var interval=setInterval(function(){
+      current+=step;
+      if(current>=target){current=target;clearInterval(interval)}
+      el.textContent=current;
+    },30);
+  });
+}
+setTimeout(animateCounters,300);
 </script>
 </body>
 </html>
