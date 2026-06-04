@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koven Agency — Espace Client</title>
+<link rel="icon" href="https://koven.agency/wp-content/uploads/2025/12/koven-v.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;background:#050208;color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden}
+
+/* ═══ IMMERSIVE SCENE ═══ */
+.scene{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* Deep violet atmosphere */
+.atmo{position:absolute;inset:0;background:
+  radial-gradient(ellipse 120% 80% at 50% 100%,rgba(60,20,120,0.12) 0%,transparent 60%),
+  radial-gradient(ellipse 80% 60% at 20% 20%,rgba(80,30,160,0.08) 0%,transparent 50%),
+  radial-gradient(ellipse 60% 50% at 80% 30%,rgba(120,60,200,0.05) 0%,transparent 50%)}
+
+/* Rotating conic nebula */
+.neb{position:absolute;width:1200px;height:1200px;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:conic-gradient(from 0deg,
+    rgba(80,30,160,0.08),rgba(247,147,59,0.03),
+    rgba(120,60,200,0.06),rgba(203,181,255,0.02),
+    rgba(60,20,120,0.08),rgba(247,147,59,0.02),
+    rgba(80,30,160,0.08));
+  border-radius:50%;filter:blur(120px);
+  animation:nebRot 45s linear infinite}
+@keyframes nebRot{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+/* Soft violet pulses */
+.pulse-1{position:absolute;width:600px;height:600px;top:15%;left:10%;
+  background:radial-gradient(circle,rgba(100,50,180,0.10) 0%,transparent 65%);
+  border-radius:50%;filter:blur(80px);animation:p1 12s ease-in-out infinite alternate}
+.pulse-2{position:absolute;width:500px;height:500px;bottom:10%;right:10%;
+  background:radial-gradient(circle,rgba(140,80,220,0.07) 0%,transparent 65%);
+  border-radius:50%;filter:blur(90px);animation:p2 15s ease-in-out infinite alternate}
+@keyframes p1{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.3);opacity:1}}
+@keyframes p2{0%{transform:scale(1.1);opacity:1}100%{transform:scale(.9);opacity:.6}}
+
+/* Micro particles */
+.pts{position:absolute;inset:0;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%,rgba(203,181,255,0.30) 50%,transparent 50%),
+    radial-gradient(1.5px 1.5px at 28% 72%,rgba(140,80,220,0.20) 50%,transparent 50%),
+    radial-gradient(1px 1px at 45% 10%,rgba(203,181,255,0.15) 50%,transparent 50%),
+    radial-gradient(1px 1px at 58% 85%,rgba(120,60,200,0.25) 50%,transparent 50%),
+    radial-gradient(1.5px 1.5px at 72% 28%,rgba(203,181,255,0.18) 50%,transparent 50%),
+    radial-gradient(1px 1px at 85% 60%,rgba(140,80,220,0.15) 50%,transparent 50%),
+    radial-gradient(1px 1px at 38% 45%,rgba(247,147,59,0.10) 50%,transparent 50%),
+    radial-gradient(1px 1px at 65% 52%,rgba(247,147,59,0.08) 50%,transparent 50%),
+    radial-gradient(1px 1px at 92% 15%,rgba(203,181,255,0.22) 50%,transparent 50%),
+    radial-gradient(1px 1px at 18% 88%,rgba(140,80,220,0.18) 50%,transparent 50%);
+  animation:ptsDrift 30s ease-in-out infinite alternate}
+@keyframes ptsDrift{0%{transform:translate(0,0)}100%{transform:translate(-10px,14px)}}
+
+/* Subtle streaks */
+.sk{position:absolute;width:1px;transform:rotate(-25deg)}
+.sk-1{height:900px;top:-20%;left:30%;background:linear-gradient(180deg,transparent,rgba(140,80,220,0.06),transparent);animation:skF 12s ease-in-out infinite}
+.sk-2{height:700px;top:0%;left:65%;background:linear-gradient(180deg,transparent,rgba(203,181,255,0.04),transparent);animation:skF 12s ease-in-out 4s infinite}
+.sk-3{height:600px;top:-10%;left:88%;background:linear-gradient(180deg,transparent,rgba(140,80,220,0.05),transparent);animation:skF 12s ease-in-out 8s infinite}
+@keyframes skF{0%,100%{opacity:0}35%,65%{opacity:1}}
+
+/* Vignette */
+.vig{position:absolute;inset:0;background:radial-gradient(ellipse 60% 55% at 50% 45%,transparent 10%,#050208 100%)}
+
+/* ═══ LANDING (login) ═══ */
+.landing{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;transition:opacity .7s ease,transform .7s ease}
+.landing.out{opacity:0;transform:scale(.97);pointer-events:none}
+
+.land-inner{display:flex;flex-direction:column;align-items:center;opacity:0;transform:translateY(28px);animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .15s forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+/* Logo container with violet halo */
+.logo-box{position:relative;display:flex;flex-direction:column;align-items:center;padding:48px;margin-bottom:8px}
+
+/* Halo behind logo */
+.logo-halo{position:absolute;width:320px;height:320px;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(100,50,180,0.12) 0%,rgba(80,30,160,0.06) 40%,transparent 70%);
+  border-radius:50%;animation:haloBreath 6s ease-in-out infinite}
+@keyframes haloBreath{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.8}50%{transform:translate(-50%,-50%) scale(1.15);opacity:1}}
+
+/* Ring accent */
+.logo-ring{position:absolute;width:260px;height:260px;top:50%;left:50%;transform:translate(-50%,-50%);
+  border:1px solid rgba(140,80,220,0.08);border-radius:50%;
+  animation:ringPulse 8s ease-in-out infinite}
+.logo-ring-2{position:absolute;width:310px;height:310px;top:50%;left:50%;transform:translate(-50%,-50%);
+  border:1px solid rgba(140,80,220,0.04);border-radius:50%;
+  animation:ringPulse 8s ease-in-out 2s infinite}
+@keyframes ringPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1}50%{transform:translate(-50%,-50%) scale(1.06);opacity:.5}}
+
+/* Logo */
+.logo-main{width:clamp(200px,32vw,340px);height:auto;position:relative;z-index:1;
+  filter:drop-shadow(0 0 40px rgba(140,80,220,0.18)) drop-shadow(0 0 80px rgba(100,50,180,0.10)) drop-shadow(0 4px 20px rgba(0,0,0,0.5));
+  animation:logoGlow 7s ease-in-out infinite}
+@keyframes logoGlow{
+  0%,100%{filter:drop-shadow(0 0 40px rgba(140,80,220,0.18)) drop-shadow(0 0 80px rgba(100,50,180,0.10)) drop-shadow(0 4px 20px rgba(0,0,0,0.5))}
+  50%{filter:drop-shadow(0 0 55px rgba(140,80,220,0.28)) drop-shadow(0 0 100px rgba(100,50,180,0.16)) drop-shadow(0 4px 24px rgba(0,0,0,0.6))}
+}
+
+/* Separator */
+.land-sep{width:60px;height:1px;margin-top:4px;position:relative;overflow:hidden}
+.land-sep::before{content:'';position:absolute;width:200%;height:100%;left:-50%;
+  background:linear-gradient(90deg,transparent 20%,rgba(140,80,220,0.25) 40%,rgba(203,181,255,0.4) 50%,rgba(140,80,220,0.25) 60%,transparent 80%);
+  animation:sepGlide 3.5s ease-in-out infinite}
+@keyframes sepGlide{0%{transform:translateX(-30%)}100%{transform:translateX(30%)}}
+
+/* Tagline */
+.land-tag{margin-top:20px;font-weight:300;font-size:11px;letter-spacing:7px;text-transform:uppercase;
+  color:rgba(203,181,255,0.40)}
+
+/* Entry button */
+.land-enter{margin-top:48px;opacity:0;animation:fadeUp .8s ease .6s forwards}
+.enter-btn{padding:14px 48px;border-radius:12px;border:1px solid rgba(140,80,220,0.20);
+  background:linear-gradient(135deg,rgba(80,30,160,0.10) 0%,rgba(140,80,220,0.05) 100%);
+  backdrop-filter:blur(12px);
+  color:rgba(203,181,255,0.7);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;letter-spacing:3px;text-transform:uppercase;
+  cursor:pointer;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden}
+.enter-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(140,80,220,0.15),rgba(247,147,59,0.08));opacity:0;transition:opacity .4s;border-radius:12px}
+.enter-btn:hover{border-color:rgba(140,80,220,0.40);transform:translateY(-3px);box-shadow:0 8px 32px rgba(100,50,180,0.12);color:rgba(203,181,255,0.9)}
+.enter-btn:hover::before{opacity:1}
+
+/* ═══ PORTAL ═══ */
+.portal{position:relative;z-index:2;min-height:100vh;display:none;flex-direction:column;align-items:center;padding:36px 32px 40px;opacity:0}
+.portal.show{display:flex;animation:portalIn .9s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes portalIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* Portal topbar */
+.topbar{display:flex;align-items:center;gap:14px;margin-bottom:56px;padding-bottom:28px;border-bottom:1px solid rgba(140,80,220,0.06);width:100%;max-width:1200px}
+.topbar-logo{height:28px;width:auto;opacity:.6;filter:drop-shadow(0 0 12px rgba(140,80,220,0.10));transition:opacity .3s}
+.topbar-logo:hover{opacity:.9}
+.topbar-div{width:1px;height:22px;background:linear-gradient(180deg,transparent,rgba(140,80,220,0.12),transparent)}
+.topbar-label{font-size:11px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:rgba(203,181,255,0.25)}
+.topbar-spacer{flex:1}
+.topbar-logout{padding:6px 14px;border-radius:8px;border:1px solid rgba(140,80,220,0.08);background:none;color:rgba(255,255,255,0.20);font-family:'Inter',sans-serif;font-size:10px;font-weight:400;letter-spacing:1px;cursor:pointer;transition:all .3s;text-transform:uppercase}
+.topbar-logout:hover{border-color:rgba(247,147,59,0.2);color:rgba(247,147,59,0.5)}
+
+/* Section */
+.sec{text-align:center;margin-bottom:48px}
+.sec h2{font-size:clamp(22px,3.5vw,32px);font-weight:800;letter-spacing:-0.5px}
+.sec h2 .hl{background:linear-gradient(135deg,#f7933b,#CBB5FF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sec p{margin-top:8px;font-size:13px;font-weight:300;color:rgba(255,255,255,0.20);letter-spacing:.5px}
+
+/* ═══ CARDS ═══ */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;width:100%;max-width:1200px}
+
+.card{position:relative;background:linear-gradient(165deg,rgba(100,50,180,0.03) 0%,rgba(5,2,8,0.6) 100%);border:1px solid rgba(140,80,220,0.05);border-radius:20px;padding:0;text-decoration:none;color:#fff;display:flex;flex-direction:column;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:all .5s cubic-bezier(.16,1,.3,1);cursor:pointer;overflow:hidden;min-height:280px}
+.card::before{content:'';position:absolute;top:-1px;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,rgba(140,80,220,0.20),rgba(203,181,255,0.12),rgba(140,80,220,0.20),transparent);transition:all .5s;opacity:0}
+.card:hover::before{opacity:1;left:5%;right:5%}
+.card:hover{transform:translateY(-10px);border-color:rgba(140,80,220,0.12);box-shadow:0 20px 64px rgba(100,50,180,0.08),0 40px 120px rgba(0,0,0,0.35),inset 0 1px 0 rgba(140,80,220,0.06)}
+
+.card-banner{padding:28px 32px;display:flex;align-items:center;height:100px;border-bottom:1px solid rgba(140,80,220,0.04)}
+.card-banner img{max-height:40px;max-width:180px;width:auto;transition:all .4s}
+.card:hover .card-banner img{transform:scale(1.03);filter:drop-shadow(0 0 12px rgba(140,80,220,0.15))}
+
+.card-body{padding:24px 32px 20px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.card-sector{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(203,181,255,0.45);margin-bottom:12px}
+.card-desc{font-weight:300;font-size:13px;line-height:1.9;color:rgba(255,255,255,0.25);flex-grow:1}
+.card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:16px}
+.card-tag{padding:3px 9px;border-radius:20px;font-size:8.5px;font-weight:500;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(140,80,220,0.08);color:rgba(203,181,255,0.30);transition:all .3s}
+.card:hover .card-tag{border-color:rgba(140,80,220,0.18);color:rgba(203,181,255,0.5)}
+
+.card-foot{padding:16px 32px 24px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(140,80,220,0.03)}
+.card-foot-text{font-size:11px;font-weight:400;color:rgba(255,255,255,0.15);transition:color .4s}
+.card:hover .card-foot-text{color:rgba(247,147,59,0.6)}
+.card-arrow{width:32px;height:32px;border-radius:50%;border:1px solid rgba(140,80,220,0.06);display:flex;align-items:center;justify-content:center;transition:all .4s}
+.card:hover .card-arrow{border-color:rgba(247,147,59,0.20);background:rgba(247,147,59,0.04);transform:translateX(4px)}
+.card-arrow svg{width:13px;height:13px;stroke:rgba(255,255,255,0.15);transition:stroke .4s}
+.card:hover .card-arrow svg{stroke:rgba(247,147,59,0.6)}
+
+/* Portal hero */
+.p-hero{text-align:center;margin-bottom:40px}
+.p-logo-wrap{position:relative;display:inline-flex;flex-direction:column;align-items:center;padding:32px}
+.p-logo-halo{position:absolute;width:200px;height:200px;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(100,50,180,0.10) 0%,rgba(80,30,160,0.04) 40%,transparent 70%);
+  border-radius:50%;animation:haloBreath 6s ease-in-out infinite}
+.p-logo{width:clamp(160px,22vw,240px);height:auto;position:relative;z-index:1;
+  filter:drop-shadow(0 0 30px rgba(140,80,220,0.15)) drop-shadow(0 0 60px rgba(100,50,180,0.08)) drop-shadow(0 4px 16px rgba(0,0,0,0.4));
+  animation:logoGlow 7s ease-in-out infinite}
+.p-sep{width:50px;height:1px;margin:12px auto 0;position:relative;overflow:hidden}
+.p-sep::before{content:'';position:absolute;width:200%;height:100%;left:-50%;background:linear-gradient(90deg,transparent 20%,rgba(140,80,220,0.25) 40%,rgba(203,181,255,0.35) 50%,rgba(140,80,220,0.25) 60%,transparent 80%);animation:sepGlide 3.5s ease-in-out infinite}
+.p-tag{margin-top:14px;font-weight:300;font-size:10px;letter-spacing:6px;text-transform:uppercase;color:rgba(203,181,255,0.30)}
+
+/* Stats band */
+.stats-band{display:flex;align-items:center;justify-content:center;gap:28px;margin-bottom:48px;padding:20px 32px;border-radius:16px;
+  background:linear-gradient(135deg,rgba(100,50,180,0.04) 0%,rgba(5,2,8,0.4) 100%);
+  border:1px solid rgba(140,80,220,0.06);backdrop-filter:blur(16px);max-width:700px;width:100%}
+.stat-item{display:flex;flex-direction:column;align-items:center;gap:4px}
+.stat-icon{color:rgba(203,181,255,0.35)}
+.stat-val{font-size:16px;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:-.3px}
+.stat-label{font-size:8.5px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.15)}
+.stat-div{width:1px;height:36px;background:linear-gradient(180deg,transparent,rgba(140,80,220,0.10),transparent)}
+.pulse-dot{width:8px;height:8px;border-radius:50%;background:rgba(120,220,120,0.5);box-shadow:0 0 8px rgba(120,220,120,0.3);animation:pulseDot 2s ease-in-out infinite}
+@keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 8px rgba(120,220,120,0.3)}50%{opacity:.5;box-shadow:0 0 16px rgba(120,220,120,0.5)}}
+
+/* Card status badge */
+.card-status{margin-left:auto;padding:4px 12px;border-radius:20px;font-size:8.5px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;display:flex;align-items:center;gap:5px;flex-shrink:0}
+.card-status.active{background:rgba(120,220,120,0.06);color:rgba(120,220,120,0.55);border:1px solid rgba(120,220,120,0.08)}
+.status-dot{width:5px;height:5px;border-radius:50%;background:rgba(120,220,120,0.6);box-shadow:0 0 6px rgba(120,220,120,0.3);animation:pulseDot 2s ease-in-out infinite}
+
+/* Mini KPIs */
+.card-minis{display:flex;gap:8px;margin-top:16px}
+.mini{flex:1;padding:10px 8px;border-radius:10px;background:rgba(140,80,220,0.04);border:1px solid rgba(140,80,220,0.06);text-align:center;transition:all .3s}
+.card:hover .mini{border-color:rgba(140,80,220,0.12);background:rgba(140,80,220,0.06)}
+.mini-val{font-size:16px;font-weight:800;color:rgba(203,181,255,0.6);letter-spacing:-.3px;transition:color .3s}
+.card:hover .mini-val{color:rgba(203,181,255,0.8)}
+.mini-label{font-size:8px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.15);margin-top:2px}
+
+/* Campaigns */
+.card-campaigns{margin-top:auto;padding-top:16px}
+.camp-title{font-size:8.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.12);margin-bottom:8px}
+.camp-list{display:flex;flex-wrap:wrap;gap:5px}
+.camp-pill{padding:4px 10px;border-radius:20px;font-size:8.5px;font-weight:500;letter-spacing:.5px;border:1px solid;transition:all .3s}
+.camp-pill.notoriete{border-color:rgba(140,80,220,0.15);color:rgba(140,80,220,0.50);background:rgba(140,80,220,0.04)}
+.camp-pill.acquisition{border-color:rgba(247,147,59,0.15);color:rgba(247,147,59,0.50);background:rgba(247,147,59,0.04)}
+.camp-pill.engagement{border-color:rgba(203,181,255,0.12);color:rgba(203,181,255,0.40);background:rgba(203,181,255,0.03)}
+.camp-pill.leadgen{border-color:rgba(120,220,120,0.15);color:rgba(120,220,120,0.50);background:rgba(120,220,120,0.04)}
+.camp-pill.trafic{border-color:rgba(100,180,255,0.15);color:rgba(100,180,255,0.50);background:rgba(100,180,255,0.04)}
+.card:hover .camp-pill{opacity:.9}
+
+/* Channels */
+.card-channels{display:flex;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(140,80,220,0.04)}
+.chan{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:400;color:rgba(255,255,255,0.20);letter-spacing:.3px}
+.chan svg{opacity:.4}
+
+/* Footer */
+.foot{text-align:center;padding:56px 24px 28px;margin-top:auto}
+.foot-logo{height:16px;width:auto;opacity:.08;margin-bottom:8px}
+.foot-txt{font-size:8.5px;font-weight:300;color:rgba(255,255,255,0.05);letter-spacing:3px;text-transform:uppercase}
+
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:960px){.grid{grid-template-columns:1fr;max-width:480px}.stats-band{flex-wrap:wrap;gap:16px}.stat-div{display:none}.logo-main{width:220px}.logo-halo{width:240px;height:240px}.logo-ring{width:200px;height:200px}.logo-ring-2{width:240px;height:240px}}
+@media(max-width:480px){.logo-main{width:180px}.card-banner{padding:24px 20px 20px}.card-body{padding:16px 20px 14px}.card-foot{padding:12px 20px 18px}.enter-btn{padding:12px 36px;font-size:11px}}
+</style>
+</head>
+<body>
+
+<div class="scene">
+  <div class="atmo"></div>
+  <div class="neb"></div>
+  <div class="pulse-1"></div>
+  <div class="pulse-2"></div>
+  <div class="pts"></div>
+  <div class="sk sk-1"></div>
+  <div class="sk sk-2"></div>
+  <div class="sk sk-3"></div>
+  <div class="vig"></div>
+</div>
+
+<!-- ═══ LANDING ═══ -->
+<div class="landing" id="landing">
+  <div class="land-inner">
+    <div class="logo-box">
+      <div class="logo-halo"></div>
+      <div class="logo-ring"></div>
+      <div class="logo-ring-2"></div>
+      <img src="https://koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven Agency" class="logo-main">
+    </div>
+    <div class="land-sep"></div>
+    <p class="land-tag">Espace Client</p>
+    <div class="land-enter">
+      <button class="enter-btn" onclick="enterPortal()">Accéder</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PORTAL ═══ -->
+<div class="portal" id="portal">
+
+  <!-- Portal hero with medium logo + glow -->
+  <div class="p-hero">
+    <div class="p-logo-wrap">
+      <div class="p-logo-halo"></div>
+      <img src="https://koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven Agency" class="p-logo">
+    </div>
+    <div class="p-sep"></div>
+    <p class="p-tag">Espace Client</p>
+  </div>
+
+  <!-- Stats band -->
+  <div class="stats-band">
+    <div class="stat-item">
+      <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <div class="stat-val">4</div>
+      <div class="stat-label">Enseignes</div>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+      <div class="stat-val">3</div>
+      <div class="stat-label">Dashboards</div>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <div class="stat-icon pulse-dot"></div>
+      <div class="stat-val" style="color:rgba(120,220,120,0.7)">Live</div>
+      <div class="stat-label">Données temps réel</div>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <div class="stat-val" id="todayDate"></div>
+      <div class="stat-label">Dernière mise à jour</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>Vos <span class="hl">dashboards</span></h2>
+    <p>Sélectionnez une enseigne pour accéder à son tableau de bord</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- Comptoir Mamie Bigoude -->
+    <a href="https://mamiebigoude.github.io/dashboard/" class="card" target="_blank">
+      <div class="card-banner"><img src="https://mediab.izipass.cloud/ComptoirMB/Content/images/accueil-general/logo-header.png" alt="Comptoir Mamie Bigoude"><span class="card-status active"><span class="status-dot"></span>Actif</span></div>
+      <div class="card-body">
+        <div class="card-sector">Restauration · Franchise</div>
+        <div class="card-campaigns">
+          <div class="camp-title">Campagnes actives</div>
+          <div class="camp-list">
+            <span class="camp-pill notoriete">Notoriété</span>
+            <span class="camp-pill acquisition">Acquisition</span>
+            <span class="camp-pill engagement">Engagement</span>
+          </div>
+        </div>
+        <div class="card-channels">
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg>Meta Ads</div>
+          <div class="chan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Google Ads</div>
+        </div>
+      </div>
+      <div class="card-foot"><span class="card-foot-text">Accéder au dashboard</span><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></div></div>
+    </a>
+
+    <!-- TOA Sushi -->
+    <a href="https://toasushi-france.github.io/dashboard/" class="card" target="_blank">
+      <div class="card-banner"><img src="https://toasushi.fr/wp-content/uploads/2025/08/logo-toasushi.svg" alt="TOA Sushi" style="filter:none;opacity:1"><span class="card-status active"><span class="status-dot"></span>Actif</span></div>
+      <div class="card-body">
+        <div class="card-sector">Restauration japonaise · Franchise</div>
+        <div class="card-campaigns">
+          <div class="camp-title">Campagnes actives</div>
+          <div class="camp-list">
+            <span class="camp-pill leadgen">Lead Gen</span>
+            <span class="camp-pill notoriete">Notoriété</span>
+            <span class="camp-pill trafic">Trafic</span>
+            <span class="camp-pill engagement">Engagement</span>
+          </div>
+        </div>
+        <div class="card-channels">
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg>Meta Ads</div>
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z"/></svg>Google Ads</div>
+        </div>
+      </div>
+      <div class="card-foot"><span class="card-foot-text">Accéder au dashboard</span><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></div></div>
+    </a>
+
+    <!-- Histoire d'Ô -->
+    <a href="https://histoires-do-dashboard.vercel.app/" class="card" target="_blank">
+      <div class="card-banner"><img src="https://www.histoiresdo.fr/media/images/logo-h2o.png" alt="Histoire d'Ô"><span class="card-status active"><span class="status-dot"></span>Actif</span></div>
+      <div class="card-body">
+        <div class="card-sector">Bien-être · Franchise</div>
+        <div class="card-campaigns">
+          <div class="camp-title">Campagnes actives</div>
+          <div class="camp-list">
+            <span class="camp-pill notoriete">Notoriété</span>
+            <span class="camp-pill acquisition">Conversion</span>
+          </div>
+        </div>
+        <div class="card-channels">
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg>Meta Ads</div>
+          <div class="chan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Google Ads</div>
+        </div>
+      </div>
+      <div class="card-foot"><span class="card-foot-text">Accéder au dashboard</span><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></div></div>
+    </a>
+
+    <!-- Flash Repair -->
+    <a href="https://flash-repair-dashboard.vercel.app/" class="card" target="_blank">
+      <div class="card-banner"><img src="https://flash-repair-dashboard.vercel.app/flashrepair-logo.png" alt="Flash Repair" style="max-height:40px;filter:none;opacity:1"><span class="card-status active"><span class="status-dot"></span>Actif</span></div>
+      <div class="card-body">
+        <div class="card-sector">Automobile · Franchise</div>
+        <div class="card-campaigns">
+          <div class="camp-title">Campagnes actives</div>
+          <div class="camp-list">
+            <span class="camp-pill leadgen">Lead Gen</span>
+            <span class="camp-pill engagement">Engagement</span>
+            <span class="camp-pill trafic">Trafic</span>
+            <span class="camp-pill notoriete">Notoriété</span>
+            <span class="camp-pill acquisition">Conversion</span>
+          </div>
+        </div>
+        <div class="card-channels">
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg>Meta Ads</div>
+          <div class="chan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Google Ads</div>
+        </div>
+      </div>
+      <div class="card-foot"><span class="card-foot-text">Accéder au dashboard</span><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></div></div>
+    </a>
+
+    <!-- The Crying Tiger -->
+    <a href="https://crying-tiger-dashboard.vercel.app/" class="card" target="_blank">
+      <div class="card-banner"><img src="https://images.squarespace-cdn.com/content/v1/613c09cdfbd3b117e8d82a90/5498ba49-a998-4018-9159-af09f29539d0/CRYING-LOGO-CERCLE-BLANC.png" alt="The Crying Tiger" style="max-height:80px;border-radius:50%;filter:none;opacity:1"><span class="card-status active"><span class="status-dot"></span>Actif</span></div>
+      <div class="card-body">
+        <div class="card-sector">Restauration thaï · Paris</div>
+        <div class="card-campaigns">
+          <div class="camp-title">Campagnes actives</div>
+          <div class="camp-list">
+            <span class="camp-pill leadgen">Lead Gen</span>
+            <span class="camp-pill acquisition">Conversion</span>
+          </div>
+        </div>
+        <div class="card-channels">
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg>Meta Ads</div>
+        </div>
+      </div>
+      <div class="card-foot"><span class="card-foot-text">Accéder au dashboard</span><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></div></div>
+    </a>
+
+    <!-- Olla -->
+    <a href="https://olla-dashboard.vercel.app/" class="card" target="_blank">
+      <div class="card-banner"><img src="https://static.wixstatic.com/media/5c7300_f92d9af83db0442cac12e7d8a2cb036c~mv2.png" alt="Olla" style="max-height:80px;filter:brightness(0) invert(1);opacity:.95"><span class="card-status active"><span class="status-dot"></span>Actif</span></div>
+      <div class="card-body">
+        <div class="card-sector">Restauration healthy · Franchise</div>
+        <div class="card-campaigns">
+          <div class="camp-title">Campagnes actives</div>
+          <div class="camp-list">
+            <span class="camp-pill leadgen">Lead Gen</span>
+            <span class="camp-pill notoriete">Notoriété</span>
+            <span class="camp-pill acquisition">Conversion</span>
+          </div>
+        </div>
+        <div class="card-channels">
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg>Meta Ads</div>
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z"/></svg>Google Ads</div>
+        </div>
+      </div>
+      <div class="card-foot"><span class="card-foot-text">Accéder au dashboard</span><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></div></div>
+    </a>
+
+    <!-- ÔCargo -->
+    <a href="https://ocargo-dashboard.vercel.app/" class="card" target="_blank">
+      <div class="card-banner"><img src="https://www.ocargofoodcourt.com/wp-content/uploads/2024/12/300-min.png" alt="ÔCargo" style="max-height:60px;filter:none;opacity:1"><span class="card-status active"><span class="status-dot"></span>Actif</span></div>
+      <div class="card-body">
+        <div class="card-sector">Food Court · Multi-villes</div>
+        <div class="card-campaigns">
+          <div class="camp-title">Campagnes actives</div>
+          <div class="camp-list">
+            <span class="camp-pill leadgen">Lead Gen Franchise</span>
+            <span class="camp-pill engagement">Engagement</span>
+            <span class="camp-pill notoriete">Notoriété</span>
+          </div>
+        </div>
+        <div class="card-channels">
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg>Meta Ads</div>
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.24.19 2.24.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 008.44-9.9c0-5.53-4.5-10.02-10-10.02z"/></svg>FB Insights</div>
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153.509.5.902 1.105 1.153 1.772.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772c-.5.508-1.105.902-1.772 1.153-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2z"/></svg>Instagram</div>
+        </div>
+      </div>
+      <div class="card-foot"><span class="card-foot-text">Accéder au dashboard</span><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></div></div>
+    </a>
+
+    <!-- Moulin d'Elise -->
+    <a href="https://moulin-delise-france.github.io/dashboard/" class="card" target="_blank">
+      <div class="card-banner"><img src="moulin-logo-white.svg" alt="Le Moulin d'Elise" style="max-height:50px;width:auto"><span class="card-status active"><span class="status-dot"></span>Actif</span></div>
+      <div class="card-body">
+        <div class="card-sector">Boulangerie bio · Franchise</div>
+        <div class="card-campaigns">
+          <div class="camp-title">Campagnes actives</div>
+          <div class="camp-list">
+            <span class="camp-pill leadgen">Recrutement</span>
+            <span class="camp-pill engagement">Engagement</span>
+            <span class="camp-pill notoriete">Notoriété</span>
+          </div>
+        </div>
+        <div class="card-channels">
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg>Meta Ads</div>
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z"/></svg>Google Ads</div>
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153.509.5.902 1.105 1.153 1.772.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772c-.5.508-1.105.902-1.772 1.153-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2z"/></svg>FB & IG Insights</div>
+        </div>
+      </div>
+      <div class="card-foot"><span class="card-foot-text">Accéder au dashboard</span><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></div></div>
+    </a>
+
+    <!-- Escapad -->
+    <a href="https://escapad-dashboard.vercel.app/" class="card" target="_blank">
+      <div class="card-banner"><img src="https://comingsoon.escapad.fr/logo.png" alt="ESCAPAD" style="max-height:45px;width:auto;filter:brightness(0) invert(1)"><span class="card-status active"><span class="status-dot"></span>Actif</span></div>
+      <div class="card-body">
+        <div class="card-sector">Complexe sportif · Padel · Escalade · Hyrox</div>
+        <div class="card-campaigns">
+          <div class="camp-title">Campagnes actives</div>
+          <div class="camp-list">
+            <span class="camp-pill leadgen">LeadGen Waitlist</span>
+            <span class="camp-pill notoriete">Notoriété</span>
+          </div>
+        </div>
+        <div class="card-channels">
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg>Meta Ads</div>
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z"/></svg>Google Ads</div>
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12.53.02C13.84 0 15.14.01 16.44.06c1.33.06 2.5.26 3.52.95.86.58 1.5 1.34 1.96 2.26.44.88.61 1.86.68 2.83.08 1.12.1 2.24.1 3.36v5.1c0 1.12-.02 2.24-.1 3.36-.07.97-.24 1.95-.68 2.83-.46.92-1.1 1.68-1.96 2.26-1.02.69-2.19.89-3.52.95-1.3.05-2.6.06-3.91.04-1.31.02-2.61.01-3.91-.04-1.33-.06-2.5-.26-3.52-.95-.86-.58-1.5-1.34-1.96-2.26-.44-.88-.61-1.86-.68-2.83-.08-1.12-.1-2.24-.1-3.36v-5.1c0-1.12.02-2.24.1-3.36.07-.97.24-1.95.68-2.83.46-.92 1.1-1.68 1.96-2.26C5.03.32 6.2.12 7.53.06 8.83.01 10.13 0 11.44.02h1.09zM9.54 8.46v7.08L16.44 12 9.54 8.46z"/></svg>TikTok Ads</div>
+          <div class="chan"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>GA4</div>
+        </div>
+      </div>
+      <div class="card-foot"><span class="card-foot-text">Accéder au dashboard</span><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></div></div>
+    </a>
+
+    <!-- Placeholder pour prochain client -->
+    <div class="card" style="opacity:.15;pointer-events:none;border-style:dashed;display:flex;align-items:center;justify-content:center;min-height:200px">
+      <div style="text-align:center;padding:40px 20px">
+        <div style="font-size:32px;opacity:.3;margin-bottom:8px">+</div>
+        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.4">Prochain client</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="foot">
+    <img src="https://koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven" class="foot-logo">
+    <div class="foot-txt">Koven Agency &copy; 2026</div>
+  </footer>
+
+</div>
+
+<script>
+// Date
+var d=new Date();
+var el=document.getElementById('todayDate');
+if(el)el.textContent=d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});
+
+function enterPortal(){
+  document.getElementById('landing').classList.add('out');
+  setTimeout(function(){
+    document.getElementById('landing').style.display='none';
+    document.getElementById('portal').classList.add('show');
+  },700);
+}
+function backToLanding(){
+  document.getElementById('portal').classList.remove('show');
+  document.getElementById('portal').style.display='none';
+  var land=document.getElementById('landing');
+  land.style.display='';
+  land.classList.remove('out');
+}
+</script>
+
+</body>
+</html>
