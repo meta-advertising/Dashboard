@@ -1,0 +1,2158 @@
+[
+  {
+    "name": "Coastal Offroad US",
+    "url": "https://coastaloffroad.com",
+    "steps": [
+      {
+        "step": "Homepage",
+        "url": "https://coastaloffroad.com",
+        "dataLayerLength": 6,
+        "ecommerceEvents": [
+          {
+            "raw": {
+              "ecommerce": {
+                "currencyCode": "USD",
+                "impressions": [
+                  {
+                    "name": "Lexus GX470 High Clearance Front Bumper Kit",
+                    "id": "CO0418",
+                    "price": 822.96,
+                    "brand": "GX470",
+                    "category": "2003-2009",
+                    "list": "Search Results",
+                    "position": 1
+                  },
+                  {
+                    "name": "4th Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                    "id": "CO06939",
+                    "price": 822.96,
+                    "brand": "4Runner",
+                    "category": "2003-2009",
+                    "list": "Search Results",
+                    "position": 2
+                  },
+                  {
+                    "name": "3rd Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                    "id": "CO0721",
+                    "price": 747.31,
+                    "brand": "4Runner",
+                    "category": "1996-2002",
+                    "list": "Search Results",
+                    "position": 3
+                  },
+                  {
+                    "name": "1st Gen Tundra High Clearance Front Bumper Kit",
+                    "id": "CO65556",
+                    "price": 822.96,
+                    "brand": "Tundra",
+                    "category": "2000-2006",
+                    "list": "Search Results",
+                    "position": 4
+                  },
+                  {
+                    "name": "R51 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                    "id": "CO43920",
+                    "price": 846.3,
+                    "brand": "",
+                    "category": "Nissan",
+                    "list": "Search Results",
+                    "position": 5
+                  },
+                  {
+                    "name": "R50 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                    "id": "CO6758",
+                    "price": 808.06,
+                    "brand": "Pathfinder R50",
+                    "category": "1996-2004",
+                    "list": "Search Results",
+                    "position": 6
+                  },
+                  {
+                    "name": "R50 Nissan Pathfinder High Clearance Front Bumper Kit",
+                    "id": "CO0849",
+                    "price": 750.75,
+                    "brand": "Pathfinder R50",
+                    "category": "1996-2004",
+                    "list": "Search Results",
+                    "position": 7
+                  },
+                  {
+                    "name": "Mitsubishi L400 Series 2 Delica High Clearance Front Bumper Kit",
+                    "id": "CO0677",
+                    "price": 822.96,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 8
+                  },
+                  {
+                    "name": "Mitsubishi L400 Series 1 Delica High Clearance Front Bumper Kit",
+                    "id": "CO14993",
+                    "price": 859.64,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 9
+                  },
+                  {
+                    "name": "Mitsubishi L400 Delica Series 2 Low Profile Rear Bumper Kit",
+                    "id": "CO0665",
+                    "price": 928.41,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 10
+                  },
+                  {
+                    "name": "Mitsubishi L400 Delica Series 1 Low Profile Rear Bumper Kit",
+                    "id": "CO16274",
+                    "price": 928.41,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 11
+                  },
+                  {
+                    "name": "Lexus GX460 High Clearance Front Bumper Kit",
+                    "id": "CO8089",
+                    "price": 937.58,
+                    "brand": "GX460",
+                    "category": "2010-2013",
+                    "list": "Search Results",
+                    "position": 12
+                  },
+                  {
+                    "name": "Kickout Rock Slider Weld-Together Kit",
+                    "id": "CO0575",
+                    "price": 663.64,
+                    "brand": "Land Cruiser 100",
+                    "category": "1998-2007",
+                    "list": "Search Results",
+                    "position": 13
+                  },
+                  {
+                    "name": "GX470 / Land Cruiser Prado 120 Low Profile Rear Bumper Kit",
+                    "id": "CO0640",
+                    "price": 847.6,
+                    "brand": "GX470",
+                    "category": "2003-2009",
+                    "list": "Search Results",
+                    "position": 14
+                  },
+                  {
+                    "name": "GX460 / Land Cruiser Prado 150 Low Profile Rear Bumper Kit",
+                    "id": "CO8006",
+                    "price": 916.95,
+                    "brand": "Lexus",
+                    "category": "GX460",
+                    "list": "Search Results",
+                    "position": 15
+                  },
+                  {
+                    "name": "FJ Cruiser High Clearance Front Bumper Kit",
+                    "id": "CO4892",
+                    "price": 785.14,
+                    "brand": "FJ Cruiser",
+                    "category": "2007-2013",
+                    "list": "Search Results",
+                    "position": 16
+                  },
+                  {
+                    "name": "Die-Cut Decals",
+                    "id": "CO94451",
+                    "price": 15.21,
+                    "brand": "",
+                    "category": "Merchandise",
+                    "list": "Search Results",
+                    "position": 17
+                  },
+                  {
+                    "name": "Swing Out Carrier Systems",
+                    "id": "CO0417",
+                    "price": 645.3,
+                    "brand": "",
+                    "category": "Accessories",
+                    "list": "Search Results",
+                    "position": 18
+                  },
+                  {
+                    "name": "80 Series Land Cruiser High Clearance Rear Bumper Kit",
+                    "id": "CO5002",
+                    "price": 847.03,
+                    "brand": "Land Cruiser 80",
+                    "category": "1991-1997",
+                    "list": "Search Results",
+                    "position": 19
+                  },
+                  {
+                    "name": "80 Series Land Cruiser High Clearance Front Bumper Kit",
+                    "id": "CO13108",
+                    "price": 785.14,
+                    "brand": "Land Cruiser 80",
+                    "category": "1991-1997",
+                    "list": "Search Results",
+                    "position": 20
+                  }
+                ]
+              }
+            },
+            "hasEventKey": false,
+            "eventName": null,
+            "format": "UA (Enhanced Ecommerce)",
+            "isGA4": false,
+            "isUA": true,
+            "itemFields": {
+              "name": true,
+              "id": true,
+              "price": true,
+              "category": true
+            },
+            "issues": [
+              "Format UA obsolete - migration GA4 recommandee",
+              "Pas de cle 'event' - ne declenchera pas de tag GTM"
+            ]
+          }
+        ],
+        "allEntries": [
+          {
+            "gtm.start": 1771426558834,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 3
+          },
+          {
+            "ecommerce": null
+          },
+          {
+            "ecommerce": {
+              "currencyCode": "USD",
+              "impressions": [
+                {
+                  "name": "Lexus GX470 High Clearance Front Bumper Kit",
+                  "id": "CO0418",
+                  "price": 822.96,
+                  "brand": "GX470",
+                  "category": "2003-2009",
+                  "list": "Search Results",
+                  "position": 1
+                },
+                {
+                  "name": "4th Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                  "id": "CO06939",
+                  "price": 822.96,
+                  "brand": "4Runner",
+                  "category": "2003-2009",
+                  "list": "Search Results",
+                  "position": 2
+                },
+                {
+                  "name": "3rd Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                  "id": "CO0721",
+                  "price": 747.31,
+                  "brand": "4Runner",
+                  "category": "1996-2002",
+                  "list": "Search Results",
+                  "position": 3
+                },
+                {
+                  "name": "1st Gen Tundra High Clearance Front Bumper Kit",
+                  "id": "CO65556",
+                  "price": 822.96,
+                  "brand": "Tundra",
+                  "category": "2000-2006",
+                  "list": "Search Results",
+                  "position": 4
+                },
+                {
+                  "name": "R51 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                  "id": "CO43920",
+                  "price": 846.3,
+                  "brand": "",
+                  "category": "Nissan",
+                  "list": "Search Results",
+                  "position": 5
+                },
+                {
+                  "name": "R50 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                  "id": "CO6758",
+                  "price": 808.06,
+                  "brand": "Pathfinder R50",
+                  "category": "1996-2004",
+                  "list": "Search Results",
+                  "position": 6
+                },
+                {
+                  "name": "R50 Nissan Pathfinder High Clearance Front Bumper Kit",
+                  "id": "CO0849",
+                  "price": 750.75,
+                  "brand": "Pathfinder R50",
+                  "category": "1996-2004",
+                  "list": "Search Results",
+                  "position": 7
+                },
+                {
+                  "name": "Mitsubishi L400 Series 2 Delica High Clearance Front Bumper Kit",
+                  "id": "CO0677",
+                  "price": 822.96,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 8
+                },
+                {
+                  "name": "Mitsubishi L400 Series 1 Delica High Clearance Front Bumper Kit",
+                  "id": "CO14993",
+                  "price": 859.64,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 9
+                },
+                {
+                  "name": "Mitsubishi L400 Delica Series 2 Low Profile Rear Bumper Kit",
+                  "id": "CO0665",
+                  "price": 928.41,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 10
+                },
+                {
+                  "name": "Mitsubishi L400 Delica Series 1 Low Profile Rear Bumper Kit",
+                  "id": "CO16274",
+                  "price": 928.41,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 11
+                },
+                {
+                  "name": "Lexus GX460 High Clearance Front Bumper Kit",
+                  "id": "CO8089",
+                  "price": 937.58,
+                  "brand": "GX460",
+                  "category": "2010-2013",
+                  "list": "Search Results",
+                  "position": 12
+                },
+                {
+                  "name": "Kickout Rock Slider Weld-Together Kit",
+                  "id": "CO0575",
+                  "price": 663.64,
+                  "brand": "Land Cruiser 100",
+                  "category": "1998-2007",
+                  "list": "Search Results",
+                  "position": 13
+                },
+                {
+                  "name": "GX470 / Land Cruiser Prado 120 Low Profile Rear Bumper Kit",
+                  "id": "CO0640",
+                  "price": 847.6,
+                  "brand": "GX470",
+                  "category": "2003-2009",
+                  "list": "Search Results",
+                  "position": 14
+                },
+                {
+                  "name": "GX460 / Land Cruiser Prado 150 Low Profile Rear Bumper Kit",
+                  "id": "CO8006",
+                  "price": 916.95,
+                  "brand": "Lexus",
+                  "category": "GX460",
+                  "list": "Search Results",
+                  "position": 15
+                },
+                {
+                  "name": "FJ Cruiser High Clearance Front Bumper Kit",
+                  "id": "CO4892",
+                  "price": 785.14,
+                  "brand": "FJ Cruiser",
+                  "category": "2007-2013",
+                  "list": "Search Results",
+                  "position": 16
+                },
+                {
+                  "name": "Die-Cut Decals",
+                  "id": "CO94451",
+                  "price": 15.21,
+                  "brand": "",
+                  "category": "Merchandise",
+                  "list": "Search Results",
+                  "position": 17
+                },
+                {
+                  "name": "Swing Out Carrier Systems",
+                  "id": "CO0417",
+                  "price": 645.3,
+                  "brand": "",
+                  "category": "Accessories",
+                  "list": "Search Results",
+                  "position": 18
+                },
+                {
+                  "name": "80 Series Land Cruiser High Clearance Rear Bumper Kit",
+                  "id": "CO5002",
+                  "price": 847.03,
+                  "brand": "Land Cruiser 80",
+                  "category": "1991-1997",
+                  "list": "Search Results",
+                  "position": 19
+                },
+                {
+                  "name": "80 Series Land Cruiser High Clearance Front Bumper Kit",
+                  "id": "CO13108",
+                  "price": 785.14,
+                  "brand": "Land Cruiser 80",
+                  "category": "1991-1997",
+                  "list": "Search Results",
+                  "position": 20
+                }
+              ]
+            }
+          },
+          {
+            "gtm.start": 1771426559023,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 4
+          },
+          {
+            "event": "gtm.dom",
+            "gtm.uniqueEventId": 5
+          },
+          {
+            "event": "gtm.load",
+            "gtm.uniqueEventId": 11
+          }
+        ]
+      },
+      {
+        "step": "Product Page",
+        "url": "https://www.coastaloffroad.com/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+        "dataLayerLength": 8,
+        "ecommerceEvents": [],
+        "allEntries": [
+          {
+            "gtm.start": 1771426565421,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 3
+          },
+          {
+            "event": "gtm.scrollDepth",
+            "gtm.scrollThreshold": 90,
+            "gtm.scrollUnits": "percent",
+            "gtm.scrollDirection": "vertical",
+            "gtm.triggers": "7",
+            "gtm.uniqueEventId": 9
+          },
+          {
+            "jsonrpc": "2.0",
+            "id": null,
+            "result": "{\"ecommerce\": {\"detail\": {\"products\": [{\"name\": \"1st Gen Tundra High Clearance Front Bumper Kit\", \"id\": \"CO65556\", \"price\": 777.693, \"brand\": \"Tundra\", \"category\": \"2000-2006\", \"variant\": \"\"}]}}}"
+          },
+          {
+            "gtm.start": 1771426565588,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 10
+          },
+          {
+            "event": "gtm.dom",
+            "gtm.uniqueEventId": 11
+          },
+          {
+            "event": "gtm.load",
+            "gtm.uniqueEventId": 12
+          },
+          {
+            "event": "gtm.historyChange-v2",
+            "gtm.historyChangeSource": "replaceState",
+            "gtm.oldUrlFragment": "",
+            "gtm.newUrlFragment": "attr=1540,1541,1547,1553,1556,1557,1559,8080",
+            "gtm.oldHistoryState": null,
+            "gtm.oldUrl": "https://www.coastaloffroad.com/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+            "gtm.newUrl": "https://www.coastaloffroad.com/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+            "gtm.triggers": "6",
+            "gtm.uniqueEventId": 13
+          },
+          {
+            "event": "gtm.historyChange-v2",
+            "gtm.historyChangeSource": "replaceState",
+            "gtm.oldUrlFragment": "attr=1540,1541,1547,1553,1556,1557,1559,8080",
+            "gtm.newUrlFragment": "attr=1540,1541,1547,1553,1556,1557,1559,8080",
+            "gtm.oldUrl": "https://www.coastaloffroad.com/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+            "gtm.newUrl": "https://www.coastaloffroad.com/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+            "gtm.triggers": "6",
+            "gtm.uniqueEventId": 14
+          }
+        ]
+      },
+      {
+        "step": "Add to Cart",
+        "url": "https://www.coastaloffroad.com/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+        "buttonFound": false,
+        "dataLayerLength": 8,
+        "newEntries": 0,
+        "ecommerceEvents": [],
+        "allNewEntries": []
+      },
+      {
+        "step": "Cart / Checkout",
+        "url": "https://www.coastaloffroad.com/shop/cart",
+        "dataLayerLength": 4,
+        "ecommerceEvents": [],
+        "allEntries": [
+          {
+            "gtm.start": 1771426575443,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 3
+          },
+          {
+            "event": "gtm.scrollDepth",
+            "gtm.scrollThreshold": 90,
+            "gtm.scrollUnits": "percent",
+            "gtm.scrollDirection": "vertical",
+            "gtm.triggers": "7",
+            "gtm.uniqueEventId": 9
+          },
+          {
+            "event": "gtm.dom",
+            "gtm.uniqueEventId": 10
+          },
+          {
+            "event": "gtm.load",
+            "gtm.uniqueEventId": 11
+          }
+        ]
+      }
+    ],
+    "gtmDetected": true,
+    "dataLayerExists": true,
+    "allEvents": [],
+    "errors": [],
+    "gtmId": "GTM-M7DTZTJ"
+  },
+  {
+    "name": "Coastal Offroad NZ",
+    "url": "https://coastaloffroad.co.nz",
+    "steps": [
+      {
+        "step": "Homepage",
+        "url": "https://coastaloffroad.co.nz",
+        "dataLayerLength": 6,
+        "ecommerceEvents": [
+          {
+            "raw": {
+              "ecommerce": {
+                "currencyCode": "NZD",
+                "impressions": [
+                  {
+                    "name": "Lexus GX470 High Clearance Front Bumper Kit",
+                    "id": "CO0418",
+                    "price": 822.96,
+                    "brand": "GX470",
+                    "category": "2003-2009",
+                    "list": "Search Results",
+                    "position": 1
+                  },
+                  {
+                    "name": "4th Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                    "id": "CO06939",
+                    "price": 822.96,
+                    "brand": "4Runner",
+                    "category": "2003-2009",
+                    "list": "Search Results",
+                    "position": 2
+                  },
+                  {
+                    "name": "3rd Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                    "id": "CO0721",
+                    "price": 747.31,
+                    "brand": "4Runner",
+                    "category": "1996-2002",
+                    "list": "Search Results",
+                    "position": 3
+                  },
+                  {
+                    "name": "R51 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                    "id": "CO43920",
+                    "price": 846.3,
+                    "brand": "",
+                    "category": "Nissan",
+                    "list": "Search Results",
+                    "position": 4
+                  },
+                  {
+                    "name": "R50 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                    "id": "CO6758",
+                    "price": 808.06,
+                    "brand": "Pathfinder R50",
+                    "category": "1996-2004",
+                    "list": "Search Results",
+                    "position": 5
+                  },
+                  {
+                    "name": "R50 Nissan Pathfinder High Clearance Front Bumper Kit",
+                    "id": "CO0849",
+                    "price": 750.75,
+                    "brand": "Pathfinder R50",
+                    "category": "1996-2004",
+                    "list": "Search Results",
+                    "position": 6
+                  },
+                  {
+                    "name": "Mitsubishi L400 Series 2 Delica High Clearance Front Bumper Kit",
+                    "id": "CO0677",
+                    "price": 822.96,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 7
+                  },
+                  {
+                    "name": "Mitsubishi L400 Series 1 Delica High Clearance Front Bumper Kit",
+                    "id": "CO14993",
+                    "price": 859.64,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 8
+                  },
+                  {
+                    "name": "Mitsubishi L400 Delica Series 2 Low Profile Rear Bumper Kit",
+                    "id": "CO0665",
+                    "price": 928.41,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 9
+                  },
+                  {
+                    "name": "Mitsubishi L400 Delica Series 1 Low Profile Rear Bumper Kit",
+                    "id": "CO16274",
+                    "price": 928.41,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 10
+                  },
+                  {
+                    "name": "Kickout Rock Slider Weld-Together Kit",
+                    "id": "CO0575",
+                    "price": 663.64,
+                    "brand": "Land Cruiser 100",
+                    "category": "1998-2007",
+                    "list": "Search Results",
+                    "position": 11
+                  },
+                  {
+                    "name": "GX470 / Land Cruiser Prado 120 Low Profile Rear Bumper Kit",
+                    "id": "CO0640",
+                    "price": 847.6,
+                    "brand": "GX470",
+                    "category": "2003-2009",
+                    "list": "Search Results",
+                    "position": 12
+                  },
+                  {
+                    "name": "GX460 / Land Cruiser Prado 150 Low Profile Rear Bumper Kit",
+                    "id": "CO8006",
+                    "price": 916.95,
+                    "brand": "Lexus",
+                    "category": "GX460",
+                    "list": "Search Results",
+                    "position": 13
+                  },
+                  {
+                    "name": "FJ Cruiser High Clearance Front Bumper Kit",
+                    "id": "CO4892",
+                    "price": 785.14,
+                    "brand": "FJ Cruiser",
+                    "category": "2007-2013",
+                    "list": "Search Results",
+                    "position": 14
+                  },
+                  {
+                    "name": "Die-Cut Decals",
+                    "id": "CO94451",
+                    "price": 15.21,
+                    "brand": "",
+                    "category": "Merchandise",
+                    "list": "Search Results",
+                    "position": 15
+                  },
+                  {
+                    "name": "Swing Out Carrier Systems",
+                    "id": "CO0417",
+                    "price": 645.3,
+                    "brand": "",
+                    "category": "Accessories",
+                    "list": "Search Results",
+                    "position": 16
+                  },
+                  {
+                    "name": "80 Series Land Cruiser High Clearance Rear Bumper Kit",
+                    "id": "CO5002",
+                    "price": 847.03,
+                    "brand": "Land Cruiser 80",
+                    "category": "1991-1997",
+                    "list": "Search Results",
+                    "position": 17
+                  },
+                  {
+                    "name": "80 Series Land Cruiser High Clearance Front Bumper Kit",
+                    "id": "CO13108",
+                    "price": 785.14,
+                    "brand": "Land Cruiser 80",
+                    "category": "1991-1997",
+                    "list": "Search Results",
+                    "position": 18
+                  },
+                  {
+                    "name": "70 Series Land Cruiser High Clearance Rear Bumper Kit",
+                    "id": "CO27024",
+                    "price": 746.17,
+                    "brand": "Land Cruiser 70",
+                    "category": "1984-2000",
+                    "list": "Search Results",
+                    "position": 19
+                  },
+                  {
+                    "name": "70 Series Land Cruiser High Clearance Front Bumper Kit",
+                    "id": "CO0930",
+                    "price": 720.95,
+                    "brand": "Land Cruiser 70",
+                    "category": "1984-2000",
+                    "list": "Search Results",
+                    "position": 20
+                  }
+                ]
+              }
+            },
+            "hasEventKey": false,
+            "eventName": null,
+            "format": "UA (Enhanced Ecommerce)",
+            "isGA4": false,
+            "isUA": true,
+            "itemFields": {
+              "name": true,
+              "id": true,
+              "price": true,
+              "category": true
+            },
+            "issues": [
+              "Format UA obsolete - migration GA4 recommandee",
+              "Pas de cle 'event' - ne declenchera pas de tag GTM"
+            ]
+          }
+        ],
+        "allEntries": [
+          {
+            "gtm.start": 1771426582586,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 3
+          },
+          {
+            "ecommerce": null
+          },
+          {
+            "ecommerce": {
+              "currencyCode": "NZD",
+              "impressions": [
+                {
+                  "name": "Lexus GX470 High Clearance Front Bumper Kit",
+                  "id": "CO0418",
+                  "price": 822.96,
+                  "brand": "GX470",
+                  "category": "2003-2009",
+                  "list": "Search Results",
+                  "position": 1
+                },
+                {
+                  "name": "4th Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                  "id": "CO06939",
+                  "price": 822.96,
+                  "brand": "4Runner",
+                  "category": "2003-2009",
+                  "list": "Search Results",
+                  "position": 2
+                },
+                {
+                  "name": "3rd Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                  "id": "CO0721",
+                  "price": 747.31,
+                  "brand": "4Runner",
+                  "category": "1996-2002",
+                  "list": "Search Results",
+                  "position": 3
+                },
+                {
+                  "name": "R51 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                  "id": "CO43920",
+                  "price": 846.3,
+                  "brand": "",
+                  "category": "Nissan",
+                  "list": "Search Results",
+                  "position": 4
+                },
+                {
+                  "name": "R50 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                  "id": "CO6758",
+                  "price": 808.06,
+                  "brand": "Pathfinder R50",
+                  "category": "1996-2004",
+                  "list": "Search Results",
+                  "position": 5
+                },
+                {
+                  "name": "R50 Nissan Pathfinder High Clearance Front Bumper Kit",
+                  "id": "CO0849",
+                  "price": 750.75,
+                  "brand": "Pathfinder R50",
+                  "category": "1996-2004",
+                  "list": "Search Results",
+                  "position": 6
+                },
+                {
+                  "name": "Mitsubishi L400 Series 2 Delica High Clearance Front Bumper Kit",
+                  "id": "CO0677",
+                  "price": 822.96,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 7
+                },
+                {
+                  "name": "Mitsubishi L400 Series 1 Delica High Clearance Front Bumper Kit",
+                  "id": "CO14993",
+                  "price": 859.64,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 8
+                },
+                {
+                  "name": "Mitsubishi L400 Delica Series 2 Low Profile Rear Bumper Kit",
+                  "id": "CO0665",
+                  "price": 928.41,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 9
+                },
+                {
+                  "name": "Mitsubishi L400 Delica Series 1 Low Profile Rear Bumper Kit",
+                  "id": "CO16274",
+                  "price": 928.41,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 10
+                },
+                {
+                  "name": "Kickout Rock Slider Weld-Together Kit",
+                  "id": "CO0575",
+                  "price": 663.64,
+                  "brand": "Land Cruiser 100",
+                  "category": "1998-2007",
+                  "list": "Search Results",
+                  "position": 11
+                },
+                {
+                  "name": "GX470 / Land Cruiser Prado 120 Low Profile Rear Bumper Kit",
+                  "id": "CO0640",
+                  "price": 847.6,
+                  "brand": "GX470",
+                  "category": "2003-2009",
+                  "list": "Search Results",
+                  "position": 12
+                },
+                {
+                  "name": "GX460 / Land Cruiser Prado 150 Low Profile Rear Bumper Kit",
+                  "id": "CO8006",
+                  "price": 916.95,
+                  "brand": "Lexus",
+                  "category": "GX460",
+                  "list": "Search Results",
+                  "position": 13
+                },
+                {
+                  "name": "FJ Cruiser High Clearance Front Bumper Kit",
+                  "id": "CO4892",
+                  "price": 785.14,
+                  "brand": "FJ Cruiser",
+                  "category": "2007-2013",
+                  "list": "Search Results",
+                  "position": 14
+                },
+                {
+                  "name": "Die-Cut Decals",
+                  "id": "CO94451",
+                  "price": 15.21,
+                  "brand": "",
+                  "category": "Merchandise",
+                  "list": "Search Results",
+                  "position": 15
+                },
+                {
+                  "name": "Swing Out Carrier Systems",
+                  "id": "CO0417",
+                  "price": 645.3,
+                  "brand": "",
+                  "category": "Accessories",
+                  "list": "Search Results",
+                  "position": 16
+                },
+                {
+                  "name": "80 Series Land Cruiser High Clearance Rear Bumper Kit",
+                  "id": "CO5002",
+                  "price": 847.03,
+                  "brand": "Land Cruiser 80",
+                  "category": "1991-1997",
+                  "list": "Search Results",
+                  "position": 17
+                },
+                {
+                  "name": "80 Series Land Cruiser High Clearance Front Bumper Kit",
+                  "id": "CO13108",
+                  "price": 785.14,
+                  "brand": "Land Cruiser 80",
+                  "category": "1991-1997",
+                  "list": "Search Results",
+                  "position": 18
+                },
+                {
+                  "name": "70 Series Land Cruiser High Clearance Rear Bumper Kit",
+                  "id": "CO27024",
+                  "price": 746.17,
+                  "brand": "Land Cruiser 70",
+                  "category": "1984-2000",
+                  "list": "Search Results",
+                  "position": 19
+                },
+                {
+                  "name": "70 Series Land Cruiser High Clearance Front Bumper Kit",
+                  "id": "CO0930",
+                  "price": 720.95,
+                  "brand": "Land Cruiser 70",
+                  "category": "1984-2000",
+                  "list": "Search Results",
+                  "position": 20
+                }
+              ]
+            }
+          },
+          {
+            "gtm.start": 1771426582788,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 4
+          },
+          {
+            "event": "gtm.dom",
+            "gtm.uniqueEventId": 5
+          },
+          {
+            "event": "gtm.load",
+            "gtm.uniqueEventId": 11
+          }
+        ]
+      },
+      {
+        "step": "Product Page",
+        "url": "https://www.coastaloffroad.co.nz/shop/3rd-gen-4runner-hilux-surf-high-clearance-front-bumper-kit-1621",
+        "dataLayerLength": 8,
+        "ecommerceEvents": [],
+        "allEntries": [
+          {
+            "gtm.start": 1771426589545,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 3
+          },
+          {
+            "event": "gtm.scrollDepth",
+            "gtm.scrollThreshold": 90,
+            "gtm.scrollUnits": "percent",
+            "gtm.scrollDirection": "vertical",
+            "gtm.triggers": "7",
+            "gtm.uniqueEventId": 9
+          },
+          {
+            "jsonrpc": "2.0",
+            "id": null,
+            "result": "{\"ecommerce\": {\"detail\": {\"products\": [{\"name\": \"3rd Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit\", \"id\": \"CO0721\", \"price\": 1029.88935, \"brand\": \"4Runner\", \"category\": \"1996-2002\", \"variant\": \"\"}]}}}"
+          },
+          {
+            "gtm.start": 1771426589698,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 10
+          },
+          {
+            "event": "gtm.dom",
+            "gtm.uniqueEventId": 11
+          },
+          {
+            "event": "gtm.load",
+            "gtm.uniqueEventId": 12
+          },
+          {
+            "event": "gtm.historyChange-v2",
+            "gtm.historyChangeSource": "replaceState",
+            "gtm.oldUrlFragment": "",
+            "gtm.newUrlFragment": "attr=2629,2634,2636,2638,2644,2647,2648,8127",
+            "gtm.oldHistoryState": null,
+            "gtm.oldUrl": "https://www.coastaloffroad.co.nz/shop/3rd-gen-4runner-hilux-surf-high-clearance-front-bumper-kit-1621",
+            "gtm.newUrl": "https://www.coastaloffroad.co.nz/shop/3rd-gen-4runner-hilux-surf-high-clearance-front-bumper-kit-1621",
+            "gtm.triggers": "6",
+            "gtm.uniqueEventId": 13
+          },
+          {
+            "event": "gtm.historyChange-v2",
+            "gtm.historyChangeSource": "replaceState",
+            "gtm.oldUrlFragment": "attr=2629,2634,2636,2638,2644,2647,2648,8127",
+            "gtm.newUrlFragment": "attr=2629,2634,2636,2638,2644,2647,2648,8127",
+            "gtm.oldUrl": "https://www.coastaloffroad.co.nz/shop/3rd-gen-4runner-hilux-surf-high-clearance-front-bumper-kit-1621",
+            "gtm.newUrl": "https://www.coastaloffroad.co.nz/shop/3rd-gen-4runner-hilux-surf-high-clearance-front-bumper-kit-1621",
+            "gtm.triggers": "6",
+            "gtm.uniqueEventId": 14
+          }
+        ]
+      },
+      {
+        "step": "Add to Cart",
+        "url": "https://www.coastaloffroad.co.nz/shop/3rd-gen-4runner-hilux-surf-high-clearance-front-bumper-kit-1621",
+        "buttonFound": false,
+        "dataLayerLength": 8,
+        "newEntries": 0,
+        "ecommerceEvents": [],
+        "allNewEntries": []
+      },
+      {
+        "step": "Cart / Checkout",
+        "url": "https://www.coastaloffroad.co.nz/shop/cart",
+        "dataLayerLength": 4,
+        "ecommerceEvents": [],
+        "allEntries": [
+          {
+            "gtm.start": 1771426601449,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 3
+          },
+          {
+            "event": "gtm.scrollDepth",
+            "gtm.scrollThreshold": 90,
+            "gtm.scrollUnits": "percent",
+            "gtm.scrollDirection": "vertical",
+            "gtm.triggers": "7",
+            "gtm.uniqueEventId": 9
+          },
+          {
+            "event": "gtm.dom",
+            "gtm.uniqueEventId": 10
+          },
+          {
+            "event": "gtm.load",
+            "gtm.uniqueEventId": 11
+          }
+        ]
+      }
+    ],
+    "gtmDetected": true,
+    "dataLayerExists": true,
+    "allEvents": [],
+    "errors": [],
+    "gtmId": "GTM-KST5KJ2"
+  },
+  {
+    "name": "Coastal Offroad AU",
+    "url": "https://coastaloffroadbumpers.com.au",
+    "steps": [
+      {
+        "step": "Homepage",
+        "url": "https://coastaloffroadbumpers.com.au",
+        "dataLayerLength": 6,
+        "ecommerceEvents": [
+          {
+            "raw": {
+              "ecommerce": {
+                "currencyCode": "AUD",
+                "impressions": [
+                  {
+                    "name": "Lexus GX470 High Clearance Front Bumper Kit",
+                    "id": "CO0418",
+                    "price": 822.96,
+                    "brand": "GX470",
+                    "category": "2003-2009",
+                    "list": "Search Results",
+                    "position": 1
+                  },
+                  {
+                    "name": "4th Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                    "id": "CO06939",
+                    "price": 822.96,
+                    "brand": "4Runner",
+                    "category": "2003-2009",
+                    "list": "Search Results",
+                    "position": 2
+                  },
+                  {
+                    "name": "3rd Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                    "id": "CO0721",
+                    "price": 747.31,
+                    "brand": "4Runner",
+                    "category": "1996-2002",
+                    "list": "Search Results",
+                    "position": 3
+                  },
+                  {
+                    "name": "1st Gen Tundra High Clearance Front Bumper Kit",
+                    "id": "CO65556",
+                    "price": 822.96,
+                    "brand": "Tundra",
+                    "category": "2000-2006",
+                    "list": "Search Results",
+                    "position": 4
+                  },
+                  {
+                    "name": "R51 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                    "id": "CO43920",
+                    "price": 846.3,
+                    "brand": "",
+                    "category": "Nissan",
+                    "list": "Search Results",
+                    "position": 5
+                  },
+                  {
+                    "name": "R50 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                    "id": "CO6758",
+                    "price": 808.06,
+                    "brand": "Pathfinder R50",
+                    "category": "1996-2004",
+                    "list": "Search Results",
+                    "position": 6
+                  },
+                  {
+                    "name": "R50 Nissan Pathfinder High Clearance Front Bumper Kit",
+                    "id": "CO0849",
+                    "price": 750.75,
+                    "brand": "Pathfinder R50",
+                    "category": "1996-2004",
+                    "list": "Search Results",
+                    "position": 7
+                  },
+                  {
+                    "name": "Mitsubishi L400 Series 2 Delica High Clearance Front Bumper Kit",
+                    "id": "CO0677",
+                    "price": 822.96,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 8
+                  },
+                  {
+                    "name": "Mitsubishi L400 Series 1 Delica High Clearance Front Bumper Kit",
+                    "id": "CO14993",
+                    "price": 859.64,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 9
+                  },
+                  {
+                    "name": "Mitsubishi L400 Delica Series 2 Low Profile Rear Bumper Kit",
+                    "id": "CO0665",
+                    "price": 928.41,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 10
+                  },
+                  {
+                    "name": "Mitsubishi L400 Delica Series 1 Low Profile Rear Bumper Kit",
+                    "id": "CO16274",
+                    "price": 928.41,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 11
+                  },
+                  {
+                    "name": "Kickout Rock Slider Weld-Together Kit",
+                    "id": "CO0575",
+                    "price": 663.64,
+                    "brand": "Land Cruiser 100",
+                    "category": "1998-2007",
+                    "list": "Search Results",
+                    "position": 12
+                  },
+                  {
+                    "name": "GX470 / Land Cruiser Prado 120 Low Profile Rear Bumper Kit",
+                    "id": "CO0640",
+                    "price": 847.6,
+                    "brand": "GX470",
+                    "category": "2003-2009",
+                    "list": "Search Results",
+                    "position": 13
+                  },
+                  {
+                    "name": "GX460 / Land Cruiser Prado 150 Low Profile Rear Bumper Kit",
+                    "id": "CO8006",
+                    "price": 916.95,
+                    "brand": "Lexus",
+                    "category": "GX460",
+                    "list": "Search Results",
+                    "position": 14
+                  },
+                  {
+                    "name": "FJ Cruiser High Clearance Front Bumper Kit",
+                    "id": "CO4892",
+                    "price": 785.14,
+                    "brand": "FJ Cruiser",
+                    "category": "2007-2013",
+                    "list": "Search Results",
+                    "position": 15
+                  },
+                  {
+                    "name": "Die-Cut Decals",
+                    "id": "CO94451",
+                    "price": 15.21,
+                    "brand": "",
+                    "category": "Merchandise",
+                    "list": "Search Results",
+                    "position": 16
+                  },
+                  {
+                    "name": "Swing Out Carrier Systems",
+                    "id": "CO0417",
+                    "price": 645.3,
+                    "brand": "",
+                    "category": "Accessories",
+                    "list": "Search Results",
+                    "position": 17
+                  },
+                  {
+                    "name": "80 Series Land Cruiser High Clearance Rear Bumper Kit",
+                    "id": "CO5002",
+                    "price": 847.03,
+                    "brand": "Land Cruiser 80",
+                    "category": "1991-1997",
+                    "list": "Search Results",
+                    "position": 18
+                  },
+                  {
+                    "name": "80 Series Land Cruiser High Clearance Front Bumper Kit",
+                    "id": "CO13108",
+                    "price": 785.14,
+                    "brand": "Land Cruiser 80",
+                    "category": "1991-1997",
+                    "list": "Search Results",
+                    "position": 19
+                  },
+                  {
+                    "name": "70 Series Land Cruiser High Clearance Rear Bumper Kit",
+                    "id": "CO27024",
+                    "price": 746.17,
+                    "brand": "Land Cruiser 70",
+                    "category": "1984-2000",
+                    "list": "Search Results",
+                    "position": 20
+                  }
+                ]
+              }
+            },
+            "hasEventKey": false,
+            "eventName": null,
+            "format": "UA (Enhanced Ecommerce)",
+            "isGA4": false,
+            "isUA": true,
+            "itemFields": {
+              "name": true,
+              "id": true,
+              "price": true,
+              "category": true
+            },
+            "issues": [
+              "Format UA obsolete - migration GA4 recommandee",
+              "Pas de cle 'event' - ne declenchera pas de tag GTM"
+            ]
+          }
+        ],
+        "allEntries": [
+          {
+            "gtm.start": 1771426608645,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 3
+          },
+          {
+            "ecommerce": null
+          },
+          {
+            "ecommerce": {
+              "currencyCode": "AUD",
+              "impressions": [
+                {
+                  "name": "Lexus GX470 High Clearance Front Bumper Kit",
+                  "id": "CO0418",
+                  "price": 822.96,
+                  "brand": "GX470",
+                  "category": "2003-2009",
+                  "list": "Search Results",
+                  "position": 1
+                },
+                {
+                  "name": "4th Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                  "id": "CO06939",
+                  "price": 822.96,
+                  "brand": "4Runner",
+                  "category": "2003-2009",
+                  "list": "Search Results",
+                  "position": 2
+                },
+                {
+                  "name": "3rd Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                  "id": "CO0721",
+                  "price": 747.31,
+                  "brand": "4Runner",
+                  "category": "1996-2002",
+                  "list": "Search Results",
+                  "position": 3
+                },
+                {
+                  "name": "1st Gen Tundra High Clearance Front Bumper Kit",
+                  "id": "CO65556",
+                  "price": 822.96,
+                  "brand": "Tundra",
+                  "category": "2000-2006",
+                  "list": "Search Results",
+                  "position": 4
+                },
+                {
+                  "name": "R51 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                  "id": "CO43920",
+                  "price": 846.3,
+                  "brand": "",
+                  "category": "Nissan",
+                  "list": "Search Results",
+                  "position": 5
+                },
+                {
+                  "name": "R50 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                  "id": "CO6758",
+                  "price": 808.06,
+                  "brand": "Pathfinder R50",
+                  "category": "1996-2004",
+                  "list": "Search Results",
+                  "position": 6
+                },
+                {
+                  "name": "R50 Nissan Pathfinder High Clearance Front Bumper Kit",
+                  "id": "CO0849",
+                  "price": 750.75,
+                  "brand": "Pathfinder R50",
+                  "category": "1996-2004",
+                  "list": "Search Results",
+                  "position": 7
+                },
+                {
+                  "name": "Mitsubishi L400 Series 2 Delica High Clearance Front Bumper Kit",
+                  "id": "CO0677",
+                  "price": 822.96,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 8
+                },
+                {
+                  "name": "Mitsubishi L400 Series 1 Delica High Clearance Front Bumper Kit",
+                  "id": "CO14993",
+                  "price": 859.64,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 9
+                },
+                {
+                  "name": "Mitsubishi L400 Delica Series 2 Low Profile Rear Bumper Kit",
+                  "id": "CO0665",
+                  "price": 928.41,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 10
+                },
+                {
+                  "name": "Mitsubishi L400 Delica Series 1 Low Profile Rear Bumper Kit",
+                  "id": "CO16274",
+                  "price": 928.41,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 11
+                },
+                {
+                  "name": "Kickout Rock Slider Weld-Together Kit",
+                  "id": "CO0575",
+                  "price": 663.64,
+                  "brand": "Land Cruiser 100",
+                  "category": "1998-2007",
+                  "list": "Search Results",
+                  "position": 12
+                },
+                {
+                  "name": "GX470 / Land Cruiser Prado 120 Low Profile Rear Bumper Kit",
+                  "id": "CO0640",
+                  "price": 847.6,
+                  "brand": "GX470",
+                  "category": "2003-2009",
+                  "list": "Search Results",
+                  "position": 13
+                },
+                {
+                  "name": "GX460 / Land Cruiser Prado 150 Low Profile Rear Bumper Kit",
+                  "id": "CO8006",
+                  "price": 916.95,
+                  "brand": "Lexus",
+                  "category": "GX460",
+                  "list": "Search Results",
+                  "position": 14
+                },
+                {
+                  "name": "FJ Cruiser High Clearance Front Bumper Kit",
+                  "id": "CO4892",
+                  "price": 785.14,
+                  "brand": "FJ Cruiser",
+                  "category": "2007-2013",
+                  "list": "Search Results",
+                  "position": 15
+                },
+                {
+                  "name": "Die-Cut Decals",
+                  "id": "CO94451",
+                  "price": 15.21,
+                  "brand": "",
+                  "category": "Merchandise",
+                  "list": "Search Results",
+                  "position": 16
+                },
+                {
+                  "name": "Swing Out Carrier Systems",
+                  "id": "CO0417",
+                  "price": 645.3,
+                  "brand": "",
+                  "category": "Accessories",
+                  "list": "Search Results",
+                  "position": 17
+                },
+                {
+                  "name": "80 Series Land Cruiser High Clearance Rear Bumper Kit",
+                  "id": "CO5002",
+                  "price": 847.03,
+                  "brand": "Land Cruiser 80",
+                  "category": "1991-1997",
+                  "list": "Search Results",
+                  "position": 18
+                },
+                {
+                  "name": "80 Series Land Cruiser High Clearance Front Bumper Kit",
+                  "id": "CO13108",
+                  "price": 785.14,
+                  "brand": "Land Cruiser 80",
+                  "category": "1991-1997",
+                  "list": "Search Results",
+                  "position": 19
+                },
+                {
+                  "name": "70 Series Land Cruiser High Clearance Rear Bumper Kit",
+                  "id": "CO27024",
+                  "price": 746.17,
+                  "brand": "Land Cruiser 70",
+                  "category": "1984-2000",
+                  "list": "Search Results",
+                  "position": 20
+                }
+              ]
+            }
+          },
+          {
+            "gtm.start": 1771426608884,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 4
+          },
+          {
+            "event": "gtm.dom",
+            "gtm.uniqueEventId": 5
+          },
+          {
+            "event": "gtm.load",
+            "gtm.uniqueEventId": 11
+          }
+        ]
+      },
+      {
+        "step": "Product Page",
+        "url": "https://www.coastaloffroadbumpers.com.au/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+        "dataLayerLength": 8,
+        "ecommerceEvents": [],
+        "allEntries": [
+          {
+            "gtm.start": 1771426615687,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 3
+          },
+          {
+            "event": "gtm.scrollDepth",
+            "gtm.scrollThreshold": 90,
+            "gtm.scrollUnits": "percent",
+            "gtm.scrollDirection": "vertical",
+            "gtm.triggers": "7",
+            "gtm.uniqueEventId": 9
+          },
+          {
+            "jsonrpc": "2.0",
+            "id": null,
+            "result": "{\"ecommerce\": {\"detail\": {\"products\": [{\"name\": \"1st Gen Tundra High Clearance Front Bumper Kit\", \"id\": \"CO65556\", \"price\": 1140.6202500000002, \"brand\": \"Tundra\", \"category\": \"2000-2006\", \"variant\": \"\"}]}}}"
+          },
+          {
+            "gtm.start": 1771426615854,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 10
+          },
+          {
+            "event": "gtm.dom",
+            "gtm.uniqueEventId": 11
+          },
+          {
+            "event": "gtm.load",
+            "gtm.uniqueEventId": 12
+          },
+          {
+            "event": "gtm.historyChange-v2",
+            "gtm.historyChangeSource": "replaceState",
+            "gtm.oldUrlFragment": "",
+            "gtm.newUrlFragment": "attr=1540,1541,1547,1553,1556,1557,1559,8080",
+            "gtm.oldHistoryState": null,
+            "gtm.oldUrl": "https://www.coastaloffroadbumpers.com.au/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+            "gtm.newUrl": "https://www.coastaloffroadbumpers.com.au/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+            "gtm.triggers": "6",
+            "gtm.uniqueEventId": 13
+          },
+          {
+            "event": "gtm.historyChange-v2",
+            "gtm.historyChangeSource": "replaceState",
+            "gtm.oldUrlFragment": "attr=1540,1541,1547,1553,1556,1557,1559,8080",
+            "gtm.newUrlFragment": "attr=1540,1541,1547,1553,1556,1557,1559,8080",
+            "gtm.oldUrl": "https://www.coastaloffroadbumpers.com.au/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+            "gtm.newUrl": "https://www.coastaloffroadbumpers.com.au/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+            "gtm.triggers": "6",
+            "gtm.uniqueEventId": 14
+          }
+        ]
+      },
+      {
+        "step": "Add to Cart",
+        "url": "https://www.coastaloffroadbumpers.com.au/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+        "buttonFound": false,
+        "dataLayerLength": 8,
+        "newEntries": 0,
+        "ecommerceEvents": [],
+        "allNewEntries": []
+      },
+      {
+        "step": "Cart / Checkout",
+        "url": "https://www.coastaloffroadbumpers.com.au/shop/cart",
+        "dataLayerLength": 4,
+        "ecommerceEvents": [],
+        "allEntries": [
+          {
+            "gtm.start": 1771426625827,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 3
+          },
+          {
+            "event": "gtm.scrollDepth",
+            "gtm.scrollThreshold": 90,
+            "gtm.scrollUnits": "percent",
+            "gtm.scrollDirection": "vertical",
+            "gtm.triggers": "7",
+            "gtm.uniqueEventId": 9
+          },
+          {
+            "event": "gtm.dom",
+            "gtm.uniqueEventId": 10
+          },
+          {
+            "event": "gtm.load",
+            "gtm.uniqueEventId": 11
+          }
+        ]
+      }
+    ],
+    "gtmDetected": true,
+    "dataLayerExists": true,
+    "allEvents": [],
+    "errors": [],
+    "gtmId": "GTM-N9MZG42"
+  },
+  {
+    "name": "Coastal Offroad CA",
+    "url": "https://coastaloffroad.ca",
+    "steps": [
+      {
+        "step": "Homepage",
+        "url": "https://coastaloffroad.ca",
+        "dataLayerLength": 7,
+        "ecommerceEvents": [
+          {
+            "raw": {
+              "ecommerce": {
+                "currencyCode": "CAD",
+                "impressions": [
+                  {
+                    "name": "Lexus GX470 High Clearance Front Bumper Kit",
+                    "id": "CO0418",
+                    "price": 822.96,
+                    "brand": "GX470",
+                    "category": "2003-2009",
+                    "list": "Search Results",
+                    "position": 1
+                  },
+                  {
+                    "name": "4th Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                    "id": "CO06939",
+                    "price": 822.96,
+                    "brand": "4Runner",
+                    "category": "2003-2009",
+                    "list": "Search Results",
+                    "position": 2
+                  },
+                  {
+                    "name": "3rd Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                    "id": "CO0721",
+                    "price": 747.31,
+                    "brand": "4Runner",
+                    "category": "1996-2002",
+                    "list": "Search Results",
+                    "position": 3
+                  },
+                  {
+                    "name": "1st Gen Tundra High Clearance Front Bumper Kit",
+                    "id": "CO65556",
+                    "price": 822.96,
+                    "brand": "Tundra",
+                    "category": "2000-2006",
+                    "list": "Search Results",
+                    "position": 4
+                  },
+                  {
+                    "name": "R51 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                    "id": "CO43920",
+                    "price": 846.3,
+                    "brand": "",
+                    "category": "Nissan",
+                    "list": "Search Results",
+                    "position": 5
+                  },
+                  {
+                    "name": "R50 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                    "id": "CO6758",
+                    "price": 808.06,
+                    "brand": "Pathfinder R50",
+                    "category": "1996-2004",
+                    "list": "Search Results",
+                    "position": 6
+                  },
+                  {
+                    "name": "R50 Nissan Pathfinder High Clearance Front Bumper Kit",
+                    "id": "CO0849",
+                    "price": 750.75,
+                    "brand": "Pathfinder R50",
+                    "category": "1996-2004",
+                    "list": "Search Results",
+                    "position": 7
+                  },
+                  {
+                    "name": "Mitsubishi L400 Series 2 Delica High Clearance Front Bumper Kit",
+                    "id": "CO0677",
+                    "price": 822.96,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 8
+                  },
+                  {
+                    "name": "Mitsubishi L400 Series 1 Delica High Clearance Front Bumper Kit",
+                    "id": "CO14993",
+                    "price": 859.64,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 9
+                  },
+                  {
+                    "name": "Mitsubishi L400 Delica Series 2 Low Profile Rear Bumper Kit",
+                    "id": "CO0665",
+                    "price": 928.41,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 10
+                  },
+                  {
+                    "name": "Mitsubishi L400 Delica Series 1 Low Profile Rear Bumper Kit",
+                    "id": "CO16274",
+                    "price": 928.41,
+                    "brand": "",
+                    "category": "Mitsubishi",
+                    "list": "Search Results",
+                    "position": 11
+                  },
+                  {
+                    "name": "Lexus GX460 High Clearance Front Bumper Kit",
+                    "id": "CO8089",
+                    "price": 937.58,
+                    "brand": "GX460",
+                    "category": "2010-2013",
+                    "list": "Search Results",
+                    "position": 12
+                  },
+                  {
+                    "name": "Kickout Rock Slider Weld-Together Kit",
+                    "id": "CO0575",
+                    "price": 663.64,
+                    "brand": "Land Cruiser 100",
+                    "category": "1998-2007",
+                    "list": "Search Results",
+                    "position": 13
+                  },
+                  {
+                    "name": "GX470 / Land Cruiser Prado 120 Low Profile Rear Bumper Kit",
+                    "id": "CO0640",
+                    "price": 847.6,
+                    "brand": "GX470",
+                    "category": "2003-2009",
+                    "list": "Search Results",
+                    "position": 14
+                  },
+                  {
+                    "name": "GX460 / Land Cruiser Prado 150 Low Profile Rear Bumper Kit",
+                    "id": "CO8006",
+                    "price": 916.95,
+                    "brand": "Lexus",
+                    "category": "GX460",
+                    "list": "Search Results",
+                    "position": 15
+                  },
+                  {
+                    "name": "FJ Cruiser High Clearance Front Bumper Kit",
+                    "id": "CO4892",
+                    "price": 785.14,
+                    "brand": "FJ Cruiser",
+                    "category": "2007-2013",
+                    "list": "Search Results",
+                    "position": 16
+                  },
+                  {
+                    "name": "Die-Cut Decals",
+                    "id": "CO94451",
+                    "price": 15.21,
+                    "brand": "",
+                    "category": "Merchandise",
+                    "list": "Search Results",
+                    "position": 17
+                  },
+                  {
+                    "name": "Swing Out Carrier Systems",
+                    "id": "CO0417",
+                    "price": 645.3,
+                    "brand": "",
+                    "category": "Accessories",
+                    "list": "Search Results",
+                    "position": 18
+                  },
+                  {
+                    "name": "80 Series Land Cruiser High Clearance Rear Bumper Kit",
+                    "id": "CO5002",
+                    "price": 847.03,
+                    "brand": "Land Cruiser 80",
+                    "category": "1991-1997",
+                    "list": "Search Results",
+                    "position": 19
+                  },
+                  {
+                    "name": "80 Series Land Cruiser High Clearance Front Bumper Kit",
+                    "id": "CO13108",
+                    "price": 785.14,
+                    "brand": "Land Cruiser 80",
+                    "category": "1991-1997",
+                    "list": "Search Results",
+                    "position": 20
+                  }
+                ]
+              }
+            },
+            "hasEventKey": false,
+            "eventName": null,
+            "format": "UA (Enhanced Ecommerce)",
+            "isGA4": false,
+            "isUA": true,
+            "itemFields": {
+              "name": true,
+              "id": true,
+              "price": true,
+              "category": true
+            },
+            "issues": [
+              "Format UA obsolete - migration GA4 recommandee",
+              "Pas de cle 'event' - ne declenchera pas de tag GTM"
+            ]
+          }
+        ],
+        "allEntries": [
+          {
+            "gtm.start": 1771426633163,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 3
+          },
+          {
+            "ecommerce": null
+          },
+          {
+            "0": "consent",
+            "1": "default",
+            "2": {
+              "ad_storage": "granted",
+              "analytics_storage": "granted",
+              "functionality_storage": "granted",
+              "personalization_storage": "granted",
+              "security_storage": "granted",
+              "wait_for_update": 500
+            }
+          },
+          {
+            "ecommerce": {
+              "currencyCode": "CAD",
+              "impressions": [
+                {
+                  "name": "Lexus GX470 High Clearance Front Bumper Kit",
+                  "id": "CO0418",
+                  "price": 822.96,
+                  "brand": "GX470",
+                  "category": "2003-2009",
+                  "list": "Search Results",
+                  "position": 1
+                },
+                {
+                  "name": "4th Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                  "id": "CO06939",
+                  "price": 822.96,
+                  "brand": "4Runner",
+                  "category": "2003-2009",
+                  "list": "Search Results",
+                  "position": 2
+                },
+                {
+                  "name": "3rd Gen 4Runner / Hilux Surf High Clearance Front Bumper Kit",
+                  "id": "CO0721",
+                  "price": 747.31,
+                  "brand": "4Runner",
+                  "category": "1996-2002",
+                  "list": "Search Results",
+                  "position": 3
+                },
+                {
+                  "name": "1st Gen Tundra High Clearance Front Bumper Kit",
+                  "id": "CO65556",
+                  "price": 822.96,
+                  "brand": "Tundra",
+                  "category": "2000-2006",
+                  "list": "Search Results",
+                  "position": 4
+                },
+                {
+                  "name": "R51 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                  "id": "CO43920",
+                  "price": 846.3,
+                  "brand": "",
+                  "category": "Nissan",
+                  "list": "Search Results",
+                  "position": 5
+                },
+                {
+                  "name": "R50 Nissan Pathfinder High Clearance Rear Bumper Kit",
+                  "id": "CO6758",
+                  "price": 808.06,
+                  "brand": "Pathfinder R50",
+                  "category": "1996-2004",
+                  "list": "Search Results",
+                  "position": 6
+                },
+                {
+                  "name": "R50 Nissan Pathfinder High Clearance Front Bumper Kit",
+                  "id": "CO0849",
+                  "price": 750.75,
+                  "brand": "Pathfinder R50",
+                  "category": "1996-2004",
+                  "list": "Search Results",
+                  "position": 7
+                },
+                {
+                  "name": "Mitsubishi L400 Series 2 Delica High Clearance Front Bumper Kit",
+                  "id": "CO0677",
+                  "price": 822.96,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 8
+                },
+                {
+                  "name": "Mitsubishi L400 Series 1 Delica High Clearance Front Bumper Kit",
+                  "id": "CO14993",
+                  "price": 859.64,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 9
+                },
+                {
+                  "name": "Mitsubishi L400 Delica Series 2 Low Profile Rear Bumper Kit",
+                  "id": "CO0665",
+                  "price": 928.41,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 10
+                },
+                {
+                  "name": "Mitsubishi L400 Delica Series 1 Low Profile Rear Bumper Kit",
+                  "id": "CO16274",
+                  "price": 928.41,
+                  "brand": "",
+                  "category": "Mitsubishi",
+                  "list": "Search Results",
+                  "position": 11
+                },
+                {
+                  "name": "Lexus GX460 High Clearance Front Bumper Kit",
+                  "id": "CO8089",
+                  "price": 937.58,
+                  "brand": "GX460",
+                  "category": "2010-2013",
+                  "list": "Search Results",
+                  "position": 12
+                },
+                {
+                  "name": "Kickout Rock Slider Weld-Together Kit",
+                  "id": "CO0575",
+                  "price": 663.64,
+                  "brand": "Land Cruiser 100",
+                  "category": "1998-2007",
+                  "list": "Search Results",
+                  "position": 13
+                },
+                {
+                  "name": "GX470 / Land Cruiser Prado 120 Low Profile Rear Bumper Kit",
+                  "id": "CO0640",
+                  "price": 847.6,
+                  "brand": "GX470",
+                  "category": "2003-2009",
+                  "list": "Search Results",
+                  "position": 14
+                },
+                {
+                  "name": "GX460 / Land Cruiser Prado 150 Low Profile Rear Bumper Kit",
+                  "id": "CO8006",
+                  "price": 916.95,
+                  "brand": "Lexus",
+                  "category": "GX460",
+                  "list": "Search Results",
+                  "position": 15
+                },
+                {
+                  "name": "FJ Cruiser High Clearance Front Bumper Kit",
+                  "id": "CO4892",
+                  "price": 785.14,
+                  "brand": "FJ Cruiser",
+                  "category": "2007-2013",
+                  "list": "Search Results",
+                  "position": 16
+                },
+                {
+                  "name": "Die-Cut Decals",
+                  "id": "CO94451",
+                  "price": 15.21,
+                  "brand": "",
+                  "category": "Merchandise",
+                  "list": "Search Results",
+                  "position": 17
+                },
+                {
+                  "name": "Swing Out Carrier Systems",
+                  "id": "CO0417",
+                  "price": 645.3,
+                  "brand": "",
+                  "category": "Accessories",
+                  "list": "Search Results",
+                  "position": 18
+                },
+                {
+                  "name": "80 Series Land Cruiser High Clearance Rear Bumper Kit",
+                  "id": "CO5002",
+                  "price": 847.03,
+                  "brand": "Land Cruiser 80",
+                  "category": "1991-1997",
+                  "list": "Search Results",
+                  "position": 19
+                },
+                {
+                  "name": "80 Series Land Cruiser High Clearance Front Bumper Kit",
+                  "id": "CO13108",
+                  "price": 785.14,
+                  "brand": "Land Cruiser 80",
+                  "category": "1991-1997",
+                  "list": "Search Results",
+                  "position": 20
+                }
+              ]
+            }
+          },
+          {
+            "gtm.start": 1771426633405,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 5
+          },
+          {
+            "event": "gtm.dom",
+            "gtm.uniqueEventId": 6
+          },
+          {
+            "event": "gtm.load",
+            "gtm.uniqueEventId": 12
+          }
+        ]
+      },
+      {
+        "step": "Product Page",
+        "url": "https://www.coastaloffroad.ca/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+        "dataLayerLength": 9,
+        "ecommerceEvents": [],
+        "allEntries": [
+          {
+            "gtm.start": 1771426639656,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 3
+          },
+          {
+            "0": "consent",
+            "1": "default",
+            "2": {
+              "ad_storage": "granted",
+              "analytics_storage": "granted",
+              "functionality_storage": "granted",
+              "personalization_storage": "granted",
+              "security_storage": "granted",
+              "wait_for_update": 500
+            }
+          },
+          {
+            "event": "gtm.scrollDepth",
+            "gtm.scrollThreshold": 90,
+            "gtm.scrollUnits": "percent",
+            "gtm.scrollDirection": "vertical",
+            "gtm.triggers": "8",
+            "gtm.uniqueEventId": 10
+          },
+          {
+            "jsonrpc": "2.0",
+            "id": null,
+            "result": "{\"ecommerce\": {\"detail\": {\"products\": [{\"name\": \"1st Gen Tundra High Clearance Front Bumper Kit\", \"id\": \"CO65556\", \"price\": 864.1080000000001, \"brand\": \"Tundra\", \"category\": \"2000-2006\", \"variant\": \"\"}]}}}"
+          },
+          {
+            "gtm.start": 1771426639813,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 11
+          },
+          {
+            "event": "gtm.dom",
+            "gtm.uniqueEventId": 12
+          },
+          {
+            "event": "gtm.load",
+            "gtm.uniqueEventId": 13
+          },
+          {
+            "event": "gtm.historyChange-v2",
+            "gtm.historyChangeSource": "replaceState",
+            "gtm.oldUrlFragment": "",
+            "gtm.newUrlFragment": "attr=1540,1541,1547,1553,1556,1557,1559,8080",
+            "gtm.oldHistoryState": null,
+            "gtm.oldUrl": "https://www.coastaloffroad.ca/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+            "gtm.newUrl": "https://www.coastaloffroad.ca/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+            "gtm.triggers": "7",
+            "gtm.uniqueEventId": 14
+          },
+          {
+            "event": "gtm.historyChange-v2",
+            "gtm.historyChangeSource": "replaceState",
+            "gtm.oldUrlFragment": "attr=1540,1541,1547,1553,1556,1557,1559,8080",
+            "gtm.newUrlFragment": "attr=1540,1541,1547,1553,1556,1557,1559,8081",
+            "gtm.oldUrl": "https://www.coastaloffroad.ca/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+            "gtm.newUrl": "https://www.coastaloffroad.ca/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+            "gtm.triggers": "7",
+            "gtm.uniqueEventId": 15
+          }
+        ]
+      },
+      {
+        "step": "Add to Cart",
+        "url": "https://www.coastaloffroad.ca/shop/1st-gen-tundra-high-clearance-front-bumper-kit-1563",
+        "buttonFound": false,
+        "dataLayerLength": 9,
+        "newEntries": 0,
+        "ecommerceEvents": [],
+        "allNewEntries": []
+      },
+      {
+        "step": "Cart / Checkout",
+        "url": "https://www.coastaloffroad.ca/shop/cart",
+        "dataLayerLength": 5,
+        "ecommerceEvents": [],
+        "allEntries": [
+          {
+            "gtm.start": 1771426649854,
+            "event": "gtm.js",
+            "gtm.uniqueEventId": 3
+          },
+          {
+            "0": "consent",
+            "1": "default",
+            "2": {
+              "ad_storage": "granted",
+              "analytics_storage": "granted",
+              "functionality_storage": "granted",
+              "personalization_storage": "granted",
+              "security_storage": "granted",
+              "wait_for_update": 500
+            }
+          },
+          {
+            "event": "gtm.scrollDepth",
+            "gtm.scrollThreshold": 90,
+            "gtm.scrollUnits": "percent",
+            "gtm.scrollDirection": "vertical",
+            "gtm.triggers": "8",
+            "gtm.uniqueEventId": 10
+          },
+          {
+            "event": "gtm.dom",
+            "gtm.uniqueEventId": 11
+          },
+          {
+            "event": "gtm.load",
+            "gtm.uniqueEventId": 12
+          }
+        ]
+      }
+    ],
+    "gtmDetected": true,
+    "dataLayerExists": true,
+    "allEvents": [],
+    "errors": [],
+    "gtmId": "GTM-T436HZG"
+  }
+]

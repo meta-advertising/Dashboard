@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Extension Bois — Portail Agences</title>
+    <link rel="icon" href="https://www.mon-extension-bois.com/wp-content/uploads/2025/03/extension-bois-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --meb-green: #3a7d34;
+            --meb-green-light: #5aad52;
+            --meb-green-dark: #2a5e24;
+            --meb-green-glow: rgba(58,125,52,0.35);
+            --meb-sage: #7cb97a;
+            --meb-mint: #a8d5a6;
+            --meb-orange: #e67e22;
+            --meb-orange-light: #f0a050;
+            --meb-amber: #f5c871;
+            --meb-warm: #c8a87a;
+            --bg-dark: #080c06;
+            --bg-card: rgba(58,125,52,0.04);
+            --bg-card-hover: rgba(58,125,52,0.1);
+            --text-primary: #f2f7f0;
+            --text-secondary: rgba(242,247,240,0.6);
+            --text-tertiary: rgba(242,247,240,0.32);
+            --border: rgba(58,125,52,0.18);
+            --border-hover: rgba(90,173,82,0.45);
+            --meta-blue: #1877f2;
+            --google-blue: #4285f4;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ══ ANIMATED BACKGROUND ══ */
+        .bg-scene {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background:
+                radial-gradient(ellipse 70% 50% at 15% 5%, rgba(58,125,52,0.1) 0%, transparent 55%),
+                radial-gradient(ellipse 50% 60% at 85% 85%, rgba(42,94,36,0.07) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 50% 40%, rgba(168,213,166,0.03) 0%, transparent 40%),
+                linear-gradient(180deg, #080c06 0%, #0a0f08 40%, #080c06 100%);
+        }
+        .bg-grain {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 200px;
+        }
+        .bg-lines {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(58,125,52,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(58,125,52,0.025) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse 60% 50% at 50% 20%, black, transparent);
+        }
+
+        .wrapper { position: relative; z-index: 1; min-height: 100vh; }
+
+        /* ══ HEADER ══ */
+        .header {
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(24px) saturate(1.2);
+            background: rgba(8,12,6,0.7);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .header-logo {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            border: 1.5px solid var(--border);
+            object-fit: contain;
+            padding: 4px;
+            background: rgba(58,125,52,0.06);
+            transition: border-color 0.3s;
+        }
+        .header-logo:hover { border-color: var(--border-hover); }
+        .header-brand {
+            display: flex;
+            flex-direction: column;
+        }
+        .header-title {
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #fff 0%, var(--meb-sage) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header-sub {
+            font-size: 10px;
+            color: var(--text-tertiary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-clock {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+        .header-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 20px;
+            background: rgba(58,125,52,0.12);
+            border: 1px solid rgba(58,125,52,0.25);
+            color: var(--meb-green-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ══ HERO ══ */
+        .hero {
+            padding: 90px 40px 70px;
+            text-align: center;
+            position: relative;
+        }
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(58,125,52,0.14) 0%, rgba(42,94,36,0.05) 40%, transparent 70%);
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+            animation: pulse-glow 8s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.15); }
+        }
+        .hero-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 22px;
+            border: 2px solid rgba(58,125,52,0.25);
+            object-fit: contain;
+            padding: 10px;
+            background: rgba(58,125,52,0.06);
+            margin: 0 auto 32px;
+            display: block;
+            box-shadow: 0 8px 40px rgba(58,125,52,0.15);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hero-logo:hover { transform: scale(1.06); }
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
+            border-radius: 30px;
+            background: rgba(58,125,52,0.1);
+            border: 1px solid rgba(58,125,52,0.2);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--meb-green-light);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 28px;
+            position: relative;
+        }
+        .hero-label .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--meb-green);
+            animation: dot-pulse 2s ease-in-out infinite;
+        }
+        @keyframes dot-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1.05;
+            margin-bottom: 18px;
+            position: relative;
+        }
+        .hero h1 .line1 {
+            display: block;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.85) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero h1 .line2 {
+            display: block;
+            background: linear-gradient(135deg, var(--meb-mint) 0%, var(--meb-green-light) 40%, var(--meb-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            max-width: 480px;
+            margin: 0 auto 48px;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        /* ══ STATS ══ */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+        }
+        .stat-item { text-align: center; }
+        .stat-value {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            background: linear-gradient(180deg, var(--meb-sage) 0%, var(--meb-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label {
+            font-size: 10px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        /* ══ SECTION ══ */
+        .section {
+            padding: 40px 40px 80px;
+            max-width: 1260px;
+            margin: 0 auto;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 36px;
+        }
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
+        }
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--text-tertiary);
+            white-space: nowrap;
+        }
+
+        /* ══ AGENCIES GRID ══ */
+        .agencies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 18px;
+        }
+
+        .agency-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            cursor: pointer;
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .agency-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, rgba(58,125,52,0.06) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .agency-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2.5px;
+            background: linear-gradient(90deg, var(--meb-green), var(--meb-sage));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .agency-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-6px);
+            box-shadow:
+                0 24px 64px rgba(58,125,52,0.12),
+                0 8px 24px rgba(0,0,0,0.35);
+        }
+        .agency-card:hover::before { opacity: 1; }
+        .agency-card:hover::after { opacity: 1; }
+        .agency-card:hover .agency-arrow { transform: translateX(5px); opacity: 1; }
+        .agency-card:hover .agency-icon { transform: scale(1.08); box-shadow: 0 0 24px var(--meb-green-glow); }
+
+        .agency-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+        .agency-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(58,125,52,0.2), rgba(58,125,52,0.06));
+            border: 1px solid rgba(58,125,52,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .agency-icon svg {
+            width: 22px;
+            height: 22px;
+            color: var(--meb-green-light);
+        }
+        .agency-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #4ade80;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        .agency-status .pulse {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #4ade80;
+            animation: status-pulse 2s ease-in-out infinite;
+        }
+        @keyframes status-pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.3); }
+            50% { opacity: 0.6; box-shadow: 0 0 0 5px transparent; }
+        }
+
+        .agency-name {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+        .agency-dept {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .agency-tags {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .agency-tag {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .agency-tag.meta {
+            background: rgba(24,119,242,0.1);
+            border: 1px solid rgba(24,119,242,0.18);
+            color: rgba(96,165,250,0.9);
+        }
+        .agency-tag.google {
+            background: rgba(66,133,244,0.08);
+            border: 1px solid rgba(66,133,244,0.15);
+            color: rgba(147,197,253,0.8);
+        }
+
+        .agency-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            position: relative;
+            z-index: 1;
+        }
+        .agency-link-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        .agency-arrow {
+            color: var(--meb-green-light);
+            opacity: 0.3;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .agency-arrow svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ══ FOOTER ══ */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid var(--border);
+            color: var(--text-tertiary);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            line-height: 1.8;
+        }
+        .footer a {
+            color: var(--meb-green-light);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer a:hover { color: var(--meb-sage); text-decoration: underline; }
+        .footer-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .footer-brand img {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            opacity: 0.5;
+        }
+
+        /* ══ RESPONSIVE ══ */
+        @media (max-width: 1024px) {
+            .agencies-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+            .hero h1 { font-size: 42px; }
+            .section { padding: 30px 24px 60px; }
+        }
+        @media (max-width: 768px) {
+            .header { padding: 16px 20px; }
+            .header-right { display: none; }
+            .hero { padding: 60px 20px 50px; }
+            .hero h1 { font-size: 34px; letter-spacing: -1.5px; }
+            .hero-desc { font-size: 14px; }
+            .stats-bar { gap: 28px; }
+            .stat-value { font-size: 28px; }
+            .section { padding: 20px 20px 60px; }
+            .agencies-grid { grid-template-columns: 1fr; }
+            .agency-card { padding: 22px; }
+            .agency-card:hover { transform: translateY(-3px); }
+        }
+        @media (max-width: 480px) {
+            .header { padding: 12px 16px; }
+            .header-logo { width: 40px; height: 40px; border-radius: 8px; }
+            .hero-logo { width: 72px; height: 72px; border-radius: 16px; padding: 8px; margin-bottom: 22px; }
+            .header-title { font-size: 14px; }
+            .header-sub { font-size: 8px; letter-spacing: 1.5px; }
+            .hero { padding: 44px 16px 36px; }
+            .hero h1 { font-size: 28px; letter-spacing: -1px; }
+            .hero-label { font-size: 9px; padding: 5px 14px; margin-bottom: 20px; }
+            .hero-desc { font-size: 13px; margin-bottom: 32px; }
+            .stats-bar { flex-direction: column; gap: 10px; }
+            .stat-value { font-size: 24px; }
+            .stat-label { font-size: 9px; }
+            .section { padding: 16px 16px 48px; }
+            .section-header { margin-bottom: 22px; }
+            .section-title { font-size: 10px; letter-spacing: 1.5px; }
+            .agency-card { padding: 20px; }
+            .agency-name { font-size: 17px; }
+            .agency-dept { font-size: 11px; margin-bottom: 14px; }
+            .agency-icon { width: 42px; height: 42px; border-radius: 10px; }
+            .agency-icon svg { width: 20px; height: 20px; }
+            .agency-tag { font-size: 9px; padding: 3px 8px; }
+            .agency-tags { gap: 5px; margin-bottom: 14px; }
+            .agency-bottom { padding-top: 12px; }
+            .agency-link-label { font-size: 11px; }
+            .footer { padding: 28px 16px; font-size: 10px; }
+        }
+
+        /* ══ ENTRANCE ANIMATIONS ══ */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(24px);
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .fade-up:nth-child(1) { animation-delay: 0.05s; }
+        .fade-up:nth-child(2) { animation-delay: 0.1s; }
+        .fade-up:nth-child(3) { animation-delay: 0.15s; }
+        .fade-up:nth-child(4) { animation-delay: 0.2s; }
+        .fade-up:nth-child(5) { animation-delay: 0.25s; }
+        .fade-up:nth-child(6) { animation-delay: 0.3s; }
+        .fade-up:nth-child(7) { animation-delay: 0.35s; }
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+<div class="bg-scene"></div>
+<div class="bg-grain"></div>
+<div class="bg-lines"></div>
+
+<div class="wrapper">
+    <!-- ══ HEADER ══ -->
+    <header class="header">
+        <div class="header-left">
+            <img src="https://www.mon-extension-bois.com/wp-content/uploads/2025/03/extension-bois-logo.png" alt="MEB" class="header-logo">
+            <div class="header-brand">
+                <div class="header-title">Mon Extension Bois</div>
+                <div class="header-sub">Portail Agences</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="header-clock" id="clock"></div>
+            <div class="header-badge">R&eacute;seau France</div>
+        </div>
+    </header>
+
+    <!-- ══ HERO ══ -->
+    <section class="hero">
+        <div class="hero-glow"></div>
+        <img src="https://www.mon-extension-bois.com/wp-content/uploads/2025/03/extension-bois-logo.png" alt="Mon Extension Bois" class="hero-logo">
+        <div class="hero-label"><span class="dot"></span>Donn&eacute;es en temps r&eacute;el</div>
+        <h1>
+            <span class="line1">Pilotage Marketing</span>
+            <span class="line2">Mon Extension Bois</span>
+        </h1>
+        <p class="hero-desc">Suivez la performance de vos campagnes publicitaires Meta Ads &amp; Google Ads sur l'ensemble de vos agences, en temps r&eacute;el.</p>
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value">7</div>
+                <div class="stat-label">Agences</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">2</div>
+                <div class="stat-label">Plateformes</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">13</div>
+                <div class="stat-label">Flux actifs</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ AGENCIES ══ -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-title">Agences &amp; Campagnes</div>
+            <div class="section-line"></div>
+        </div>
+        <div class="agencies-grid" id="grid"></div>
+    </section>
+
+    <!-- ══ FOOTER ══ -->
+    <footer class="footer">
+        <div class="footer-brand">
+            <img src="https://www.mon-extension-bois.com/wp-content/uploads/2025/03/extension-bois-logo.png" alt="">
+            Mon Extension Bois
+        </div>
+        &mdash; Extensions &amp; sur&eacute;l&eacute;vations en bois &bull; Fabriqu&eacute; en France<br>
+        <a href="https://www.mon-extension-bois.com" target="_blank">www.mon-extension-bois.com</a><br>
+        <span style="opacity:0.4;margin-top:6px;display:inline-block">Portail interne &mdash; Meta-Advertising</span>
+    </footer>
+</div>
+
+<script>
+const AGENCIES = [
+    {
+        name: 'Metz',
+        dept: 'Moselle (57)',
+        url: 'https://monextensionbois-france.github.io/agence.metz/',
+        tags: ['Meta Ads', 'Google Ads'],
+        icon: 'map'
+    },
+    {
+        name: 'Cambrai',
+        dept: 'Nord (59)',
+        url: 'https://monextensionbois-france.github.io/agence.cambrai/',
+        tags: ['Meta Ads', 'Google Ads'],
+        icon: 'map'
+    },
+    {
+        name: 'La Rochelle',
+        dept: 'Charente-Maritime (17)',
+        url: 'https://monextensionbois-france.github.io/agence.la-rochelle/',
+        tags: ['Meta Ads', 'Google Ads'],
+        icon: 'map'
+    },
+    {
+        name: 'Lille',
+        dept: 'Nord (59)',
+        url: 'https://monextensionbois-france.github.io/agence.lille/',
+        tags: ['Meta Ads', 'Google Ads'],
+        icon: 'map'
+    },
+    {
+        name: 'Arras',
+        dept: 'Pas-de-Calais (62)',
+        url: 'https://monextensionbois-france.github.io/agence.arras/',
+        tags: ['Meta Ads', 'Google Ads'],
+        icon: 'map'
+    },
+    {
+        name: 'National',
+        dept: 'France enti\u00e8re',
+        url: 'https://monextensionbois-france.github.io/national/',
+        tags: ['Meta Ads', 'Google Ads'],
+        icon: 'globe'
+    },
+    {
+        name: 'Franchise',
+        dept: 'R\u00e9seau Franchise',
+        url: 'https://monextensionbois-france.github.io/franchise/',
+        tags: ['Meta Ads'],
+        icon: 'network'
+    }
+];
+
+const ICONS = {
+    map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+    globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+    network: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M5 3v4"/><path d="M19 3v4"/><path d="M5 17v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M3 19h4"/><path d="M17 5h4"/><path d="M17 19h4"/></svg>',
+    arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>'
+};
+
+function renderGrid() {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = AGENCIES.map((a, i) => {
+        const tagsHtml = a.tags.map(t => {
+            const cls = t.includes('Google') ? 'agency-tag google' : 'agency-tag meta';
+            return '<span class="' + cls + '">' + t + '</span>';
+        }).join('');
+
+        return '<a href="' + a.url + '" target="_blank" rel="noopener" class="agency-card fade-up">' +
+            '<div class="agency-top">' +
+                '<div class="agency-icon">' + ICONS[a.icon] + '</div>' +
+                '<div class="agency-status"><span class="pulse"></span>Actif</div>' +
+            '</div>' +
+            '<div class="agency-name">' + a.name + '</div>' +
+            '<div class="agency-dept">' + a.dept + '</div>' +
+            '<div class="agency-tags">' + tagsHtml + '</div>' +
+            '<div class="agency-bottom">' +
+                '<span class="agency-link-label">Ouvrir le dashboard</span>' +
+                '<span class="agency-arrow">' + ICONS.arrow + '</span>' +
+            '</div>' +
+        '</a>';
+    }).join('');
+}
+
+function updateClock() {
+    var now = new Date();
+    var opts = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+    document.getElementById('clock').textContent = now.toLocaleDateString('fr-FR', opts);
+}
+updateClock();
+setInterval(updateClock, 30000);
+
+renderGrid();
+</script>
+</body>
+</html>

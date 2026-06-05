@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Le Moulin d'Elise — Langueux</title>
+<link rel="icon" href="https://moulindelise.com/wp-content/uploads/2024/03/cropped-logo-moulin-elise-01-1-32x32.png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --gold:#BF8D50;--gold-light:#d4a96a;--gold-dark:#a07640;--gold-bg:rgba(191,141,80,0.08);--gold-bg2:rgba(191,141,80,0.15);
+  --gradient-gold:linear-gradient(135deg,#BF8D50 0%,#d4a96a 100%);
+  --wheat:#e8d5b7;--cream:#f5ead6;
+  --trafic:#3498db;--engagement:#e67e22;--notoriete:#9b59b6;--recrutement:#27ae60;--leadgen:#c0392b;--googleads:#34a853;
+  --text-primary:#1a1a1a;--text-secondary:#5a5a5a;--text-tertiary:#8a8a8a;
+  --bg:#faf7f2;--bg-card:#ffffff;--bg-dp:#fff;
+  --border:rgba(0,0,0,0.06);--border-strong:rgba(0,0,0,0.1);
+  --radius-sm:8px;--radius-md:12px;--radius-lg:16px;
+  --shadow-sm:0 2px 8px rgba(0,0,0,0.05);--shadow-md:0 4px 16px rgba(0,0,0,0.08);
+  --sidebar-w:260px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans','Inter',sans-serif;background:var(--bg);color:var(--text-primary);overflow-x:hidden}
+.dashboard{display:flex;min-height:100vh}
+
+/* ══ SIDEBAR ══ */
+.sidebar{width:var(--sidebar-w);background:var(--bg-card);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto}
+.sidebar-brand{padding:20px 20px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);text-decoration:none;color:inherit}
+.sidebar-logo{height:36px;width:auto}
+.sidebar-brand-text h2{font-size:14px;font-weight:800;letter-spacing:-.2px}
+.sidebar-brand-text span{font-size:10px;color:var(--text-tertiary);font-weight:600;text-transform:uppercase;letter-spacing:.8px}
+.sidebar-nav{flex:1;padding:12px 10px}
+.nav-section{margin-bottom:16px}
+.nav-section-title{font-size:10px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1px;padding:8px 12px 4px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:13px;font-weight:500;color:var(--text-secondary);border:none;background:none;width:100%;text-align:left;font-family:inherit}
+.nav-item:hover{background:var(--gold-bg);color:var(--text-primary)}
+.nav-item.active{background:var(--gold-bg2);color:var(--gold-dark);font-weight:700;border-left:3px solid var(--gold)}
+.nav-item svg{width:18px;height:18px;flex-shrink:0;opacity:.6}
+.nav-item.active svg{opacity:1;color:var(--gold)}
+.sidebar-back{padding:16px 20px;border-top:1px solid var(--border)}
+.sidebar-back a{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--text-tertiary);text-decoration:none;transition:color .2s}
+.sidebar-back a:hover{color:var(--gold)}
+.sidebar-back a svg{width:16px;height:16px}
+
+/* ══ MAIN ══ */
+.main{margin-left:var(--sidebar-w);flex:1;min-width:0}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(250,247,242,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.topbar-left{display:flex;align-items:center;gap:12px}
+.topbar-title{font-size:14px;font-weight:700;color:var(--text-primary)}
+.topbar-sep{color:var(--text-tertiary);font-size:12px}
+.topbar-page{font-size:14px;font-weight:500;color:var(--text-secondary)}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--recrutement);animation:blink 1.5s ease-in-out infinite;margin-right:4px;display:inline-block}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.content{padding:24px 28px;max-width:1400px}
+
+/* ══ DATE PICKER TRIGGER ══ */
+.dp-trigger{display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--bg-card);border:1px solid var(--border-strong);border-radius:10px;font-size:12px;font-weight:600;color:var(--text-primary);cursor:pointer;transition:all .25s;font-family:inherit}
+.dp-trigger:hover{border-color:var(--gold);box-shadow:var(--shadow-sm)}
+.dp-trigger.open{border-color:var(--gold);background:var(--gold-bg)}
+.dp-trigger svg{width:14px;height:14px}
+.dp-trigger .dp-icon{color:var(--gold)}
+.dp-trigger .dp-chevron{color:var(--text-tertiary);transition:transform .3s}
+.dp-trigger.open .dp-chevron{transform:rotate(180deg)}
+
+/* ══ CALENDAR OVERLAY ══ */
+.cal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.25);backdrop-filter:blur(3px)}
+.cal-overlay.show{display:block}
+
+/* ══ CALENDAR DROPDOWN ══ */
+.cal-dropdown{display:none;position:fixed;top:60px;right:32px;z-index:1001;background:var(--bg-card);border:1px solid var(--border-strong);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.12);overflow:hidden;flex-direction:row}
+.cal-dropdown.show{display:flex;animation:calSlide .35s cubic-bezier(.16,1,.3,1)}
+@keyframes calSlide{from{opacity:0;transform:translateY(-12px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+.cal-sidebar{width:170px;padding:18px 12px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:3px;background:var(--bg)}
+.cal-year-tabs{display:flex;gap:4px;margin-bottom:14px;padding:3px;background:var(--bg-card);border-radius:8px;border:1px solid var(--border)}
+.cal-year-tab{flex:1;padding:6px;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;background:transparent;color:var(--text-secondary);transition:all .25s;font-family:inherit}
+.cal-year-tab.active{background:var(--gradient-gold);color:#fff}
+.cal-year-tab:hover:not(.active){color:var(--gold)}
+.cal-preset-label{font-size:9px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1px;padding:8px 8px 3px}
+.cal-preset{padding:8px 10px;border-radius:8px;font-size:11px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all .2s}
+.cal-preset:hover{background:var(--gold-bg);color:var(--text-primary)}
+.cal-preset.active{background:var(--gold-bg2);color:var(--gold-dark)}
+
+.cal-main{padding:18px 20px 20px;min-width:480px}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-nav-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--border-strong);background:var(--bg-card);color:var(--text-secondary);display:flex;align-items:center;justify-content:center;transition:all .2s;cursor:pointer;font-family:inherit}
+.cal-nav-btn:hover{border-color:var(--gold);color:var(--gold)}
+.cal-nav-btn svg{width:14px;height:14px}
+.cal-nav-title{font-size:14px;font-weight:800;letter-spacing:-.2px;color:var(--text-primary)}
+.cal-months{display:flex;gap:24px}
+.cal-month{flex:1}
+.cal-month-label{font-size:10px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;text-align:center}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px}
+.cal-wd{text-align:center;font-size:9px;font-weight:600;color:var(--text-tertiary);padding:3px 0}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-day{text-align:center;padding:6px 2px;border-radius:6px;font-size:11px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all .12s;min-width:28px}
+.cal-day:hover{background:var(--gold-bg);color:var(--text-primary)}
+.cal-day.empty{visibility:hidden;pointer-events:none}
+.cal-day.today{color:var(--gold);font-weight:700;box-shadow:inset 0 -2px 0 var(--gold)}
+.cal-day.selected,.cal-day.range-start,.cal-day.range-end{background:var(--gradient-gold);color:#fff;font-weight:700}
+.cal-day.in-range{background:var(--gold-bg2);color:var(--gold-dark);border-radius:3px}
+.cal-day.range-start{border-radius:6px 3px 3px 6px}
+.cal-day.range-end{border-radius:3px 6px 6px 3px}
+.cal-day.range-start.range-end{border-radius:6px}
+.cal-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--border);margin-top:14px}
+.cal-selection-text{font-size:12px;font-weight:600;color:var(--gold)}
+.cal-apply-btn{padding:7px 18px;border:none;border-radius:8px;background:var(--gradient-gold);color:#fff;font-size:11px;font-weight:700;cursor:pointer;transition:all .25s;font-family:inherit}
+.cal-apply-btn:hover{box-shadow:0 4px 16px rgba(191,141,80,0.35);transform:translateY(-1px)}
+
+/* ══ STATUS BANNER ══ */
+.status-banner{padding:10px 16px;border-radius:var(--radius-sm);margin-bottom:20px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px}
+.status-banner.ok{background:rgba(39,174,96,0.08);color:#27ae60;border:1px solid rgba(39,174,96,0.15)}
+.status-banner.err{background:rgba(192,57,43,0.08);color:#c0392b;border:1px solid rgba(192,57,43,0.15)}
+.status-banner svg{width:16px;height:16px;flex-shrink:0}
+
+/* ══ PAGE VIEWS ══ */
+.page-view{display:none}
+.page-view.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ══ KPI GRID ══ */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px}
+.kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px;position:relative;transition:all .25s}
+.kpi-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.kpi-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;border-radius:var(--radius-md) var(--radius-md) 0 0;background:var(--gold);opacity:0;transition:opacity .25s}
+.kpi-card:hover::after{opacity:1}
+.kpi-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.kpi-label{font-size:11px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.6px}
+.kpi-icon{width:34px;height:34px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center}
+.kpi-icon svg{width:16px;height:16px}
+.kpi-icon.gold{background:var(--gold-bg2);color:var(--gold)}
+.kpi-icon.blue{background:rgba(52,152,219,0.1);color:var(--trafic)}
+.kpi-icon.orange{background:rgba(230,126,34,0.1);color:var(--engagement)}
+.kpi-icon.red{background:rgba(192,57,43,0.1);color:var(--leadgen)}
+.kpi-icon.green{background:rgba(39,174,96,0.1);color:var(--recrutement)}
+.kpi-value{font-size:26px;font-weight:800;letter-spacing:-.5px;line-height:1.1}
+.kpi-sub{font-size:11px;color:var(--text-tertiary);margin-top:4px}
+
+/* ══ SECTION TITLE ══ */
+.sec-title{font-size:16px;font-weight:800;margin-bottom:4px;letter-spacing:-.2px}
+.sec-sub{font-size:12px;color:var(--text-tertiary);margin-bottom:16px}
+
+/* ══ CHARTS ══ */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.chart-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px}
+.chart-box-title{font-size:12px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.chart-container{position:relative;height:260px}
+
+/* ══ DATA TABLE ══ */
+.data-table{width:100%;border-collapse:separate;border-spacing:0;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;margin-bottom:24px}
+.data-table thead th{font-size:10px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.5px;padding:12px 12px;text-align:right;background:var(--bg);border-bottom:1px solid var(--border)}
+.data-table thead th:first-child{text-align:left;padding-left:16px}
+.data-table tbody td{font-size:13px;font-weight:500;padding:10px 12px;text-align:right;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums}
+.data-table tbody td:first-child{text-align:left;font-weight:600;padding-left:16px}
+.data-table tbody tr:last-child td{border-bottom:none}
+.data-table tbody tr:hover td{background:var(--gold-bg)}
+.data-table tfoot td{font-size:13px;font-weight:800;padding:12px 12px;text-align:right;background:var(--gold-bg);border-top:2px solid var(--gold)}
+.data-table tfoot td:first-child{text-align:left;padding-left:16px;color:var(--gold-dark)}
+td.cost{color:#c0392b}
+
+/* ══ CALENDAR PAGE ══ */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-title{font-size:16px;font-weight:700}
+.cal-pg-nav{display:flex;gap:8px}
+.cal-pg-nav button{width:32px;height:32px;border:1px solid var(--border-strong);background:var(--bg-card);border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--text-secondary);font-family:inherit}
+.cal-pg-nav button:hover{border-color:var(--gold);color:var(--gold)}
+.cal-pg-nav button:disabled{opacity:.3;cursor:default}
+
+/* ══ CONNEXION PAGE ══ */
+.conn-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px;margin-bottom:16px}
+.conn-title{font-size:14px;font-weight:700;margin-bottom:12px}
+.conn-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.conn-row:last-child{border-bottom:none}
+.conn-label{color:var(--text-secondary);font-weight:500}
+.conn-val{font-weight:700;font-variant-numeric:tabular-nums}
+.conn-status{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px}
+.conn-status.ok{background:rgba(39,174,96,0.1);color:#27ae60}
+
+/* ══ MOBILE ══ */
+.mobile-toggle{display:none;position:fixed;bottom:20px;right:20px;z-index:200;width:48px;height:48px;border-radius:50%;background:var(--gold);color:#fff;border:none;box-shadow:var(--shadow-md);cursor:pointer;align-items:center;justify-content:center}
+.mobile-toggle svg{width:22px;height:22px}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:90}
+
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);transition:transform .3s;z-index:200}
+  .sidebar.open{transform:none}
+  .sidebar-overlay.open{display:block}
+  .main{margin-left:0}
+  .mobile-toggle{display:flex}
+  .topbar{padding:12px 16px;flex-wrap:wrap;gap:8px}
+  .content{padding:16px}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .charts-grid{grid-template-columns:1fr}
+  .chart-container{height:220px}
+  .cal-dropdown{top:auto;right:8px;left:8px;flex-direction:column;max-height:90vh;overflow-y:auto}
+  .cal-sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border);flex-direction:row;flex-wrap:wrap;padding:10px}
+  .cal-main{min-width:auto;padding:14px}
+  .cal-months{flex-direction:column;gap:16px}
+}
+@media(max-width:480px){
+  .kpi-grid{grid-template-columns:1fr}
+  .kpi-value{font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<div class="dashboard">
+
+<!-- ══ SIDEBAR ══ -->
+<aside class="sidebar" id="sidebar">
+  <a class="sidebar-brand" href="index.html">
+    <img class="sidebar-logo" src="https://moulindelise.com/wp-content/uploads/logo-moulin-elise-01.svg" alt="Logo">
+    <div class="sidebar-brand-text">
+      <h2>Le Moulin d'Elise</h2>
+      <span>Langueux</span>
+    </div>
+  </a>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-title">Tableau de bord</div>
+      <button class="nav-item active" data-page="overview">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Vue d'ensemble
+      </button>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">Campagnes</div>
+      <button class="nav-item" data-page="googleads">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Google Ads
+      </button>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">Donnees</div>
+      <button class="nav-item" data-page="calendar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Calendrier
+      </button>
+      <button class="nav-item" data-page="connexions">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Connexions
+      </button>
+    </div>
+  </nav>
+  <div class="sidebar-back">
+    <a href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Retour au portail
+    </a>
+  </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- ══ CALENDAR OVERLAY + DROPDOWN ══ -->
+<div class="cal-overlay" id="calOverlay" onclick="closeDatePicker()"></div>
+<div class="cal-dropdown" id="calDropdown">
+  <div class="cal-sidebar">
+    <div class="cal-year-tabs">
+      <button class="cal-year-tab" onclick="dpSwitchYear('2025')">2025</button>
+      <button class="cal-year-tab active" onclick="dpSwitchYear('2026')">2026</button>
+    </div>
+    <div class="cal-preset-label">Periodes</div>
+    <div class="cal-preset active" onclick="dpPreset('annual')">Cumul annuel</div>
+    <div class="cal-preset" onclick="dpPreset('t1')">Trimestre 1</div>
+    <div class="cal-preset" onclick="dpPreset('t2')">Trimestre 2</div>
+    <div class="cal-preset" onclick="dpPreset('t3')">Trimestre 3</div>
+    <div class="cal-preset" onclick="dpPreset('t4')">Trimestre 4</div>
+    <div class="cal-preset-label">Semestres</div>
+    <div class="cal-preset" onclick="dpPreset('s1')">Semestre 1</div>
+    <div class="cal-preset" onclick="dpPreset('s2')">Semestre 2</div>
+  </div>
+  <div class="cal-main">
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="dpNav(-2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <div class="cal-nav-title" id="dpNavTitle"></div>
+      <button class="cal-nav-btn" onclick="dpNav(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+    <div class="cal-months" id="dpMonths"></div>
+    <div class="cal-footer">
+      <div class="cal-selection-text" id="dpSelText">Cumul annuel — 2026</div>
+      <button class="cal-apply-btn" onclick="dpApply()">Appliquer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIN ══ -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title">Langueux</span>
+      <span class="topbar-sep">/</span>
+      <span class="topbar-page" id="breadcrumb">Vue d'ensemble</span>
+    </div>
+    <div class="topbar-right">
+      <div class="dp-trigger" id="dpTrigger" onclick="toggleDatePicker()">
+        <svg class="dp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span id="dpLabel">Cumul annuel — 2026</span>
+        <svg class="dp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <span class="live-dot"></span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="status-banner ok" id="statusBanner" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <span id="statusText"></span>
+    </div>
+
+    <!-- PAGE: VUE D'ENSEMBLE (Google Ads) -->
+    <div class="page-view active" id="page-overview">
+      <h3 class="sec-title"><svg style="display:inline;vertical-align:middle;width:20px;height:20px;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="#34a853" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Google Ads</h3>
+      <p class="sec-sub">Campagne Search Local — Langueux</p>
+      <div class="kpi-grid" id="overviewKpis"></div>
+      <div class="charts-grid">
+        <div class="chart-box"><div class="chart-box-title">Clics Google Ads par jour</div><div class="chart-container"><canvas id="chartClkDay"></canvas></div></div>
+        <div class="chart-box"><div class="chart-box-title">Impressions Google Ads par jour</div><div class="chart-container"><canvas id="chartImpDay"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- PAGE: GOOGLE ADS DETAIL -->
+    <div class="page-view" id="page-googleads">
+      <h3 class="sec-title">Google Ads — Search Local Langueux</h3>
+      <p class="sec-sub">Detail quotidien de la campagne de recherche locale</p>
+      <div class="kpi-grid" id="gadsKpis"></div>
+      <div class="charts-grid">
+        <div class="chart-box"><div class="chart-box-title">Impressions par jour</div><div class="chart-container"><canvas id="chartGadsImp"></canvas></div></div>
+        <div class="chart-box"><div class="chart-box-title">Clics par jour</div><div class="chart-container"><canvas id="chartGadsClk"></canvas></div></div>
+      </div>
+      <div class="chart-box" style="margin-bottom:24px"><div class="chart-box-title">Depenses par jour</div><div class="chart-container"><canvas id="chartGadsCost"></canvas></div></div>
+      <table class="data-table" id="gadsTable"><thead></thead><tbody></tbody><tfoot></tfoot></table>
+    </div>
+
+    <!-- PAGE: CALENDAR -->
+    <div class="page-view" id="page-calendar">
+      <h3 class="sec-title">Calendrier jour par jour</h3>
+      <p class="sec-sub">Navigation mensuelle — Google Ads</p>
+      <div class="cal-header">
+        <span class="cal-title" id="calTitle"></span>
+        <div class="cal-pg-nav">
+          <button id="calPrev" onclick="changeMonth(-1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <button id="calNext" onclick="changeMonth(1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+        </div>
+      </div>
+      <table class="data-table" id="calTable"><thead></thead><tbody></tbody><tfoot></tfoot></table>
+    </div>
+
+    <!-- PAGE: CONNEXIONS -->
+    <div class="page-view" id="page-connexions">
+      <h3 class="sec-title">Connexions & Sources</h3>
+      <p class="sec-sub">Statut des sources de donnees</p>
+      <div class="conn-card">
+        <div class="conn-title">Google Ads — Supermetrics</div>
+        <div class="conn-row"><span class="conn-label">Onglet</span><span class="conn-val">GOOGLE ADS</span></div>
+        <div class="conn-row"><span class="conn-label">GID</span><span class="conn-val">2003247368</span></div>
+        <div class="conn-row"><span class="conn-label">Campagne</span><span class="conn-val">Search Local Langueux</span></div>
+        <div class="conn-row"><span class="conn-label">Statut</span><span class="conn-status ok" id="connStatus">Connecte</span></div>
+        <div class="conn-row"><span class="conn-label">Derniere donnee</span><span class="conn-val" id="connLastDate">--</span></div>
+        <div class="conn-row"><span class="conn-label">Lignes chargees</span><span class="conn-val" id="connRows">--</span></div>
+      </div>
+      <div class="conn-card">
+        <div class="conn-title">Informations client</div>
+        <div class="conn-row"><span class="conn-label">Client</span><span class="conn-val">Le Moulin d'Elise</span></div>
+        <div class="conn-row"><span class="conn-label">Entite</span><span class="conn-val">Langueux (22)</span></div>
+        <div class="conn-row"><span class="conn-label">Site web</span><span class="conn-val"><a href="https://moulindelise.com" target="_blank" style="color:var(--gold)">moulindelise.com</a></span></div>
+        <div class="conn-row"><span class="conn-label">Version dashboard</span><span class="conn-val">1.0</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+<button class="mobile-toggle" onclick="toggleSidebar()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+
+<script>
+/* ══════════════════════════════════════════════
+   LE MOULIN D'ELISE — DASHBOARD LANGUEUX
+   Google Ads uniquement
+   ══════════════════════════════════════════════ */
+Chart.defaults.font.family="'Plus Jakarta Sans','Inter',sans-serif";
+const GADS_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vQZZqBeck80LcNEZUPOx-EjBHY_xnR1yGINcHIllM-P7lBh_rT1zdZTLxp6nyOE06ppyCagPog6Dxx1/pub?output=csv&single=true&gid=2003247368';
+const GADS_CITY='langueux';
+const MONTHS_FR=['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
+const MONTH_SHORT=['Jan','Fev','Mar','Avr','Mai','Jun','Jul','Aou','Sep','Oct','Nov','Dec'];
+const WEEKDAYS=['L','M','M','J','V','S','D'];
+const charts={};
+let gadsRowsRaw=[],gadsRows=[],gadsByDate={},allMonths=[],currentMonth='';
+
+/* ── CSV ── */
+function parseCSV(text){const lines=text.trim().split('\n');if(lines.length<2)return[];const h=parseLine(lines[0]);const rows=[];for(let i=1;i<lines.length;i++){const v=parseLine(lines[i]);if(v.length<h.length)continue;const r={};h.forEach((k,j)=>r[k.trim()]=v[j]);rows.push(r)}return rows}
+function parseLine(l){const r=[];let c='',q=false;for(let i=0;i<l.length;i++){const ch=l[i];if(ch==='"'){if(q&&l[i+1]==='"'){c+='"';i++}else q=!q}else if(ch===','&&!q){r.push(c);c=''}else c+=ch}r.push(c);return r}
+function pN(v){if(!v||v==='')return 0;return parseFloat(String(v).replace(/"/g,'').replace(',','.').replace(/\s/g,''))||0}
+function fmt(n){return n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?Math.round(n).toLocaleString('fr-FR'):String(Math.round(n))}
+function fmtE(n){return n.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' \u20ac'}
+function fmtPct(n){return n.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' %'}
+
+/* ── DATE RANGE ── */
+let dpYear='2026',dpMode='annual',dpStart={month:0,day:0},dpEnd={month:11,day:30};
+let dpViewMonth=0,dpViewYear=2026,dpSelStart=null,dpSelEnd=null,dpOpen=false;
+
+function getDpRange(){
+  const yr=parseInt(dpYear);
+  if(dpMode==='annual')return{start:yr+'-01-01',end:yr+'-12-31'};
+  if(dpSelStart&&dpSelEnd){
+    const s=dpSelStart,e=dpSelEnd;
+    return{start:s.year+'-'+String(s.month+1).padStart(2,'0')+'-'+String(s.day).padStart(2,'0'),end:e.year+'-'+String(e.month+1).padStart(2,'0')+'-'+String(e.day).padStart(2,'0')};
+  }
+  return{start:yr+'-'+String(dpStart.month+1).padStart(2,'0')+'-'+String(dpStart.day+1).padStart(2,'0'),end:yr+'-'+String(dpEnd.month+1).padStart(2,'0')+'-'+String(dpEnd.day+1).padStart(2,'0')};
+}
+function filterByRange(rows){const r=getDpRange();return rows.filter(x=>{const d=x['Date'];return d>=r.start&&d<=r.end})}
+
+/* ── PROCESS DATA ── */
+function processData(rows){
+  gadsRows=rows;gadsByDate={};
+  rows.forEach(r=>{
+    const date=r['Date'];
+    if(!gadsByDate[date])gadsByDate[date]={impressions:0,clicks:0,cost:0};
+    const d=gadsByDate[date];d.impressions+=pN(r['Impressions']);d.clicks+=pN(r['Clicks']);d.cost+=pN(r['Cost (EUR)']);
+  });
+  const dates=Object.keys(gadsByDate).sort();
+  allMonths=[...new Set(dates.map(d=>d.substring(0,7)))].sort();
+  currentMonth=allMonths[allMonths.length-1]||'2026-02';
+}
+
+/* ── LOAD ── */
+async function loadData(){
+  try{
+    const resp=await fetch(GADS_URL+'&_t='+Date.now(),{redirect:'follow',credentials:'omit'});
+    if(!resp.ok)throw new Error('HTTP '+resp.status);
+    const text=await resp.text();
+    const allRows=parseCSV(text);
+    const rows=allRows.filter(r=>(r['Campaign name']||'').toLowerCase().includes(GADS_CITY));
+    if(rows.length===0)throw new Error('Aucune donnee Google Ads pour Langueux');
+    gadsRowsRaw=rows;
+    processData(filterByRange(rows));
+    const banner=document.getElementById('statusBanner');
+    banner.style.display='flex';banner.className='status-banner ok';
+    const dates=rows.map(r=>r['Date']).sort();
+    document.getElementById('statusText').textContent=rows.length+' lignes Google Ads chargees \u00b7 Derniere donnee: '+dates[dates.length-1];
+    document.getElementById('connLastDate').textContent=dates[dates.length-1];
+    document.getElementById('connRows').textContent=rows.length;
+    renderAll();
+  }catch(e){
+    console.error(e);
+    const banner=document.getElementById('statusBanner');
+    banner.style.display='flex';banner.className='status-banner err';
+    document.getElementById('statusText').textContent='Erreur: '+e.message;
+  }
+}
+
+function renderAll(){
+  renderOverviewKPIs();renderOverviewCharts();renderGadsPage();renderCalendar();
+}
+
+/* ── OVERVIEW KPIs ── */
+function renderOverviewKPIs(){
+  let imp=0,clk=0,cost=0;
+  gadsRows.forEach(r=>{imp+=pN(r['Impressions']);clk+=pN(r['Clicks']);cost+=pN(r['Cost (EUR)'])});
+  const ctr=imp?clk/imp*100:0;const cpc=clk?cost/clk:0;
+  document.getElementById('overviewKpis').innerHTML=
+    '<div class="kpi-card"><div class="kpi-header"><span class="kpi-label">Impressions</span><div class="kpi-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div></div><div class="kpi-value">'+fmt(imp)+'</div><div class="kpi-sub">Google Search</div></div>'
+    +'<div class="kpi-card"><div class="kpi-header"><span class="kpi-label">Clics</span><div class="kpi-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div><div class="kpi-value">'+fmt(clk)+'</div><div class="kpi-sub">CTR: '+fmtPct(ctr)+'</div></div>'
+    +'<div class="kpi-card"><div class="kpi-header"><span class="kpi-label">Depenses</span><div class="kpi-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div></div><div class="kpi-value">'+fmtE(cost)+'</div><div class="kpi-sub">CPC moy: '+(clk?fmtE(cpc):'--')+'</div></div>';
+}
+
+/* ── OVERVIEW CHARTS ── */
+function renderOverviewCharts(){
+  const dates=Object.keys(gadsByDate).sort();
+  const labels=dates.map(d=>{const p=d.split('-');return p[2]+'/'+p[1]});
+  makeChart('chartClkDay','bar',labels,[{label:'Clics',data:dates.map(d=>gadsByDate[d].clicks),backgroundColor:'rgba(66,133,244,0.5)',borderColor:'#4285f4',borderWidth:1,borderRadius:3}]);
+  makeChart('chartImpDay','bar',labels,[{label:'Impressions',data:dates.map(d=>gadsByDate[d].impressions),backgroundColor:'rgba(52,168,83,0.5)',borderColor:'#34a853',borderWidth:1,borderRadius:3}]);
+}
+
+function makeChart(id,type,labels,datasets,scaleOpts={},extra={}){
+  if(charts[id]){charts[id].destroy();delete charts[id]}
+  const ctx=document.getElementById(id);if(!ctx)return;
+  const isDoughnut=type==='doughnut';
+  const config={type,data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:isDoughnut},tooltip:{backgroundColor:'#1a1a1a',titleFont:{size:11},bodyFont:{size:11},padding:10,cornerRadius:8}},scales:isDoughnut?{}:{x:{grid:{display:false},ticks:{font:{size:10},maxRotation:0,autoSkip:true,maxTicksLimit:15}},y:{grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{size:10}}}}},...extra};
+  charts[id]=new Chart(ctx,config);
+}
+
+/* ── GOOGLE ADS DETAIL PAGE ── */
+function renderGadsPage(){
+  const el=document.getElementById('gadsKpis');if(!el)return;
+  let imp=0,clk=0,cost=0;
+  gadsRows.forEach(r=>{imp+=pN(r['Impressions']);clk+=pN(r['Clicks']);cost+=pN(r['Cost (EUR)'])});
+  const ctr=imp?clk/imp*100:0;const cpc=clk?cost/clk:0;
+  el.innerHTML=
+    '<div class="kpi-card"><div class="kpi-header"><span class="kpi-label">Impressions</span><div class="kpi-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div></div><div class="kpi-value">'+fmt(imp)+'</div></div>'
+    +'<div class="kpi-card"><div class="kpi-header"><span class="kpi-label">Clics</span><div class="kpi-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div><div class="kpi-value">'+fmt(clk)+'</div></div>'
+    +'<div class="kpi-card"><div class="kpi-header"><span class="kpi-label">Depenses</span><div class="kpi-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div></div><div class="kpi-value">'+fmtE(cost)+'</div></div>'
+    +'<div class="kpi-card"><div class="kpi-header"><span class="kpi-label">CPC moyen</span><div class="kpi-icon gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div></div><div class="kpi-value">'+(clk?fmtE(cpc):'--')+'</div></div>'
+    +'<div class="kpi-card"><div class="kpi-header"><span class="kpi-label">CTR</span><div class="kpi-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div></div><div class="kpi-value">'+fmtPct(ctr)+'</div></div>';
+  const dates=Object.keys(gadsByDate).sort();
+  const labels=dates.map(d=>{const p=d.split('-');return p[2]+'/'+p[1]});
+  makeChart('chartGadsImp','bar',labels,[{label:'Impressions',data:dates.map(d=>gadsByDate[d].impressions),backgroundColor:'rgba(52,168,83,0.5)',borderColor:'#34a853',borderWidth:1,borderRadius:3}]);
+  makeChart('chartGadsClk','bar',labels,[{label:'Clics',data:dates.map(d=>gadsByDate[d].clicks),backgroundColor:'rgba(66,133,244,0.5)',borderColor:'#4285f4',borderWidth:1,borderRadius:3}]);
+  makeChart('chartGadsCost','line',labels,[{label:'Depenses (EUR)',data:dates.map(d=>gadsByDate[d].cost),borderColor:'#ea4335',backgroundColor:'rgba(234,67,53,0.08)',fill:true,tension:.3,pointRadius:2}]);
+  const thead=document.querySelector('#gadsTable thead');
+  thead.innerHTML='<tr><th>Date</th><th>Impressions</th><th>Clics</th><th>CTR</th><th>CPC</th><th>Depenses</th></tr>';
+  const tbody=document.querySelector('#gadsTable tbody');tbody.innerHTML='';
+  let tI=0,tC=0,tCo=0;
+  const sorted=[...gadsRows].sort((a,b)=>(a['Date']||'').localeCompare(b['Date']||''));
+  sorted.forEach(r=>{
+    const i=pN(r['Impressions']),c=pN(r['Clicks']),co=pN(r['Cost (EUR)']);
+    tI+=i;tC+=c;tCo+=co;
+    const ctr2=i?fmtPct(c/i*100):'--';const cpc2=c?fmtE(co/c):'--';
+    tbody.innerHTML+='<tr><td>'+r['Date']+'</td><td>'+fmt(i)+'</td><td>'+fmt(c)+'</td><td>'+ctr2+'</td><td>'+cpc2+'</td><td class="cost">'+fmtE(co)+'</td></tr>';
+  });
+  const tCtr=tI?fmtPct(tC/tI*100):'--';const tCpc=tC?fmtE(tCo/tC):'--';
+  document.querySelector('#gadsTable tfoot').innerHTML='<tr><td>Total ('+sorted.length+' jours)</td><td>'+fmt(tI)+'</td><td>'+fmt(tC)+'</td><td>'+tCtr+'</td><td>'+tCpc+'</td><td class="cost">'+fmtE(tCo)+'</td></tr>';
+}
+
+/* ── CALENDAR PAGE ── */
+function changeMonth(delta){const idx=allMonths.indexOf(currentMonth);const ni=idx+delta;if(ni<0||ni>=allMonths.length)return;currentMonth=allMonths[ni];renderCalendar()}
+function renderCalendar(){
+  if(!currentMonth)return;
+  const [y,m]=currentMonth.split('-').map(Number);
+  const daysInMonth=new Date(y,m,0).getDate();
+  const monthName=MONTHS_FR[m-1]+' '+y;
+  document.getElementById('calTitle').textContent=monthName;
+  const idx=allMonths.indexOf(currentMonth);
+  document.getElementById('calPrev').disabled=(idx<=0);
+  document.getElementById('calNext').disabled=(idx>=allMonths.length-1);
+  document.querySelector('#calTable thead').innerHTML='<tr><th>Jour</th><th>Impressions</th><th>Clics</th><th>CTR</th><th>CPC</th><th>Depenses</th></tr>';
+  const tbody=document.querySelector('#calTable tbody');tbody.innerHTML='';
+  const totals={imp:0,clk:0,cost:0};
+  for(let day=1;day<=daysInMonth;day++){
+    const ds=y+'-'+String(m).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+    const dd=gadsByDate[ds];
+    const imp=dd?dd.impressions:0,clk=dd?dd.clicks:0,cost=dd?dd.cost:0;
+    const has=imp>0||clk>0||cost>0;
+    if(has){totals.imp+=imp;totals.clk+=clk;totals.cost+=cost}
+    const dl=String(day).padStart(2,'0')+' '+MONTHS_FR[m-1].substring(0,3);
+    const ctr=imp?fmtPct(clk/imp*100):'--';const cpc=clk?fmtE(cost/clk):'--';
+    tbody.innerHTML+='<tr'+(has?'':' style="opacity:.4"')+'><td>'+dl+'</td><td>'+(has?fmt(imp):'-')+'</td><td>'+(has?fmt(clk):'-')+'</td><td>'+(has?ctr:'-')+'</td><td>'+(has?cpc:'-')+'</td><td class="cost">'+(has?fmtE(cost):'-')+'</td></tr>';
+  }
+  const tCtr=totals.imp?fmtPct(totals.clk/totals.imp*100):'--';const tCpc=totals.clk?fmtE(totals.cost/totals.clk):'--';
+  document.querySelector('#calTable tfoot').innerHTML='<tr><td>Total '+monthName+'</td><td>'+fmt(totals.imp)+'</td><td>'+fmt(totals.clk)+'</td><td>'+tCtr+'</td><td>'+tCpc+'</td><td class="cost">'+fmtE(totals.cost)+'</td></tr>';
+}
+
+/* ══ DATE PICKER ══ */
+function daysInMonthDP(yr,mo){return new Date(yr,mo+1,0).getDate()}
+function firstDayOfMonth(yr,mo){const d=new Date(yr,mo,1).getDay();return d===0?6:d-1}
+
+function getDpLabel(){
+  if(dpMode==='annual')return'Cumul annuel \u2014 '+dpYear;
+  const yr=parseInt(dpYear);
+  if(dpSelStart&&dpSelEnd){
+    const s=dpSelStart,e=dpSelEnd;
+    const sL=s.day+' '+MONTH_SHORT[s.month],eL=e.day+' '+MONTH_SHORT[e.month];
+    if(s.year===e.year&&s.month===e.month&&s.day===e.day)return sL+' '+s.year;
+    return sL+' \u2014 '+eL+' '+e.year;
+  }
+  const sd=dpStart.day+1,ed=dpEnd.day+1;
+  if(dpStart.day===0&&dpEnd.day>=daysInMonthDP(yr,dpEnd.month)-1){
+    if(dpStart.month===dpEnd.month)return MONTHS_FR[dpStart.month]+' '+dpYear;
+    return MONTHS_FR[dpStart.month]+' \u2014 '+MONTHS_FR[dpEnd.month]+' '+dpYear;
+  }
+  return sd+' '+MONTH_SHORT[dpStart.month]+' \u2014 '+ed+' '+MONTH_SHORT[dpEnd.month]+' '+dpYear;
+}
+
+function toggleDatePicker(){
+  dpOpen=!dpOpen;
+  document.getElementById('calDropdown').classList.toggle('show',dpOpen);
+  document.getElementById('calOverlay').classList.toggle('show',dpOpen);
+  document.getElementById('dpTrigger').classList.toggle('open',dpOpen);
+  if(dpOpen){dpViewYear=parseInt(dpYear);dpViewMonth=dpMode==='range'?dpStart.month-(dpStart.month%2):0;renderDP()}
+}
+function closeDatePicker(){
+  dpOpen=false;
+  document.getElementById('calDropdown').classList.remove('show');
+  document.getElementById('calOverlay').classList.remove('show');
+  document.getElementById('dpTrigger').classList.remove('open');
+}
+function dpNav(delta){
+  dpViewMonth+=delta;
+  if(dpViewMonth<0){dpViewMonth+=12;dpViewYear--}
+  if(dpViewMonth>10){dpViewMonth-=12;dpViewYear++}
+  if(dpViewYear<2025){dpViewYear=2025;dpViewMonth=0}
+  if(dpViewYear>2026){dpViewYear=2026;dpViewMonth=10}
+  renderDP();
+}
+function dpSwitchYear(y){
+  dpYear=y;dpViewYear=parseInt(y);dpViewMonth=0;
+  dpSelStart=null;dpSelEnd=null;dpMode='annual';
+  document.querySelectorAll('.cal-year-tab').forEach(b=>b.classList.toggle('active',b.textContent===y));
+  updateDpUI();renderDP();
+}
+function dpPreset(p){
+  dpYear=String(dpViewYear);const yr=dpViewYear;
+  dpSelStart=null;dpSelEnd=null;
+  if(p==='annual'){dpMode='annual'}
+  else{dpMode='range';let fm,tm;
+    if(p==='t1'){fm=0;tm=2}else if(p==='t2'){fm=3;tm=5}else if(p==='t3'){fm=6;tm=8}else if(p==='t4'){fm=9;tm=11}else if(p==='s1'){fm=0;tm=5}else if(p==='s2'){fm=6;tm=11}
+    dpStart={month:fm,day:0};dpEnd={month:tm,day:daysInMonthDP(yr,tm)-1};
+  }
+  updateDpUI();renderDP();
+}
+function dpDayClick(year,month,day){
+  dpYear=String(year);dpMode='range';
+  if(!dpSelStart||dpSelEnd){dpSelStart={year,month,day};dpSelEnd=null}
+  else{dpSelEnd={year,month,day};
+    const sv=dpSelStart.year*10000+dpSelStart.month*100+dpSelStart.day;
+    const ev=dpSelEnd.year*10000+dpSelEnd.month*100+dpSelEnd.day;
+    if(sv>ev){const tmp=dpSelStart;dpSelStart=dpSelEnd;dpSelEnd=tmp}
+    dpStart={month:dpSelStart.month,day:dpSelStart.day-1};dpEnd={month:dpSelEnd.month,day:dpSelEnd.day-1};
+  }
+  document.querySelectorAll('.cal-year-tab').forEach(b=>b.classList.toggle('active',b.textContent===dpYear));
+  updateDpUI();renderDP();
+}
+function dpApply(){
+  document.getElementById('dpLabel').textContent=getDpLabel();
+  processData(filterByRange(gadsRowsRaw));
+  renderAll();
+  closeDatePicker();
+}
+function updateDpUI(){
+  document.querySelectorAll('.cal-preset').forEach(el=>el.classList.remove('active'));
+  if(dpMode==='annual'){const el=document.querySelector('.cal-preset[onclick*="annual"]');if(el)el.classList.add('active')}
+  else{const fm=dpStart.month,tm=dpEnd.month,yr=parseInt(dpYear);
+    const full=dpStart.day===0&&dpEnd.day>=daysInMonthDP(yr,tm)-1;
+    if(full){let s=null;if(fm===0&&tm===2)s='t1';else if(fm===3&&tm===5)s='t2';else if(fm===6&&tm===8)s='t3';else if(fm===9&&tm===11)s='t4';else if(fm===0&&tm===5)s='s1';else if(fm===6&&tm===11)s='s2';
+      if(s){const el=document.querySelector('.cal-preset[onclick*="'+s+'"]');if(el)el.classList.add('active')}}}
+  const txt=document.getElementById('dpSelText');if(txt)txt.textContent=getDpLabel();
+}
+function renderDP(){
+  const container=document.getElementById('dpMonths');
+  const title=document.getElementById('dpNavTitle');
+  const m1=dpViewMonth,m2=dpViewMonth+1;
+  const y1=dpViewYear,y2=m2>11?dpViewYear+1:dpViewYear;
+  const m2adj=m2>11?0:m2;
+  title.textContent=y1!==y2?MONTHS_FR[m1]+' '+y1+' \u2014 '+MONTHS_FR[m2adj]+' '+y2:MONTHS_FR[m1]+' \u2014 '+MONTHS_FR[m2adj]+' '+y1;
+  container.innerHTML=renderDPMonth(y1,m1)+renderDPMonth(y2,m2adj);
+  const txt=document.getElementById('dpSelText');if(txt)txt.textContent=getDpLabel();
+}
+function renderDPMonth(year,month){
+  const days=daysInMonthDP(year,month);
+  const firstDay=firstDayOfMonth(year,month);
+  const today=new Date();
+  const isToday=today.getFullYear()===year&&today.getMonth()===month;
+  const cy=parseInt(dpYear);
+  let html='<div class="cal-month"><div class="cal-month-label">'+MONTHS_FR[month]+' '+year+'</div>';
+  html+='<div class="cal-weekdays">'+WEEKDAYS.map(w=>'<div class="cal-wd">'+w+'</div>').join('')+'</div><div class="cal-days">';
+  for(let i=0;i<firstDay;i++)html+='<div class="cal-day empty"></div>';
+  for(let d=1;d<=days;d++){
+    let cls='cal-day';
+    if(isToday&&d===today.getDate())cls+=' today';
+    if(dpSelStart&&dpSelEnd){
+      const dv=year*10000+month*100+d,sv=dpSelStart.year*10000+dpSelStart.month*100+dpSelStart.day,ev=dpSelEnd.year*10000+dpSelEnd.month*100+dpSelEnd.day;
+      if(dv===sv&&dv===ev)cls+=' selected';else if(dv===sv)cls+=' range-start';else if(dv===ev)cls+=' range-end';else if(dv>sv&&dv<ev)cls+=' in-range';
+    }else if(dpSelStart&&!dpSelEnd){
+      const dv=year*10000+month*100+d,sv=dpSelStart.year*10000+dpSelStart.month*100+dpSelStart.day;
+      if(dv===sv)cls+=' selected';
+    }else if(year===cy){
+      if(dpMode==='annual')cls+=' in-range';
+      else{const dv=month*100+d,sv=dpStart.month*100+(dpStart.day+1),ev=dpEnd.month*100+(dpEnd.day+1);
+        if(dv===sv&&dv===ev)cls+=' selected';else if(dv===sv)cls+=' range-start';else if(dv===ev)cls+=' range-end';else if(dv>sv&&dv<ev)cls+=' in-range'}
+    }
+    html+='<div class="'+cls+'" onclick="dpDayClick('+year+','+month+','+d+')">'+d+'</div>';
+  }
+  html+='</div></div>';return html;
+}
+
+/* ── NAVIGATION ── */
+document.querySelectorAll('.nav-item[data-page]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.page-view').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+btn.dataset.page).classList.add('active');
+    document.getElementById('breadcrumb').textContent=btn.textContent.trim();
+    if(window.innerWidth<=768)toggleSidebar();
+  });
+});
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+/* ── INIT ── */
+loadData();
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" width="500" height="150">
+  <defs>
+    <!-- Gradient principal enrichi -->
+    <linearGradient id="p1main" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f46e5"/>
+      <stop offset="30%" style="stop-color:#7c3aed"/>
+      <stop offset="60%" style="stop-color:#a855f7"/>
+      <stop offset="100%" style="stop-color:#d946ef"/>
+    </linearGradient>
+    <!-- Gradient texte -->
+    <linearGradient id="p1text" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7c3aed"/>
+      <stop offset="100%" style="stop-color:#c026d3"/>
+    </linearGradient>
+    <!-- Ombre portée icône -->
+    <filter id="p1shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#7c3aed" flood-opacity="0.35"/>
+    </filter>
+    <!-- Lueur subtile texte -->
+    <filter id="p1glow">
+      <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#a855f7" flood-opacity="0.2"/>
+    </filter>
+    <!-- Reflet brillant sur l'icône -->
+    <linearGradient id="p1shine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.25)"/>
+      <stop offset="50%" style="stop-color:rgba(255,255,255,0)"/>
+    </linearGradient>
+    <!-- Gradient tagline -->
+    <linearGradient id="p1tag" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#94a3b8"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Icône: carré arrondi avec ombre -->
+  <rect x="16" y="18" width="110" height="110" rx="28" fill="url(#p1main)" filter="url(#p1shadow)"/>
+  <!-- Reflet glass sur l'icône -->
+  <rect x="16" y="18" width="110" height="55" rx="28" fill="url(#p1shine)"/>
+
+  <!-- K central premium — path dessiné (pas une police) -->
+  <g transform="translate(71, 73)">
+    <!-- Barre verticale du K -->
+    <rect x="-18" y="-26" width="5.5" height="52" rx="2.8" fill="white"/>
+    <!-- Branche haute du K -->
+    <rect x="-10" y="-26" width="5.5" height="35" rx="2.8" fill="white" transform="rotate(38, -10, -26)"/>
+    <!-- Branche basse du K -->
+    <rect x="-10" y="26" width="5.5" height="35" rx="2.8" fill="white" transform="rotate(-38, -10, 26)"/>
+  </g>
+
+  <!-- Accolades subtiles -->
+  <text x="38" y="93" font-family="'SF Mono', 'Fira Code', monospace" font-size="20" fill="rgba(255,255,255,0.3)" text-anchor="middle">{</text>
+  <text x="104" y="93" font-family="'SF Mono', 'Fira Code', monospace" font-size="20" fill="rgba(255,255,255,0.3)" text-anchor="middle">}</text>
+
+  <!-- Petit point lumineux décoratif -->
+  <circle cx="126" cy="22" r="3" fill="#d946ef" opacity="0.6"/>
+  <circle cx="16" cy="128" r="2" fill="#4f46e5" opacity="0.4"/>
+
+  <!-- Texte principal Kōdify -->
+  <text x="152" y="90" font-family="'Segoe UI', 'SF Pro Display', system-ui, sans-serif" font-size="58" font-weight="800" fill="url(#p1text)" filter="url(#p1glow)" letter-spacing="-1">Kōdify</text>
+
+  <!-- Ligne séparatrice dégradée -->
+  <rect x="154" y="100" width="80" height="2.5" rx="1.2" fill="url(#p1main)" opacity="0.6"/>
+
+  <!-- Tagline premium -->
+  <text x="154" y="122" font-family="'Segoe UI', 'SF Pro Display', system-ui, sans-serif" font-size="13" fill="#94a3b8" letter-spacing="4" font-weight="500">DIGITAL STUDIO</text>
+
+  <!-- Accent décoratif en bas à droite -->
+  <circle cx="475" cy="130" r="20" fill="#7c3aed" opacity="0.04"/>
+  <circle cx="465" cy="15" r="12" fill="#d946ef" opacity="0.04"/>
+</svg>

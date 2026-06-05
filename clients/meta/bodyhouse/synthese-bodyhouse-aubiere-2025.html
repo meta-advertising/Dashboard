@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthèse Annuelle 2025 - Body House Aubière</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pink: #E8A0BF;
+            --pink-light: #F5D0E0;
+            --pink-dark: #C77DA3;
+            --pink-soft: #FDF2F7;
+            --black: #1A1A1A;
+            --gray-dark: #333333;
+            --gray: #666666;
+            --gray-light: #999999;
+            --white: #FFFFFF;
+            --bg-light: #FEFBFC;
+            --success: #7FB685;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.4;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            max-height: 297mm;
+            margin: 0 auto;
+            padding: 18mm 16mm;
+            background: var(--white);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--pink);
+            margin-bottom: 18px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .logo img {
+            height: 28px;
+            width: auto;
+        }
+
+        .brand-text h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--black);
+            letter-spacing: -0.5px;
+        }
+
+        .brand-text p {
+            font-size: 11px;
+            color: var(--gray);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .period-badge {
+            background: var(--pink-soft);
+            border: 1px solid var(--pink-light);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 11px;
+            color: var(--pink-dark);
+            font-weight: 600;
+        }
+
+        /* Key Metrics Section */
+        .metrics-section {
+            margin-bottom: 18px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--pink-dark);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, var(--pink-soft) 0%, var(--white) 100%);
+            border: 1px solid var(--pink-light);
+            border-radius: 12px;
+            padding: 14px 10px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--pink) 0%, var(--pink-light) 100%);
+        }
+
+        .metric-icon {
+            width: 32px;
+            height: 32px;
+            margin: 0 auto 8px;
+            background: rgba(232, 160, 191, 0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .metric-icon svg {
+            width: 16px;
+            height: 16px;
+            color: var(--pink-dark);
+        }
+
+        .metric-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--black);
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        .metric-label {
+            font-size: 9px;
+            color: var(--gray);
+            font-weight: 500;
+            margin-top: 5px;
+            line-height: 1.3;
+        }
+
+        /* Performance Section */
+        .performance-section {
+            margin-bottom: 16px;
+        }
+
+        .campaigns-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .campaign-card {
+            background: var(--pink-soft);
+            border-radius: 12px;
+            padding: 14px;
+            border: 1px solid var(--pink-light);
+        }
+
+        .campaign-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .campaign-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-trafic {
+            background: rgba(232, 160, 191, 0.25);
+            color: var(--pink-dark);
+        }
+
+        .badge-engagement {
+            background: rgba(127, 182, 133, 0.2);
+            color: #4A7C50;
+        }
+
+        .campaign-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .campaign-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .stat-item {
+            background: var(--white);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .stat-label {
+            font-size: 8px;
+            color: var(--gray-light);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        /* Visual Comparison */
+        .comparison-section {
+            background: var(--pink-soft);
+            border-radius: 12px;
+            padding: 14px;
+            border: 1px solid var(--pink-light);
+            margin-top: 12px;
+        }
+
+        .comparison-title {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--gray-dark);
+            margin-bottom: 10px;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bar-label {
+            width: 75px;
+            font-size: 9px;
+            font-weight: 500;
+            color: var(--gray);
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 20px;
+            background: #F0E4E9;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+        }
+
+        .bar-fill-pink {
+            background: linear-gradient(90deg, var(--pink) 0%, var(--pink-light) 100%);
+        }
+
+        .bar-fill-green {
+            background: linear-gradient(90deg, #7FB685 0%, #A8D5AE 100%);
+        }
+
+        .bar-value {
+            font-size: 8px;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* Highlights Section */
+        .highlights-section {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 12px;
+        }
+
+        .highlights-card {
+            background: linear-gradient(145deg, var(--black) 0%, #2A2A2A 100%);
+            border-radius: 12px;
+            padding: 16px;
+            color: var(--white);
+        }
+
+        .highlights-title {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--pink-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .highlight-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight-icon {
+            width: 22px;
+            height: 22px;
+            background: rgba(232, 160, 191, 0.2);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .highlight-icon svg {
+            width: 11px;
+            height: 11px;
+            color: var(--pink);
+        }
+
+        .highlight-text {
+            font-size: 9px;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .highlight-text strong {
+            color: var(--pink-light);
+        }
+
+        /* ROI Card */
+        .roi-card {
+            background: linear-gradient(145deg, var(--pink) 0%, var(--pink-dark) 100%);
+            border-radius: 12px;
+            padding: 16px;
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .roi-title {
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .roi-main {
+            margin-bottom: 10px;
+        }
+
+        .roi-value {
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .roi-label {
+            font-size: 9px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        .roi-detail {
+            font-size: 8px;
+            opacity: 0.85;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 10px;
+            line-height: 1.5;
+        }
+
+        /* CTR Badge */
+        .ctr-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 8px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .ctr-badge svg {
+            width: 10px;
+            height: 10px;
+        }
+
+        /* Chart Section */
+        .chart-section {
+            margin-top: 14px;
+        }
+
+        .section-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .section-header-row .section-title {
+            margin-bottom: 0;
+        }
+
+        .budget-badge {
+            background: linear-gradient(135deg, var(--pink) 0%, var(--pink-dark) 100%);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .budget-badge strong {
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1.8fr;
+            gap: 16px;
+            background: var(--pink-soft);
+            border: 1px solid var(--pink-light);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .chart-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .donut-chart {
+            width: 90px;
+            height: 90px;
+        }
+
+        .donut-chart svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 8px;
+            color: var(--gray);
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .chart-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .efficiency-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .eff-item {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .eff-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .eff-label {
+            font-size: 9px;
+            font-weight: 500;
+            color: var(--gray-dark);
+        }
+
+        .eff-value {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .eff-bar-bg {
+            height: 6px;
+            background: #E8E0E4;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .eff-bar {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .eff-note {
+            font-size: 7px;
+            color: var(--gray-light);
+            font-style: italic;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 16px;
+            padding-top: 10px;
+            border-top: 1px solid var(--pink-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 9px;
+            color: var(--gray-light);
+        }
+
+        .footer-brand {
+            font-size: 9px;
+            color: var(--pink-dark);
+            font-weight: 600;
+        }
+
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .page {
+                margin: 0;
+                padding: 12mm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-section">
+                <div class="logo">
+                    <img src="https://bodyhouse.fr/themes/ARPA3-BodyHouse/assets/img/header/logo.svg" alt="Body House">
+                </div>
+                <div class="brand-text">
+                    <h1>Boutique Aubière</h1>
+                    <p>Synthèse Annuelle des Performances Digitales</p>
+                </div>
+            </div>
+            <div class="period-badge">
+                Année 2025
+            </div>
+        </header>
+
+        <!-- Key Metrics -->
+        <section class="metrics-section">
+            <h2 class="section-title">Chiffres Clés</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value">1 019 056</div>
+                    <div class="metric-label">Interactions générées<br>sur Instagram</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value">586 039</div>
+                    <div class="metric-label">Personnes touchées<br>sur le territoire</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                            <polyline points="10 17 15 12 10 7"/>
+                            <line x1="15" y1="12" x2="3" y2="12"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value">36 927</div>
+                    <div class="metric-label">Clics générés<br>au total</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <circle cx="12" cy="10" r="3"/>
+                            <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value">17 017</div>
+                    <div class="metric-label">Visites du profil<br>Instagram</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <line x1="19" y1="8" x2="19" y2="14"/>
+                            <line x1="22" y1="11" x2="16" y2="11"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value">+907</div>
+                    <div class="metric-label">Nouveaux abonnés<br>Instagram</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Section -->
+        <section class="performance-section">
+            <h2 class="section-title">Performance des Campagnes</h2>
+            <div class="campaigns-grid">
+                <!-- Trafic Campaign -->
+                <div class="campaign-card">
+                    <div class="campaign-header">
+                        <span class="campaign-badge badge-trafic">Trafic</span>
+                        <span class="campaign-title">Visites Instagram</span>
+                    </div>
+                    <div class="campaign-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">17 017</div>
+                            <div class="stat-label">Visites générées</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">158 467</div>
+                            <div class="stat-label">Couverture</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">0,15 €</div>
+                            <div class="stat-label">Coût / visite</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">3,74%</div>
+                            <div class="stat-label">Taux de clic</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Engagement Campaign -->
+                <div class="campaign-card">
+                    <div class="campaign-header">
+                        <span class="campaign-badge badge-engagement">Engagement</span>
+                        <span class="campaign-title">Interactions</span>
+                    </div>
+                    <div class="campaign-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">1 019 056</div>
+                            <div class="stat-label">Interactions</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">427 572</div>
+                            <div class="stat-label">Couverture</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">0,01 €</div>
+                            <div class="stat-label">Coût / interaction</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">4,31</div>
+                            <div class="stat-label">Fréquence moy.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Comparison -->
+            <div class="comparison-section">
+                <div class="comparison-title">Répartition de la Couverture & Performance</div>
+                <div class="bar-chart">
+                    <div class="bar-item">
+                        <span class="bar-label">Engagement</span>
+                        <div class="bar-container">
+                            <div class="bar-fill bar-fill-green" style="width: 73%;">
+                                <span class="bar-value">427 572 personnes • 1 019 056 interactions</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-item">
+                        <span class="bar-label">Trafic</span>
+                        <div class="bar-container">
+                            <div class="bar-fill bar-fill-pink" style="width: 27%;">
+                                <span class="bar-value">158 467 personnes • 17 017 visites</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Highlights & ROI -->
+        <section class="highlights-section">
+            <div class="highlights-card">
+                <h3 class="highlights-title">Points Clés 2025</h3>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                            <polyline points="17 6 23 6 23 12"/>
+                        </svg>
+                    </div>
+                    <p class="highlight-text">
+                        <strong>Engagement :</strong> Plus d'un million d'interactions générées à 0,01€ l'unité, avec un contenu qui résonne auprès de l'audience locale
+                    </p>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <p class="highlight-text">
+                        <strong>Taux de clic :</strong> 3,74% obtenu sur la campagne trafic, au-dessus de la moyenne du secteur (1-2%)
+                    </p>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <p class="highlight-text">
+                        <strong>Visibilité locale :</strong> 586 039 personnes touchées sur la zone de chalandise d'Aubière
+                    </p>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <line x1="19" y1="8" x2="19" y2="14"/>
+                            <line x1="22" y1="11" x2="16" y2="11"/>
+                        </svg>
+                    </div>
+                    <p class="highlight-text">
+                        <strong>Croissance :</strong> 907 nouveaux abonnés Instagram acquis sur l'année
+                    </p>
+                </div>
+            </div>
+
+            <div class="roi-card">
+                <div class="roi-title">Performance Coût</div>
+                <div class="roi-main">
+                    <div class="roi-value">0,01€</div>
+                    <div class="roi-label">par interaction</div>
+                </div>
+                <div class="roi-detail">
+                    Coût d'acquisition optimisé permettant une visibilité large avec un budget maîtrisé.
+                    <div class="ctr-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        CTR 3,74% • 2x la moyenne
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chart Section -->
+        <section class="chart-section">
+            <div class="section-header-row">
+                <h2 class="section-title">Efficacité des Investissements</h2>
+                <div class="budget-badge">Budget Meta 2025 : <strong>10 100 €</strong></div>
+            </div>
+            <div class="chart-container">
+                <div class="chart-left">
+                    <div class="donut-chart">
+                        <svg viewBox="0 0 100 100">
+                            <!-- Background circle -->
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#F0E4E9" stroke-width="12"/>
+                            <!-- Engagement segment (73%) -->
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#7FB685" stroke-width="12"
+                                stroke-dasharray="183.6 251.2" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+                            <!-- Trafic segment (27%) -->
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#E8A0BF" stroke-width="12"
+                                stroke-dasharray="67.8 251.2" stroke-dashoffset="-183.6" transform="rotate(-90 50 50)"/>
+                            <!-- Center text -->
+                            <text x="50" y="46" text-anchor="middle" font-size="10" font-weight="700" fill="#1A1A1A">586 039</text>
+                            <text x="50" y="58" text-anchor="middle" font-size="5" fill="#666">personnes touchées</text>
+                        </svg>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background: #7FB685;"></span>
+                            <span>Engagement (73%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background: #E8A0BF;"></span>
+                            <span>Trafic (27%)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-right">
+                    <div class="efficiency-bars">
+                        <div class="eff-item">
+                            <div class="eff-header">
+                                <span class="eff-label">Coût par interaction</span>
+                                <span class="eff-value">0,01 €</span>
+                            </div>
+                            <div class="eff-bar-bg">
+                                <div class="eff-bar" style="width: 5%; background: #7FB685;"></div>
+                            </div>
+                            <span class="eff-note">Référence secteur : 0,05-0,10 €</span>
+                        </div>
+                        <div class="eff-item">
+                            <div class="eff-header">
+                                <span class="eff-label">Coût par visite profil</span>
+                                <span class="eff-value">0,15 €</span>
+                            </div>
+                            <div class="eff-bar-bg">
+                                <div class="eff-bar" style="width: 30%; background: #E8A0BF;"></div>
+                            </div>
+                            <span class="eff-note">Référence secteur : 0,30-0,50 €</span>
+                        </div>
+                        <div class="eff-item">
+                            <div class="eff-header">
+                                <span class="eff-label">Taux de clic (CTR)</span>
+                                <span class="eff-value">3,74 %</span>
+                            </div>
+                            <div class="eff-bar-bg">
+                                <div class="eff-bar" style="width: 75%; background: linear-gradient(90deg, #E8A0BF, #7FB685);"></div>
+                            </div>
+                            <span class="eff-note">Référence secteur : 1-2 %</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <span class="footer-text">Données Meta Ads • Année 2025</span>
+            <span class="footer-brand">bodyhouse.fr</span>
+        </footer>
+    </div>
+</body>
+</html>

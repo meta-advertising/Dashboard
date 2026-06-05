@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koven Agency × L'Empire du 8ème & Monkey Pigalle — Présentation Stratégie Digitale</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --koven-black: #1a1a1a;
+  --koven-orange: #f7933b;
+  --koven-beige: #e9dfc8;
+  --koven-white: #fafafa;
+  --empire-gold: #d4a843;
+  --monkey-green: #1a3a2a;
+  --monkey-gold: #c9a94e;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--koven-black);
+  color: var(--koven-white);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ========== SLIDE SYSTEM ========== */
+.slides-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 80px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+  overflow-y: auto;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0) !important;
+  pointer-events: all;
+}
+
+/* ========== NAVIGATION ========== */
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 60px;
+  background: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 100;
+  border-top: 1px solid rgba(247, 147, 59, 0.2);
+}
+
+.nav-bar .slide-counter {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 2px;
+}
+
+.nav-btn {
+  background: rgba(247, 147, 59, 0.15);
+  border: 1px solid rgba(247, 147, 59, 0.3);
+  color: var(--koven-orange);
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.3s;
+}
+
+.nav-btn:hover {
+  background: var(--koven-orange);
+  color: var(--koven-black);
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--koven-orange), var(--empire-gold));
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 101;
+}
+
+/* ========== TYPOGRAPHY ========== */
+.slide-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--koven-orange);
+  margin-bottom: 20px;
+}
+
+.slide-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 24px;
+  max-width: 900px;
+  text-align: center;
+}
+
+.slide-subtitle {
+  font-size: 18px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.7);
+  max-width: 650px;
+  text-align: center;
+  line-height: 1.7;
+}
+
+.highlight { color: var(--koven-orange); }
+.highlight-gold { color: var(--empire-gold); }
+.highlight-green { color: var(--monkey-gold); }
+
+/* ========== LOGOS ========== */
+.cover-logos {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 40px;
+}
+
+.logo-img {
+  object-fit: contain;
+  display: block;
+}
+
+.logo-img.koven-logo { height: 65px; }
+.logo-img.monkey-logo {
+  height: 80px;
+  border-radius: 12px;
+}
+.logo-img.logo-sm.koven-logo { height: 50px; }
+.logo-img.logo-sm.monkey-logo { height: 65px; border-radius: 10px; }
+
+.cover-x { color: rgba(255,255,255,0.3); font-size: 20px; font-weight: 300; }
+
+.cover-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 60px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+
+.cover-line {
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--koven-orange), var(--empire-gold));
+  margin: 0 auto 24px;
+  border-radius: 2px;
+}
+
+.cover-meta {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ========== DUAL BRAND ========== */
+.dual-brand {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.brand-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 28px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+}
+
+.brand-block.empire {
+  border-color: rgba(212, 168, 67, 0.3);
+  background: rgba(212, 168, 67, 0.06);
+}
+
+.brand-block.monkey {
+  border-color: rgba(201, 169, 78, 0.3);
+  background: rgba(26, 58, 42, 0.4);
+}
+
+.brand-block .brand-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.brand-block.empire .brand-label { color: var(--empire-gold); }
+.brand-block.monkey .brand-label { color: var(--monkey-gold); }
+
+.brand-ampersand {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: rgba(255,255,255,0.3);
+  font-style: italic;
+}
+
+/* ========== CARDS GRID ========== */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 10px;
+}
+
+.card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 32px 28px;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--koven-orange), var(--empire-gold));
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(247, 147, 59, 0.3);
+  transform: translateY(-4px);
+}
+
+.card:hover::before { opacity: 1; }
+
+.card-icon {
+  font-size: 36px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--koven-white);
+}
+
+.card-text {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.7;
+}
+
+/* ========== STATS ROW ========== */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 30px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 30px 20px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.stat-number {
+  font-size: 48px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--koven-orange), var(--empire-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 8px;
+}
+
+/* ========== ABOUT GRID ========== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  width: 100%;
+  max-width: 1050px;
+  margin-top: 10px;
+}
+
+.about-box {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 36px 32px;
+}
+
+.about-box h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.about-box p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.8;
+}
+
+.about-box ul {
+  list-style: none;
+  margin-top: 12px;
+}
+
+.about-box ul li {
+  padding: 6px 0;
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.about-box ul li::before {
+  content: '\2192';
+  color: var(--koven-orange);
+  font-weight: 700;
+}
+
+/* ========== KOVEN DETAIL CARD ========== */
+.koven-detail {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 1050px;
+}
+
+.koven-detail h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--koven-white);
+}
+
+.koven-detail .detail-subtitle {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.koven-detail ul {
+  list-style: none;
+  columns: 2;
+  column-gap: 40px;
+}
+
+.koven-detail ul li {
+  padding: 5px 0;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  break-inside: avoid;
+}
+
+.koven-detail ul li::before {
+  content: '\2014';
+  color: var(--koven-orange);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ========== STYLED LIST ========== */
+.styled-list {
+  list-style: none;
+  max-width: 700px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.styled-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.6;
+}
+
+.styled-list li .list-icon {
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  background: rgba(247, 147, 59, 0.15);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--koven-orange);
+  margin-top: 2px;
+}
+
+/* ========== FUNNEL ========== */
+.funnel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  max-width: 800px;
+  margin-top: 20px;
+}
+
+.funnel-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 22px 40px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.4s;
+  text-align: center;
+}
+
+.funnel-step:hover { transform: scale(1.03); }
+
+.funnel-step.step-1 {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(247, 147, 59, 0.2), rgba(247, 147, 59, 0.05));
+  border: 1px solid rgba(247, 147, 59, 0.3);
+  color: var(--koven-orange);
+}
+
+.funnel-step.step-2 {
+  width: 82%;
+  background: linear-gradient(135deg, rgba(212, 168, 67, 0.2), rgba(212, 168, 67, 0.05));
+  border: 1px solid rgba(212, 168, 67, 0.3);
+  color: var(--empire-gold);
+}
+
+.funnel-step.step-3 {
+  width: 64%;
+  background: linear-gradient(135deg, rgba(201, 169, 78, 0.2), rgba(201, 169, 78, 0.05));
+  border: 1px solid rgba(201, 169, 78, 0.3);
+  color: var(--monkey-gold);
+}
+
+.funnel-step.step-4 {
+  width: 50%;
+  background: linear-gradient(135deg, rgba(26, 58, 42, 0.5), rgba(26, 58, 42, 0.2));
+  border: 1px solid rgba(201, 169, 78, 0.4);
+  color: var(--monkey-gold);
+}
+
+.funnel-arrow {
+  color: rgba(255,255,255,0.2);
+  font-size: 20px;
+  margin: 4px 0;
+}
+
+/* ========== TIMELINE ========== */
+.timeline {
+  display: flex;
+  gap: 0;
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 20px;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--koven-orange), var(--empire-gold));
+  opacity: 0.3;
+}
+
+.timeline-item {
+  flex: 1;
+  text-align: center;
+  padding: 24px 16px;
+  position: relative;
+}
+
+.timeline-dot {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--koven-orange);
+  margin: 0 auto 16px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 20px rgba(247, 147, 59, 0.4);
+}
+
+.timeline-item:nth-child(2) .timeline-dot { background: var(--empire-gold); }
+.timeline-item:nth-child(3) .timeline-dot { background: var(--monkey-gold); }
+.timeline-item:nth-child(4) .timeline-dot { background: #34a853; }
+
+.timeline-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--koven-orange);
+  margin-bottom: 8px;
+}
+
+.timeline-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.6;
+}
+
+/* ========== CAMPAIGN CARDS ========== */
+.campaign-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 10px;
+}
+
+.campaign-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 36px 28px;
+  text-align: center;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.campaign-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--card-accent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.campaign-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.campaign-card:hover::after { opacity: 1; }
+
+.campaign-card .card-icon {
+  width: 64px; height: 64px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 20px;
+  background: var(--card-bg);
+}
+
+.campaign-card .card-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--koven-white);
+}
+
+.campaign-card .card-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.campaign-card .card-text {
+  font-size: 13px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.6);
+}
+
+.campaign-card.notoriete {
+  --card-accent: var(--koven-orange);
+  --card-bg: rgba(247, 147, 59, 0.12);
+}
+.campaign-card.notoriete .card-tag { color: var(--koven-orange); }
+
+.campaign-card.trafic {
+  --card-accent: var(--empire-gold);
+  --card-bg: rgba(212, 168, 67, 0.12);
+}
+.campaign-card.trafic .card-tag { color: var(--empire-gold); }
+
+.campaign-card.engagement {
+  --card-accent: var(--monkey-gold);
+  --card-bg: rgba(26, 58, 42, 0.3);
+}
+.campaign-card.engagement .card-tag { color: var(--monkey-gold); }
+
+/* Google Ads specific */
+.campaign-card.google-search {
+  --card-accent: #4285f4;
+  --card-bg: rgba(66, 133, 244, 0.12);
+}
+.campaign-card.google-search .card-tag { color: #4285f4; }
+
+.campaign-card.google-local {
+  --card-accent: #34a853;
+  --card-bg: rgba(52, 168, 83, 0.12);
+}
+.campaign-card.google-local .card-tag { color: #34a853; }
+
+.campaign-card.google-display {
+  --card-accent: #fbbc04;
+  --card-bg: rgba(251, 188, 4, 0.12);
+}
+.campaign-card.google-display .card-tag { color: #fbbc04; }
+
+/* ========== TRACKING DASHBOARD ========== */
+.tracking-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 20px;
+}
+
+.tracking-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tracking-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: var(--track-color, var(--koven-orange));
+  border-radius: 0 4px 4px 0;
+}
+
+.tracking-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  padding-left: 12px;
+}
+
+.tracking-card .track-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  padding-left: 12px;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.kpi-row {
+  display: flex;
+  gap: 12px;
+  padding-left: 12px;
+  flex-wrap: wrap;
+}
+
+.kpi-badge {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 10px 16px;
+  text-align: center;
+  flex: 1;
+  min-width: 80px;
+}
+
+.kpi-badge .kpi-val {
+  font-size: 20px;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.kpi-badge .kpi-name {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+.tracking-card.track-meta { --track-color: var(--koven-orange); }
+.tracking-card.track-meta h4 { color: var(--koven-orange); }
+.tracking-card.track-meta .kpi-val { color: var(--koven-orange); }
+
+.tracking-card.track-google { --track-color: #4285f4; }
+.tracking-card.track-google h4 { color: #4285f4; }
+.tracking-card.track-google .kpi-val { color: #4285f4; }
+
+.tracking-card.track-social { --track-color: var(--monkey-gold); }
+.tracking-card.track-social h4 { color: var(--monkey-gold); }
+.tracking-card.track-social .kpi-val { color: var(--monkey-gold); }
+
+.tracking-card.track-revenue { --track-color: #34a853; }
+.tracking-card.track-revenue h4 { color: #34a853; }
+.tracking-card.track-revenue .kpi-val { color: #34a853; }
+
+/* ========== TRACKING PROCESS ========== */
+.tracking-process {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 24px;
+}
+
+.process-step {
+  flex: 1;
+  text-align: center;
+  padding: 20px 12px;
+  position: relative;
+}
+
+.process-icon {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin: 0 auto 12px;
+  background: rgba(247, 147, 59, 0.12);
+  border: 1px solid rgba(247, 147, 59, 0.25);
+}
+
+.process-step h5 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--koven-white);
+}
+
+.process-step p {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.5;
+}
+
+.process-arrow {
+  font-size: 20px;
+  color: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+
+/* ========== CTA SLIDE ========== */
+.cta-box {
+  background: linear-gradient(135deg, rgba(247, 147, 59, 0.08), rgba(212, 168, 67, 0.05));
+  border: 1px solid rgba(247, 147, 59, 0.2);
+  border-radius: 28px;
+  padding: 50px 60px;
+  text-align: center;
+  max-width: 750px;
+  width: 100%;
+}
+
+.cta-box .slide-title { font-size: 42px; margin-bottom: 16px; }
+.cta-box .slide-subtitle { margin: 0 auto; }
+
+.questions-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(255,255,255,0.5);
+  margin-top: 30px;
+}
+
+/* ========== DECORATIVE ========== */
+.bg-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(150px);
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.glow-orange { background: var(--koven-orange); top: -100px; right: -100px; }
+.glow-gold { background: var(--empire-gold); bottom: -100px; left: -100px; }
+.glow-green { background: var(--monkey-green); bottom: -100px; right: -100px; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .slide { padding: 40px 30px; }
+  .cover-title, .slide-title { font-size: 36px; }
+  .about-grid { grid-template-columns: 1fr; gap: 30px; }
+  .campaign-cards { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr; }
+  .timeline { flex-direction: column; }
+  .timeline::before { display: none; }
+  .koven-detail ul { columns: 1; }
+  .tracking-grid { grid-template-columns: 1fr; }
+  .tracking-process { flex-direction: column; }
+}
+
+/* ========== PRINT ========== */
+@media print {
+  .nav-bar, .progress-bar { display: none !important; }
+  .slide {
+    position: relative !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    pointer-events: all !important;
+    page-break-after: always;
+    height: auto;
+    min-height: 100vh;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="slides-container" id="slidesContainer">
+
+  <!-- ==================== SLIDE 1 : COVER ==================== -->
+  <div class="slide active" data-slide="1">
+    <div class="bg-glow glow-orange"></div>
+    <div class="bg-glow glow-gold"></div>
+    <div class="cover-logos">
+      <img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven Agency" class="logo-img koven-logo">
+    </div>
+    <div class="dual-brand">
+      <div class="brand-block empire">
+        <span class="brand-label">L'Empire du 8ème</span>
+      </div>
+      <span class="brand-ampersand">&</span>
+      <div class="brand-block monkey">
+        <img src="https://www.monkeypigalle.com/wp-content/uploads/go-x/u/f6de2ca5-b78b-44c5-b463-5617323d114a/image-455x455.jpg" alt="Monkey Pigalle" style="height:55px;border-radius:8px;">
+      </div>
+    </div>
+    <div class="cover-title">Stratégie Digitale<br><span class="highlight">& Croissance</span></div>
+    <div class="cover-line"></div>
+    <p class="slide-subtitle">Accompagnement marketing digital personnalisé pour développer la visibilité, l'affluence et le chiffre d'affaires de vos deux établissements parisiens.</p>
+    <br>
+    <p class="cover-meta">Mars 2026 — Proposition d'accompagnement</p>
+  </div>
+
+  <!-- ==================== SLIDE 2 : QUI EST KOVEN ==================== -->
+  <div class="slide" data-slide="2">
+    <div class="bg-glow glow-gold"></div>
+    <span class="slide-label">Qui sommes-nous</span>
+    <img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven Agency" class="logo-img logo-sm koven-logo" style="margin-bottom:20px;">
+    <h2 class="slide-title"><span class="highlight">Koven Agency</span></h2>
+    <p class="slide-subtitle" style="margin-bottom:30px;">Agence spécialisée en marketing digital, acquisition de trafic et croissance. Plus de 50 projets accompagnés avec une approche 100% orientée résultats.</p>
+    <div class="about-grid">
+      <div class="about-box" style="border-color:rgba(247,147,59,0.2);">
+        <h3 style="color:var(--koven-orange);">Acquisition & Visibilité</h3>
+        <ul>
+          <li>Campagnes Meta Ads (Instagram & Facebook) et Google Ads</li>
+          <li>SEO local et référencement naturel</li>
+          <li>Stratégie de contenu et création de visuels</li>
+          <li>Gestion de communauté et social media management</li>
+          <li>Influence marketing et partenariats stratégiques</li>
+        </ul>
+      </div>
+      <div class="about-box" style="border-color:rgba(212,168,67,0.2);">
+        <h3 style="color:var(--empire-gold);">Performance & Data</h3>
+        <ul>
+          <li>Tableaux de bord personnalisés en temps réel</li>
+          <li>Optimisation continue du ROI et du ROAS</li>
+          <li>Tests A/B et itérations data-driven</li>
+          <li>Suivi KPI : CPA, CTR, taux de conversion</li>
+          <li>Reporting mensuel détaillé et recommandations</li>
+        </ul>
+      </div>
+    </div>
+    <div class="koven-detail" style="margin-top:24px;">
+      <h3>Ils nous font confiance</h3>
+      <p class="detail-subtitle">Des entreprises de toutes tailles, du commerce local aux enseignes nationales :</p>
+      <ul>
+        <li>Casino Supermarchés — Campagnes d'acquisition locale multi-points de vente</li>
+        <li>Mon Extension Bois — Génération de leads qualifiés et scaling national</li>
+        <li>Body Addiction — Stratégie social media et développement e-commerce</li>
+        <li>Ash — Notoriété de marque et campagnes Meta Ads à fort engagement</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 3 : VOS ÉTABLISSEMENTS ==================== -->
+  <div class="slide" data-slide="3">
+    <div class="bg-glow glow-orange"></div>
+    <span class="slide-label">Vos établissements</span>
+    <h2 class="slide-title"><span class="highlight-gold">L'Empire du 8ème</span> & <span class="highlight-green">Monkey Pigalle</span></h2>
+    <p class="slide-subtitle" style="margin-bottom:36px;">Deux adresses parisiennes, une même vision : offrir des expériences uniques à une clientèle exigeante dans deux quartiers emblématiques de Paris.</p>
+    <div class="about-grid">
+      <div class="about-box" style="border-color:rgba(212,168,67,0.3);">
+        <h3 style="color:var(--empire-gold);">L'Empire du 8ème</h3>
+        <ul>
+          <li>Emplacement premium dans le 8e arrondissement</li>
+          <li>Quartier à forte affluence et clientèle CSP+</li>
+          <li>Ambiance raffinée et cadre élégant</li>
+          <li>Zone touristique à fort potentiel digital</li>
+        </ul>
+        <p style="margin-top:16px;font-size:13px;color:var(--empire-gold);font-weight:600;">Un positionnement haut de gamme à valoriser</p>
+      </div>
+      <div class="about-box" style="border-color:rgba(201,169,78,0.3);background:rgba(26,58,42,0.15);">
+        <h3 style="color:var(--monkey-gold);">
+          <img src="https://www.monkeypigalle.com/wp-content/uploads/go-x/u/f6de2ca5-b78b-44c5-b463-5617323d114a/image-455x455.jpg" alt="Monkey Pigalle" style="height:32px;border-radius:6px;vertical-align:middle;margin-right:8px;">
+          Monkey Pigalle
+        </h3>
+        <ul>
+          <li>Au cœur du quartier festif de Pigalle</li>
+          <li>Ambiance branchée et dynamique</li>
+          <li>Clientèle jeune et connectée</li>
+          <li>Fort potentiel viral sur les réseaux sociaux</li>
+        </ul>
+        <p style="margin-top:16px;font-size:13px;color:var(--monkey-gold);font-weight:600;">Une identité forte à amplifier en ligne</p>
+      </div>
+    </div>
+    <div class="stats-row" style="margin-top:30px;">
+      <div class="stat-item">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Établissements à Paris</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Quartiers stratégiques</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">1</div>
+        <div class="stat-label">Stratégie digitale unifiée</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 4 : QU'EST-CE QUE LE MARKETING DIGITAL ==================== -->
+  <div class="slide" data-slide="4">
+    <div class="bg-glow glow-gold"></div>
+    <span class="slide-label">Les fondamentaux</span>
+    <h2 class="slide-title">Le <span class="highlight">Marketing Digital</span>,<br>c'est quoi ?</h2>
+    <p class="slide-subtitle" style="margin-bottom:36px;">L'ensemble des actions marketing menées sur les canaux numériques pour attirer, engager et convertir vos clients idéaux.</p>
+    <div class="cards-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 800px;">
+      <div class="card">
+        <span class="card-icon">🌐</span>
+        <h4 class="card-title">Être visible</h4>
+        <p class="card-text">Faire en sorte que les personnes qui cherchent un restaurant ou un bar à Paris vous trouvent <strong>en premier</strong> — sur Google, Instagram, Facebook.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">💬</span>
+        <h4 class="card-title">Créer du lien</h4>
+        <p class="card-text">Construire une communauté engagée autour de vos deux marques. Chaque like, commentaire et partage renforce votre <strong>notoriété</strong>.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🍽️</span>
+        <h4 class="card-title">Remplir vos salles</h4>
+        <p class="card-text">Transformer les curieux en clients réguliers grâce à des campagnes publicitaires <strong>ciblées</strong> et des offres irrésistibles.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📈</span>
+        <h4 class="card-title">Mesurer & optimiser</h4>
+        <p class="card-text">Contrairement au marketing traditionnel, chaque euro investi est <strong>traçable</strong>. On sait exactement ce qui fonctionne.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 5 : POURQUOI LA VISIBILITÉ ==================== -->
+  <div class="slide" data-slide="5">
+    <div class="bg-glow glow-orange"></div>
+    <span class="slide-label">L'enjeu clé</span>
+    <h2 class="slide-title">Pourquoi la <span class="highlight-gold">visibilité digitale</span><br>est indispensable ?</h2>
+    <ul class="styled-list" style="margin-top:30px;">
+      <li>
+        <span class="list-icon">01</span>
+        <span><strong>90% des consommateurs</strong> consultent les avis en ligne et les réseaux sociaux avant de choisir un restaurant ou un bar.</span>
+      </li>
+      <li>
+        <span class="list-icon">02</span>
+        <span><strong>Le food & nightlife explose</strong> sur Instagram et TikTok. Vos ambiances et plats sont naturellement « partageables » — un avantage concurrentiel énorme.</span>
+      </li>
+      <li>
+        <span class="list-icon">03</span>
+        <span><strong>Vos concurrents investissent déjà.</strong> Les restaurants et bars parisiens multiplient les campagnes sponsorisées. Rester en retrait, c'est perdre des clients.</span>
+      </li>
+      <li>
+        <span class="list-icon">04</span>
+        <span><strong>Deux établissements = double force.</strong> Une stratégie digitale cohérente sur les deux adresses crée une synergie qui démultiplie l'impact.</span>
+      </li>
+      <li>
+        <span class="list-icon">05</span>
+        <span><strong>Le 8e et Pigalle attirent</strong> une clientèle diverse (locaux, touristes, noctambules). Le digital est le meilleur moyen de tous les atteindre.</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ==================== SLIDE 6 : STRATÉGIES DE VISIBILITÉ ==================== -->
+  <div class="slide" data-slide="6">
+    <div class="bg-glow glow-gold"></div>
+    <span class="slide-label">Les leviers</span>
+    <h2 class="slide-title">Les stratégies pour <span class="highlight">gagner en visibilité</span></h2>
+    <div class="cards-grid" style="grid-template-columns: repeat(3, 1fr); margin-top:30px;">
+      <div class="card">
+        <span class="card-icon">📸</span>
+        <h4 class="card-title">Contenu de qualité</h4>
+        <p class="card-text">Photos, vidéos et reels mettant en scène vos ambiances, plats et cocktails. Le contenu food & nightlife génère un engagement massif.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎯</span>
+        <h4 class="card-title">Publicités ciblées</h4>
+        <p class="card-text">Campagnes Meta (Instagram & Facebook) avec ciblage précis : zone géographique, centres d'intérêt, comportements de sortie.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔍</span>
+        <h4 class="card-title">SEO & Google Local</h4>
+        <p class="card-text">Optimisation de vos fiches Google Business pour apparaître en tête des recherches « restaurant 8ème » et « bar Pigalle ».</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🤝</span>
+        <h4 class="card-title">Influence & UGC</h4>
+        <p class="card-text">Collaborations avec des influenceurs food et lifestyle parisiens. Le contenu généré par les clients crédibilise vos marques.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎉</span>
+        <h4 class="card-title">Événements & Actualités</h4>
+        <p class="card-text">Mise en avant de vos soirées spéciales, nouveaux menus et événements pour créer du buzz et de la récurrence.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📊</span>
+        <h4 class="card-title">Analyse & Itération</h4>
+        <p class="card-text">Dashboard de suivi des performances en temps réel. Chaque semaine, on analyse et on ajuste pour maximiser le ROI.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 7 : IMPACT IMAGE & CA ==================== -->
+  <div class="slide" data-slide="7">
+    <div class="bg-glow glow-orange"></div>
+    <span class="slide-label">Les bénéfices</span>
+    <h2 class="slide-title">Impact sur votre <span class="highlight">image</span><br>et votre <span class="highlight-gold">chiffre d'affaires</span></h2>
+    <div class="about-grid" style="margin-top:30px;">
+      <div class="about-box" style="border-color:rgba(247,147,59,0.2);">
+        <h3 style="color:var(--koven-orange);">Image de marque</h3>
+        <ul>
+          <li>Perception premium renforcée auprès de votre cible</li>
+          <li>Cohérence visuelle sur tous les canaux digitaux</li>
+          <li>Identité distincte pour chaque établissement</li>
+          <li>Confiance accrue grâce à la preuve sociale amplifiée</li>
+          <li>Top of mind : on pense à vous en premier pour sortir à Paris</li>
+        </ul>
+      </div>
+      <div class="about-box" style="border-color:rgba(212,168,67,0.2);">
+        <h3 style="color:var(--empire-gold);">Chiffre d'affaires</h3>
+        <ul>
+          <li>Augmentation du trafic en salle et des réservations</li>
+          <li>Remplissage optimisé en semaine comme le week-end</li>
+          <li>Panier moyen en hausse grâce au positionnement</li>
+          <li>Réduction du coût d'acquisition client dans le temps</li>
+          <li>Clients fidèles grâce au remarketing et aux offres</li>
+        </ul>
+      </div>
+    </div>
+    <div class="stats-row" style="margin-top:30px; grid-template-columns: repeat(3, 1fr);">
+      <div class="stat-item">
+        <div class="stat-number">x4</div>
+        <div class="stat-label">Engagement contenu food & bar vs autres secteurs</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">78%</div>
+        <div class="stat-label">Des sorties influencées par les réseaux sociaux</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">-40%</div>
+        <div class="stat-label">Coût d'acquisition après 3 mois d'optimisation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 8 : CAMPAGNES META ==================== -->
+  <div class="slide" data-slide="8">
+    <div class="bg-glow glow-gold"></div>
+    <span class="slide-label">Campagnes Meta</span>
+    <h2 class="slide-title">Votre stratégie<br><span class="highlight">Meta Ads</span> en 3 piliers</h2>
+    <p class="slide-subtitle" style="margin-bottom:30px;">Une approche en entonnoir pour couvrir tout le parcours client, de la découverte jusqu'à la réservation.</p>
+    <div class="campaign-cards">
+      <div class="campaign-card notoriete">
+        <div class="card-icon">👁️</div>
+        <span class="card-tag">Pilier 1</span>
+        <h4 class="card-title">Notoriété</h4>
+        <p class="card-text">Faire connaître L'Empire du 8ème et Monkey Pigalle au plus grand nombre. Objectif : <strong>maximiser les impressions</strong> auprès d'une audience qualifiée (25-45 ans, Paris & IDF, intéressés restaurants, bars, sorties, food).</p>
+      </div>
+      <div class="campaign-card trafic">
+        <div class="card-icon">🔗</div>
+        <span class="card-tag">Pilier 2</span>
+        <h4 class="card-title">Trafic & Réservations</h4>
+        <p class="card-text">Diriger les personnes intéressées vers vos pages de réservation et vos profils. Objectif : <strong>générer des réservations</strong> et des visites en établissement grâce à des visuels appétissants.</p>
+      </div>
+      <div class="campaign-card engagement">
+        <div class="card-icon">💬</div>
+        <span class="card-tag">Pilier 3</span>
+        <h4 class="card-title">Engagement</h4>
+        <p class="card-text">Créer de l'interaction avec votre communauté. Objectif : <strong>augmenter likes, commentaires et partages</strong> pour booster l'algorithme et générer du bouche-à-oreille viral.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 9 : CAMPAGNES GOOGLE ADS ==================== -->
+  <div class="slide" data-slide="9">
+    <div class="bg-glow glow-orange"></div>
+    <span class="slide-label">Campagnes Google</span>
+    <h2 class="slide-title">Votre stratégie<br><span class="highlight">Google Ads</span> en 3 axes</h2>
+    <p class="slide-subtitle" style="margin-bottom:30px;">Capturer la demande existante. Quand quelqu'un cherche « restaurant 8ème Paris » ou « bar Pigalle » sur Google, c'est vous qui devez apparaître.</p>
+    <div class="campaign-cards">
+      <div class="campaign-card google-search">
+        <div class="card-icon">🔎</div>
+        <span class="card-tag">Axe 1</span>
+        <h4 class="card-title">Search Ads</h4>
+        <p class="card-text">Apparaître en première position sur les requêtes à forte intention : <strong>« restaurant 8ème arrondissement », « bar Pigalle ce soir », « meilleur restaurant Paris »</strong>. Chaque clic est un client potentiel qui vous cherche.</p>
+      </div>
+      <div class="campaign-card google-local">
+        <div class="card-icon">📍</div>
+        <span class="card-tag">Axe 2</span>
+        <h4 class="card-title">Local & Maps</h4>
+        <p class="card-text">Dominer les résultats locaux Google Maps dans le 8e et à Pigalle. <strong>Optimisation de vos fiches Google Business</strong>, extensions d'appel et d'itinéraire pour convertir les recherches « à proximité ».</p>
+      </div>
+      <div class="campaign-card google-display">
+        <div class="card-icon">🖼️</div>
+        <span class="card-tag">Axe 3</span>
+        <h4 class="card-title">Display & Remarketing</h4>
+        <p class="card-text">Bannières visuelles de vos établissements sur des milliers de sites partenaires Google. <strong>Remarketing intelligent</strong> : on relance les visiteurs qui ont consulté vos pages sans réserver.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 10 : FUNNEL ==================== -->
+  <div class="slide" data-slide="10">
+    <div class="bg-glow glow-gold"></div>
+    <span class="slide-label">Parcours client</span>
+    <h2 class="slide-title">L'entonnoir de <span class="highlight">conversion</span></h2>
+    <p class="slide-subtitle" style="margin-bottom:30px;">Chaque levier nourrit le suivant pour transformer un inconnu en client fidèle de vos deux établissements.</p>
+    <div class="funnel">
+      <div class="funnel-step step-1">
+        👁️&nbsp;&nbsp;<strong>NOTORIÉTÉ</strong>&nbsp;—&nbsp;Ils découvrent L'Empire du 8ème & Monkey Pigalle
+      </div>
+      <div class="funnel-arrow">▼</div>
+      <div class="funnel-step step-2">
+        🔗&nbsp;&nbsp;<strong>TRAFIC</strong>&nbsp;—&nbsp;Ils consultent vos pages, menus, photos et avis
+      </div>
+      <div class="funnel-arrow">▼</div>
+      <div class="funnel-step step-3">
+        💬&nbsp;&nbsp;<strong>ENGAGEMENT</strong>&nbsp;—&nbsp;Ils interagissent, suivent, partagent vos contenus
+      </div>
+      <div class="funnel-arrow">▼</div>
+      <div class="funnel-step step-4">
+        🍽️&nbsp;&nbsp;<strong>CONVERSION</strong>&nbsp;—&nbsp;Ils réservent et viennent dans vos établissements
+      </div>
+    </div>
+    <p class="slide-subtitle" style="margin-top:30px;font-size:13px;">Le remarketing permet de relancer les visiteurs qui n'ont pas encore réservé — aucune opportunité n'est perdue.</p>
+  </div>
+
+  <!-- ==================== SLIDE 11 : TRACKING & SUIVI DES RÉSULTATS ==================== -->
+  <div class="slide" data-slide="11">
+    <div class="bg-glow glow-orange"></div>
+    <div class="bg-glow glow-gold"></div>
+    <span class="slide-label">Tracking & Performance</span>
+    <h2 class="slide-title">Suivre vos <span class="highlight">résultats</span><br>et les <span class="highlight-gold">optimiser</span></h2>
+    <p class="slide-subtitle" style="margin-bottom:24px;">Un système de tracking complet pour mesurer chaque action, chaque euro investi, et prendre des décisions basées sur la data.</p>
+    <div class="tracking-grid">
+      <div class="tracking-card track-meta">
+        <h4>Meta Ads — Performance</h4>
+        <p class="track-desc">Suivi en temps réel de vos campagnes Instagram & Facebook</p>
+        <div class="kpi-row">
+          <div class="kpi-badge">
+            <span class="kpi-val">CPM</span>
+            <span class="kpi-name">Coût / 1000 vues</span>
+          </div>
+          <div class="kpi-badge">
+            <span class="kpi-val">CTR</span>
+            <span class="kpi-name">Taux de clic</span>
+          </div>
+          <div class="kpi-badge">
+            <span class="kpi-val">CPA</span>
+            <span class="kpi-name">Coût / action</span>
+          </div>
+          <div class="kpi-badge">
+            <span class="kpi-val">ROAS</span>
+            <span class="kpi-name">Retour pub</span>
+          </div>
+        </div>
+      </div>
+      <div class="tracking-card track-google">
+        <h4>Google Ads — Acquisition</h4>
+        <p class="track-desc">Mesure des performances de recherche et du trafic généré</p>
+        <div class="kpi-row">
+          <div class="kpi-badge">
+            <span class="kpi-val">CPC</span>
+            <span class="kpi-name">Coût par clic</span>
+          </div>
+          <div class="kpi-badge">
+            <span class="kpi-val">CVR</span>
+            <span class="kpi-name">Conversion</span>
+          </div>
+          <div class="kpi-badge">
+            <span class="kpi-val">QS</span>
+            <span class="kpi-name">Quality Score</span>
+          </div>
+          <div class="kpi-badge">
+            <span class="kpi-val">IMP</span>
+            <span class="kpi-name">Impressions</span>
+          </div>
+        </div>
+      </div>
+      <div class="tracking-card track-social">
+        <h4>Réseaux Sociaux — Croissance</h4>
+        <p class="track-desc">Évolution de votre communauté et engagement organique</p>
+        <div class="kpi-row">
+          <div class="kpi-badge">
+            <span class="kpi-val">+ABN</span>
+            <span class="kpi-name">Nv. abonnés</span>
+          </div>
+          <div class="kpi-badge">
+            <span class="kpi-val">ENG</span>
+            <span class="kpi-name">Engagement</span>
+          </div>
+          <div class="kpi-badge">
+            <span class="kpi-val">REACH</span>
+            <span class="kpi-name">Portée</span>
+          </div>
+          <div class="kpi-badge">
+            <span class="kpi-val">SAVE</span>
+            <span class="kpi-name">Sauvegardes</span>
+          </div>
+        </div>
+      </div>
+      <div class="tracking-card track-revenue">
+        <h4>Business — Impact réel</h4>
+        <p class="track-desc">Les métriques qui comptent vraiment pour votre activité</p>
+        <div class="kpi-row">
+          <div class="kpi-badge">
+            <span class="kpi-val">RÉSA</span>
+            <span class="kpi-name">Réservations</span>
+          </div>
+          <div class="kpi-badge">
+            <span class="kpi-val">CA</span>
+            <span class="kpi-name">Chiffre aff.</span>
+          </div>
+          <div class="kpi-badge">
+            <span class="kpi-val">ROI</span>
+            <span class="kpi-name">Retour invest.</span>
+          </div>
+          <div class="kpi-badge">
+            <span class="kpi-val">LTV</span>
+            <span class="kpi-name">Valeur client</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 12 : PROCESSUS D'OPTIMISATION ==================== -->
+  <div class="slide" data-slide="12">
+    <div class="bg-glow glow-gold"></div>
+    <span class="slide-label">Optimisation continue</span>
+    <h2 class="slide-title">Comment on <span class="highlight">optimise</span><br>vos campagnes</h2>
+    <p class="slide-subtitle" style="margin-bottom:20px;">Un cycle d'amélioration continue pour garantir que chaque euro investi génère le maximum de résultats.</p>
+    <div class="tracking-process">
+      <div class="process-step">
+        <div class="process-icon">📡</div>
+        <h5>Collecte</h5>
+        <p>Pixels Meta & Google, UTM tracking, suivi des conversions sur toutes les plateformes</p>
+      </div>
+      <span class="process-arrow">→</span>
+      <div class="process-step">
+        <div class="process-icon">📊</div>
+        <h5>Analyse</h5>
+        <p>Dashboard temps réel, identification des campagnes performantes vs sous-performantes</p>
+      </div>
+      <span class="process-arrow">→</span>
+      <div class="process-step">
+        <div class="process-icon">🔧</div>
+        <h5>Optimisation</h5>
+        <p>Réallocation des budgets, A/B testing des visuels, ajustement des audiences et enchères</p>
+      </div>
+      <span class="process-arrow">→</span>
+      <div class="process-step">
+        <div class="process-icon">🚀</div>
+        <h5>Scaling</h5>
+        <p>Augmentation progressive du budget sur ce qui fonctionne, nouvelles audiences lookalike</p>
+      </div>
+    </div>
+    <div class="about-grid" style="margin-top:30px;max-width:900px;">
+      <div class="about-box" style="border-color:rgba(247,147,59,0.2);padding:24px;">
+        <h3 style="color:var(--koven-orange);font-size:16px;">Reporting hebdomadaire</h3>
+        <p style="font-size:13px;">Chaque semaine, vous recevez un rapport clair avec les performances clés, les actions réalisées et les recommandations pour la semaine suivante.</p>
+      </div>
+      <div class="about-box" style="border-color:rgba(212,168,67,0.2);padding:24px;">
+        <h3 style="color:var(--empire-gold);font-size:16px;">Bilan mensuel stratégique</h3>
+        <p style="font-size:13px;">Chaque mois, un bilan complet avec analyse approfondie, comparaison mois par mois, et ajustement de la stratégie globale.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 13 : TIMELINE ==================== -->
+  <div class="slide" data-slide="13">
+    <div class="bg-glow glow-orange"></div>
+    <span class="slide-label">En pratique</span>
+    <h2 class="slide-title">Ce que nous mettons en place<br><span class="highlight">concrètement</span></h2>
+    <div class="timeline" style="margin-top:40px;">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">Semaine 1-2</div>
+        <h4 style="font-size:15px;margin-bottom:6px;">Audit & Setup</h4>
+        <p class="timeline-desc">Analyse de vos audiences, configuration du Business Manager, pixels Meta & Google, audiences personnalisées pour chaque établissement.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">Semaine 3-4</div>
+        <h4 style="font-size:15px;margin-bottom:6px;">Lancement</h4>
+        <p class="timeline-desc">Premières campagnes notoriété + trafic pour les deux adresses. Tests A/B sur les visuels, ciblage affiné par quartier.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">Mois 2</div>
+        <h4 style="font-size:15px;margin-bottom:6px;">Optimisation</h4>
+        <p class="timeline-desc">Analyse des premiers résultats, scaling des meilleures audiences, ajout des campagnes engagement et remarketing.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">Mois 3+</div>
+        <h4 style="font-size:15px;margin-bottom:6px;">Croissance</h4>
+        <p class="timeline-desc">Remarketing avancé, lookalike audiences, scaling progressif, synergies cross-établissements.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 14 : FIN ==================== -->
+  <div class="slide" data-slide="14">
+    <div class="bg-glow glow-orange"></div>
+    <div class="bg-glow glow-gold"></div>
+    <div class="cover-logos" style="margin-bottom:20px;">
+      <img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven Agency" class="logo-img koven-logo">
+    </div>
+    <div class="dual-brand" style="margin-bottom:30px;">
+      <div class="brand-block empire" style="padding:12px 20px;">
+        <span class="brand-label" style="font-size:18px;">L'Empire du 8ème</span>
+      </div>
+      <span class="brand-ampersand">&</span>
+      <div class="brand-block monkey" style="padding:12px 20px;">
+        <img src="https://www.monkeypigalle.com/wp-content/uploads/go-x/u/f6de2ca5-b78b-44c5-b463-5617323d114a/image-455x455.jpg" alt="Monkey Pigalle" style="height:45px;border-radius:8px;">
+      </div>
+    </div>
+    <div class="cta-box">
+      <h2 class="slide-title">Prêt à <span class="highlight">accélérer</span> ?</h2>
+      <p class="slide-subtitle">Vous avez deux adresses exceptionnelles dans des quartiers stratégiques de Paris. Il ne manque plus qu'une stratégie digitale structurée pour remplir vos salles et développer votre notoriété.</p>
+      <p class="questions-text">Des questions ?</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAVIGATION -->
+<div class="nav-bar">
+  <div style="display:flex;align-items:center;gap:20px;">
+    <img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven" style="height:24px;object-fit:contain;">
+    <span class="slide-counter" id="slideCounter">01 / 14</span>
+  </div>
+  <div style="display:flex;gap:12px;">
+    <button class="nav-btn" onclick="changeSlide(-1)" title="Slide précédente">&#8592;</button>
+    <button class="nav-btn" onclick="changeSlide(1)" title="Slide suivante">&#8594;</button>
+  </div>
+</div>
+
+<script>
+let currentSlide = 1;
+const totalSlides = 14;
+let isAnimating = false;
+
+function changeSlide(direction) {
+  if (isAnimating) return;
+  const next = currentSlide + direction;
+  if (next < 1 || next > totalSlides) return;
+
+  isAnimating = true;
+
+  const currentEl = document.querySelector('.slide[data-slide="' + currentSlide + '"]');
+  const nextEl = document.querySelector('.slide[data-slide="' + next + '"]');
+
+  nextEl.style.transition = 'none';
+  nextEl.style.transform = direction > 0 ? 'translateX(80px)' : 'translateX(-80px)';
+  nextEl.style.opacity = '0';
+  nextEl.style.visibility = 'visible';
+
+  nextEl.offsetHeight;
+
+  nextEl.style.transition = '';
+  currentEl.style.transition = '';
+
+  currentEl.classList.remove('active');
+  currentEl.style.transform = direction > 0 ? 'translateX(-80px)' : 'translateX(80px)';
+  currentEl.style.opacity = '0';
+
+  nextEl.classList.add('active');
+  nextEl.style.transform = 'translateX(0)';
+  nextEl.style.opacity = '1';
+
+  currentSlide = next;
+  updateUI();
+
+  setTimeout(function() {
+    currentEl.style.visibility = 'hidden';
+    currentEl.style.transform = '';
+    currentEl.style.opacity = '';
+    isAnimating = false;
+  }, 550);
+}
+
+function updateUI() {
+  document.getElementById('slideCounter').textContent =
+    String(currentSlide).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+  document.getElementById('progress').style.width =
+    ((currentSlide / totalSlides) * 100) + '%';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+});
+
+var touchStartX = 0;
+document.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', function(e) {
+  var diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+});
+
+updateUI();
+</script>
+
+</body>
+</html>

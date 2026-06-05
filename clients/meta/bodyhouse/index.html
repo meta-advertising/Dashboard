@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta-Advertising — Portail Interne</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>∞</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════
+           META-ADVERTISING — PORTAIL INTERNE
+           ═══════════════════════════════════════════ */
+
+        :root {
+            --bg-deep: #06060f;
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #10102a;
+            --bg-card: rgba(255,255,255,0.03);
+            --bg-card-hover: rgba(255,255,255,0.06);
+            --bg-glass: rgba(255,255,255,0.04);
+            --accent-violet: #7c3aed;
+            --accent-violet-light: #a78bfa;
+            --accent-violet-soft: rgba(124,58,237,0.12);
+            --accent-violet-glow: rgba(124,58,237,0.25);
+            --accent-blue: #3b82f6;
+            --accent-blue-light: #60a5fa;
+            --accent-blue-soft: rgba(59,130,246,0.1);
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --text-primary: #f1f1f7;
+            --text-secondary: #9494b8;
+            --text-tertiary: #5a5a80;
+            --border-subtle: rgba(255,255,255,0.06);
+            --border-medium: rgba(255,255,255,0.1);
+            --shadow-glow: 0 0 60px rgba(124,58,237,0.08);
+            --gradient-main: linear-gradient(135deg, #7c3aed 0%, #3b82f6 50%, #06b6d4 100%);
+            --gradient-card: linear-gradient(135deg, rgba(124,58,237,0.08) 0%, rgba(59,130,246,0.04) 100%);
+            --gradient-bg: radial-gradient(ellipse at 20% 0%, rgba(124,58,237,0.08) 0%, transparent 50%),
+                           radial-gradient(ellipse at 80% 100%, rgba(59,130,246,0.06) 0%, transparent 50%);
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .page-bg {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background: var(--gradient-bg);
+        }
+
+        .page-wrapper { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* ══ HEADER ══ */
+        .header {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(6,6,15,0.75);
+            backdrop-filter: blur(24px) saturate(1.4);
+            -webkit-backdrop-filter: blur(24px) saturate(1.4);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 0 40px;
+            height: 72px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 16px; }
+
+        .logo-infinity {
+            width: 52px; height: 52px;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+        .logo-infinity svg { width: 48px; height: 48px; }
+        .logo-infinity::after {
+            content: '';
+            position: absolute; inset: -6px;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            opacity: 0.12;
+            filter: blur(14px);
+            animation: logoPulse 4s ease-in-out infinite;
+        }
+        .infinity-spark {
+            animation: sparkFlow 3.5s linear infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { opacity: 0.08; transform: scale(1); }
+            50% { opacity: 0.2; transform: scale(1.12); }
+        }
+        @keyframes sparkFlow {
+            0% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: -520; }
+        }
+
+        .logo-text {
+            display: flex; flex-direction: column;
+        }
+        .logo-text-main {
+            font-size: 20px; font-weight: 800; letter-spacing: -0.3px;
+            background: var(--gradient-main);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+        .logo-text-sub {
+            font-size: 10px; font-weight: 600; color: var(--text-tertiary);
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+
+        .header-center { flex: 1; max-width: 480px; margin: 0 40px; }
+        .search-box {
+            width: 100%;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 10px 16px 10px 44px;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.25s var(--ease);
+        }
+        .search-box input::placeholder { color: var(--text-tertiary); }
+        .search-box input:focus {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(124,58,237,0.4);
+            box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+        }
+        .search-box svg {
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+            width: 18px; height: 18px; color: var(--text-tertiary);
+            pointer-events: none;
+        }
+
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .header-clock {
+            font-size: 13px; font-weight: 600;
+            color: var(--text-secondary);
+            font-variant-numeric: tabular-nums;
+            background: rgba(255,255,255,0.04);
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+        }
+        .header-badge {
+            font-size: 10px; font-weight: 700;
+            background: var(--accent-violet-soft);
+            color: var(--accent-violet-light);
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* ══ MAIN ══ */
+        .main { flex: 1; padding: 40px; max-width: 1400px; margin: 0 auto; width: 100%; }
+
+        /* Stats */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 22px 24px;
+            display: flex; align-items: center; gap: 16px;
+            transition: all 0.3s var(--ease);
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--gradient-main);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .stat-card:hover { background: var(--bg-card-hover); transform: translateY(-2px); }
+        .stat-card:hover::before { opacity: 1; }
+        .stat-icon {
+            width: 48px; height: 48px;
+            border-radius: var(--radius-md);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .stat-icon svg { width: 22px; height: 22px; }
+        .stat-icon.violet { background: var(--accent-violet-soft); color: var(--accent-violet-light); }
+        .stat-icon.blue { background: var(--accent-blue-soft); color: var(--accent-blue-light); }
+        .stat-icon.emerald { background: rgba(16,185,129,0.1); color: #34d399; }
+        .stat-icon.amber { background: rgba(245,158,11,0.1); color: #fbbf24; }
+        .stat-info { display: flex; flex-direction: column; }
+        .stat-value { font-size: 28px; font-weight: 800; line-height: 1.1; letter-spacing: -0.5px; }
+        .stat-label { font-size: 12px; font-weight: 500; color: var(--text-tertiary); margin-top: 2px; }
+
+        /* Section title */
+        .section-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .section-title {
+            font-size: 18px; font-weight: 700; color: var(--text-primary);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .section-title::before {
+            content: '';
+            width: 4px; height: 20px;
+            background: var(--gradient-main);
+            border-radius: 2px;
+        }
+        .section-count {
+            font-size: 12px; font-weight: 600;
+            color: var(--text-tertiary);
+            background: rgba(255,255,255,0.04);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        /* Client Grid */
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 20px;
+            align-items: start;
+        }
+
+        .client-card {
+            background: var(--gradient-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all 0.35s var(--ease);
+            cursor: pointer;
+            position: relative;
+        }
+        .client-card::before {
+            content: '';
+            position: absolute; inset: 0;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, rgba(124,58,237,0.06) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .client-card:hover {
+            border-color: rgba(124,58,237,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(124,58,237,0.1), 0 4px 16px rgba(0,0,0,0.2);
+        }
+        .client-card:hover::before { opacity: 1; }
+        .client-card.expanded {
+            border-color: rgba(124,58,237,0.25);
+            box-shadow: 0 8px 32px rgba(124,58,237,0.08);
+        }
+
+        .client-header {
+            padding: 24px 24px 20px;
+            display: flex; align-items: center; gap: 16px;
+            position: relative; z-index: 1;
+        }
+
+        .client-logo {
+            width: 56px; height: 56px;
+            border-radius: var(--radius-md);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border-subtle);
+            transition: all 0.3s var(--ease);
+        }
+        .client-card:hover .client-logo {
+            border-color: rgba(124,58,237,0.3);
+            box-shadow: 0 0 20px rgba(124,58,237,0.15);
+        }
+        .client-logo img {
+            width: 100%; height: 100%;
+            object-fit: contain;
+            padding: 6px;
+        }
+        .client-logo.logo-light {
+            background: #ffffff !important;
+            border-color: rgba(255,255,255,0.15) !important;
+        }
+        .client-logo .initials {
+            font-size: 18px; font-weight: 800;
+            background: var(--gradient-main);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .client-info { flex: 1; min-width: 0; }
+        .client-name {
+            font-size: 16px; font-weight: 700; color: var(--text-primary);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            line-height: 1.3;
+        }
+        .client-meta {
+            display: flex; align-items: center; gap: 10px;
+            margin-top: 4px;
+        }
+        .client-sector {
+            font-size: 11.5px; font-weight: 500;
+            color: var(--text-tertiary);
+        }
+        .client-status {
+            font-size: 10px; font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .client-status.active {
+            background: rgba(16,185,129,0.12);
+            color: #34d399;
+        }
+        .client-status.pending {
+            background: rgba(245,158,11,0.12);
+            color: #fbbf24;
+        }
+
+        .client-stats {
+            display: flex; gap: 16px;
+            padding: 0 24px 8px;
+            position: relative; z-index: 1;
+        }
+        .client-stat {
+            font-size: 11.5px; font-weight: 500;
+            color: var(--text-tertiary);
+            display: flex; align-items: center; gap: 5px;
+        }
+        .client-stat strong {
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+        .client-stat svg { width: 14px; height: 14px; opacity: 0.5; }
+
+        .client-expand-indicator {
+            display: flex; align-items: center; justify-content: center;
+            padding: 10px;
+            border-top: 1px solid var(--border-subtle);
+            position: relative; z-index: 1;
+            transition: all 0.3s;
+        }
+        .client-expand-indicator svg {
+            width: 18px; height: 18px;
+            color: var(--text-tertiary);
+            transition: transform 0.35s var(--ease-spring);
+        }
+        .client-card.expanded .client-expand-indicator svg {
+            transform: rotate(180deg);
+        }
+
+        /* Expanded links */
+        .client-links {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s var(--ease);
+        }
+        .client-card.expanded .client-links {
+            max-height: 800px;
+        }
+        .client-links-inner {
+            padding: 4px 16px 16px;
+            border-top: 1px solid var(--border-subtle);
+            position: relative;
+            z-index: 2;
+        }
+        .client-links-title {
+            font-size: 10px; font-weight: 700;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 12px 8px 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            transition: color 0.2s var(--ease);
+        }
+        .client-links-title:hover {
+            color: var(--accent-violet-light);
+        }
+        .client-links-title::after {
+            content: '';
+            width: 6px; height: 6px;
+            border-right: 1.5px solid currentColor;
+            border-bottom: 1.5px solid currentColor;
+            transform: rotate(45deg);
+            transition: transform 0.25s var(--ease);
+            flex-shrink: 0;
+        }
+        .client-links-title.section-open::after {
+            transform: rotate(-135deg);
+        }
+        .section-group {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s var(--ease);
+        }
+
+        .link-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s var(--ease);
+            position: relative;
+        }
+        .link-item:hover {
+            background: rgba(124,58,237,0.08);
+            color: var(--accent-violet-light);
+            transform: translateX(4px);
+        }
+        .link-item-icon {
+            width: 32px; height: 32px;
+            border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .link-item-icon.dashboard {
+            background: var(--accent-violet-soft);
+            color: var(--accent-violet-light);
+        }
+        .link-item-icon.report {
+            background: var(--accent-blue-soft);
+            color: var(--accent-blue-light);
+        }
+        .link-item-icon svg { width: 16px; height: 16px; }
+        .link-item-text { flex: 1; }
+        .link-item-label { line-height: 1.3; }
+        .link-item-type {
+            font-size: 10px;
+            color: var(--text-tertiary);
+            font-weight: 400;
+        }
+        .link-item-arrow {
+            color: var(--text-tertiary);
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: all 0.2s;
+        }
+        .link-item:hover .link-item-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Empty state */
+        .no-results {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-tertiary);
+        }
+        .no-results svg { width: 48px; height: 48px; margin-bottom: 16px; opacity: 0.3; }
+        .no-results p { font-size: 15px; font-weight: 500; }
+
+        /* Footer */
+        .footer {
+            padding: 24px 40px;
+            border-top: 1px solid var(--border-subtle);
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        .footer span {
+            background: var(--gradient-main);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in {
+            animation: fadeInUp 0.5s var(--ease) both;
+        }
+        .clients-grid .client-card:nth-child(1) { animation-delay: 0.05s; }
+        .clients-grid .client-card:nth-child(2) { animation-delay: 0.1s; }
+        .clients-grid .client-card:nth-child(3) { animation-delay: 0.15s; }
+        .clients-grid .client-card:nth-child(4) { animation-delay: 0.2s; }
+        .clients-grid .client-card:nth-child(5) { animation-delay: 0.25s; }
+        .clients-grid .client-card:nth-child(6) { animation-delay: 0.3s; }
+
+        /* ══ RESPONSIVE ══ */
+        @media (max-width: 1100px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 900px) {
+            .header { padding: 0 20px; }
+            .header-center { margin: 0 16px; }
+            .main { padding: 24px 20px; }
+            .clients-grid { grid-template-columns: 1fr; }
+            .logo-text-main { font-size: 17px; }
+        }
+        @media (max-width: 640px) {
+            .header { height: 56px; }
+            .header-badge { display: none; }
+            .stats-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .stat-card { padding: 14px; }
+            .stat-value { font-size: 20px; }
+            .stat-label { font-size: 10px; }
+            .stat-icon { width: 36px; height: 36px; }
+            .main { padding: 16px 12px; }
+            .logo-text-main { font-size: 15px; }
+            .logo-text-sub { font-size: 8px; }
+            .client-card { border-radius: 12px; }
+            .client-header { padding: 16px; gap: 12px; }
+            .client-logo { width: 38px; height: 38px; }
+            .client-name { font-size: 14px; }
+            .client-links-inner { padding: 4px 12px 14px; }
+            .link-item { padding: 10px 8px; font-size: 12px; }
+            .link-item-icon { width: 28px; height: 28px; }
+            .link-item-icon svg { width: 14px; height: 14px; }
+            .footer { padding: 20px 16px; font-size: 11px; }
+            .search-input { font-size: 14px; padding: 12px 16px 12px 40px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-bg"></div>
+    <div class="page-wrapper">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo-infinity">
+                    <svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="infinityGrad" x1="0" y1="0" x2="120" y2="0" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#7c3aed"/>
+                                <stop offset="40%" stop-color="#3b82f6"/>
+                                <stop offset="70%" stop-color="#06b6d4"/>
+                                <stop offset="100%" stop-color="#7c3aed"/>
+                            </linearGradient>
+                            <linearGradient id="infinityShine" x1="0" y1="0" x2="120" y2="0" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#a78bfa"/>
+                                <stop offset="50%" stop-color="#60a5fa"/>
+                                <stop offset="100%" stop-color="#22d3ee"/>
+                            </linearGradient>
+                            <filter id="infinityGlow">
+                                <feGaussianBlur stdDeviation="3"/>
+                            </filter>
+                        </defs>
+                        <!-- Glow layer -->
+                        <path d="M60,30 C60,8 20,5 15,30 C10,55 60,52 60,30 C60,8 100,5 105,30 C110,55 60,52 60,30"
+                              stroke="url(#infinityGrad)" stroke-width="7" stroke-linecap="round" fill="none" opacity="0.35" filter="url(#infinityGlow)"/>
+                        <!-- Main stroke -->
+                        <path d="M60,30 C60,8 20,5 15,30 C10,55 60,52 60,30 C60,8 100,5 105,30 C110,55 60,52 60,30"
+                              stroke="url(#infinityGrad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <!-- Highlight stroke -->
+                        <path d="M60,30 C60,8 20,5 15,30 C10,55 60,52 60,30 C60,8 100,5 105,30 C110,55 60,52 60,30"
+                              stroke="url(#infinityShine)" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4"/>
+                        <!-- Flowing spark -->
+                        <path class="infinity-spark" d="M60,30 C60,8 20,5 15,30 C10,55 60,52 60,30 C60,8 100,5 105,30 C110,55 60,52 60,30"
+                              stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7"
+                              stroke-dasharray="12 508"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-text-main">Meta-Advertising</div>
+                    <div class="logo-text-sub">Portail interne</div>
+                </div>
+            </div>
+
+            <div class="header-center">
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" id="searchInput" placeholder="Rechercher un client..." autocomplete="off">
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="header-clock" id="clock"></div>
+                <div class="header-badge">Interne</div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main class="main">
+
+            <!-- Stats -->
+            <div class="stats-row" id="statsRow">
+                <div class="stat-card animate-in">
+                    <div class="stat-icon violet">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statClients">0</div>
+                        <div class="stat-label">Clients actifs</div>
+                    </div>
+                </div>
+                <div class="stat-card animate-in" style="animation-delay:.05s">
+                    <div class="stat-icon blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statDashboards">0</div>
+                        <div class="stat-label">Dashboards</div>
+                    </div>
+                </div>
+                <div class="stat-card animate-in" style="animation-delay:.1s">
+                    <div class="stat-icon emerald">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statReports">0</div>
+                        <div class="stat-label">Rapports</div>
+                    </div>
+                </div>
+                <div class="stat-card animate-in" style="animation-delay:.15s">
+                    <div class="stat-icon amber">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statTotal">0</div>
+                        <div class="stat-label">Total ressources</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section title -->
+            <div class="section-header">
+                <div class="section-title">Portefeuille Clients</div>
+                <div class="section-count" id="sectionCount">0 clients</div>
+            </div>
+
+            <!-- Clients Grid -->
+            <div class="clients-grid" id="clientsGrid"></div>
+
+            <!-- No results -->
+            <div class="no-results" id="noResults" style="display:none">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <p>Aucun client ne correspond à votre recherche</p>
+            </div>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <span>Meta-Advertising</span> &copy; 2025 — Usage strictement interne
+        </footer>
+    </div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   DONNÉES CLIENTS
+   ─────────────────────────────────────────────────────────────
+   Pour ajouter un nouveau client, dupliquer un bloc ci-dessous
+   et renseigner : name, sector, status, logo (URL ou null),
+   initials (si pas de logo), color, et links[].
+   ═══════════════════════════════════════════════════════════════ */
+
+const CLIENTS = [
+    {
+        id: 'exteco-france',
+        name: 'EXTECO France',
+        sector: 'Bâtiment & Construction',
+        status: 'active',
+        logo: 'https://www.exteco.fr/wp-content/uploads/2024/06/LOGO-ROND.png',
+        initials: null,
+        color: '#556e36',
+        links: [
+            {
+                label: 'Epinal — Dashboard Marketing',
+                type: 'dashboard',
+                url: 'https://exteco-france.github.io/agence-epinal/',
+                agency: 'Epinal'
+            },
+            {
+                label: 'Nancy — Dashboard Marketing',
+                type: 'dashboard',
+                url: 'https://exteco-france.github.io/agence-nancy/',
+                agency: 'Nancy'
+            },
+            {
+                label: 'Metz — Dashboard Marketing',
+                type: 'dashboard',
+                url: 'https://exteco-france.github.io/agence-metz/',
+                agency: 'Metz'
+            },
+            {
+                label: 'Les Sables d\'Olonne — Dashboard Marketing',
+                type: 'dashboard',
+                url: 'https://exteco-france.github.io/agence-les-sables-d-olonnes/',
+                agency: 'Les Sables d\'Olonne'
+            },
+            {
+                label: 'Cannes-Fréjus — Dashboard Marketing',
+                type: 'dashboard',
+                url: 'https://exteco-france.github.io/agence-cannes-frejus/',
+                agency: 'Cannes-Fréjus'
+            }
+        ]
+    },
+    {
+        id: 'mamie-bigoude',
+        name: 'Comptoir Mamie Bigoude',
+        sector: 'Restauration',
+        status: 'active',
+        logo: 'https://mediab.izipass.cloud/ComptoirMB/Content/images/accueil-general/visuel-accueil-responsive.png',
+        initials: null,
+        color: '#c4567a',
+        links: [
+            {
+                label: 'Dashboard Campagnes',
+                type: 'dashboard',
+                url: 'https://mamiebigoude.github.io/dashboard/'
+            }
+        ]
+    },
+    {
+        id: 'bodyhouse',
+        name: 'Body House',
+        sector: 'Réseau Franchise — Bien-être',
+        status: 'active',
+        logo: 'https://bodyhouse.fr/themes/ARPA3-BodyHouse/assets/img/header/logo.svg',
+        logoBg: 'light',
+        initials: null,
+        color: '#e91e63',
+        links: [
+            { label: 'Portail Marketing Body House', type: 'dashboard', section: 'Portail', url: 'portail-bodyhouse.html' },
+            { label: 'Aubière', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-aubiere-2025.pdf' },
+            { label: 'Avignon Nord', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-avignon-nord-2025.pdf' },
+            { label: 'Avignon Sud', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-avignon-sud-2025.pdf' },
+            { label: 'Biganos', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-biganos-2025.pdf' },
+            { label: 'Chambéry', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-chambery-2025.pdf' },
+            { label: 'Grenoble', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-grenoble-2025.pdf' },
+            { label: 'Jacou', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-jacou-2025.pdf' },
+            { label: 'Lyon', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-lyon-2025.pdf' },
+            { label: 'Montélimar', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-montelimar-2025.pdf' },
+            { label: 'Sainte-Eulalie', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-sainte-eulalie-2025.pdf' },
+            { label: 'Salaise', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-salaise-2025.pdf' },
+            { label: 'Valence', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-valence-2025.pdf' },
+            { label: 'Villefranche', type: 'report', year: '2025', section: 'Rapports 2025', url: 'synthese-bodyhouse-villefranche-2025.pdf' },
+            { label: 'Rapport Performance Skeepers', type: 'report', year: '2025', section: 'Skeepers 2025', url: 'rapport-skeepers-bodyhouse-2025.pdf' }
+        ]
+    },
+    {
+        id: 'mon-extension-bois',
+        name: 'Mon Extension Bois',
+        sector: 'Extensions & Sur\u00E9l\u00E9vations en bois',
+        status: 'active',
+        logo: 'https://www.mon-extension-bois.com/wp-content/uploads/2025/03/extension-bois-logo.png',
+        logoBg: 'light',
+        initials: null,
+        color: '#e67e22',
+        links: [
+            { label: 'Metz \u2014 Dashboard Marketing', type: 'dashboard', url: 'https://monextensionbois-france.github.io/agence.metz/', agency: 'Metz' },
+            { label: 'Cambrai \u2014 Dashboard Marketing', type: 'dashboard', url: 'https://monextensionbois-france.github.io/agence.cambrai/', agency: 'Cambrai' },
+            { label: 'La Rochelle \u2014 Dashboard Marketing', type: 'dashboard', url: 'https://monextensionbois-france.github.io/agence.la-rochelle/', agency: 'La Rochelle' },
+            { label: 'Lille \u2014 Dashboard Marketing', type: 'dashboard', url: 'https://monextensionbois-france.github.io/agence.lille/', agency: 'Lille' },
+            { label: 'Arras \u2014 Dashboard Marketing', type: 'dashboard', url: 'https://monextensionbois-france.github.io/agence.arras/', agency: 'Arras' },
+            { label: 'National \u2014 Dashboard Marketing', type: 'dashboard', url: 'https://monextensionbois-france.github.io/national/', agency: 'National' },
+            { label: 'Franchise \u2014 Dashboard Marketing', type: 'dashboard', url: 'https://monextensionbois-france.github.io/franchise/', agency: 'Franchise' }
+        ]
+    },
+    {
+        id: 'as-agt',
+        name: 'AS-AGT',
+        sector: 'Agencement & Menuiserie',
+        status: 'active',
+        logo: 'https://www.as-agt.fr/wp-content/uploads/2025/04/Logo-AS-AGT-COULEUR.png',
+        initials: null,
+        color: '#69af36',
+        links: [
+            {
+                label: 'Dashboard Marketing',
+                type: 'dashboard',
+                url: 'https://as-agt.github.io/Dashboard/'
+            }
+        ]
+    },
+    {
+        id: 'histoires-do',
+        name: "Histoires d'\u00D4",
+        sector: 'Franchise Baln\u00E9o-Club',
+        status: 'active',
+        logo: 'https://www.histoiresdo.fr/media/images/logo-h2o.png',
+        logoBg: 'dark',
+        initials: null,
+        color: '#6c3fa0',
+        links: [
+            {
+                label: 'Dashboard Marketing',
+                type: 'dashboard',
+                url: 'https://histoires-do.github.io/Dashboard/'
+            }
+        ]
+    },
+    {
+        id: 'moulin-elise',
+        name: "Le Moulin d'Elise",
+        sector: 'Franchise Boulangerie',
+        status: 'active',
+        logo: 'https://moulindelise.com/wp-content/uploads/logo-moulin-elise-01.svg',
+        logoBg: 'light',
+        initials: null,
+        color: '#BF8D50',
+        links: [
+            {
+                label: 'Portail Marketing',
+                type: 'dashboard',
+                url: 'https://moulin-delise-france.github.io/dashboard/'
+            },
+            {
+                label: 'Dashboard National',
+                type: 'dashboard',
+                url: 'https://moulin-delise-france.github.io/dashboard/dashboard-moulin-national.html'
+            },
+            {
+                label: 'Dashboard Carquefou',
+                type: 'dashboard',
+                url: 'https://moulin-delise-france.github.io/dashboard/dashboard-moulin-carquefou.html'
+            },
+            {
+                label: 'Dashboard Saint-Brieuc',
+                type: 'dashboard',
+                url: 'https://moulin-delise-france.github.io/dashboard/dashboard-moulin-saintbrieuc.html'
+            }
+        ]
+    }
+];
+
+/* ═══════════════════════════════════════════════════════════════ */
+
+// Clock
+function updateClock() {
+    const now = new Date();
+    const opts = { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' };
+    document.getElementById('clock').textContent = now.toLocaleDateString('fr-FR', opts);
+}
+updateClock();
+setInterval(updateClock, 30000);
+
+// Stats
+function updateStats() {
+    const totalDashboards = CLIENTS.reduce((s, c) => s + c.links.filter(l => l.type === 'dashboard').length, 0);
+    const totalReports = CLIENTS.reduce((s, c) => s + c.links.filter(l => l.type === 'report').length, 0);
+    document.getElementById('statClients').textContent = CLIENTS.length;
+    document.getElementById('statDashboards').textContent = totalDashboards;
+    document.getElementById('statReports').textContent = totalReports;
+    document.getElementById('statTotal').textContent = totalDashboards + totalReports;
+}
+updateStats();
+
+// SVG icons
+const ICONS = {
+    dashboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>',
+    report: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+    chevron: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>',
+    arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>',
+    link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'
+};
+
+// Render clients
+function renderClients(filter = '') {
+    const grid = document.getElementById('clientsGrid');
+    const noResults = document.getElementById('noResults');
+    const query = filter.toLowerCase().trim();
+
+    const filtered = CLIENTS.filter(c =>
+        c.name.toLowerCase().includes(query) ||
+        c.sector.toLowerCase().includes(query) ||
+        c.links.some(l => l.label.toLowerCase().includes(query))
+    );
+
+    document.getElementById('sectionCount').textContent = filtered.length + ' client' + (filtered.length !== 1 ? 's' : '');
+
+    if (filtered.length === 0) {
+        grid.innerHTML = '';
+        noResults.style.display = 'block';
+        return;
+    }
+
+    noResults.style.display = 'none';
+
+    grid.innerHTML = filtered.map(client => {
+        const dashCount = client.links.filter(l => l.type === 'dashboard').length;
+        const reportCount = client.links.filter(l => l.type === 'report').length;
+
+        const logoLightClass = client.logoBg === 'light' ? ' logo-light' : '';
+        const logoHtml = client.logo
+            ? `<img src="${client.logo}" alt="${client.name}" onerror="this.parentElement.innerHTML='<span class=\\'initials\\'>${(client.initials || client.name.substring(0,2).toUpperCase())}</span>'">`
+            : `<span class="initials">${client.initials || client.name.substring(0,2).toUpperCase()}</span>`;
+
+        // Group links by type
+        const dashboardLinks = client.links.filter(l => l.type === 'dashboard');
+        const reportLinks = client.links.filter(l => l.type === 'report');
+
+        const renderLink = (link) => `
+            <a href="${link.url}" target="_blank" rel="noopener" class="link-item" onclick="event.stopPropagation()">
+                <div class="link-item-icon ${link.type}">
+                    ${ICONS[link.type] || ICONS.link}
+                </div>
+                <div class="link-item-text">
+                    <div class="link-item-label">${link.label}</div>
+                    <div class="link-item-type">${link.type === 'dashboard' ? 'Dashboard' : 'Rapport'}</div>
+                </div>
+                <div class="link-item-arrow">
+                    ${ICONS.arrow}
+                </div>
+            </a>`;
+
+        let linksHtml = '';
+        const hasSections = reportLinks.some(l => l.section);
+
+        if (dashboardLinks.length > 0) {
+            if (hasSections) {
+                // Client avec sous-sections : on titre aussi les dashboards
+                linksHtml += `<div class="client-links-title section-open" onclick="toggleSection(this, event)">Dashboards</div>`;
+                linksHtml += `<div class="section-group" style="max-height:none">${dashboardLinks.map(renderLink).join('')}</div>`;
+            } else {
+                // Client simple : pas de sous-section, liens directs
+                linksHtml += dashboardLinks.map(renderLink).join('');
+            }
+        }
+        if (reportLinks.length > 0) {
+            if (hasSections) {
+                const sections = [...new Set(reportLinks.map(l => l.section).filter(Boolean))];
+                sections.forEach(sec => {
+                    const secLinks = reportLinks.filter(l => l.section === sec);
+                    linksHtml += `<div class="client-links-title" onclick="toggleSection(this, event)">${sec}</div>`;
+                    linksHtml += `<div class="section-group">${secLinks.map(renderLink).join('')}</div>`;
+                });
+                const noSec = reportLinks.filter(l => !l.section);
+                if (noSec.length > 0) {
+                    linksHtml += `<div class="client-links-title" onclick="toggleSection(this, event)">Autres rapports</div>`;
+                    linksHtml += `<div class="section-group">${noSec.map(renderLink).join('')}</div>`;
+                }
+            } else {
+                // Client simple : liens directs sans sous-sections
+                linksHtml += reportLinks.map(renderLink).join('');
+            }
+        }
+
+        return `
+            <div class="client-card animate-in" data-id="${client.id}" onclick="toggleCard(this)">
+                <div class="client-header">
+                    <div class="client-logo${logoLightClass}" style="background: ${client.color}15; border-color: ${client.color}30">
+                        ${logoHtml}
+                    </div>
+                    <div class="client-info">
+                        <div class="client-name">${client.name}</div>
+                        <div class="client-meta">
+                            <span class="client-sector">${client.sector}</span>
+                            <span class="client-status ${client.status}">${client.status === 'active' ? 'Actif' : 'En cours'}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="client-stats">
+                    ${dashCount > 0 ? `<div class="client-stat">${ICONS.dashboard} <strong>${dashCount}</strong> dashboard${dashCount > 1 ? 's' : ''}</div>` : ''}
+                    ${reportCount > 0 ? `<div class="client-stat">${ICONS.report} <strong>${reportCount}</strong> rapport${reportCount > 1 ? 's' : ''}</div>` : ''}
+                </div>
+                <div class="client-links">
+                    <div class="client-links-inner">
+                        ${linksHtml}
+                    </div>
+                </div>
+                <div class="client-expand-indicator">
+                    ${ICONS.chevron}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function toggleCard(card) {
+    card.classList.toggle('expanded');
+}
+
+function toggleSection(el, e) {
+    e.stopPropagation();
+    const group = el.nextElementSibling;
+    if (!group) return;
+    const isOpen = group.style.maxHeight && group.style.maxHeight !== '0px';
+    if (isOpen) {
+        group.style.maxHeight = '0px';
+        el.classList.remove('section-open');
+    } else {
+        group.style.maxHeight = group.scrollHeight + 'px';
+        el.classList.add('section-open');
+    }
+}
+
+// Search
+document.getElementById('searchInput').addEventListener('input', function() {
+    renderClients(this.value);
+});
+
+// Keyboard shortcut: / to focus search
+document.addEventListener('keydown', function(e) {
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+        e.preventDefault();
+        document.getElementById('searchInput').focus();
+    }
+    if (e.key === 'Escape') {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('searchInput').blur();
+        renderClients();
+    }
+});
+
+// Init
+renderClients();
+</script>
+</body>
+</html>

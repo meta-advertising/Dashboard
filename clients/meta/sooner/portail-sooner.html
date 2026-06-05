@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SOONER — Dashboard Marketing</title>
+<link rel="icon" href="https://sooner.fr/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#AE00FF;
+  --primary-light:#c44dff;
+  --primary-dark:#7B00B3;
+  --bg:#08060e;
+  --card-bg:rgba(174,0,255,0.04);
+  --card-border:rgba(174,0,255,0.10);
+  --text:#f0eef5;
+  --text-secondary:rgba(240,238,245,0.55);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* ── Animated Background ── */
+.hero-bg{
+  position:fixed;inset:0;z-index:0;overflow:hidden;
+}
+.hero-bg::before{
+  content:'';position:absolute;inset:-50%;
+  background:
+    radial-gradient(ellipse 600px 600px at 20% 30%,rgba(174,0,255,0.18),transparent 70%),
+    radial-gradient(ellipse 500px 500px at 80% 20%,rgba(123,0,179,0.14),transparent 70%),
+    radial-gradient(ellipse 700px 700px at 50% 70%,rgba(174,0,255,0.10),transparent 70%),
+    radial-gradient(ellipse 400px 400px at 70% 80%,rgba(196,77,255,0.08),transparent 70%);
+  animation:bgShift 15s ease-in-out infinite alternate;
+}
+.hero-bg::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(174,0,255,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(174,0,255,0.03) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,black 30%,transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,black 30%,transparent 70%);
+}
+@keyframes bgShift{
+  0%{transform:translate(0,0) scale(1)}
+  25%{transform:translate(3%,-2%) scale(1.02)}
+  50%{transform:translate(-2%,3%) scale(1.01)}
+  75%{transform:translate(2%,1%) scale(1.03)}
+  100%{transform:translate(-1%,-3%) scale(1)}
+}
+
+/* ── Layout ── */
+.content{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+
+/* ── Hero ── */
+.hero{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:55vh;padding:80px 24px 40px;text-align:center;
+}
+.logo-img{
+  width:clamp(180px,30vw,340px);height:auto;
+  filter:drop-shadow(0 0 40px rgba(174,0,255,0.5)) drop-shadow(0 0 80px rgba(174,0,255,0.2));
+  animation:logoPulse 4s ease-in-out infinite;
+}
+@keyframes logoPulse{
+  0%,100%{filter:drop-shadow(0 0 40px rgba(174,0,255,0.5)) drop-shadow(0 0 80px rgba(174,0,255,0.2))}
+  50%{filter:drop-shadow(0 0 60px rgba(174,0,255,0.7)) drop-shadow(0 0 100px rgba(174,0,255,0.35))}
+}
+@keyframes shimmer{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.hero-subtitle{
+  font-family:'Inter',sans-serif;font-weight:300;
+  font-size:clamp(0.85rem,2vw,1.15rem);
+  color:transparent;margin-top:16px;letter-spacing:4px;text-transform:uppercase;
+  background:linear-gradient(90deg,rgba(240,238,245,0.3),rgba(174,0,255,0.7),rgba(240,238,245,0.3));
+  background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  animation:subtitleShimmer 6s ease-in-out infinite;
+  position:relative;
+  padding-bottom:20px;
+}
+.hero-subtitle::after{
+  content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:80px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--primary),transparent);
+}
+@keyframes subtitleShimmer{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+
+/* ── KPI Section ── */
+.kpi-section{
+  display:flex;justify-content:center;gap:clamp(24px,5vw,72px);
+  padding:0 24px 56px;flex-wrap:wrap;
+}
+.kpi{text-align:center;min-width:160px}
+.kpi-value{
+  font-family:'Playfair Display',serif;font-weight:800;
+  font-size:clamp(1.8rem,4vw,3rem);
+  background:linear-gradient(135deg,#fff,var(--primary-light));
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  line-height:1.2;
+}
+.kpi-label{
+  font-size:0.8rem;color:var(--text-secondary);
+  margin-top:6px;font-weight:400;letter-spacing:0.5px;text-transform:uppercase;
+}
+.kpi-divider{
+  width:1px;background:linear-gradient(180deg,transparent,rgba(174,0,255,0.2),transparent);
+  align-self:stretch;margin:4px 0;
+}
+
+/* ── Cards Grid ── */
+.cards-section{
+  max-width:1200px;width:100%;margin:0 auto;
+  padding:0 24px 80px;
+}
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.cards-grid .card:nth-child(4),
+.cards-grid .card:nth-child(5){
+  /* center the last 2 cards */
+}
+@media(min-width:1100px){
+  .cards-grid{grid-template-columns:repeat(5,1fr)}
+}
+
+.card{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:16px;
+  padding:32px 24px 28px;
+  text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  transition:transform 0.4s cubic-bezier(.22,1,.36,1),
+             box-shadow 0.4s cubic-bezier(.22,1,.36,1),
+             border-color 0.4s ease;
+  opacity:0;transform:translateY(30px);
+  cursor:pointer;position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;inset:0;border-radius:16px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(174,0,255,0.06),transparent 70%);
+  opacity:0;transition:opacity 0.4s ease;
+}
+.card:hover{
+  transform:translateY(-4px) scale(1.03);
+  border-color:rgba(174,0,255,0.30);
+  box-shadow:0 8px 40px rgba(174,0,255,0.12),0 0 80px rgba(174,0,255,0.06);
+}
+.card:hover::before{opacity:1}
+.card.visible{opacity:1;transform:translateY(0)}
+
+.card-icon{
+  width:48px;height:48px;margin-bottom:18px;position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+.card-icon svg{
+  width:32px;height:32px;stroke:var(--primary-light);fill:none;
+  stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;
+  filter:drop-shadow(0 0 8px rgba(174,0,255,0.4));
+  animation:iconPulse 3s ease-in-out infinite;
+}
+@keyframes iconPulse{
+  0%,100%{filter:drop-shadow(0 0 6px rgba(174,0,255,0.3))}
+  50%{filter:drop-shadow(0 0 14px rgba(174,0,255,0.6))}
+}
+.card-title{
+  font-family:'Playfair Display',serif;font-weight:700;
+  font-size:1.05rem;margin-bottom:8px;letter-spacing:0.3px;
+}
+.card-desc{
+  font-size:0.8rem;color:var(--text-secondary);
+  font-weight:300;line-height:1.5;
+}
+
+/* ── Footer ── */
+.footer{
+  text-align:center;padding:40px 24px 32px;
+  font-size:0.72rem;color:rgba(240,238,245,0.25);
+  letter-spacing:0.3px;font-weight:300;
+  margin-top:auto;
+}
+.footer span{color:rgba(174,0,255,0.4)}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  .hero{min-height:45vh;padding:60px 20px 32px}
+  .kpi-section{gap:20px;padding-bottom:40px}
+  .kpi-divider{display:none}
+  .cards-grid{grid-template-columns:1fr}
+  .cards-section{padding-bottom:48px}
+}
+@media(min-width:769px) and (max-width:1099px){
+  .cards-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+/* ── Loading shimmer for KPI ── */
+.kpi-value.loading{
+  background:linear-gradient(90deg,rgba(174,0,255,0.1),rgba(174,0,255,0.25),rgba(174,0,255,0.1));
+  background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:loadShimmer 1.5s ease-in-out infinite;
+}
+@keyframes loadShimmer{
+  0%{background-position:200% 0}100%{background-position:-200% 0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero-bg"></div>
+
+<div class="content">
+
+  <!-- Hero -->
+  <section class="hero">
+    <img class="logo-img" src="sooner-logo-white.png" alt="SOONER">
+    <p class="hero-subtitle">Dashboard Marketing</p>
+  </section>
+
+  <!-- KPI Counters -->
+  <section class="kpi-section">
+    <div class="kpi">
+      <div class="kpi-value loading" id="kpi-spend">—</div>
+      <div class="kpi-label">Dépenses totales</div>
+    </div>
+    <div class="kpi-divider"></div>
+    <div class="kpi">
+      <div class="kpi-value loading" id="kpi-purchases">—</div>
+      <div class="kpi-label">Achats SVOD</div>
+    </div>
+    <div class="kpi-divider"></div>
+    <div class="kpi">
+      <div class="kpi-value loading" id="kpi-cpa">—</div>
+      <div class="kpi-label">CPA SVOD</div>
+    </div>
+  </section>
+
+  <!-- Navigation Cards -->
+  <section class="cards-section">
+    <div class="cards-grid">
+
+      <a href="dashboard-sooner.html#overview" class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        </div>
+        <div class="card-title">Vue d'ensemble</div>
+        <div class="card-desc">Performances globales multi-canal</div>
+      </a>
+
+      <a href="dashboard-sooner.html#meta" class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        </div>
+        <div class="card-title">Meta Ads</div>
+        <div class="card-desc">Facebook & Instagram Ads</div>
+      </a>
+
+      <a href="dashboard-sooner.html#google" class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div class="card-title">Google Ads</div>
+        <div class="card-desc">Search, Display & Performance Max</div>
+      </a>
+
+      <a href="dashboard-sooner.html#ga4" class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="card-title">GA4 / Site</div>
+        <div class="card-desc">Comportement & E-commerce</div>
+      </a>
+
+      <a href="dashboard-sooner.html#bilan" class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8" y2="14.01"/><line x1="12" y1="14" x2="12" y2="14.01"/><line x1="16" y1="14" x2="16" y2="14.01"/><line x1="8" y1="18" x2="8" y2="18.01"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
+        </div>
+        <div class="card-title">Bilan Mensuel</div>
+        <div class="card-desc">Synthèse & Reporting</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    Lucky Time Agency &copy; 2026 — Propulsé par <span>Supermetrics</span> &times; <span>Claude Code</span>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+
+  /* ── CSV Fetch & Parse ── */
+  const BASE='https://docs.google.com/spreadsheets/d/e/2PACX-1vSZagUxarZFDcCcmYW8fd1eXI_21odFFSu2ptSPWbnGYkog-UuH77A4iXv4Vv3A2DG2HGUnEWMTmrsc/pub?output=csv&single=true&gid=';
+  const GID_META='0';
+  const GID_GADS='303706772';
+
+  function pN(v){
+    if(!v||v==='')return 0;
+    return parseFloat(String(v).replace(/"/g,'').replace(',','.').replace(/\s/g,''))||0;
+  }
+
+  function parseCSV(text){
+    const lines=text.split('\n').filter(l=>l.trim());
+    if(lines.length<2)return[];
+    /* Handle quoted fields properly */
+    function splitRow(row){
+      const fields=[];let cur='',inQ=false;
+      for(let i=0;i<row.length;i++){
+        const c=row[i];
+        if(c==='"'){inQ=!inQ;continue}
+        if(c===';' && !inQ){fields.push(cur);cur='';continue}
+        cur+=c;
+      }
+      fields.push(cur);
+      /* If only 1 field, try comma separator */
+      if(fields.length<=1){
+        const f2=[];cur='';inQ=false;
+        for(let i=0;i<row.length;i++){
+          const c=row[i];
+          if(c==='"'){inQ=!inQ;continue}
+          if(c===',' && !inQ){f2.push(cur);cur='';continue}
+          cur+=c;
+        }
+        f2.push(cur);
+        if(f2.length>1)return f2;
+      }
+      return fields;
+    }
+    const headers=splitRow(lines[0]).map(h=>h.trim().toLowerCase());
+    return lines.slice(1).map(line=>{
+      const vals=splitRow(line);
+      const obj={};
+      headers.forEach((h,i)=>obj[h]=vals[i]||'');
+      return obj;
+    });
+  }
+
+  function findCol(row,patterns){
+    const keys=Object.keys(row);
+    for(const p of patterns){
+      const found=keys.find(k=>k.includes(p));
+      if(found)return found;
+    }
+    return null;
+  }
+
+  async function fetchSheet(gid){
+    const res=await fetch(BASE+gid);
+    const txt=await res.text();
+    return parseCSV(txt);
+  }
+
+  /* ── Animate Counter ── */
+  function animateValue(el,target,duration,formatter){
+    el.classList.remove('loading');
+    const start=performance.now();
+    const step=(now)=>{
+      const elapsed=now-start;
+      const progress=Math.min(elapsed/duration,1);
+      /* ease-out cubic */
+      const eased=1-Math.pow(1-progress,3);
+      const current=target*eased;
+      el.textContent=formatter(current);
+      if(progress<1)requestAnimationFrame(step);
+      else el.textContent=formatter(target);
+    };
+    requestAnimationFrame(step);
+  }
+
+  const fmtEur=(v)=>v.toLocaleString('fr-FR',{minimumFractionDigits:0,maximumFractionDigits:0})+' €';
+  const fmtInt=(v)=>Math.round(v).toLocaleString('fr-FR');
+
+  /* ── Load Data ── */
+  Promise.all([fetchSheet(GID_META),fetchSheet(GID_GADS)])
+    .then(([meta,gads])=>{
+      let metaSpend=0,metaPurchases=0;
+      let gadsSpend=0,gadsPurchases=0;
+
+      if(meta.length){
+        const spendCol=findCol(meta[0],['montant dépensé','spend','dépens','amount spent','cout','coût','cost']);
+        const purchCol=findCol(meta[0],['achat','purchase','achats','purchases','conversion']);
+        meta.forEach(r=>{
+          if(spendCol)metaSpend+=pN(r[spendCol]);
+          if(purchCol)metaPurchases+=pN(r[purchCol]);
+        });
+      }
+
+      if(gads.length){
+        const spendCol=findCol(gads[0],['cost','coût','cout','spend','dépens']);
+        const convCol=findCol(gads[0],['conversion','achat','purchase']);
+        gads.forEach(r=>{
+          if(spendCol)gadsSpend+=pN(r[spendCol]);
+          if(convCol)gadsPurchases+=pN(r[convCol]);
+        });
+      }
+
+      const totalSpend=metaSpend+gadsSpend;
+      const totalPurchases=metaPurchases+gadsPurchases;
+      const cpaSVOD=totalPurchases>0?totalSpend/totalPurchases:0;
+
+      animateValue(document.getElementById('kpi-spend'),totalSpend,2000,fmtEur);
+      animateValue(document.getElementById('kpi-purchases'),totalPurchases,2000,fmtInt);
+      animateValue(document.getElementById('kpi-cpa'),cpaSVOD,2000,fmtEur);
+    })
+    .catch(()=>{
+      ['kpi-spend','kpi-purchases','kpi-cpa'].forEach(id=>{
+        const el=document.getElementById(id);
+        el.classList.remove('loading');
+        el.textContent='—';
+      });
+    });
+
+  /* ── Card Entrance Animation ── */
+  const cards=document.querySelectorAll('.card');
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const card=entry.target;
+        const idx=[...cards].indexOf(card);
+        setTimeout(()=>card.classList.add('visible'),idx*100);
+        observer.unobserve(card);
+      }
+    });
+  },{threshold:0.1});
+  cards.forEach(c=>observer.observe(c));
+
+})();
+</script>
+</body>
+</html>

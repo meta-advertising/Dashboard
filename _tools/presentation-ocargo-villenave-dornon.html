@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koven Agency × Ôcargo Food Court Villenave-d'Ornon — Présentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --koven-black: #1a1a1a;
+  --koven-orange: #f7933b;
+  --koven-white: #fafafa;
+  --ocargo-orange: #ff9600;
+  --ocargo-teal: #015f62;
+  --ocargo-teal-light: #027a7e;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--koven-black);
+  color: var(--koven-white);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+.slides-container { width: 100vw; height: 100vh; position: relative; }
+
+.slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 80px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+  overflow-y: auto;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0) !important;
+  pointer-events: all;
+}
+
+/* NAV */
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 60px;
+  background: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 100;
+  border-top: 1px solid rgba(1, 95, 98, 0.3);
+}
+
+.slide-counter {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 2px;
+}
+
+.nav-btn {
+  background: rgba(1, 95, 98, 0.2);
+  border: 1px solid rgba(1, 95, 98, 0.4);
+  color: var(--ocargo-teal-light);
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.3s;
+}
+
+.nav-btn:hover {
+  background: var(--ocargo-teal);
+  color: white;
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ocargo-teal), var(--ocargo-orange));
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 101;
+}
+
+/* TYPO */
+.slide-label {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--ocargo-orange);
+  margin-bottom: 26px;
+}
+
+.slide-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 58px;
+  font-weight: 700;
+  line-height: 1.13;
+  margin-bottom: 20px;
+  max-width: 1300px;
+  text-align: center;
+}
+
+.slide-subtitle {
+  font-size: 21px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.72);
+  max-width: 900px;
+  text-align: center;
+  line-height: 1.55;
+}
+
+.highlight { color: var(--ocargo-orange); }
+.highlight-teal { color: var(--ocargo-teal-light); }
+
+/* LOGOS */
+.cover-logos {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  margin-bottom: 46px;
+}
+
+.logo-koven { height: 120px; object-fit: contain; }
+.logo-ocargo { height: 104px; object-fit: contain; }
+.logo-koven-sm { height: 80px; object-fit: contain; }
+.logo-ocargo-sm { height: 80px; object-fit: contain; }
+
+.cover-x { color: rgba(255,255,255,0.25); font-size: 30px; font-weight: 300; }
+
+.cover-line {
+  width: 110px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--ocargo-teal), var(--ocargo-orange));
+  margin: 0 auto 26px;
+  border-radius: 2px;
+}
+
+.cover-meta {
+  font-size: 17px;
+  color: rgba(255,255,255,0.38);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* CARDS */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 22px;
+  width: 100%;
+  max-width: 1560px;
+  margin-top: 6px;
+}
+
+.card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  padding: 26px 28px;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 4px;
+  background: linear-gradient(90deg, var(--ocargo-teal), var(--ocargo-orange));
+  opacity: 1;
+}
+
+.card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(1, 95, 98, 0.4);
+  transform: translateY(-4px);
+}
+
+.card:hover::before { opacity: 1; }
+
+.card-icon {
+  font-size: 26px; margin-bottom: 14px; display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 54px; height: 54px; border-radius: 15px;
+  background: linear-gradient(135deg, rgba(255,150,0,0.16), rgba(1,95,98,0.16));
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.card-title { font-size: 21px; font-weight: 700; margin-bottom: 9px; color: var(--koven-white); }
+.card-text { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.62); line-height: 1.55; }
+
+/* STATS */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  width: 100%;
+  max-width: 1280px;
+  margin-top: 38px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 36px 24px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.stat-number {
+  font-size: 70px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--ocargo-teal-light), var(--ocargo-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.stat-spark { display: block; margin: 10px auto 4px; }
+
+.stat-label {
+  font-size: 18px;
+  color: rgba(255,255,255,0.55);
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 8px;
+}
+
+/* ABOUT BOX */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  width: 100%;
+  max-width: 1500px;
+  margin-top: 14px;
+}
+
+.about-box {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 26px;
+  padding: 42px 40px;
+}
+
+.about-box h3 { font-size: 26px; font-weight: 700; margin-bottom: 20px; }
+.about-box p { font-size: 18px; color: rgba(255,255,255,0.62); line-height: 1.75; }
+
+.about-box ul { list-style: none; margin-top: 14px; }
+.about-box ul li {
+  padding: 9px 0;
+  font-size: 18px;
+  color: rgba(255,255,255,0.62);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.about-box ul li::before {
+  content: '\2192';
+  color: var(--ocargo-orange);
+  font-weight: 700;
+}
+
+/* FUNNEL */
+.funnel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  max-width: 1150px;
+  margin-top: 6px;
+}
+
+.funnel-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 14px 40px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.4s;
+  text-align: center;
+}
+
+.funnel-step:hover { transform: scale(1.03); }
+
+.funnel-step.step-1 {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(255,150,0,0.2), rgba(255,150,0,0.05));
+  border: 1px solid rgba(255,150,0,0.3);
+  color: var(--ocargo-orange);
+}
+
+.funnel-step.step-2 {
+  width: 80%;
+  background: linear-gradient(135deg, rgba(1,95,98,0.25), rgba(1,95,98,0.08));
+  border: 1px solid rgba(1,95,98,0.4);
+  color: var(--ocargo-teal-light);
+}
+
+.funnel-step.step-3 {
+  width: 60%;
+  background: linear-gradient(135deg, rgba(2,122,126,0.25), rgba(2,122,126,0.08));
+  border: 1px solid rgba(2,122,126,0.4);
+  color: #03a5aa;
+}
+
+.funnel-arrow { color: rgba(255,255,255,0.25); font-size: 18px; margin: 2px 0; }
+
+/* CAMPAIGN CARDS */
+.campaign-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  width: 100%;
+  max-width: 1560px;
+  margin-top: 6px;
+}
+
+.campaign-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 26px 24px;
+  text-align: center;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.campaign-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 5px;
+  background: var(--card-accent);
+  opacity: 1;
+}
+
+.campaign-card .cc-icon {
+  width: 60px; height: 60px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  margin: 0 auto 14px;
+  background: var(--card-bg);
+}
+
+.campaign-card .cc-tag {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.campaign-card h4 { font-size: 21px; font-weight: 700; margin-bottom: 9px; }
+.campaign-card p { font-size: 15px; line-height: 1.55; color: rgba(255,255,255,0.62); }
+
+.campaign-card.notoriete { --card-accent: var(--ocargo-orange); --card-bg: rgba(255,150,0,0.12); }
+.campaign-card.notoriete .cc-tag { color: var(--ocargo-orange); }
+
+.campaign-card.engagement { --card-accent: var(--ocargo-teal); --card-bg: rgba(1,95,98,0.15); }
+.campaign-card.engagement .cc-tag { color: var(--ocargo-teal-light); }
+
+.campaign-card.conversion { --card-accent: #03a5aa; --card-bg: rgba(3,165,170,0.12); }
+.campaign-card.conversion .cc-tag { color: #03a5aa; }
+
+/* TRACKING */
+.tracking-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  width: 100%;
+  max-width: 1500px;
+  margin-top: 6px;
+}
+
+.tracking-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  padding: 18px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tracking-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 6px; height: 100%;
+  background: var(--track-color, var(--ocargo-orange));
+  border-radius: 0 6px 6px 0;
+}
+
+.tracking-card h4 { font-size: 19px; font-weight: 700; margin-bottom: 5px; padding-left: 16px; }
+.tracking-card .track-desc { font-size: 14px; color: rgba(255,255,255,0.48); padding-left: 16px; margin-bottom: 10px; line-height: 1.45; }
+
+.kpi-row { display: flex; gap: 10px; padding-left: 16px; flex-wrap: wrap; }
+
+.kpi-badge {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 10px 14px;
+  text-align: center;
+  flex: 1;
+  min-width: 90px;
+}
+
+.kpi-badge .kpi-val { font-size: 20px; font-weight: 800; display: block; margin-bottom: 3px; }
+.kpi-badge .kpi-name { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.42); }
+
+.tracking-card.track-meta { --track-color: var(--ocargo-orange); }
+.tracking-card.track-meta h4 { color: var(--ocargo-orange); }
+.tracking-card.track-meta .kpi-val { color: var(--ocargo-orange); }
+
+.tracking-card.track-social { --track-color: var(--ocargo-teal-light); }
+.tracking-card.track-social h4 { color: var(--ocargo-teal-light); }
+.tracking-card.track-social .kpi-val { color: var(--ocargo-teal-light); }
+
+.tracking-card.track-event { --track-color: #03a5aa; }
+.tracking-card.track-event h4 { color: #03a5aa; }
+.tracking-card.track-event .kpi-val { color: #03a5aa; }
+
+.tracking-card.track-revenue { --track-color: #34a853; }
+.tracking-card.track-revenue h4 { color: #34a853; }
+.tracking-card.track-revenue .kpi-val { color: #34a853; }
+
+/* CTA */
+.cta-box {
+  background: linear-gradient(135deg, rgba(1,95,98,0.12), rgba(255,150,0,0.06));
+  border: 1px solid rgba(1,95,98,0.25);
+  border-radius: 36px;
+  padding: 58px 64px;
+  text-align: center;
+  max-width: 980px;
+  width: 100%;
+}
+
+.cta-box .slide-title { font-size: 56px; margin-bottom: 18px; }
+
+.questions-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(255,255,255,0.5);
+  margin-top: 24px;
+}
+
+/* LOCATIONS TAG */
+.locations-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(1,95,98,0.15);
+  border: 1px solid rgba(1,95,98,0.3);
+  border-radius: 40px;
+  padding: 13px 30px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ocargo-teal-light);
+  letter-spacing: 1px;
+}
+
+.locations-tag .loc-dot {
+  width: 9px; height: 9px;
+  background: var(--ocargo-orange);
+  border-radius: 50%;
+}
+
+/* DECORATIVE */
+/* Halos doux via dégradé radial (pas de filter:blur → PDF léger et fluide) */
+.bg-glow {
+  position: absolute;
+  width: 1000px;
+  height: 1000px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.glow-teal { background: radial-gradient(circle, rgba(1,95,98,0.20), transparent 66%); top: -260px; right: -260px; }
+.glow-orange { background: radial-gradient(circle, rgba(255,150,0,0.16), transparent 66%); bottom: -260px; left: -260px; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .slide { padding: 40px 24px; }
+  .slide-title { font-size: 32px; }
+  .about-grid, .campaign-cards, .tracking-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media print {
+  .nav-bar, .progress-bar { display: none !important; }
+  .slide {
+    position: relative !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    pointer-events: all !important;
+    page-break-after: always;
+    height: auto;
+    min-height: 100vh;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="slides-container" id="slidesContainer">
+
+  <!-- ===== SLIDE 1 : COVER ===== -->
+  <div class="slide active" data-slide="1">
+    <div class="bg-glow glow-teal"></div>
+    <div class="bg-glow glow-orange"></div>
+    <div class="cover-logos">
+      <img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven Agency" class="logo-koven">
+      <span class="cover-x">×</span>
+      <img src="https://www.ocargofoodcourt.com/wp-content/uploads/2024/12/300-min.png" alt="Ôcargo Food Court" class="logo-ocargo">
+    </div>
+    <h1 class="slide-title">Bienvenue à<br><span class="highlight">Villenave-d'Ornon</span></h1>
+    <div class="cover-line"></div>
+    <p class="slide-subtitle">Stratégie de visibilité et d'acquisition digitale pour le lancement de votre nouveau Ôcargo Food Court à Villenave-d'Ornon.</p>
+    <br>
+    <div class="locations-tag">
+      <span class="loc-dot"></span> La Garde &nbsp;·&nbsp; Avignon &nbsp;·&nbsp; Aix-en-Provence &nbsp;·&nbsp; Marseille &nbsp;·&nbsp; Bessan &nbsp;·&nbsp; <strong style="color:var(--ocargo-orange);">Villenave-d'Ornon</strong>
+    </div>
+    <br>
+    <p class="cover-meta">Mai 2026 — Proposition d'accompagnement</p>
+  </div>
+
+  <!-- ===== SLIDE 2 : KOVEN AGENCY ===== -->
+  <div class="slide" data-slide="2">
+    <div class="bg-glow glow-teal"></div>
+    <span class="slide-label">Qui sommes-nous</span>
+    <img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven Agency" class="logo-koven-sm" style="margin-bottom:16px;">
+    <h2 class="slide-title"><span class="highlight">Koven Agency</span></h2>
+    <p class="slide-subtitle" style="margin-bottom:28px;">Agence spécialisée en marketing digital et acquisition de trafic. Nous accompagnons déjà <strong>Ôcargo Food Court</strong> sur 5 villes avec des résultats concrets.</p>
+    <div class="about-grid">
+      <div class="about-box" style="border-color:rgba(255,150,0,0.2);">
+        <h3 style="color:var(--ocargo-orange);">Ce que nous faisons</h3>
+        <ul>
+          <li>Campagnes Meta Ads (Instagram & Facebook)</li>
+          <li>Création de contenus sponsorisés et visuels</li>
+          <li>Stratégie d'acquisition et de notoriété locale</li>
+          <li>Promotion d'événements et soirées</li>
+          <li>Campagnes de recrutement ciblées</li>
+          <li>Reporting et suivi des performances</li>
+        </ul>
+      </div>
+      <div class="about-box" style="border-color:rgba(1,95,98,0.3);">
+        <h3 style="color:var(--ocargo-teal-light);">Notre collaboration avec Ôcargo</h3>
+        <ul>
+          <li>Promotion et mise en avant des événements hebdomadaires</li>
+          <li>Campagnes de notoriété et d'acquisition de trafic</li>
+          <li>Stratégies d'engagement et d'acquisition de followers</li>
+          <li>Campagnes de recrutement ciblées</li>
+          <li>Suivi des performances et optimisation continue</li>
+        </ul>
+        <p style="margin-top:20px;font-size:17px;color:var(--ocargo-orange);font-weight:600;">→ Un partenariat éprouvé, des résultats mesurables</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 3 : CE QUE NOUS PROPOSONS POUR BESSAN ===== -->
+  <div class="slide" data-slide="3">
+    <div class="bg-glow glow-orange"></div>
+    <span class="slide-label">Ôcargo Villenave-d'Ornon</span>
+    <h2 class="slide-title">Ce que nous mettons en place<br>pour <span class="highlight">Villenave-d'Ornon</span></h2>
+    <p class="slide-subtitle" style="margin-bottom:28px;">La même recette qui fonctionne sur vos autres Ôcargo, adaptée au marché local de Villenave-d'Ornon et à son dynamisme.</p>
+    <div class="cards-grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="card">
+        <span class="card-icon">🎉</span>
+        <h4 class="card-title">Promotion des événements</h4>
+        <p class="card-text">Mise en avant de chaque événement et animation hebdomadaire via des campagnes sponsorisées ciblées sur la zone de Villenave-d'Ornon et ses alentours.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📸</span>
+        <h4 class="card-title">Contenus sponsorisés</h4>
+        <p class="card-text">Création et sponsorisation de visuels et vidéos attractifs pour faire découvrir l'ambiance Ôcargo, les stands food et l'atmosphère festive.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📍</span>
+        <h4 class="card-title">Ciblage local</h4>
+        <p class="card-text">Audiences géolocalisées autour de Villenave-d'Ornon et ses alentours : habitants, familles, amateurs de food et de sorties.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔄</span>
+        <h4 class="card-title">Récurrence</h4>
+        <p class="card-text">Programmation récurrente des campagnes pour chaque événement de la semaine. L'audience s'habitue, la fréquentation augmente.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🚀</span>
+        <h4 class="card-title">Lancement & Ouverture</h4>
+        <p class="card-text">Campagne de lancement dédiée pour créer le buzz autour de l'ouverture du Ôcargo Villenave-d'Ornon et maximiser l'affluence dès le jour J.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📊</span>
+        <h4 class="card-title">Suivi & Optimisation</h4>
+        <p class="card-text">Dashboard de suivi en temps réel, reporting régulier et optimisation continue de chaque campagne pour maximiser le retour sur investissement.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 4 : POURQUOI META ===== -->
+  <div class="slide" data-slide="4">
+    <div class="bg-glow glow-teal"></div>
+    <span class="slide-label">Pourquoi Meta</span>
+    <h2 class="slide-title">Les avantages de <span class="highlight">Meta Ads</span><br>pour Ôcargo</h2>
+    <p class="slide-subtitle" style="margin-bottom:28px;">Instagram et Facebook sont les plateformes idéales pour promouvoir un food court festif. Voici pourquoi.</p>
+    <div class="cards-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 1150px;">
+      <div class="card">
+        <span class="card-icon">🎯</span>
+        <h4 class="card-title">Ciblage ultra-précis</h4>
+        <p class="card-text">Touchez exactement les bonnes personnes : par localisation (rayon autour de Villenave-d'Ornon), âge, centres d'intérêt (food, sorties, événements) et comportements.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">👁️</span>
+        <h4 class="card-title">Format visuel immersif</h4>
+        <p class="card-text">Stories, Reels, carrousels — des formats pensés pour montrer l'ambiance, les plats et l'énergie des soirées Ôcargo. Le food & nightlife explose sur Instagram.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">💰</span>
+        <h4 class="card-title">Budget maîtrisé</h4>
+        <p class="card-text">Vous définissez votre budget. Chaque euro est traçable, mesurable. On sait exactement combien coûte chaque vue, chaque clic, chaque action.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">⚡</span>
+        <h4 class="card-title">Résultats rapides</h4>
+        <p class="card-text">Contrairement au référencement naturel, les résultats sont immédiats. Dès le lancement, vos événements sont visibles par des milliers de personnes à Villenave-d'Ornon.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 5 : LES 3 PILIERS META ===== -->
+  <div class="slide" data-slide="5">
+    <div class="bg-glow glow-orange"></div>
+    <span class="slide-label">Stratégie Meta Ads</span>
+    <h2 class="slide-title">Les <span class="highlight">4 piliers</span> de vos campagnes</h2>
+    <p class="slide-subtitle" style="margin-bottom:14px;">Une approche structurée en entonnoir pour maximiser l'impact de chaque événement.</p>
+    <div class="campaign-cards" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="campaign-card notoriete">
+        <div class="cc-icon">👁️</div>
+        <span class="cc-tag">Pilier 1</span>
+        <h4>Notoriété</h4>
+        <p>Faire connaître Ôcargo Villenave-d'Ornon au plus grand nombre. On maximise les <strong>impressions</strong> auprès des habitants de Villenave-d'Ornon et alentours (18-45 ans, intéressés food, sorties, events).</p>
+      </div>
+      <div class="campaign-card engagement">
+        <div class="cc-icon">💬</div>
+        <span class="cc-tag">Pilier 2</span>
+        <h4>Engagement</h4>
+        <p>Créer de l'interaction autour de vos événements. <strong>Likes, commentaires, partages</strong> qui boostent l'algorithme et génèrent du bouche-à-oreille organique.</p>
+      </div>
+      <div class="campaign-card" style="--card-accent: #4285f4; --card-bg: rgba(66,133,244,0.12);">
+        <div class="cc-icon">👥</div>
+        <span class="cc-tag" style="color:#4285f4;">Pilier 3</span>
+        <h4>Trafic & Followers</h4>
+        <p>Développer votre communauté avec des campagnes d'<strong>acquisition de followers</strong> ciblées. Plus d'abonnés = plus de portée organique et plus de monde à chaque événement.</p>
+      </div>
+      <div class="campaign-card conversion">
+        <div class="cc-icon">🎟️</div>
+        <span class="cc-tag">Pilier 4</span>
+        <h4>Conversion</h4>
+        <p>Transformer l'audience en visiteurs réels. Campagnes ciblées pour <strong>remplir vos événements</strong> : réservations, itinéraires, actions concrètes.</p>
+      </div>
+    </div>
+    <div class="funnel" style="margin-top:30px;">
+      <div class="funnel-step step-1">👁️&nbsp;&nbsp;<strong>NOTORIÉTÉ</strong>&nbsp;—&nbsp;Ils découvrent Ôcargo Villenave-d'Ornon</div>
+      <div class="funnel-arrow">▼</div>
+      <div class="funnel-step step-2">💬&nbsp;&nbsp;<strong>ENGAGEMENT</strong>&nbsp;—&nbsp;Ils interagissent, suivent, partagent</div>
+      <div class="funnel-arrow">▼</div>
+      <div class="funnel-step" style="width:70%;background:linear-gradient(135deg,rgba(66,133,244,0.2),rgba(66,133,244,0.05));border:1px solid rgba(66,133,244,0.3);color:#4285f4;">👥&nbsp;&nbsp;<strong>TRAFIC & FOLLOWERS</strong>&nbsp;—&nbsp;Ils s'abonnent et rejoignent votre communauté</div>
+      <div class="funnel-arrow">▼</div>
+      <div class="funnel-step step-3">🎟️&nbsp;&nbsp;<strong>CONVERSION</strong>&nbsp;—&nbsp;Ils viennent à vos événements</div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 6 : TRACKING & RÉSULTATS ===== -->
+  <div class="slide" data-slide="6">
+    <div class="bg-glow glow-teal"></div>
+    <div class="bg-glow glow-orange"></div>
+    <span class="slide-label">Tracking & Performance</span>
+    <h2 class="slide-title">Suivre les <span class="highlight">résultats</span><br>et les <span class="highlight-teal">optimiser</span></h2>
+    <p class="slide-subtitle" style="margin-bottom:12px;">Chaque campagne est mesurée en temps réel. On analyse, on ajuste, on améliore — chaque semaine.</p>
+    <div class="tracking-grid">
+      <div class="tracking-card track-meta">
+        <h4>Portée & Visibilité</h4>
+        <p class="track-desc">Combien de personnes voient vos campagnes</p>
+        <div class="kpi-row">
+          <div class="kpi-badge"><span class="kpi-val">VUES</span><span class="kpi-name">Personnes atteintes</span></div>
+          <div class="kpi-badge"><span class="kpi-val">CLICS</span><span class="kpi-name">Clics sur vos pubs</span></div>
+          <div class="kpi-badge"><span class="kpi-val">COÛT</span><span class="kpi-name">Coût par résultat</span></div>
+        </div>
+      </div>
+      <div class="tracking-card track-social">
+        <h4>Communauté & Engagement</h4>
+        <p class="track-desc">La croissance de votre audience Ôcargo Villenave-d'Ornon</p>
+        <div class="kpi-row">
+          <div class="kpi-badge"><span class="kpi-val">ABONNÉS</span><span class="kpi-name">Nouveaux followers</span></div>
+          <div class="kpi-badge"><span class="kpi-val">LIKES</span><span class="kpi-name">Interactions</span></div>
+          <div class="kpi-badge"><span class="kpi-val">PARTAGES</span><span class="kpi-name">Viralité</span></div>
+        </div>
+      </div>
+      <div class="tracking-card track-event">
+        <h4>Événements & Affluence</h4>
+        <p class="track-desc">L'impact direct sur la fréquentation</p>
+        <div class="kpi-row">
+          <div class="kpi-badge"><span class="kpi-val">INTÉRESSÉS</span><span class="kpi-name">Réponses événement</span></div>
+          <div class="kpi-badge"><span class="kpi-val">VISITES</span><span class="kpi-name">Affluence générée</span></div>
+          <div class="kpi-badge"><span class="kpi-val">BUDGET</span><span class="kpi-name">Dépensé vs résultat</span></div>
+        </div>
+      </div>
+      <div class="tracking-card track-revenue">
+        <h4>Reporting via dashboard personnalisé</h4>
+        <p class="track-desc">Accès en temps réel à toutes vos données</p>
+        <div class="kpi-row">
+          <div class="kpi-badge" style="flex:3;text-align:left;"><span class="kpi-val" style="font-size:18px;">DASHBOARD EN TEMPS RÉEL</span><span class="kpi-name" style="font-size:14px;line-height:1.55;">Consultez vos résultats à tout moment depuis votre dashboard personnalisé — performances des campagnes, croissance réseaux sociaux et statistiques événements, le tout sur une seule plateforme accessible 24h/24.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="about-grid" style="margin-top:12px;max-width:1500px;">
+      <div class="about-box" style="border-color:rgba(255,150,0,0.2);padding:22px 28px;">
+        <h3 style="color:var(--ocargo-orange);font-size:19px;margin-bottom:10px;">Accès au dashboard personnalisé en temps réel</h3>
+        <p style="font-size:15px;line-height:1.55;">Vous disposez d'un accès permanent à votre dashboard personnalisé pour suivre les performances de vos campagnes et la croissance de vos réseaux sociaux en toute autonomie.</p>
+      </div>
+      <div class="about-box" style="border-color:rgba(1,95,98,0.3);padding:22px 28px;">
+        <h3 style="color:var(--ocargo-teal-light);font-size:19px;margin-bottom:10px;">Optimisation continue</h3>
+        <p style="font-size:15px;line-height:1.55;">On réalloue les budgets sur ce qui fonctionne, on teste de nouveaux visuels, on affine les audiences — chaque semaine est meilleure que la précédente.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 7 : CTA ===== -->
+  <div class="slide" data-slide="7">
+    <div class="bg-glow glow-teal"></div>
+    <div class="bg-glow glow-orange"></div>
+    <div class="cover-logos" style="margin-bottom:20px;">
+      <img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven Agency" class="logo-koven-sm">
+      <span class="cover-x">×</span>
+      <img src="https://www.ocargofoodcourt.com/wp-content/uploads/2024/12/300-min.png" alt="Ôcargo Food Court" class="logo-ocargo-sm">
+    </div>
+    <div class="stats-row" style="margin-bottom:30px;margin-top:0;grid-template-columns:repeat(3,1fr);">
+      <div class="stat-item">
+        <div class="stat-number">5</div>
+        <svg class="stat-spark" width="130" height="34" viewBox="0 0 130 34" fill="none">
+          <rect x="4"   y="22" width="14" height="12" rx="3" fill="#027a7e" opacity="0.55"/>
+          <rect x="33"  y="16" width="14" height="18" rx="3" fill="#027a7e" opacity="0.7"/>
+          <rect x="62"  y="10" width="14" height="24" rx="3" fill="#ff9600" opacity="0.8"/>
+          <rect x="91"  y="3"  width="14" height="31" rx="3" fill="#ff9600"/>
+        </svg>
+        <div class="stat-label">Ôcargo déjà accompagnés</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">100+</div>
+        <svg class="stat-spark" width="130" height="34" viewBox="0 0 130 34" fill="none">
+          <polyline points="4,30 34,24 64,15 94,9 124,3" stroke="url(#sparkGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="124" cy="3" r="4" fill="#ff9600"/>
+          <defs>
+            <linearGradient id="sparkGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#027a7e"/>
+              <stop offset="1" stop-color="#ff9600"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="stat-label">Événements promus</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">2M+</div>
+        <svg class="stat-spark" width="130" height="34" viewBox="0 0 130 34" fill="none">
+          <rect x="4"   y="24" width="14" height="10" rx="3" fill="#027a7e" opacity="0.55"/>
+          <rect x="33"  y="17" width="14" height="17" rx="3" fill="#027a7e" opacity="0.7"/>
+          <rect x="62"  y="9"  width="14" height="25" rx="3" fill="#ff9600" opacity="0.8"/>
+          <rect x="91"  y="2"  width="14" height="32" rx="3" fill="#ff9600"/>
+        </svg>
+        <div class="stat-label">Impressions générées</div>
+      </div>
+    </div>
+    <div class="cta-box">
+      <h2 class="slide-title">Avez-vous des<br><span class="highlight">questions</span> ?</h2>
+      <p class="slide-subtitle">On connaît votre concept, vos valeurs et votre public. Villenave-d'Ornon n'attend plus que vous — et nous sommes prêts à faire exploser votre visibilité dès le jour de l'ouverture.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAV -->
+<div class="nav-bar">
+  <div style="display:flex;align-items:center;gap:16px;">
+    <img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven" style="height:22px;object-fit:contain;">
+    <span style="color:rgba(255,255,255,0.2);font-size:12px;">×</span>
+    <img src="https://www.ocargofoodcourt.com/wp-content/uploads/2024/12/300-min.png" alt="Ôcargo" style="height:28px;object-fit:contain;">
+    <span class="slide-counter" id="slideCounter">01 / 07</span>
+  </div>
+  <div style="display:flex;gap:12px;">
+    <button class="nav-btn" onclick="changeSlide(-1)" title="Slide précédente">&#8592;</button>
+    <button class="nav-btn" onclick="changeSlide(1)" title="Slide suivante">&#8594;</button>
+  </div>
+</div>
+
+<script>
+let currentSlide = 1;
+const totalSlides = 7;
+let isAnimating = false;
+
+function changeSlide(direction) {
+  if (isAnimating) return;
+  const next = currentSlide + direction;
+  if (next < 1 || next > totalSlides) return;
+  isAnimating = true;
+
+  const currentEl = document.querySelector('.slide[data-slide="' + currentSlide + '"]');
+  const nextEl = document.querySelector('.slide[data-slide="' + next + '"]');
+
+  nextEl.style.transition = 'none';
+  nextEl.style.transform = direction > 0 ? 'translateX(80px)' : 'translateX(-80px)';
+  nextEl.style.opacity = '0';
+  nextEl.style.visibility = 'visible';
+  nextEl.offsetHeight;
+
+  nextEl.style.transition = '';
+  currentEl.style.transition = '';
+
+  currentEl.classList.remove('active');
+  currentEl.style.transform = direction > 0 ? 'translateX(-80px)' : 'translateX(80px)';
+  currentEl.style.opacity = '0';
+
+  nextEl.classList.add('active');
+  nextEl.style.transform = 'translateX(0)';
+  nextEl.style.opacity = '1';
+
+  currentSlide = next;
+  updateUI();
+
+  setTimeout(function() {
+    currentEl.style.visibility = 'hidden';
+    currentEl.style.transform = '';
+    currentEl.style.opacity = '';
+    isAnimating = false;
+  }, 550);
+}
+
+function updateUI() {
+  document.getElementById('slideCounter').textContent =
+    String(currentSlide).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+  document.getElementById('progress').style.width =
+    ((currentSlide / totalSlides) * 100) + '%';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+});
+
+var touchStartX = 0;
+document.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', function(e) {
+  var diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+});
+
+updateUI();
+</script>
+
+</body>
+</html>

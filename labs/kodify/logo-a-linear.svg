@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 140" width="480" height="140">
+  <!-- Style Linear/Vercel : ultra-clean, monochrome, géométrique -->
+
+  <!-- Icône : K abstrait formé de 2 triangles -->
+  <rect x="24" y="24" width="92" height="92" rx="22" fill="#111111"/>
+  <path d="M52 44 L52 96" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  <path d="M52 70 L80 44" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  <path d="M52 70 L80 96" stroke="white" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Wordmark -->
+  <text x="140" y="84" font-family="-apple-system, 'SF Pro Display', 'Inter', 'Segoe UI', sans-serif" font-size="50" font-weight="600" fill="#111111" letter-spacing="-2">kodify</text>
+
+  <!-- Tagline minimaliste -->
+  <text x="142" y="108" font-family="-apple-system, 'SF Pro Display', 'Inter', 'Segoe UI', sans-serif" font-size="12" fill="#999999" letter-spacing="3" font-weight="400">STUDIO</text>
+</svg>

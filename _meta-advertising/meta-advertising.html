@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meta-Advertising — Portail Interne</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a12;
+  --bg2: #0e0e1a;
+  --card: rgba(255,255,255,.025);
+  --card-border: rgba(255,255,255,.06);
+  --text: #f5f0e8;
+  --text2: rgba(245,240,232,.5);
+  --text3: rgba(245,240,232,.22);
+  --orange: #FF6B00;
+  --orange2: #FF9500;
+  --orange-glow: rgba(255,107,0,.12);
+  --blue: #4FC3F7;
+  --blue2: #29B6F6;
+  --blue-glow: rgba(79,195,247,.10);
+  --red: #FF1744;
+  --red-glow: rgba(255,23,68,.10);
+  --yellow: #FFD600;
+  --green: #00E676;
+  --purple: #7C4DFF;
+  --radius: 16px;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ═══ PORTAL ═══ */
+.portal{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity .7s,transform .7s}
+.portal.hidden{opacity:0;transform:scale(.97);pointer-events:none}
+
+/* Speed lines */
+.speed-lines{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.speed-line{position:absolute;top:50%;left:50%;height:1px;transform-origin:0 0;opacity:0;animation:speedPulse 4s ease-in-out infinite}
+@keyframes speedPulse{0%,100%{opacity:0;width:0}50%{opacity:1;width:100vw}}
+
+/* Energy field */
+.energy-field{position:absolute;inset:0;pointer-events:none}
+.energy-orb{position:absolute;border-radius:50%;filter:blur(100px)}
+.orb-kamehameha{width:500px;height:500px;top:-150px;right:-100px;background:rgba(79,195,247,.08);animation:orbFloat 15s ease-in-out infinite}
+.orb-rasengan{width:400px;height:400px;bottom:-100px;left:-50px;background:rgba(79,195,247,.06);animation:orbFloat 18s ease-in-out infinite reverse}
+.orb-ki{width:450px;height:450px;top:40%;left:45%;background:rgba(255,107,0,.06);animation:orbFloat 20s ease-in-out infinite}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-40px) scale(1.1)}66%{transform:translate(-20px,25px) scale(.93)}}
+
+/* Dragon ball stars */
+.db-stars{position:absolute;inset:0;pointer-events:none}
+.db-star{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--orange);opacity:.06;box-shadow:0 0 8px var(--orange);animation:starTwinkle 3s ease-in-out infinite}
+@keyframes starTwinkle{0%,100%{opacity:.04;transform:scale(1)}50%{opacity:.1;transform:scale(1.3)}}
+
+/* Kanji bg */
+.kanji-bg{position:absolute;inset:0;pointer-events:none;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:80px;opacity:.015;font-size:80px;overflow:hidden;transform:rotate(-15deg);color:var(--orange)}
+
+/* Portal content */
+.portal-inner{position:relative;z-index:2;text-align:center;padding:0 24px;opacity:0;transform:translateY(30px);animation:pUp 1s cubic-bezier(.16,1,.3,1) .2s forwards}
+@keyframes pUp{to{opacity:1;transform:translateY(0)}}
+
+/* Sharingan */
+.sharingan-wrap{position:relative;display:inline-block;margin-bottom:24px}
+.sharingan{width:clamp(140px,22vw,200px);height:clamp(140px,22vw,200px);position:relative;z-index:1}
+.sharingan-outer{position:absolute;inset:0;border-radius:50%;border:3px solid var(--red);opacity:.15;animation:sharinganPulse 3s ease-in-out infinite}
+.sharingan-ring{position:absolute;inset:8px;border-radius:50%;border:2px solid var(--red);opacity:.25;animation:sharinganSpin 8s linear infinite}
+.sharingan-ring-2{position:absolute;inset:16px;border-radius:50%;border:1.5px solid var(--orange);opacity:.2;animation:sharinganSpin 12s linear infinite reverse}
+.sharingan-core{position:absolute;inset:30%;border-radius:50%;background:radial-gradient(circle,var(--red) 0%,rgba(255,23,68,.3) 40%,transparent 70%);animation:sharinganPulse 2s ease-in-out infinite}
+.sharingan-tomoe{position:absolute;inset:0;animation:sharinganSpin 4s linear infinite}
+.tomoe{position:absolute;width:14px;height:14px;background:var(--red);border-radius:50%;box-shadow:0 0 12px var(--red)}
+.tomoe-1{top:12%;left:50%;transform:translateX(-50%)}
+.tomoe-2{bottom:20%;left:18%}
+.tomoe-3{bottom:20%;right:18%}
+@keyframes sharinganSpin{to{transform:rotate(360deg)}}
+@keyframes sharinganPulse{0%,100%{opacity:.15;transform:scale(1)}50%{opacity:.3;transform:scale(1.05)}}
+
+/* Mangekyo pattern */
+.mangekyo{position:absolute;inset:20%;z-index:2;animation:sharinganSpin 6s linear infinite}
+.mangekyo svg{width:100%;height:100%;filter:drop-shadow(0 0 15px rgba(255,23,68,.4))}
+
+/* Susanoo aura */
+.susanoo-aura{position:absolute;inset:-60px;border-radius:50%;background:radial-gradient(circle,rgba(124,77,255,.08) 0%,rgba(255,23,68,.04) 40%,transparent 65%);animation:susanooPulse 4s ease-in-out infinite}
+.susanoo-aura-2{position:absolute;inset:-90px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,0,.04) 0%,transparent 55%);animation:susanooPulse 5s ease-in-out infinite reverse}
+@keyframes susanooPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.15);opacity:1}}
+
+/* Chakra particles */
+.chakra-particles{position:absolute;inset:0;pointer-events:none}
+.chakra-p{position:absolute;width:4px;height:4px;border-radius:50%;animation:chakraFloat linear infinite}
+@keyframes chakraFloat{0%{transform:translateY(0) scale(1);opacity:0}20%{opacity:.8}80%{opacity:.8}100%{transform:translateY(-200px) scale(0);opacity:0}}
+
+/* Jutsu seal animation */
+.jutsu-seal{position:absolute;inset:-30px;border-radius:50%;border:1px dashed rgba(255,107,0,.08);animation:sharinganSpin 20s linear infinite}
+.jutsu-seal-2{position:absolute;inset:-50px;border-radius:50%;border:1px dashed rgba(79,195,247,.05);animation:sharinganSpin 25s linear infinite reverse}
+
+/* Characters */
+.characters{display:flex;gap:clamp(40px,8vw,100px);align-items:center;justify-content:center;margin-top:32px;opacity:0;animation:pUp .8s ease .3s forwards}
+.char-card{text-align:center;position:relative}
+.char-img{width:clamp(80px,12vw,110px);height:clamp(80px,12vw,110px);border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,.06);margin:0 auto 10px;position:relative;transition:all .4s}
+.char-card:hover .char-img{border-color:var(--red);box-shadow:0 0 30px rgba(255,23,68,.15);transform:scale(1.05)}
+.char-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.char-card:hover .char-img img{transform:scale(1.12)}
+.char-name{font-family:var(--font-display);font-size:clamp(.9rem,1.5vw,1.1rem);letter-spacing:.06em;color:var(--text)}
+.char-title{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px}
+/* Char aura on hover */
+.char-card:nth-child(1):hover .char-img{border-color:var(--red)!important;box-shadow:0 0 35px rgba(255,23,68,.2)!important}
+.char-card:nth-child(2):hover .char-img{border-color:var(--orange)!important;box-shadow:0 0 35px rgba(255,107,0,.2)!important}
+.char-card:nth-child(3):hover .char-img{border-color:var(--blue)!important;box-shadow:0 0 35px rgba(79,195,247,.2)!important}
+
+/* Metrics bar */
+.portal-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:36px;width:100%;max-width:700px;opacity:0;animation:pUp .8s ease .6s forwards}
+.pm-card{background:rgba(255,255,255,.02);border:1px solid var(--card-border);border-radius:12px;padding:16px;text-align:center;transition:all .3s;position:relative;overflow:hidden}
+.pm-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .3s}
+.pm-card:hover{border-color:rgba(255,107,0,.15);transform:translateY(-2px)}
+.pm-card:hover::before{opacity:1}
+.pm-card:nth-child(1)::before{background:var(--orange)}
+.pm-card:nth-child(2)::before{background:var(--blue)}
+.pm-card:nth-child(3)::before{background:var(--green)}
+.pm-card:nth-child(4)::before{background:var(--red)}
+.pm-card:nth-child(5)::before{background:var(--yellow)}
+.pm-val{font-family:var(--font-display);font-size:clamp(1.3rem,2.5vw,1.8rem);line-height:1}
+.pm-lbl{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:1px;margin-top:4px;text-transform:uppercase}
+.pm-icon{font-size:18px;margin-bottom:6px}
+
+/* Title */
+.portal-title{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,4.5rem);letter-spacing:.06em;line-height:1;margin-top:8px;color:var(--text);text-shadow:0 0 40px rgba(255,107,0,.2)}
+.portal-title .accent-o{color:var(--orange)}
+.portal-title .accent-b{color:var(--blue)}
+
+/* Tagline */
+.portal-tag{font-family:var(--font-mono);font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--text3);margin-top:12px;opacity:0;animation:pUp .8s ease .4s forwards}
+
+/* Power level scouter */
+.scouter{display:flex;gap:clamp(24px,5vw,56px);justify-content:center;margin-top:40px;flex-wrap:wrap;opacity:0;animation:pUp .8s ease .5s forwards}
+.scouter-item{text-align:center;position:relative}
+.scouter-val{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.2rem);line-height:1;background:linear-gradient(135deg,var(--orange),var(--yellow));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none}
+.scouter-lbl{font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
+
+/* CTA */
+.portal-cta{margin-top:48px;opacity:0;animation:pUp .8s ease .65s forwards}
+.cta-btn{padding:16px 48px;border-radius:12px;border:1px solid rgba(255,107,0,.25);background:linear-gradient(135deg,rgba(255,107,0,.10),rgba(79,195,247,.05));backdrop-filter:blur(12px);color:var(--orange2);font-family:var(--font-display);font-size:18px;letter-spacing:4px;cursor:pointer;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden}
+.cta-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,107,0,.18),rgba(79,195,247,.08));opacity:0;transition:opacity .4s;border-radius:12px}
+.cta-btn:hover{border-color:rgba(255,107,0,.5);transform:translateY(-3px);box-shadow:0 8px 40px rgba(255,107,0,.15),0 0 60px rgba(255,107,0,.08);color:var(--orange)}
+.cta-btn:hover::before{opacity:1}
+
+/* Fun quote */
+.portal-quote{margin-top:32px;font-size:12px;font-style:italic;color:var(--text3);max-width:400px;margin-left:auto;margin-right:auto;opacity:0;animation:pUp .8s ease .8s forwards}
+.portal-quote span{color:var(--orange2);font-style:normal;font-weight:600}
+
+/* ═══ MAIN APP ═══ */
+.app-wrapper{display:none;min-height:100vh;position:relative}
+.app-wrapper.show{display:block;animation:appIn .6s ease}
+@keyframes appIn{from{opacity:0}to{opacity:1}}
+
+/* Ambient */
+.app-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 20% 0%,rgba(255,107,0,.04) 0%,transparent 50%),radial-gradient(ellipse at 80% 100%,rgba(79,195,247,.03) 0%,transparent 50%)}
+.app-bg::before{content:'火 風 雷 水 土 力 勝 戦 魂 忍';position:absolute;inset:0;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:120px;font-size:60px;color:var(--orange);opacity:.008;transform:rotate(-10deg);pointer-events:none;overflow:hidden}
+/* Floating kunai */
+.app-kunai{position:fixed;z-index:0;pointer-events:none;opacity:.03;font-size:20px;animation:kunaiFloat 20s linear infinite}
+@keyframes kunaiFloat{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:.03}90%{opacity:.03}100%{transform:translateY(-50px) rotate(180deg);opacity:0}}
+
+/* Header */
+.header{position:sticky;top:0;z-index:100;background:rgba(10,10,18,.8);backdrop-filter:blur(24px);border-bottom:1px solid var(--card-border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.header-left{display:flex;align-items:center;gap:12px}
+.header-logo{font-family:var(--font-display);font-size:22px;letter-spacing:.04em}
+.header-logo .hl-o{color:var(--orange)}
+.header-logo .hl-b{color:var(--blue)}
+.header-badge{font-family:var(--font-mono);font-size:9px;padding:4px 10px;border-radius:8px;background:var(--orange-glow);color:var(--orange);letter-spacing:1px}
+.header-center{flex:1;max-width:420px;margin:0 24px}
+.header-search{width:100%;padding:9px 14px 9px 38px;border-radius:10px;border:1px solid var(--card-border);background:rgba(255,255,255,.03);font-family:var(--font-body);font-size:13px;color:var(--text);outline:none;transition:border-color .2s}
+.header-search:focus{border-color:rgba(255,107,0,.3)}
+.header-search::placeholder{color:var(--text3)}
+.header-right{display:flex;align-items:center;gap:12px}
+.header-clock{font-family:var(--font-mono);font-size:11px;color:var(--text2);padding:6px 12px;border-radius:8px;border:1px solid var(--card-border);background:rgba(255,255,255,.02)}
+
+/* Main */
+.main{position:relative;z-index:1;padding:32px;max-width:1400px;margin:0 auto}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:40px}
+.stat-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:20px;display:flex;align-items:center;gap:14px;transition:all .3s;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .3s}
+.stat-card:hover{transform:translateY(-2px);border-color:rgba(255,107,0,.15)}
+.stat-card:hover::before{opacity:1}
+.stat-card:nth-child(1)::before{background:linear-gradient(90deg,var(--orange),var(--yellow))}
+.stat-card:nth-child(2)::before{background:linear-gradient(90deg,var(--blue),var(--blue2))}
+.stat-card:nth-child(3)::before{background:linear-gradient(90deg,var(--green),#69F0AE)}
+.stat-card:nth-child(4)::before{background:linear-gradient(90deg,var(--purple),#B388FF)}
+.stat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.stat-icon.si-1{background:var(--orange-glow)}
+.stat-icon.si-2{background:var(--blue-glow)}
+.stat-icon.si-3{background:rgba(0,230,118,.08)}
+.stat-icon.si-4{background:rgba(124,77,255,.08)}
+.stat-val{font-family:var(--font-display);font-size:28px;letter-spacing:.02em;line-height:1}
+.stat-lbl{font-size:11px;color:var(--text3);margin-top:2px}
+
+/* Section */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.section-title{font-family:var(--font-display);font-size:20px;letter-spacing:.06em;display:flex;align-items:center;gap:10px}
+.section-title::before{content:'';width:4px;height:20px;background:linear-gradient(180deg,var(--orange),var(--blue));border-radius:2px}
+.section-count{font-family:var(--font-mono);font-size:11px;color:var(--text3);background:rgba(255,255,255,.03);padding:4px 12px;border-radius:20px;border:1px solid var(--card-border)}
+
+/* Client grid */
+.clients-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:18px;align-items:start}
+
+/* Client card — manga style */
+.client-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);overflow:hidden;transition:all .35s cubic-bezier(.22,1,.36,1);cursor:pointer;position:relative}
+.client-card::before{content:'';position:absolute;inset:0;border-radius:var(--radius);background:linear-gradient(135deg,rgba(255,107,0,.04) 0%,rgba(79,195,247,.02) 100%);opacity:0;transition:opacity .3s;pointer-events:none}
+.client-card:hover{border-color:rgba(255,107,0,.2);transform:translateY(-4px);box-shadow:0 12px 40px rgba(255,107,0,.06),0 4px 16px rgba(0,0,0,.2)}
+.client-card:hover::before{opacity:1}
+.client-card.expanded{border-color:rgba(255,107,0,.15);box-shadow:0 8px 32px rgba(255,107,0,.06)}
+
+/* Client header */
+.client-header{padding:22px 22px 18px;display:flex;align-items:center;gap:16px;position:relative;z-index:1}
+.client-logo{width:64px;height:64px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background:rgba(255,255,255,.05);border:1px solid var(--card-border);transition:all .4s}
+.client-card:hover .client-logo{border-color:rgba(255,107,0,.25);box-shadow:0 0 20px rgba(255,107,0,.10);transform:scale(1.05)}
+.client-logo img{width:100%;height:100%;object-fit:contain;padding:8px;transition:transform .4s}
+.client-card:hover .client-logo img{transform:scale(1.08)}
+.client-logo.logo-light{background:rgba(255,255,255,.95)!important;border-color:rgba(255,255,255,.15)!important}
+.client-logo.logo-dark{background:rgba(20,20,40,.9)!important}
+.client-logo .initials{font-family:var(--font-display);font-size:22px;background:linear-gradient(135deg,var(--orange),var(--blue));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+
+.client-info{flex:1;min-width:0}
+.client-name{font-family:var(--font-display);font-size:18px;letter-spacing:.04em;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+.client-meta{display:flex;align-items:center;gap:10px;margin-top:4px}
+.client-sector{font-size:11px;color:var(--text3)}
+.client-status{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px}
+.client-status.active{background:rgba(0,230,118,.10);color:var(--green)}
+.client-status.pending{background:rgba(255,214,0,.10);color:var(--yellow)}
+
+/* Power bar (replaces stat count) */
+.client-stats{display:flex;gap:14px;padding:0 22px 8px;position:relative;z-index:1}
+.client-stat{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:5px}
+.client-stat strong{color:var(--orange2);font-weight:700}
+.client-stat svg{width:14px;height:14px;opacity:.4}
+
+.client-expand-indicator{display:flex;align-items:center;justify-content:center;padding:10px;border-top:1px solid var(--card-border);position:relative;z-index:1}
+.client-expand-indicator svg{width:18px;height:18px;color:var(--text3);transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.client-card.expanded .client-expand-indicator svg{transform:rotate(180deg)}
+
+/* Expanded links */
+.client-links{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.25,.46,.45,.94)}
+.client-card.expanded .client-links{max-height:800px}
+.client-links-inner{padding:4px 16px 16px;border-top:1px solid var(--card-border);position:relative;z-index:2}
+.client-links-title{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;padding:12px 8px 8px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;transition:color .2s}
+.client-links-title:hover{color:var(--orange)}
+.client-links-title::after{content:'';width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);transition:transform .25s;flex-shrink:0}
+.client-links-title.section-open::after{transform:rotate(-135deg)}
+.section-group{max-height:0;overflow:hidden;transition:max-height .35s}
+
+.link-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;text-decoration:none;color:var(--text2);font-size:13px;font-weight:500;transition:all .2s}
+.link-item:hover{background:rgba(255,107,0,.06);color:var(--orange);transform:translateX(4px)}
+.link-item-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.link-item-icon.dashboard{background:var(--orange-glow);color:var(--orange)}
+.link-item-icon.report{background:var(--blue-glow);color:var(--blue)}
+.link-item-icon svg{width:16px;height:16px}
+.link-item-text{flex:1}
+.link-item-label{line-height:1.3}
+.link-item-type{font-size:10px;color:var(--text3)}
+.link-item-arrow{color:var(--text3);opacity:0;transform:translateX(-4px);transition:all .2s}
+.link-item:hover .link-item-arrow{opacity:1;transform:translateX(0)}
+
+/* Footer */
+.footer{padding:24px 32px;border-top:1px solid var(--card-border);text-align:center;font-size:11px;color:var(--text3)}
+.footer span{color:var(--orange);font-weight:600}
+
+/* No results */
+.no-results{text-align:center;padding:80px 20px;color:var(--text3);display:none}
+.no-results p{font-size:15px}
+
+/* Responsive */
+@media(max-width:1100px){.stats-row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.header{padding:0 16px}.main{padding:24px 16px}.clients-grid{grid-template-columns:1fr}.header-center{margin:0 12px}}
+@media(max-width:640px){
+  .header{height:52px}.header-badge{display:none}.stats-row{grid-template-columns:1fr 1fr;gap:10px}.stat-card{padding:14px}.stat-val{font-size:20px}.stat-icon{width:36px;height:36px;font-size:18px}
+  .main{padding:16px 12px}.client-logo{width:48px;height:48px}.client-name{font-size:15px}.client-header{padding:16px;gap:12px}
+  .portal-title{font-size:2rem}.scouter{gap:20px}.scouter-val{font-size:1.8rem}.cta-btn{padding:12px 32px;font-size:14px;letter-spacing:2px}
+  .footer{padding:16px;font-size:10px}
+}
+
+/* ═══ MANGA ANIMATIONS V2 (Dashboard) — ÇA PÈTE ═══ */
+
+/* App enter — POWER UP explosion */
+.app-wrapper.show{animation:appPowerUp .8s cubic-bezier(.16,1,.3,1)}
+@keyframes appPowerUp{0%{opacity:0;transform:scale(.92);filter:brightness(2) saturate(0)}30%{filter:brightness(1.5) saturate(.5)}100%{opacity:1;transform:scale(1);filter:brightness(1) saturate(1)}}
+
+/* Header — energy bar bottom */
+.header::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--orange),var(--blue),var(--orange));background-size:200% 100%;animation:headerEnergy 3s linear infinite}
+@keyframes headerEnergy{0%{background-position:0 0}100%{background-position:200% 0}}
+
+/* Header logo — permanent glow */
+.header-logo{text-shadow:0 0 15px rgba(255,107,0,.15)}
+
+/* Search — Rasengan spiral on focus */
+.header-search:focus{box-shadow:0 0 0 3px rgba(79,195,247,.15),0 0 25px rgba(79,195,247,.08);animation:rasenganGlow 1.5s ease-in-out infinite}
+@keyframes rasenganGlow{0%,100%{box-shadow:0 0 0 3px rgba(79,195,247,.15),0 0 25px rgba(79,195,247,.08)}50%{box-shadow:0 0 0 5px rgba(79,195,247,.25),0 0 40px rgba(79,195,247,.12)}}
+
+/* Stats — POWER UP on hover with screenshake */
+.stat-card{position:relative}
+.stat-card:hover{animation:statShake .4s ease}
+.stat-card:hover .stat-val{animation:powerUp .5s ease}
+@keyframes statShake{0%,100%{transform:translateY(-2px)}25%{transform:translate(-2px,-3px)}50%{transform:translate(2px,-4px)}75%{transform:translate(-1px,-2px)}}
+@keyframes powerUp{0%{transform:scale(1);color:var(--text)}40%{transform:scale(1.3);color:var(--orange);text-shadow:0 0 30px rgba(255,107,0,.5)}100%{transform:scale(1);color:var(--text)}}
+
+/* Stat icons — continuous rotation */
+.stat-icon{animation:iconFloat 3s ease-in-out infinite}
+.stat-card:nth-child(1) .stat-icon{animation-delay:0s}
+.stat-card:nth-child(2) .stat-icon{animation-delay:.3s}
+.stat-card:nth-child(3) .stat-icon{animation-delay:.6s}
+.stat-card:nth-child(4) .stat-icon{animation-delay:.9s}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* Section title — chakra wave + glow */
+.section-title{position:relative;overflow:hidden;text-shadow:0 0 10px rgba(255,107,0,.08)}
+.section-title::after{content:'';position:absolute;bottom:-2px;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,var(--orange),var(--blue),var(--red),transparent);background-size:200% 100%;animation:chakraWave 2.5s linear infinite}
+@keyframes chakraWave{0%{background-position:-200% 0}100%{background-position:200% 0}}
+
+/* CLIENT CARDS — full manga treatment */
+
+/* Ki charge aura on hover */
+.client-card::after{content:'';position:absolute;inset:0;border-radius:var(--radius);opacity:0;pointer-events:none;z-index:0;
+  background:radial-gradient(circle at 50% 30%,rgba(255,107,0,.06) 0%,rgba(79,195,247,.03) 40%,transparent 70%);
+  transition:opacity .3s}
+.client-card:hover::after{opacity:1;animation:kiCharge .5s ease}
+@keyframes kiCharge{0%{transform:scale(.85);opacity:0}60%{opacity:1}100%{transform:scale(1)}}
+
+/* Card hover — float + glow + border flash */
+.client-card:hover{border-color:rgba(255,107,0,.25)!important;transform:translateY(-6px) scale(1.01)!important;
+  box-shadow:0 16px 50px rgba(255,107,0,.08),0 0 30px rgba(255,107,0,.04),0 4px 16px rgba(0,0,0,.3)!important}
+
+/* Client name — flash on hover */
+.client-card:hover .client-name{color:var(--orange);text-shadow:0 0 12px rgba(255,107,0,.2);transition:all .3s}
+
+/* Logo — bounce + glow */
+.client-card:hover .client-logo{border-color:rgba(255,107,0,.3)!important;
+  box-shadow:0 0 25px rgba(255,107,0,.12)!important;
+  animation:logoBounce .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes logoBounce{0%{transform:scale(1)}40%{transform:scale(1.15)}100%{transform:scale(1.05)}}
+
+/* Expand chevron — spin on hover */
+.client-card:hover .client-expand-indicator svg{color:var(--orange);animation:chevronSpin .6s ease}
+@keyframes chevronSpin{0%{transform:rotate(0)}50%{transform:rotate(180deg)}100%{transform:rotate(360deg)}}
+
+/* Status badge — heartbeat */
+.client-status.active{animation:statusHeartbeat 2s ease-in-out infinite}
+@keyframes statusHeartbeat{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(0,230,118,.2)}14%{transform:scale(1.1)}28%{transform:scale(1)}42%{transform:scale(1.08)}70%{box-shadow:0 0 0 6px rgba(0,230,118,0)}}
+
+/* Link items — slide in + trail */
+.link-item{position:relative;overflow:hidden}
+.link-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--orange),var(--blue));transform:scaleY(0);transition:transform .3s cubic-bezier(.22,1,.36,1);border-radius:2px}
+.link-item:hover::before{transform:scaleY(1)}
+.link-item:hover{background:rgba(255,107,0,.06)!important;padding-left:16px!important;border-left-color:var(--orange)}
+.link-item::after{content:'';position:absolute;right:0;top:50%;width:0;height:1px;background:linear-gradient(90deg,transparent,var(--orange));transform:translateY(-50%);transition:width .4s;opacity:0}
+.link-item:hover::after{width:60px;opacity:.2}
+
+/* Link icon — pulse on hover */
+.link-item:hover .link-item-icon{animation:linkIconPop .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes linkIconPop{0%{transform:scale(1)}50%{transform:scale(1.2) rotate(5deg)}100%{transform:scale(1) rotate(0)}}
+
+/* Footer — naruto run + energy trail */
+.footer{position:relative;overflow:hidden}
+.footer::before{content:'🍥';position:absolute;bottom:50%;font-size:16px;animation:narutoRun 8s linear infinite;opacity:.2}
+.footer::after{content:'';position:absolute;bottom:50%;font-size:12px;width:40px;height:2px;background:linear-gradient(90deg,rgba(255,107,0,.15),transparent);animation:narutoRun 8s linear infinite;animation-delay:-.2s;opacity:.4;transform:translateY(50%)}
+@keyframes narutoRun{0%{left:-30px}100%{left:calc(100% + 30px)}}
+
+/* Speed lines — diagonal across whole page */
+.main::before{content:'';position:fixed;top:0;left:0;width:200%;height:200%;pointer-events:none;z-index:0;opacity:.015;
+  background:repeating-linear-gradient(-45deg,transparent,transparent 30px,rgba(255,107,0,.3) 30px,rgba(255,107,0,.3) 31px);
+  animation:speedLinesDiag 20s linear infinite}
+@keyframes speedLinesDiag{0%{transform:translate(0,0)}100%{transform:translate(-50%,-50%)}}
+
+/* Ambient energy pulses */
+.app-bg::after{content:'';position:fixed;top:50%;left:50%;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,107,0,.03) 0%,transparent 70%);
+  transform:translate(-50%,-50%);pointer-events:none;
+  animation:ambientPulse 6s ease-in-out infinite}
+@keyframes ambientPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.5}50%{transform:translate(-50%,-50%) scale(1.4);opacity:1}}
+
+/* Grid entrance — stagger with bounce */
+.clients-grid .client-card{animation:cardEntrance .6s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes cardEntrance{0%{opacity:0;transform:translateY(40px) scale(.9)}100%{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Animations */
+.animate-in{animation:fadeInUp .5s cubic-bezier(.25,.46,.45,.94) both}
+.clients-grid .client-card:nth-child(1){animation-delay:.05s}
+.clients-grid .client-card:nth-child(2){animation-delay:.1s}
+.clients-grid .client-card:nth-child(3){animation-delay:.15s}
+.clients-grid .client-card:nth-child(4){animation-delay:.2s}
+.clients-grid .client-card:nth-child(5){animation-delay:.25s}
+.clients-grid .client-card:nth-child(6){animation-delay:.3s}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- ═══ PORTAL ═══ -->
+<div class="portal" id="portal">
+  <div class="energy-field">
+    <div class="energy-orb orb-kamehameha"></div>
+    <div class="energy-orb orb-rasengan"></div>
+    <div class="energy-orb orb-ki"></div>
+  </div>
+  <div class="speed-lines" id="speedLines"></div>
+  <div class="db-stars" id="dbStars"></div>
+  <div class="kanji-bg">火 風 雷 水 土 力 勝 光 戦 魂 火 風 雷 水 土 力 勝 光 戦 魂 火 風 雷 水 土 力 勝 光 戦 魂 火 風 雷 水 土 力 勝 光 戦 魂</div>
+
+  <div class="portal-inner">
+
+    <!-- Sharingan central -->
+    <div class="sharingan-wrap">
+      <div class="susanoo-aura"></div>
+      <div class="susanoo-aura-2"></div>
+      <div class="jutsu-seal"></div>
+      <div class="jutsu-seal-2"></div>
+      <div class="sharingan">
+        <div class="sharingan-outer"></div>
+        <div class="sharingan-ring"></div>
+        <div class="sharingan-ring-2"></div>
+        <div class="sharingan-core"></div>
+        <div class="sharingan-tomoe">
+          <div class="tomoe tomoe-1"></div>
+          <div class="tomoe tomoe-2"></div>
+          <div class="tomoe tomoe-3"></div>
+        </div>
+        <div class="mangekyo">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="10" fill="#FF1744" opacity=".6"/>
+            <path d="M50 15 C60 30, 75 40, 50 50 C25 40, 40 30, 50 15Z" fill="#FF1744" opacity=".3"/>
+            <path d="M50 15 C60 30, 75 40, 50 50 C25 40, 40 30, 50 15Z" fill="#FF1744" opacity=".3" transform="rotate(120 50 50)"/>
+            <path d="M50 15 C60 30, 75 40, 50 50 C25 40, 40 30, 50 15Z" fill="#FF1744" opacity=".3" transform="rotate(240 50 50)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="chakra-particles" id="chakraParticles"></div>
+    </div>
+
+    <div class="portal-title">META-<span class="accent-o">ADVERT</span><span class="accent-b">ISING</span></div>
+    <div class="portal-tag">~ Nindo du Marketing Digital ~</div>
+
+    <!-- Characters -->
+    <div class="characters">
+      <div class="char-card">
+        <div class="char-img" style="border-color:rgba(255,23,68,.2);box-shadow:0 0 25px rgba(255,23,68,.12)">
+          <img src="itachi.png" alt="Itachi">
+        </div>
+        <div class="char-name">ITACHI</div>
+        <div class="char-title">Stratégie & Vision</div>
+      </div>
+      <div class="char-card">
+        <div class="char-img" style="border-color:rgba(255,107,0,.2);box-shadow:0 0 25px rgba(255,107,0,.12)">
+          <img src="naruto.png" alt="Naruto">
+        </div>
+        <div class="char-name">NARUTO</div>
+        <div class="char-title">Hokage du ROAS</div>
+      </div>
+      <div class="char-card">
+        <div class="char-img" style="border-color:rgba(79,195,247,.2);box-shadow:0 0 25px rgba(79,195,247,.12)">
+          <img src="sasuke.png" alt="Sasuke">
+        </div>
+        <div class="char-name">SASUKE</div>
+        <div class="char-title">Lead Acquisition</div>
+      </div>
+    </div>
+
+    <div class="portal-cta" style="margin-top:36px">
+      <button class="cta-btn" onclick="enterPortal()">HAJIME !</button>
+    </div>
+
+    <div class="portal-quote">
+      « Un vrai marketeur ne recule jamais devant un CPA élevé... il optimise jusqu'au dernier centime ! »<br>
+      <span>— Hokage du ROAS 🍥</span>
+    </div>
+  </div>
+</div>
+
+<style>@keyframes sparkRun{0%{stroke-dashoffset:0}100%{stroke-dashoffset:-520}}</style>
+
+<!-- ═══ APP ═══ -->
+<div class="app-wrapper" id="app">
+  <div class="app-bg"></div>
+  <div id="appKunai"></div>
+  <div id="appSparkles" style="position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden"></div>
+
+  <header class="header">
+    <div class="header-left">
+      <div class="header-logo"><span class="hl-o">META</span>-<span class="hl-b">ADVERTISING</span></div>
+      <div class="header-badge">PORTAIL INTERNE</div>
+    </div>
+    <div class="header-center">
+      <input type="text" class="header-search" id="searchInput" placeholder="Rechercher un client... ( / )">
+    </div>
+    <div class="header-right">
+      <div class="header-clock" id="clock"></div>
+      <button onclick="backToPortal()" style="padding:6px 14px;border-radius:8px;border:1px solid var(--card-border);background:rgba(255,107,0,.06);color:var(--orange);font-family:var(--font-mono);font-size:10px;cursor:pointer;letter-spacing:1px;transition:all .3s;display:flex;align-items:center;gap:6px" onmouseover="this.style.borderColor='rgba(255,107,0,.3)';this.style.boxShadow='0 0 16px rgba(255,107,0,.08)'" onmouseout="this.style.borderColor='var(--card-border)';this.style.boxShadow='none'">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        PORTAIL
+      </button>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-icon si-1">🔥</div><div><div class="stat-val" id="statClients">0</div><div class="stat-lbl">Clients actifs</div></div></div>
+      <div class="stat-card"><div class="stat-icon si-2">⚡</div><div><div class="stat-val" id="statDashboards">0</div><div class="stat-lbl">Dashboards</div></div></div>
+      <div class="stat-card"><div class="stat-icon si-3">📜</div><div><div class="stat-val" id="statReports">0</div><div class="stat-lbl">Rapports</div></div></div>
+      <div class="stat-card"><div class="stat-icon si-4">💎</div><div><div class="stat-val" id="statTotal">0</div><div class="stat-lbl">Total ressources</div></div></div>
+    </div>
+
+    <div class="section-header">
+      <div class="section-title">Clients</div>
+      <div class="section-count" id="sectionCount">0 clients</div>
+    </div>
+
+    <div class="clients-grid" id="clientsGrid"></div>
+    <div class="no-results" id="noResults"><p>Aucun client trouvé... 🍥</p></div>
+  </div>
+
+  <footer class="footer">
+    <span>Meta-Advertising</span> — Portail Interne · Tous droits réservés 🍥
+  </footer>
+</div>
+
+<script>
+/* ═══ Chakra particles ═══ */
+(function(){
+  var c=document.getElementById('chakraParticles');
+  if(!c)return;
+  var colors=['#FF1744','#FF6B00','#4FC3F7','#7C4DFF','#FFD600'];
+  for(var i=0;i<20;i++){
+    var p=document.createElement('div');p.className='chakra-p';
+    p.style.left=(20+Math.random()*60)+'%';
+    p.style.bottom='20%';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    p.style.boxShadow='0 0 6px '+p.style.background;
+    p.style.animationDuration=(2+Math.random()*3)+'s';
+    p.style.animationDelay=(-Math.random()*5)+'s';
+    p.style.width=(2+Math.random()*4)+'px';
+    p.style.height=p.style.width;
+    c.appendChild(p);
+  }
+})();
+
+/* ═══ Speed lines ═══ */
+(function(){
+  var c=document.getElementById('speedLines');
+  for(var i=0;i<24;i++){
+    var l=document.createElement('div');l.className='speed-line';
+    var angle=-180+Math.random()*360;
+    l.style.transform='rotate('+angle+'deg)';
+    l.style.background='linear-gradient(90deg,transparent,rgba('+(Math.random()>.5?'255,107,0':'79,195,247')+',0.04),transparent)';
+    l.style.animationDelay=(-Math.random()*4)+'s';
+    l.style.animationDuration=(3+Math.random()*3)+'s';
+    c.appendChild(l);
+  }
+})();
+
+/* ═══ Dragon ball stars ═══ */
+(function(){
+  var c=document.getElementById('dbStars');
+  for(var i=0;i<15;i++){
+    var s=document.createElement('div');s.className='db-star';
+    s.style.left=Math.random()*100+'%';
+    s.style.top=Math.random()*100+'%';
+    s.style.animationDelay=(-Math.random()*3)+'s';
+    s.style.width=(8+Math.random()*8)+'px';
+    s.style.height=s.style.width;
+    c.appendChild(s);
+  }
+})();
+
+/* ═══ Portal ═══ */
+function enterPortal(){
+  document.getElementById('portal').classList.add('hidden');
+  setTimeout(function(){
+    document.getElementById('portal').style.display='none';
+    document.getElementById('app').classList.add('show');
+  },600);
+}
+function backToPortal(){
+  document.getElementById('app').classList.remove('show');
+  document.getElementById('app').style.display='none';
+  var p=document.getElementById('portal');
+  p.style.display='';
+  p.classList.remove('hidden');
+  setTimeout(function(){document.getElementById('app').style.display=''},100);
+}
+
+/* ═══ CLIENT DATA ═══ */
+const CLIENTS = [
+    {
+        id: 'exteco-france',
+        name: 'EXTECO France',
+        sector: 'Bâtiment & Construction',
+        status: 'active',
+        logo: 'https://www.exteco.fr/wp-content/uploads/2024/06/LOGO-ROND.png',
+        initials: null,
+        color: '#556e36',
+        links: [
+            { label: 'Epinal — Dashboard Marketing', type: 'dashboard', url: 'https://exteco-france.github.io/agence-epinal/', agency: 'Epinal' },
+            { label: 'Nancy — Dashboard Marketing', type: 'dashboard', url: 'https://exteco-france.github.io/agence-nancy/', agency: 'Nancy' },
+            { label: 'Metz — Dashboard Marketing', type: 'dashboard', url: 'https://exteco-france.github.io/agence-metz/', agency: 'Metz' },
+            { label: 'Les Sables d\'Olonne — Dashboard Marketing', type: 'dashboard', url: 'https://exteco-france.github.io/agence-les-sables-d-olonnes/', agency: 'Les Sables d\'Olonne' },
+            { label: 'Cannes-Fréjus — Dashboard Marketing', type: 'dashboard', url: 'https://exteco-france.github.io/agence-cannes-frejus/', agency: 'Cannes-Fréjus' },
+            { label: 'Montbéliard-Belfort — Dashboard Marketing', type: 'dashboard', url: 'https://exteco-france.github.io/agence-montbeliard-belfort/', agency: 'Montbéliard-Belfort' }
+        ]
+    },
+    { id: 'mamie-bigoude', name: 'Comptoir Mamie Bigoude', sector: 'Restauration', status: 'active', logo: 'https://mediab.izipass.cloud/ComptoirMB/Content/images/accueil-general/visuel-accueil-responsive.png', initials: null, color: '#c4567a', links: [{ label: 'Dashboard Campagnes', type: 'dashboard', url: 'https://mamiebigoude.github.io/dashboard/' }] },
+    {
+        id: 'bodyhouse', name: 'Body House', sector: 'Réseau Franchise — Bien-être', status: 'active',
+        logo: 'https://bodyhouse.fr/themes/ARPA3-BodyHouse/assets/img/header/logo.svg', logoBg: 'light', initials: null, color: '#e91e63',
+        links: [
+            { label: 'Portail Marketing Body House', type: 'dashboard', section: 'Portail', url: 'https://bodyhouse-france.github.io/dashboard/gateway.html' },
+            { label: 'Aubière', type: 'report', year: '2025', section: 'Rapports 2025', url: '../Bodyhouse/synthese-bodyhouse-aubiere-2025.pdf' },
+            { label: 'Avignon Nord', type: 'report', year: '2025', section: 'Rapports 2025', url: '../Bodyhouse/synthese-bodyhouse-avignon-nord-2025.pdf' },
+            { label: 'Avignon Sud', type: 'report', year: '2025', section: 'Rapports 2025', url: '../Bodyhouse/synthese-bodyhouse-avignon-sud-2025.pdf' },
+            { label: 'Biganos', type: 'report', year: '2025', section: 'Rapports 2025', url: '../Bodyhouse/synthese-bodyhouse-biganos-2025.pdf' },
+            { label: 'Chambéry', type: 'report', year: '2025', section: 'Rapports 2025', url: '../Bodyhouse/synthese-bodyhouse-chambery-2025.pdf' },
+            { label: 'Grenoble', type: 'report', year: '2025', section: 'Rapports 2025', url: '../Bodyhouse/synthese-bodyhouse-grenoble-2025.pdf' },
+            { label: 'Jacou', type: 'report', year: '2025', section: 'Rapports 2025', url: '../Bodyhouse/synthese-bodyhouse-jacou-2025.pdf' },
+            { label: 'Lyon', type: 'report', year: '2025', section: 'Rapports 2025', url: '../Bodyhouse/synthese-bodyhouse-lyon-2025.pdf' },
+            { label: 'Montélimar', type: 'report', year: '2025', section: 'Rapports 2025', url: '../Bodyhouse/synthese-bodyhouse-montelimar-2025.pdf' },
+            { label: 'Sainte-Eulalie', type: 'report', year: '2025', section: 'Rapports 2025', url: '../Bodyhouse/synthese-bodyhouse-sainte-eulalie-2025.pdf' },
+            { label: 'Salaise', type: 'report', year: '2025', section: 'Rapports 2025', url: '../Bodyhouse/synthese-bodyhouse-salaise-2025.pdf' },
+            { label: 'Valence', type: 'report', year: '2025', section: 'Rapports 2025', url: '../Bodyhouse/synthese-bodyhouse-valence-2025.pdf' },
+            { label: 'Villefranche', type: 'report', year: '2025', section: 'Rapports 2025', url: '../Bodyhouse/synthese-bodyhouse-villefranche-2025.pdf' },
+            { label: 'Rapport Performance Skeepers', type: 'report', year: '2025', section: 'Skeepers 2025', url: '../Bodyhouse/rapport-skeepers-bodyhouse-2025.pdf' }
+        ]
+    },
+    {
+        id: 'mon-extension-bois', name: 'Mon Extension Bois', sector: 'Extensions & Surélévations en bois', status: 'active',
+        logo: 'https://www.mon-extension-bois.com/wp-content/uploads/2025/03/extension-bois-logo.png', logoBg: 'light', initials: null, color: '#e67e22',
+        links: [
+            { label: 'Metz', type: 'dashboard', url: 'https://monextensionbois-france.github.io/agence.metz/' },
+            { label: 'Cambrai', type: 'dashboard', url: 'https://monextensionbois-france.github.io/agence.cambrai/' },
+            { label: 'La Rochelle', type: 'dashboard', url: 'https://monextensionbois-france.github.io/agence.la-rochelle/' },
+            { label: 'Lille', type: 'dashboard', url: 'https://monextensionbois-france.github.io/agence.lille/' },
+            { label: 'Arras', type: 'dashboard', url: 'https://monextensionbois-france.github.io/agence.arras/' },
+            { label: 'National', type: 'dashboard', url: 'https://monextensionbois-france.github.io/national/' },
+            { label: 'Franchise', type: 'dashboard', url: 'https://monextensionbois-france.github.io/franchise/' }
+        ]
+    },
+    { id: 'as-agt', name: 'AS-AGT', sector: 'Agencement & Menuiserie', status: 'active', logo: 'https://www.as-agt.fr/wp-content/uploads/2025/04/Logo-AS-AGT-COULEUR.png', initials: null, color: '#69af36', links: [{ label: 'Dashboard Marketing', type: 'dashboard', url: 'https://as-agt.github.io/Dashboard/' }] },
+    { id: 'histoires-do', name: "Histoires d'Ô", sector: 'Franchise Balnéo-Club', status: 'active', logo: 'https://www.histoiresdo.fr/media/images/logo-h2o.png', logoBg: 'dark', initials: null, color: '#6c3fa0', links: [{ label: 'Dashboard Marketing', type: 'dashboard', url: 'https://histoires-do.github.io/Dashboard/' }] },
+    {
+        id: 'moulin-elise', name: "Le Moulin d'Elise", sector: 'Franchise Boulangerie', status: 'active',
+        logo: 'https://moulindelise.com/wp-content/uploads/logo-moulin-elise-01.svg', logoBg: 'light', initials: null, color: '#BF8D50',
+        links: [
+            { label: 'Portail Marketing', type: 'dashboard', url: 'https://moulin-delise-france.github.io/dashboard/' },
+            { label: 'Dashboard National', type: 'dashboard', url: 'https://moulin-delise-france.github.io/dashboard/dashboard-moulin-national.html' },
+            { label: 'Dashboard Carquefou', type: 'dashboard', url: 'https://moulin-delise-france.github.io/dashboard/dashboard-moulin-carquefou.html' },
+            { label: 'Dashboard Saint-Brieuc', type: 'dashboard', url: 'https://moulin-delise-france.github.io/dashboard/dashboard-moulin-saintbrieuc.html' }
+        ]
+    },
+    { id: 'escapad', name: 'ESCAPAD', sector: 'Complexe sportif — Padel · Escalade · Hyrox', status: 'active', logo: 'https://comingsoon.escapad.fr/logo.png', logoBg: 'light', initials: null, color: '#f49879', links: [{ label: 'Dashboard Marketing', type: 'dashboard', url: 'https://escapad-dashboard.vercel.app/' }] },
+    { id: 'toa-sushi', name: 'TOA Sushi', sector: 'Restauration japonaise · Franchise', status: 'active', logo: 'https://toasushi.fr/wp-content/uploads/2025/08/logo-toasushi.svg', initials: null, color: '#e74c3c', links: [{ label: 'Dashboard Campagnes', type: 'dashboard', url: 'https://toasushi-france.github.io/dashboard/' }] },
+    { id: 'flash-repair', name: 'Flash Repair', sector: 'Automobile · Franchise', status: 'active', logo: 'https://flash-repair-dashboard.vercel.app/flashrepair-logo.png', initials: null, color: '#f39c12', links: [{ label: 'Dashboard Campagnes', type: 'dashboard', url: 'https://flash-repair-dashboard.vercel.app/' }] },
+    { id: 'crying-tiger', name: 'The Crying Tiger', sector: 'Restauration thaï · Paris', status: 'active', logo: 'https://images.squarespace-cdn.com/content/v1/613c09cdfbd3b117e8d82a90/5498ba49-a998-4018-9159-af09f29539d0/CRYING-LOGO-CERCLE-BLANC.png', initials: null, color: '#2ecc71', links: [{ label: 'Dashboard Campagnes', type: 'dashboard', url: 'https://crying-tiger-dashboard.vercel.app/' }] },
+    { id: 'olla', name: 'Olla', sector: 'Restauration healthy · Franchise', status: 'active', logo: 'https://static.wixstatic.com/media/5c7300_f92d9af83db0442cac12e7d8a2cb036c~mv2.png', logoBg: 'light', initials: null, color: '#1abc9c', links: [{ label: 'Dashboard Campagnes', type: 'dashboard', url: 'https://olla-dashboard.vercel.app/' }] },
+    { id: 'ocargo', name: 'ÔCargo', sector: 'Food Court · Multi-villes', status: 'active', logo: 'https://www.ocargofoodcourt.com/wp-content/uploads/2024/12/300-min.png', initials: null, color: '#e67e22', links: [{ label: 'Dashboard Campagnes', type: 'dashboard', url: 'https://ocargo-dashboard.vercel.app/' }] },
+    { id: 'sooner', name: 'Sooner', sector: 'Streaming VOD · SVOD/TVOD', status: 'active', logo: 'https://sooner-france.github.io/dashboard/sooner-logo-white.png', logoBg: 'dark', initials: null, color: '#6366f1', links: [{ label: 'Portail Sooner', type: 'dashboard', url: 'https://sooner-france.github.io/dashboard/' }] },
+    { id: 'franchise-board', name: 'Franchise Board', sector: 'Cabinet Conseil · Franchise', status: 'active', logo: 'https://www.franchise-board.fr/wp-content/uploads/2024/06/franchise-board-logo.svg', logoBg: 'light', initials: null, color: '#0ea5e9', links: [{ label: 'Dashboard Campagnes', type: 'dashboard', url: 'https://franchise-board.github.io/dashboard/' }] },
+    { id: 'forum-des-images', name: 'Forum des Images', sector: 'Culture · Cinéma · Paris', status: 'active', logo: 'https://www.forumdesimages.fr/themes/custom/parasite/logo.svg', logoBg: 'light', initials: null, color: '#ec4899', links: [{ label: 'Dashboard Marketing', type: 'dashboard', url: 'https://forum-des-images-dashboard.vercel.app/' }] },
+    {
+        id: 'everfruit', name: 'Everfruit Digital', sector: 'Agence Franchise · Rapports clients EVF', status: 'active',
+        logo: 'https://cdn.prod.website-files.com/65085826aaad7f0bca3ab725/650abd88b67689047249ec77_Everfruit%20fruits%201.svg', initials: null, color: '#34c759',
+        links: [
+            { label: 'Monceau Fleurs — Reporting EVF', type: 'report', section: 'Rapports clients', url: 'https://reporting-monceau.vercel.app/' },
+            { label: 'Bodyhit Saint-Lazare — Rapport de performance', type: 'report', section: 'Rapports clients', url: 'https://rapport-bodyhit.vercel.app/' }
+        ]
+    }
+];
+
+/* Floating kunai in dashboard */
+(function(){
+  var c=document.getElementById('appKunai');
+  var items=['🔪','⭐','🍥','💨','🔥','⚡','🌀','👊','💥','🎯'];
+  for(var i=0;i<15;i++){
+    var k=document.createElement('div');k.className='app-kunai';
+    k.textContent=items[Math.floor(Math.random()*items.length)];
+    k.style.left=Math.random()*100+'%';
+    k.style.animationDuration=(12+Math.random()*18)+'s';
+    k.style.animationDelay=(-Math.random()*25)+'s';
+    k.style.fontSize=(14+Math.random()*14)+'px';
+    c.appendChild(k);
+  }
+})();
+
+/* Energy sparkles */
+(function(){
+  var c=document.getElementById('appSparkles');if(!c)return;
+  var style=document.createElement('style');
+  style.textContent='.sparkle{position:absolute;width:3px;height:3px;border-radius:50%;pointer-events:none;animation:sparkleAnim linear infinite}@keyframes sparkleAnim{0%{opacity:0;transform:translate(0,0) scale(0)}20%{opacity:.6}50%{opacity:.8;transform:translate(var(--sx),var(--sy)) scale(1)}80%{opacity:.3}100%{opacity:0;transform:translate(calc(var(--sx)*2),calc(var(--sy)*2)) scale(0)}}';
+  document.head.appendChild(style);
+  var colors=['#FF6B00','#4FC3F7','#FF1744','#FFD600','#7C4DFF','#00E676'];
+  for(var i=0;i<30;i++){
+    var s=document.createElement('div');s.className='sparkle';
+    s.style.left=Math.random()*100+'%';
+    s.style.top=Math.random()*100+'%';
+    s.style.background=colors[Math.floor(Math.random()*colors.length)];
+    s.style.boxShadow='0 0 6px '+s.style.background;
+    s.style.setProperty('--sx',(Math.random()*60-30)+'px');
+    s.style.setProperty('--sy',(Math.random()*60-30)+'px');
+    s.style.animationDuration=(3+Math.random()*5)+'s';
+    s.style.animationDelay=(-Math.random()*8)+'s';
+    s.style.width=(2+Math.random()*3)+'px';
+    s.style.height=s.style.width;
+    c.appendChild(s);
+  }
+})();
+
+
+/* Clock */
+function updateClock(){var n=new Date();document.getElementById('clock').textContent=n.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}
+updateClock();setInterval(updateClock,30000);
+
+/* Stats */
+function updateStats(){
+  var tD=CLIENTS.reduce(function(s,c){return s+c.links.filter(function(l){return l.type==='dashboard'}).length},0);
+  var tR=CLIENTS.reduce(function(s,c){return s+c.links.filter(function(l){return l.type==='report'}).length},0);
+  document.getElementById('statClients').textContent=CLIENTS.length;
+  document.getElementById('statDashboards').textContent=tD;
+  document.getElementById('statReports').textContent=tR;
+  document.getElementById('statTotal').textContent=tD+tR;
+  if(document.getElementById('pClients'))document.getElementById('pClients').textContent=CLIENTS.length;
+  if(document.getElementById('pDash'))document.getElementById('pDash').textContent=tD;
+  if(document.getElementById('pReports'))document.getElementById('pReports').textContent=tR;
+  if(document.getElementById('pTotal'))document.getElementById('pTotal').textContent=tD+tR;
+  if(document.getElementById('pActive'))document.getElementById('pActive').textContent=CLIENTS.filter(function(c){return c.status==='active'}).length;
+}
+updateStats();
+
+/* Icons */
+var ICONS={
+  dashboard:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>',
+  report:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+  chevron:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>',
+  arrow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>',
+  link:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'
+};
+
+/* Render */
+function renderClients(filter){
+  filter=filter||'';var grid=document.getElementById('clientsGrid');var noR=document.getElementById('noResults');var q=filter.toLowerCase().trim();
+  var filtered=CLIENTS.filter(function(c){return c.name.toLowerCase().indexOf(q)!==-1||c.sector.toLowerCase().indexOf(q)!==-1||c.links.some(function(l){return l.label.toLowerCase().indexOf(q)!==-1})});
+  document.getElementById('sectionCount').textContent=filtered.length+' client'+(filtered.length!==1?'s':'');
+  if(!filtered.length){grid.innerHTML='';noR.style.display='block';return}
+  noR.style.display='none';
+  grid.innerHTML=filtered.map(function(client){
+    var dashCount=client.links.filter(function(l){return l.type==='dashboard'}).length;
+    var reportCount=client.links.filter(function(l){return l.type==='report'}).length;
+    var logoClass=client.logoBg==='light'?' logo-light':(client.logoBg==='dark'?' logo-dark':'');
+    var logoHtml=client.logo?'<img src="'+client.logo+'" alt="'+client.name+'" onerror="this.parentElement.innerHTML=\'<span class=\\\'initials\\\'>'+(client.initials||client.name.substring(0,2).toUpperCase())+'</span>\'">':'<span class="initials">'+(client.initials||client.name.substring(0,2).toUpperCase())+'</span>';
+    var dashboardLinks=client.links.filter(function(l){return l.type==='dashboard'});
+    var reportLinks=client.links.filter(function(l){return l.type==='report'});
+    var renderLink=function(link){return '<a href="'+link.url+'" target="_blank" rel="noopener" class="link-item" onclick="event.stopPropagation()"><div class="link-item-icon '+link.type+'">'+((ICONS[link.type]||ICONS.link))+'</div><div class="link-item-text"><div class="link-item-label">'+link.label+'</div><div class="link-item-type">'+(link.type==='dashboard'?'Dashboard':'Rapport')+'</div></div><div class="link-item-arrow">'+ICONS.arrow+'</div></a>'};
+    var linksHtml='';var hasSections=reportLinks.some(function(l){return l.section});
+    if(dashboardLinks.length>0){
+      if(hasSections){linksHtml+='<div class="client-links-title section-open" onclick="toggleSection(this,event)">Dashboards</div><div class="section-group" style="max-height:none">'+dashboardLinks.map(renderLink).join('')+'</div>'}
+      else{linksHtml+=dashboardLinks.map(renderLink).join('')}
+    }
+    if(reportLinks.length>0){
+      if(hasSections){
+        var sections=[...new Set(reportLinks.map(function(l){return l.section}).filter(Boolean))];
+        sections.forEach(function(sec){var secLinks=reportLinks.filter(function(l){return l.section===sec});linksHtml+='<div class="client-links-title" onclick="toggleSection(this,event)">'+sec+'</div><div class="section-group">'+secLinks.map(renderLink).join('')+'</div>'});
+      }else{linksHtml+=reportLinks.map(renderLink).join('')}
+    }
+    return '<div class="client-card animate-in" data-id="'+client.id+'" onclick="toggleCard(this)"><div class="client-header"><div class="client-logo'+logoClass+'" style="background:'+client.color+'15;border-color:'+client.color+'30">'+logoHtml+'</div><div class="client-info"><div class="client-name">'+client.name+'</div><div class="client-meta"><span class="client-sector">'+client.sector+'</span><span class="client-status '+(client.status)+'">'+(client.status==='active'?'Actif':'En cours')+'</span></div></div></div><div class="client-stats">'+(dashCount>0?'<div class="client-stat">'+ICONS.dashboard+' <strong>'+dashCount+'</strong> dashboard'+(dashCount>1?'s':'')+'</div>':'')+(reportCount>0?'<div class="client-stat">'+ICONS.report+' <strong>'+reportCount+'</strong> rapport'+(reportCount>1?'s':'')+'</div>':'')+'</div><div class="client-links"><div class="client-links-inner">'+linksHtml+'</div></div><div class="client-expand-indicator">'+ICONS.chevron+'</div></div>'
+  }).join('');
+}
+
+function toggleCard(card){card.classList.toggle('expanded')}
+function toggleSection(el,e){e.stopPropagation();var g=el.nextElementSibling;if(!g)return;var isOpen=g.style.maxHeight&&g.style.maxHeight!=='0px';if(isOpen){g.style.maxHeight='0px';el.classList.remove('section-open')}else{g.style.maxHeight=g.scrollHeight+'px';el.classList.add('section-open')}}
+
+document.getElementById('searchInput').addEventListener('input',function(){renderClients(this.value)});
+document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();document.getElementById('searchInput').focus()}if(e.key==='Escape'){document.getElementById('searchInput').value='';document.getElementById('searchInput').blur();renderClients()}});
+
+renderClients();
+</script>
+</body>
+</html>

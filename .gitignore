@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+.env
+.vercel/
+*.mov
+*.MOV
+*.mp4
+*.mp3
+.mcp.json
+.claude/

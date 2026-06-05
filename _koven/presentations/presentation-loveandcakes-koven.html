@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koven Agency × Love and Cakes Paris — Présentation Stratégie Digitale</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --koven-black: #1a1a1a;
+  --koven-orange: #f7933b;
+  --koven-beige: #e9dfc8;
+  --koven-white: #fafafa;
+  --lac-pink: #fa0598;
+  --lac-brown: #bf7230;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--koven-black);
+  color: var(--koven-white);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ========== SLIDE SYSTEM ========== */
+.slides-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 80px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+  overflow-y: auto;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0) !important;
+  pointer-events: all;
+}
+
+/* ========== NAVIGATION ========== */
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 60px;
+  background: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 100;
+  border-top: 1px solid rgba(247, 147, 59, 0.2);
+}
+
+.nav-bar .slide-counter {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 2px;
+}
+
+.nav-btn {
+  background: rgba(247, 147, 59, 0.15);
+  border: 1px solid rgba(247, 147, 59, 0.3);
+  color: var(--koven-orange);
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.3s;
+}
+
+.nav-btn:hover {
+  background: var(--koven-orange);
+  color: var(--koven-black);
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--koven-orange), var(--lac-pink));
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 101;
+}
+
+/* ========== TYPOGRAPHY ========== */
+.slide-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--koven-orange);
+  margin-bottom: 20px;
+}
+
+.slide-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 24px;
+  max-width: 900px;
+  text-align: center;
+}
+
+.slide-subtitle {
+  font-size: 18px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.7);
+  max-width: 650px;
+  text-align: center;
+  line-height: 1.7;
+}
+
+.highlight { color: var(--koven-orange); }
+.highlight-pink { color: var(--lac-pink); }
+
+/* ========== LOGOS ========== */
+.cover-logos {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 40px;
+}
+
+.logo-img {
+  object-fit: contain;
+  display: block;
+}
+
+.logo-img.koven-logo { height: 65px; }
+.logo-img.lac-logo {
+  height: 80px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 12px;
+  padding: 8px 16px;
+}
+.logo-img.ia-logo {
+  height: 55px;
+}
+
+/* Smaller variants for inside slides */
+.logo-img.logo-sm.koven-logo { height: 50px; }
+.logo-img.logo-sm.lac-logo { height: 65px; padding: 6px 14px; }
+.logo-img.logo-sm.ia-logo { height: 45px; }
+
+.cover-x { color: rgba(255,255,255,0.3); font-size: 20px; font-weight: 300; }
+
+.cover-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 60px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+
+.cover-line {
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--koven-orange), var(--lac-pink));
+  margin: 0 auto 24px;
+  border-radius: 2px;
+}
+
+.cover-meta {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ========== CARDS GRID ========== */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 10px;
+}
+
+.card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 32px 28px;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--koven-orange), var(--lac-pink));
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(247, 147, 59, 0.3);
+  transform: translateY(-4px);
+}
+
+.card:hover::before { opacity: 1; }
+
+.card-icon {
+  font-size: 36px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--koven-white);
+}
+
+.card-text {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.7;
+}
+
+/* ========== PARTNER BADGE ========== */
+.partner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(247, 147, 59, 0.1);
+  border: 1px solid rgba(247, 147, 59, 0.2);
+  border-radius: 100px;
+  padding: 10px 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--koven-orange);
+  margin-bottom: 30px;
+}
+
+/* ========== STATS ROW ========== */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 30px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 30px 20px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.stat-number {
+  font-size: 48px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--koven-orange), var(--lac-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 8px;
+}
+
+/* ========== ABOUT GRID ========== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  width: 100%;
+  max-width: 1050px;
+  margin-top: 10px;
+}
+
+.about-box {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 36px 32px;
+}
+
+.about-box h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.about-box p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.8;
+}
+
+.about-box ul {
+  list-style: none;
+  margin-top: 12px;
+}
+
+.about-box ul li {
+  padding: 6px 0;
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.about-box ul li::before {
+  content: '→';
+  color: var(--koven-orange);
+  font-weight: 700;
+}
+
+/* ========== KOVEN DETAIL CARD ========== */
+.koven-detail {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 1050px;
+}
+
+.koven-detail h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--koven-white);
+}
+
+.koven-detail .detail-subtitle {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.koven-detail ul {
+  list-style: none;
+  columns: 2;
+  column-gap: 40px;
+}
+
+.koven-detail ul li {
+  padding: 5px 0;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  break-inside: avoid;
+}
+
+.koven-detail ul li::before {
+  content: '—';
+  color: var(--koven-orange);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ========== STYLED LIST ========== */
+.styled-list {
+  list-style: none;
+  max-width: 700px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.styled-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.6;
+}
+
+.styled-list li .list-icon {
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  background: rgba(247, 147, 59, 0.15);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--koven-orange);
+  margin-top: 2px;
+}
+
+/* ========== FUNNEL ========== */
+.funnel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  max-width: 800px;
+  margin-top: 20px;
+}
+
+.funnel-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 22px 40px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.4s;
+  text-align: center;
+}
+
+.funnel-step:hover { transform: scale(1.03); }
+
+.funnel-step.step-1 {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(247, 147, 59, 0.2), rgba(247, 147, 59, 0.05));
+  border: 1px solid rgba(247, 147, 59, 0.3);
+  color: var(--koven-orange);
+}
+
+.funnel-step.step-2 {
+  width: 82%;
+  background: linear-gradient(135deg, rgba(230, 120, 60, 0.2), rgba(230, 120, 60, 0.05));
+  border: 1px solid rgba(230, 120, 60, 0.3);
+  color: #e6783c;
+}
+
+.funnel-step.step-3 {
+  width: 64%;
+  background: linear-gradient(135deg, rgba(200, 80, 100, 0.2), rgba(200, 80, 100, 0.05));
+  border: 1px solid rgba(200, 80, 100, 0.3);
+  color: #c85064;
+}
+
+.funnel-step.step-4 {
+  width: 50%;
+  background: linear-gradient(135deg, rgba(250, 5, 152, 0.2), rgba(250, 5, 152, 0.05));
+  border: 1px solid rgba(250, 5, 152, 0.3);
+  color: var(--lac-pink);
+}
+
+.funnel-arrow {
+  color: rgba(255,255,255,0.2);
+  font-size: 20px;
+  margin: 4px 0;
+}
+
+/* ========== TIMELINE ========== */
+.timeline {
+  display: flex;
+  gap: 0;
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 20px;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--koven-orange), var(--lac-pink));
+  opacity: 0.3;
+}
+
+.timeline-item {
+  flex: 1;
+  text-align: center;
+  padding: 24px 16px;
+  position: relative;
+}
+
+.timeline-dot {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--koven-orange);
+  margin: 0 auto 16px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 20px rgba(247, 147, 59, 0.4);
+}
+
+.timeline-item:nth-child(2) .timeline-dot { background: #d97a4a; }
+.timeline-item:nth-child(3) .timeline-dot { background: #c85064; }
+.timeline-item:nth-child(4) .timeline-dot { background: var(--lac-pink); }
+
+.timeline-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--koven-orange);
+  margin-bottom: 8px;
+}
+
+.timeline-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.6;
+}
+
+/* ========== CAMPAIGN CARDS ========== */
+.campaign-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 10px;
+}
+
+.campaign-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 36px 28px;
+  text-align: center;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.campaign-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--card-accent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.campaign-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.campaign-card:hover::after { opacity: 1; }
+
+.campaign-card .card-icon {
+  width: 64px; height: 64px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 20px;
+  background: var(--card-bg);
+}
+
+.campaign-card .card-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--koven-white);
+}
+
+.campaign-card .card-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.campaign-card .card-text {
+  font-size: 13px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.6);
+}
+
+.campaign-card.notoriete {
+  --card-accent: var(--koven-orange);
+  --card-bg: rgba(247, 147, 59, 0.12);
+}
+.campaign-card.notoriete .card-tag { color: var(--koven-orange); }
+
+.campaign-card.trafic {
+  --card-accent: #c85064;
+  --card-bg: rgba(200, 80, 100, 0.12);
+}
+.campaign-card.trafic .card-tag { color: #c85064; }
+
+.campaign-card.engagement {
+  --card-accent: var(--lac-pink);
+  --card-bg: rgba(250, 5, 152, 0.12);
+}
+.campaign-card.engagement .card-tag { color: var(--lac-pink); }
+
+/* Google Ads specific */
+.campaign-card.google-search {
+  --card-accent: #4285f4;
+  --card-bg: rgba(66, 133, 244, 0.12);
+}
+.campaign-card.google-search .card-tag { color: #4285f4; }
+
+.campaign-card.google-local {
+  --card-accent: #34a853;
+  --card-bg: rgba(52, 168, 83, 0.12);
+}
+.campaign-card.google-local .card-tag { color: #34a853; }
+
+.campaign-card.google-display {
+  --card-accent: #fbbc04;
+  --card-bg: rgba(251, 188, 4, 0.12);
+}
+.campaign-card.google-display .card-tag { color: #fbbc04; }
+
+/* ========== CTA SLIDE ========== */
+.cta-box {
+  background: linear-gradient(135deg, rgba(247, 147, 59, 0.08), rgba(250, 5, 152, 0.05));
+  border: 1px solid rgba(247, 147, 59, 0.2);
+  border-radius: 28px;
+  padding: 50px 60px;
+  text-align: center;
+  max-width: 750px;
+  width: 100%;
+}
+
+.cta-box .slide-title { font-size: 42px; margin-bottom: 16px; }
+.cta-box .slide-subtitle { margin: 0 auto; }
+
+.questions-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(255,255,255,0.5);
+  margin-top: 30px;
+}
+
+/* ========== DECORATIVE ========== */
+.bg-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(150px);
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.glow-orange { background: var(--koven-orange); top: -100px; right: -100px; }
+.glow-pink { background: var(--lac-pink); bottom: -100px; left: -100px; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .slide { padding: 40px 30px; }
+  .cover-title, .slide-title { font-size: 36px; }
+  .about-grid { grid-template-columns: 1fr; gap: 30px; }
+  .campaign-cards { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr; }
+  .timeline { flex-direction: column; }
+  .timeline::before { display: none; }
+  .koven-detail ul { columns: 1; }
+}
+
+/* ========== PRINT ========== */
+@media print {
+  .nav-bar, .progress-bar { display: none !important; }
+  .slide {
+    position: relative !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    pointer-events: all !important;
+    page-break-after: always;
+    height: auto;
+    min-height: 100vh;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="slides-container" id="slidesContainer">
+
+  <!-- ==================== SLIDE 1 : COVER ==================== -->
+  <div class="slide active" data-slide="1">
+    <div class="bg-glow glow-orange"></div>
+    <div class="bg-glow glow-pink"></div>
+    <div class="cover-logos">
+      <img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven Agency" class="logo-img koven-logo">
+      <span class="cover-x">&times;</span>
+      <img src="https://cdn.shopify.com/s/files/1/0927/7925/0008/files/Logo_Straight_Ss_Layered_cakes.png?v=1753649587" alt="Love and Cakes Paris" class="logo-img lac-logo">
+    </div>
+    <div class="cover-title">Stratégie Digitale<br><span class="highlight">& Croissance</span></div>
+    <div class="cover-line"></div>
+    <p class="slide-subtitle">Accompagnement marketing digital personnalisé pour développer votre visibilité, votre communauté et vos ventes en ligne.</p>
+    <br>
+    <div class="partner-badge">
+      <img src="https://rejoindre.impact-accelerator.fr/wp-content/uploads/2024/10/LOGO_2_IMPACTACCELERATOR.svg" alt="Impact Accelerator" style="height:30px;object-fit:contain;">
+      Partenaire Impact Accelerator Food & Retail
+    </div>
+    <p class="cover-meta">Mars 2026 — Proposition d'accompagnement</p>
+  </div>
+
+  <!-- ==================== SLIDE 2 : CONTEXTE ==================== -->
+  <div class="slide" data-slide="2">
+    <div class="bg-glow glow-orange"></div>
+    <span class="slide-label">Contexte</span>
+    <img src="https://rejoindre.impact-accelerator.fr/wp-content/uploads/2024/10/LOGO_2_IMPACTACCELERATOR.svg" alt="Impact Accelerator" class="logo-img logo-sm ia-logo" style="margin-bottom:24px;">
+    <h2 class="slide-title">Un partenariat né<br>d'<span class="highlight">Impact Accelerator</span></h2>
+    <p class="slide-subtitle">Programme d'accompagnement gratuit pour les entrepreneurs du food & retail issus des quartiers prioritaires, soutenu par Impact Partners, Franchise Board et BPI France.</p>
+    <div class="stats-row" style="margin-top:40px;">
+      <div class="stat-item">
+        <div class="stat-number">100h+</div>
+        <div class="stat-label">De formation gratuite</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">5</div>
+        <div class="stat-label">Promotions accompagnées</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">1 an</div>
+        <div class="stat-label">D'accompagnement intensif</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 3 : QUI EST KOVEN ==================== -->
+  <div class="slide" data-slide="3">
+    <div class="bg-glow glow-pink"></div>
+    <span class="slide-label">Qui sommes-nous</span>
+    <img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven Agency" class="logo-img logo-sm koven-logo" style="margin-bottom:20px;">
+    <h2 class="slide-title"><span class="highlight">Koven Agency</span></h2>
+    <p class="slide-subtitle" style="margin-bottom:30px;">Agence spécialisée en marketing digital, acquisition de trafic et croissance. Plus de 50 projets accompagnés avec une approche 100% orientée résultats.</p>
+    <div class="about-grid">
+      <div class="about-box" style="border-color:rgba(247,147,59,0.2);">
+        <h3 style="color:var(--koven-orange);">🎯 Acquisition & Visibilité</h3>
+        <ul>
+          <li>Campagnes Meta Ads (Instagram & Facebook) et Google Ads</li>
+          <li>SEO local et référencement naturel</li>
+          <li>Stratégie de contenu et création de visuels</li>
+          <li>Gestion de communauté et social media management</li>
+          <li>Influence marketing et partenariats stratégiques</li>
+        </ul>
+      </div>
+      <div class="about-box" style="border-color:rgba(250,5,152,0.2);">
+        <h3 style="color:var(--lac-pink);">📊 Performance & Data</h3>
+        <ul>
+          <li>Tableaux de bord personnalisés en temps réel</li>
+          <li>Optimisation continue du ROI et du ROAS</li>
+          <li>Tests A/B et itérations data-driven</li>
+          <li>Suivi KPI : CPA, CTR, taux de conversion</li>
+          <li>Reporting mensuel détaillé et recommandations</li>
+        </ul>
+      </div>
+    </div>
+    <div class="koven-detail" style="margin-top:24px;">
+      <h3>Ils nous font confiance</h3>
+      <p class="detail-subtitle">Des entreprises de toutes tailles, du commerce local aux enseignes nationales :</p>
+      <ul>
+        <li>Casino Supermarchés — Campagnes d'acquisition locale multi-points de vente</li>
+        <li>Mon Extension Bois — Génération de leads qualifiés et scaling national</li>
+        <li>Body Addiction — Stratégie social media et développement e-commerce</li>
+        <li>Ash — Notoriété de marque et campagnes Meta Ads à fort engagement</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 4 : LOVE AND CAKES ==================== -->
+  <div class="slide" data-slide="4">
+    <div class="bg-glow glow-orange"></div>
+    <span class="slide-label">Votre marque</span>
+    <img src="https://cdn.shopify.com/s/files/1/0927/7925/0008/files/Logo_Straight_Ss_Layered_cakes.png?v=1753649587" alt="Love and Cakes" class="logo-img logo-sm lac-logo" style="margin-bottom:20px;">
+    <h2 class="slide-title"><span class="highlight-pink">Love and Cakes</span> Paris</h2>
+    <p class="slide-subtitle" style="margin-bottom:36px;">Pâtisserie artisanale anglo-saxonne depuis 2016, au pied de Montmartre. Créations sur-mesure, sans colorant artificiel ni additif.</p>
+    <div class="about-grid">
+      <div class="about-box">
+        <h3>🎂 Vos forces</h3>
+        <ul>
+          <li>Produits artisanaux, faits main, uniques et raffinés</li>
+          <li>Positionnement premium sans additifs</li>
+          <li>400+ avis Google positifs</li>
+          <li>Adresse iconique : Paris 18e, Montmartre</li>
+          <li>Gamme large : layer cakes, wedding cakes, cupcakes...</li>
+        </ul>
+      </div>
+      <div class="about-box">
+        <h3>📱 Votre présence actuelle</h3>
+        <ul>
+          <li>Site e-commerce Shopify fonctionnel</li>
+          <li>Instagram, Facebook & TikTok actifs</li>
+          <li>Livraison en Île-de-France</li>
+          <li>Identité visuelle forte (rose & marron)</li>
+        </ul>
+        <p style="margin-top:16px;font-size:13px;color:var(--koven-orange);font-weight:600;">→ Un potentiel digital considérable à exploiter</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 5 : QU'EST-CE QUE LE MARKETING DIGITAL ==================== -->
+  <div class="slide" data-slide="5">
+    <div class="bg-glow glow-pink"></div>
+    <span class="slide-label">Les fondamentaux</span>
+    <h2 class="slide-title">Le <span class="highlight">Marketing Digital</span>,<br>c'est quoi ?</h2>
+    <p class="slide-subtitle" style="margin-bottom:36px;">L'ensemble des actions marketing menées sur les canaux numériques pour attirer, engager et convertir vos clients idéaux.</p>
+    <div class="cards-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 800px;">
+      <div class="card">
+        <span class="card-icon">🌐</span>
+        <h4 class="card-title">Être visible</h4>
+        <p class="card-text">Faire en sorte que les personnes qui cherchent des gâteaux sur-mesure à Paris vous trouvent <strong>en premier</strong> — sur Google, Instagram, Facebook.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">💬</span>
+        <h4 class="card-title">Créer du lien</h4>
+        <p class="card-text">Construire une communauté engagée autour de votre marque. Chaque like, commentaire et partage renforce votre <strong>notoriété</strong>.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🛒</span>
+        <h4 class="card-title">Générer des ventes</h4>
+        <p class="card-text">Transformer les visiteurs en clients grâce à des parcours d'achat optimisés et des campagnes publicitaires <strong>ciblées</strong>.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📈</span>
+        <h4 class="card-title">Mesurer & optimiser</h4>
+        <p class="card-text">Contrairement au marketing traditionnel, chaque euro investi est <strong>traçable</strong>. On sait exactement ce qui fonctionne.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 6 : POURQUOI LA VISIBILITÉ ==================== -->
+  <div class="slide" data-slide="6">
+    <div class="bg-glow glow-orange"></div>
+    <span class="slide-label">L'enjeu clé</span>
+    <h2 class="slide-title">Pourquoi la <span class="highlight-pink">visibilité digitale</span><br>est indispensable ?</h2>
+    <ul class="styled-list" style="margin-top:30px;">
+      <li>
+        <span class="list-icon">01</span>
+        <span><strong>87% des consommateurs</strong> recherchent en ligne avant d'acheter en boutique. Si vous n'êtes pas visible, vous n'existez pas pour eux.</span>
+      </li>
+      <li>
+        <span class="list-icon">02</span>
+        <span><strong>L'alimentaire visuel explose</strong> sur les réseaux sociaux. Vos créations sont naturellement « Instagrammables » — un avantage concurrentiel majeur.</span>
+      </li>
+      <li>
+        <span class="list-icon">03</span>
+        <span><strong>Vos concurrents investissent déjà.</strong> Les pâtisseries parisiennes multiplient les campagnes sponsorisées. Rester en retrait, c'est perdre des parts de marché.</span>
+      </li>
+      <li>
+        <span class="list-icon">04</span>
+        <span><strong>La livraison en Île-de-France</strong> étend votre zone de chalandise bien au-delà du 18e. Le digital est le seul moyen d'atteindre ces clients éloignés.</span>
+      </li>
+      <li>
+        <span class="list-icon">05</span>
+        <span><strong>Le bouche-à-oreille se fait en ligne.</strong> 400+ avis Google, c'est déjà une preuve sociale forte. Amplifions-la avec une stratégie structurée.</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ==================== SLIDE 7 : STRATÉGIES DE VISIBILITÉ ==================== -->
+  <div class="slide" data-slide="7">
+    <div class="bg-glow glow-pink"></div>
+    <span class="slide-label">Les leviers</span>
+    <h2 class="slide-title">Les stratégies pour <span class="highlight">gagner en visibilité</span></h2>
+    <div class="cards-grid" style="grid-template-columns: repeat(3, 1fr); margin-top:30px;">
+      <div class="card">
+        <span class="card-icon">📸</span>
+        <h4 class="card-title">Contenu de qualité</h4>
+        <p class="card-text">Photos, vidéos et reels mettant en scène vos créations. Le contenu visuel food génère 3x plus d'engagement que tout autre secteur.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎯</span>
+        <h4 class="card-title">Publicités ciblées</h4>
+        <p class="card-text">Campagnes Meta (Instagram & Facebook) avec ciblage précis : zone géographique, centres d'intérêt, comportements d'achat.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔍</span>
+        <h4 class="card-title">SEO & Google Local</h4>
+        <p class="card-text">Optimisation de votre fiche Google Business et de votre site pour apparaître en tête des recherches « gâteau sur-mesure Paris ».</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🤝</span>
+        <h4 class="card-title">Influence & UGC</h4>
+        <p class="card-text">Collaborations avec des micro-influenceurs food parisiens. Le contenu généré par les utilisateurs crédibilise votre marque.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📧</span>
+        <h4 class="card-title">Email & Fidélisation</h4>
+        <p class="card-text">Séquences email automatisées pour relancer les clients existants : anniversaires, fêtes, nouvelles créations.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📊</span>
+        <h4 class="card-title">Analyse & Itération</h4>
+        <p class="card-text">Dashboard de suivi des performances en temps réel. Chaque semaine, on analyse et on ajuste pour maximiser le ROI.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 8 : IMPACT IMAGE & CA ==================== -->
+  <div class="slide" data-slide="8">
+    <div class="bg-glow glow-orange"></div>
+    <span class="slide-label">Les bénéfices</span>
+    <h2 class="slide-title">Impact sur votre <span class="highlight">image</span><br>et votre <span class="highlight-pink">chiffre d'affaires</span></h2>
+    <div class="about-grid" style="margin-top:30px;">
+      <div class="about-box" style="border-color:rgba(247,147,59,0.2);">
+        <h3 style="color:var(--koven-orange);">✨ Image de marque</h3>
+        <ul>
+          <li>Perception premium renforcée auprès de votre cible</li>
+          <li>Cohérence visuelle sur tous les canaux digitaux</li>
+          <li>Positionnement d'experte dans la pâtisserie artisanale</li>
+          <li>Confiance accrue grâce à la preuve sociale amplifiée</li>
+          <li>Top of mind : on pense à vous en premier pour un gâteau</li>
+        </ul>
+      </div>
+      <div class="about-box" style="border-color:rgba(250,5,152,0.2);">
+        <h3 style="color:var(--lac-pink);">💰 Chiffre d'affaires</h3>
+        <ul>
+          <li>Augmentation du trafic en boutique et sur le site</li>
+          <li>Hausse des commandes en ligne (livraison Île-de-France)</li>
+          <li>Panier moyen en hausse grâce au positionnement premium</li>
+          <li>Réduction du coût d'acquisition client dans le temps</li>
+          <li>Revenus récurrents via fidélisation et remarketing</li>
+        </ul>
+      </div>
+    </div>
+    <div class="stats-row" style="margin-top:30px; grid-template-columns: repeat(3, 1fr);">
+      <div class="stat-item">
+        <div class="stat-number">x3</div>
+        <div class="stat-label">Engagement contenu food vs autres secteurs</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">72%</div>
+        <div class="stat-label">Des achats influencés par les réseaux sociaux</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">-40%</div>
+        <div class="stat-label">Coût d'acquisition après 3 mois d'optimisation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 9 : CAMPAGNES META ==================== -->
+  <div class="slide" data-slide="9">
+    <div class="bg-glow glow-pink"></div>
+    <span class="slide-label">Campagnes Meta</span>
+    <h2 class="slide-title">Votre stratégie<br><span class="highlight">Meta Ads</span> en 3 piliers</h2>
+    <p class="slide-subtitle" style="margin-bottom:30px;">Une approche en entonnoir pour couvrir tout le parcours client, de la découverte jusqu'à l'achat.</p>
+    <div class="campaign-cards">
+      <div class="campaign-card notoriete">
+        <div class="card-icon">👁️</div>
+        <span class="card-tag">Pilier 1</span>
+        <h4 class="card-title">Notoriété</h4>
+        <p class="card-text">Faire connaître Love and Cakes au plus grand nombre dans votre zone cible. Objectif : <strong>maximiser les impressions</strong> auprès d'une audience qualifiée (femmes 25-55 ans, Paris & IDF, intéressées pâtisserie, événementiel, cadeaux).</p>
+      </div>
+      <div class="campaign-card trafic">
+        <div class="card-icon">🔗</div>
+        <span class="card-tag">Pilier 2</span>
+        <h4 class="card-title">Trafic</h4>
+        <p class="card-text">Diriger les personnes intéressées vers votre site loveandcakes.fr. Objectif : <strong>générer des visites qualifiées</strong> sur vos pages produits (layer cakes, wedding cakes) pour déclencher des commandes.</p>
+      </div>
+      <div class="campaign-card engagement">
+        <div class="card-icon">💬</div>
+        <span class="card-tag">Pilier 3</span>
+        <h4 class="card-title">Engagement</h4>
+        <p class="card-text">Créer de l'interaction avec votre communauté. Objectif : <strong>augmenter likes, commentaires et partages</strong> pour booster l'algorithme et générer du bouche-à-oreille viral.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 10 : CAMPAGNES GOOGLE ADS ==================== -->
+  <div class="slide" data-slide="10">
+    <div class="bg-glow glow-orange"></div>
+    <span class="slide-label">Campagnes Google</span>
+    <h2 class="slide-title">Votre stratégie<br><span class="highlight">Google Ads</span> en 3 axes</h2>
+    <p class="slide-subtitle" style="margin-bottom:30px;">Capturer la demande existante. Quand quelqu'un cherche « gâteau anniversaire Paris » sur Google, c'est Love and Cakes qui doit apparaître.</p>
+    <div class="campaign-cards">
+      <div class="campaign-card google-search">
+        <div class="card-icon">🔎</div>
+        <span class="card-tag">Axe 1</span>
+        <h4 class="card-title">Search Ads</h4>
+        <p class="card-text">Apparaître en première position sur les requêtes à forte intention d'achat : <strong>« layer cake Paris », « gâteau sur-mesure livraison », « wedding cake artisanal »</strong>. Chaque clic est un client potentiel qui vous cherche activement.</p>
+      </div>
+      <div class="campaign-card google-local">
+        <div class="card-icon">📍</div>
+        <span class="card-tag">Axe 2</span>
+        <h4 class="card-title">Local & Maps</h4>
+        <p class="card-text">Dominer les résultats locaux Google Maps autour du 18e et dans toute l'Île-de-France. <strong>Optimisation de votre fiche Google Business</strong>, extensions d'appel et d'itinéraire pour convertir les recherches « à proximité ».</p>
+      </div>
+      <div class="campaign-card google-display">
+        <div class="card-icon">🖼️</div>
+        <span class="card-tag">Axe 3</span>
+        <h4 class="card-title">Display & Remarketing</h4>
+        <p class="card-text">Bannières visuelles de vos créations sur des milliers de sites partenaires Google. <strong>Remarketing intelligent</strong> : on relance les visiteurs de votre site qui n'ont pas encore commandé avec des visuels personnalisés.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 11 : FUNNEL ==================== -->
+  <div class="slide" data-slide="11">
+    <div class="bg-glow glow-pink"></div>
+    <span class="slide-label">Parcours client</span>
+    <h2 class="slide-title">L'entonnoir de <span class="highlight">conversion</span></h2>
+    <p class="slide-subtitle" style="margin-bottom:30px;">Chaque levier nourrit le suivant pour transformer un inconnu en client fidèle.</p>
+    <div class="funnel">
+      <div class="funnel-step step-1">
+        👁️&nbsp;&nbsp;<strong>NOTORIÉTÉ</strong>&nbsp;—&nbsp;Ils découvrent Love and Cakes
+      </div>
+      <div class="funnel-arrow">▼</div>
+      <div class="funnel-step step-2">
+        🔗&nbsp;&nbsp;<strong>TRAFIC</strong>&nbsp;—&nbsp;Ils visitent votre site & explorent vos créations
+      </div>
+      <div class="funnel-arrow">▼</div>
+      <div class="funnel-step step-3">
+        💬&nbsp;&nbsp;<strong>ENGAGEMENT</strong>&nbsp;—&nbsp;Ils interagissent, suivent, partagent
+      </div>
+      <div class="funnel-arrow">▼</div>
+      <div class="funnel-step step-4">
+        🎂&nbsp;&nbsp;<strong>CONVERSION</strong>&nbsp;—&nbsp;Ils commandent leur gâteau sur-mesure
+      </div>
+    </div>
+    <p class="slide-subtitle" style="margin-top:30px;font-size:13px;">Le remarketing permet de relancer les visiteurs qui n'ont pas encore commandé — aucune opportunité n'est perdue.</p>
+  </div>
+
+  <!-- ==================== SLIDE 12 : TIMELINE ==================== -->
+  <div class="slide" data-slide="12">
+    <div class="bg-glow glow-orange"></div>
+    <span class="slide-label">En pratique</span>
+    <h2 class="slide-title">Ce que nous mettons en place<br><span class="highlight">concrètement</span></h2>
+    <div class="timeline" style="margin-top:40px;">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">Semaine 1-2</div>
+        <h4 style="font-size:15px;margin-bottom:6px;">Audit & Setup</h4>
+        <p class="timeline-desc">Analyse de votre audience actuelle, configuration du Business Manager, pixel Meta, audiences personnalisées.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">Semaine 3-4</div>
+        <h4 style="font-size:15px;margin-bottom:6px;">Lancement</h4>
+        <p class="timeline-desc">Premières campagnes notoriété + trafic. Tests A/B sur les visuels et les accroches. Ciblage affiné.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">Mois 2</div>
+        <h4 style="font-size:15px;margin-bottom:6px;">Optimisation</h4>
+        <p class="timeline-desc">Analyse des premiers résultats, scaling des meilleures audiences, ajout de campagnes engagement.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">Mois 3+</div>
+        <h4 style="font-size:15px;margin-bottom:6px;">Croissance</h4>
+        <p class="timeline-desc">Remarketing avancé, lookalike audiences, scaling progressif du budget sur les campagnes performantes.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 13 : FIN ==================== -->
+  <div class="slide" data-slide="13">
+    <div class="bg-glow glow-orange"></div>
+    <div class="bg-glow glow-pink"></div>
+    <div class="cover-logos" style="margin-bottom:30px;">
+      <img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven Agency" class="logo-img koven-logo">
+      <span class="cover-x">&times;</span>
+      <img src="https://cdn.shopify.com/s/files/1/0927/7925/0008/files/Logo_Straight_Ss_Layered_cakes.png?v=1753649587" alt="Love and Cakes Paris" class="logo-img lac-logo">
+    </div>
+    <div class="cta-box">
+      <h2 class="slide-title">Prête à <span class="highlight">accélérer</span> ?</h2>
+      <p class="slide-subtitle">Vous avez le savoir-faire artisanal, les créations exceptionnelles et les avis clients. Il ne manque plus qu'une stratégie digitale structurée pour passer au niveau supérieur.</p>
+      <p class="questions-text">Des questions ?</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAVIGATION -->
+<div class="nav-bar">
+  <div style="display:flex;align-items:center;gap:20px;">
+    <img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven" style="height:24px;object-fit:contain;">
+    <span class="slide-counter" id="slideCounter">01 / 13</span>
+  </div>
+  <div style="display:flex;gap:12px;">
+    <button class="nav-btn" onclick="changeSlide(-1)" title="Slide précédente">&#8592;</button>
+    <button class="nav-btn" onclick="changeSlide(1)" title="Slide suivante">&#8594;</button>
+  </div>
+</div>
+
+<script>
+let currentSlide = 1;
+const totalSlides = 13;
+let isAnimating = false;
+
+function changeSlide(direction) {
+  if (isAnimating) return;
+  const next = currentSlide + direction;
+  if (next < 1 || next > totalSlides) return;
+
+  isAnimating = true;
+
+  const currentEl = document.querySelector('.slide[data-slide="' + currentSlide + '"]');
+  const nextEl = document.querySelector('.slide[data-slide="' + next + '"]');
+
+  // Reset next slide position before showing
+  nextEl.style.transition = 'none';
+  nextEl.style.transform = direction > 0 ? 'translateX(80px)' : 'translateX(-80px)';
+  nextEl.style.opacity = '0';
+  nextEl.style.visibility = 'visible';
+
+  // Force reflow
+  nextEl.offsetHeight;
+
+  // Re-enable transitions
+  nextEl.style.transition = '';
+  currentEl.style.transition = '';
+
+  // Animate current slide out
+  currentEl.classList.remove('active');
+  currentEl.style.transform = direction > 0 ? 'translateX(-80px)' : 'translateX(80px)';
+  currentEl.style.opacity = '0';
+
+  // Animate next slide in
+  nextEl.classList.add('active');
+  nextEl.style.transform = 'translateX(0)';
+  nextEl.style.opacity = '1';
+
+  currentSlide = next;
+  updateUI();
+
+  setTimeout(function() {
+    // Clean up old slide
+    currentEl.style.visibility = 'hidden';
+    currentEl.style.transform = '';
+    currentEl.style.opacity = '';
+    isAnimating = false;
+  }, 550);
+}
+
+function updateUI() {
+  document.getElementById('slideCounter').textContent =
+    String(currentSlide).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+  document.getElementById('progress').style.width =
+    ((currentSlide / totalSlides) * 100) + '%';
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+});
+
+// Touch navigation
+var touchStartX = 0;
+document.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', function(e) {
+  var diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+});
+
+updateUI();
+</script>
+
+</body>
+</html>

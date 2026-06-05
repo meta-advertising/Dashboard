@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthèse Annuelle 2025 - Body House Valence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --pink: #E8A0BF; --pink-light: #F5D0E0; --pink-dark: #C77DA3; --pink-soft: #FDF2F7;
+            --google-red: #EA4335; --google-orange: #F5A623; --google-yellow: #FBBC05; --google-light: #FFF8E7; --google-soft: #FFFBF0;
+            --black: #1A1A1A; --gray-dark: #333333; --gray: #666666; --gray-light: #999999; --white: #FFFFFF; --bg-light: #FEFBFC; --success: #7FB685;
+        }
+        @page { size: A4; margin: 0; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--white); color: var(--black); line-height: 1.3; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .page { width: 210mm; min-height: 297mm; max-height: 297mm; margin: 0 auto; padding: 12mm 14mm 10mm; background: var(--white); overflow: hidden; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 2px solid var(--black); margin-bottom: 12px; }
+        .logo-section { display: flex; align-items: center; gap: 14px; }
+        .logo img { height: 24px; width: auto; }
+        .brand-text h1 { font-size: 17px; font-weight: 700; color: var(--black); letter-spacing: -0.5px; }
+        .brand-text p { font-size: 9px; color: var(--gray); font-weight: 500; margin-top: 1px; }
+        .header-badges { display: flex; gap: 8px; align-items: center; }
+        .budget-total { background: var(--bg-light); border: 1px solid #E0E0E0; padding: 5px 10px; border-radius: 6px; font-size: 9px; color: var(--gray-dark); }
+        .budget-total strong { font-weight: 700; color: var(--black); }
+        .period-badge { background: var(--black); color: var(--white); padding: 5px 12px; border-radius: 6px; font-size: 10px; font-weight: 600; }
+        .platform-section { margin-bottom: 10px; padding: 10px 12px; border-radius: 10px; position: relative; }
+        .platform-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 10px 10px 0 0; }
+        .meta-section { background: var(--pink-soft); border: 1px solid var(--pink-light); }
+        .meta-section::before { background: linear-gradient(90deg, #833AB4 0%, #E1306C 50%, #F56040 100%); }
+        .google-section { background: var(--google-soft); border: 1px solid #FFE082; }
+        .google-section::before { background: linear-gradient(90deg, #EA4335 0%, #FBBC05 50%, #34A853 100%); }
+        .platform-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .platform-title-row { display: flex; align-items: center; gap: 8px; }
+        .platform-icon { width: 22px; height: 22px; border-radius: 5px; display: flex; align-items: center; justify-content: center; }
+        .google-icon { background: var(--white); border: 1px solid #E0E0E0; }
+        .platform-icon svg { width: 12px; height: 12px; }
+        .section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .meta-section .section-title { color: var(--pink-dark); }
+        .google-section .section-title { color: var(--google-red); }
+        .platform-budget { font-size: 9px; font-weight: 600; padding: 4px 8px; border-radius: 5px; }
+        .meta-section .platform-budget { background: rgba(199, 125, 163, 0.15); color: var(--pink-dark); }
+        .google-section .platform-budget { background: rgba(234, 67, 53, 0.12); color: var(--google-red); }
+        .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 8px; }
+        .metrics-grid-4 { grid-template-columns: repeat(4, 1fr); }
+        .metric-card { background: var(--white); border-radius: 8px; padding: 10px 6px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .metric-icon { width: 26px; height: 26px; margin: 0 auto 6px; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+        .meta-section .metric-icon { background: rgba(232, 160, 191, 0.2); }
+        .meta-section .metric-icon svg { color: var(--pink-dark); }
+        .google-section .metric-icon { background: rgba(234, 67, 53, 0.12); }
+        .google-section .metric-icon svg { color: var(--google-red); }
+        .metric-icon svg { width: 13px; height: 13px; }
+        .metric-value { font-size: 14px; font-weight: 800; color: var(--black); letter-spacing: -0.3px; line-height: 1.1; }
+        .metric-label { font-size: 7px; color: var(--gray); font-weight: 500; margin-top: 3px; line-height: 1.2; }
+        .campaigns-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 8px; }
+        .campaign-card { background: var(--white); border-radius: 8px; padding: 10px; }
+        .campaign-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .campaign-badge { padding: 3px 8px; border-radius: 4px; font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+        .badge-trafic { background: rgba(232, 160, 191, 0.25); color: var(--pink-dark); }
+        .badge-engagement { background: rgba(127, 182, 133, 0.2); color: #4A7C50; }
+        .badge-notoriete { background: rgba(138, 110, 176, 0.2); color: #6B4C9A; }
+        .campaign-title { font-size: 10px; font-weight: 600; color: var(--black); }
+        .campaign-stats { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; }
+        .stat-item { background: var(--bg-light); padding: 6px 8px; border-radius: 5px; }
+        .google-section .stat-item { background: var(--google-light); }
+        .stat-value { font-size: 12px; font-weight: 700; color: var(--black); }
+        .stat-label { font-size: 7px; color: var(--gray-light); font-weight: 500; margin-top: 1px; }
+        .comparison-bar { background: var(--white); border-radius: 8px; padding: 8px 10px; }
+        .comparison-title { font-size: 8px; font-weight: 600; color: var(--gray-dark); margin-bottom: 6px; }
+        .bar-chart { display: flex; flex-direction: column; gap: 5px; }
+        .bar-item { display: flex; align-items: center; gap: 8px; }
+        .bar-label { width: 65px; font-size: 8px; font-weight: 500; color: var(--gray); }
+        .bar-container { flex: 1; height: 16px; background: #F0E4E9; border-radius: 4px; overflow: hidden; }
+        .google-section .bar-container { background: #FFF0D4; }
+        .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; }
+        .bar-fill-pink { background: linear-gradient(90deg, var(--pink) 0%, var(--pink-light) 100%); }
+        .bar-fill-green { background: linear-gradient(90deg, #7FB685 0%, #A8D5AE 100%); }
+        .bar-fill-blue { background: linear-gradient(90deg, #4285F4 0%, #7BAAF7 100%); }
+        .bar-fill-red { background: linear-gradient(90deg, #EA4335 0%, #F28B82 100%); }
+        .bar-fill-purple { background: linear-gradient(90deg, #8A6EB0 0%, #B8A4D0 100%); }
+        .bar-value { font-size: 7px; font-weight: 600; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        .highlights-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .highlights-card { background: linear-gradient(145deg, var(--black) 0%, #2A2A2A 100%); border-radius: 10px; padding: 12px; color: var(--white); }
+        .highlights-title { font-size: 9px; font-weight: 600; color: var(--pink-light); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px; }
+        .highlight-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+        .highlight-item:last-child { margin-bottom: 0; }
+        .highlight-icon { width: 18px; height: 18px; background: rgba(232, 160, 191, 0.2); border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .highlight-icon svg { width: 10px; height: 10px; color: var(--pink); }
+        .highlight-text { font-size: 8px; line-height: 1.4; color: rgba(255, 255, 255, 0.9); }
+        .highlight-text strong { color: var(--pink-light); }
+        .roi-card { background: linear-gradient(145deg, var(--pink) 0%, var(--pink-dark) 100%); border-radius: 10px; padding: 12px; color: var(--white); display: flex; flex-direction: column; justify-content: center; }
+        .roi-title { font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.9; margin-bottom: 8px; }
+        .roi-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+        .roi-item { background: rgba(255,255,255,0.15); border-radius: 6px; padding: 8px; text-align: center; }
+        .roi-item-label { font-size: 7px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8; margin-bottom: 4px; }
+        .roi-item-value { font-size: 20px; font-weight: 800; line-height: 1; }
+        .roi-item-desc { font-size: 7px; opacity: 0.85; margin-top: 2px; }
+        .roi-detail { font-size: 7px; opacity: 0.85; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px; line-height: 1.4; }
+        .ctr-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.2); padding: 3px 6px; border-radius: 4px; font-size: 7px; font-weight: 600; margin-top: 6px; }
+        .ctr-badge svg { width: 8px; height: 8px; }
+        .footer { margin-top: 8px; padding-top: 8px; border-top: 1px solid #E0E0E0; display: flex; justify-content: space-between; align-items: center; }
+        .footer-text { font-size: 8px; color: var(--gray-light); }
+        .footer-brand { font-size: 8px; color: var(--black); font-weight: 600; }
+        @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .page { margin: 0; padding: 10mm; } }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="logo-section">
+                <div class="logo">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjMxIiBoZWlnaHQ9IjI3IiB2aWV3Qm94PSIwIDAgMjMxIDI3IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxwYXRoIGQ9Ik0wIDAuNDQ5MjE5SDEwLjQyNzhDMTIuNDg4NCAwLjQ0OTIxOSAxNC4wMzcgMC41MzY2MzggMTUuMDQ4NiAwLjcxMTQ3NkMxNi4wNjAxIDAuODg2MzE0IDE2Ljk3MTggMS4yMzU5OSAxNy43NzEgMS43ODU0OEMxOC41NzAzIDIuMzM0OTcgMTkuMjQ0NyAzLjA1OTMgMTkuNzY5MiAzLjk3MDk2QzIwLjMwNjIgNC44ODI2MSAyMC41Njg1IDUuODk0MTggMjAuNTY4NSA3LjAxODE0QzIwLjU2ODUgOC4yNDIgMjAuMjQzOCA5LjM2NTk2IDE5LjU4MTkgMTAuMzc3NUMxOC45MiAxMS40MDE2IDE4LjAzMzMgMTIuMTYzNCAxNi44OTY5IDEyLjY3NTRDMTguNDgyOSAxMy4xMzc1IDE5LjcwNjggMTMuOTI0MiAyMC41Njg1IDE1LjA0ODJDMjEuNDE3NyAxNi4xNTk3IDIxLjg1NDggMTcuNDcxIDIxLjg1NDggMTguOTgyMUMyMS44NTQ4IDIwLjE2ODUgMjEuNTggMjEuMzE3NCAyMS4wMzA1IDIyLjQ0MTRDMjAuNDgxIDIzLjU2NTMgMTkuNzE5MiAyNC40NTIgMTguNzcwMSAyNS4xMjY0QzE3LjgyMSAyNS44MDA3IDE2LjYzNDYgMjYuMjEyOSAxNS4yMzU5IDI2LjM2MjdDMTQuMzYxNyAyNi40NjI2IDEyLjIzODcgMjYuNTEyNiA4Ljg3OTI4IDI2LjUzNzZIMFYwLjQ0OTIxOVpNNS4yNzAxMiA0Ljc4MjcxVjEwLjgxNDZIOC43MTY5M0MxMC43NjUgMTAuODE0NiAxMi4wMzg5IDEwLjc4OTYgMTIuNTM4NCAxMC43MjcyQzEzLjQzNzYgMTAuNjE0OCAxNC4xNDk0IDEwLjMwMjYgMTQuNjYxNCA5Ljc5MDU3QzE1LjE3MzQgOS4yNzg1NCAxNS40MzU3IDguNTkxNjggMTUuNDM1NyA3Ljc1NDk1QzE1LjQzNTcgNi45MTgyMyAxNS4yMTA5IDYuMjkzODEgMTQuNzczOCA1Ljc4MTc4QzE0LjMyNDIgNS4yODIyNCAxMy42NjIzIDQuOTcwMDMgMTIuNzg4MiA0Ljg3MDEzQzEyLjI2MzYgNC44MDc2OCAxMC43NjUgNC43ODI3MSA4LjI5MjMyIDQuNzgyNzFINS4yNzAxMlpNNS4yNzAxMiAxNS4xNjA2VjIyLjE0MTZIMTAuMTQwNkMxMi4wMzg5IDIyLjE0MTYgMTMuMjM3NyAyMi4wOTE3IDEzLjc0OTggMjEuOTc5M0MxNC41MzY1IDIxLjg0MTkgMTUuMTczNCAyMS40OTIyIDE1LjY2MDUgMjAuOTQyN0MxNi4xNDc1IDIwLjM5MzMgMTYuMzk3MyAxOS42NTY0IDE2LjM5NzMgMTguNzE5OEMxNi4zOTczIDE3LjkzMyAxNi4yMSAxNy4yNzExIDE1LjgyMjggMTYuNzIxN0MxNS40MzU3IDE2LjE3MjIgMTQuODk4NyAxNS43NzI1IDE0LjE3NDQgMTUuNTIyOEMxMy40NjI1IDE1LjI3MyAxMS45MDE1IDE1LjE0ODEgOS41MDM3IDE1LjE0ODFINS4yNDUxNEw1LjI3MDEyIDE1LjE2MDZaIiBmaWxsPSIjMjQyNDI0Ii8+CiAgPHBhdGggZD0iTTI1LjIzOTEgMTMuNjQ5OUMyNS4yMzkxIDEwLjk4OTggMjUuNjM4NyA4Ljc2Njg4IDI2LjQzOCA2Ljk1NjA2QzI3LjAyNDkgNS42MzIyOCAyNy44MzY3IDQuNDMzMzkgMjguODYwNyAzLjM3MTg4QzI5Ljg4NDggMi4zMjI4NSAzMS4wMDg3IDEuNTM2MDggMzIuMjMyNiAxLjAyNDA1QzMzLjg1NjEgMC4zNDk2NzYgMzUuNzI5NCAwIDM3Ljg1MjQgMEM0MS42OTg4IDAgNDQuNzcxIDEuMTg2NCA0Ny4wODE0IDMuNTcxNjlDNDkuMzkxNyA1Ljk1Njk4IDUwLjU0MDYgOS4yNjY0MiA1MC41NDA2IDEzLjUyNUM1MC41NDA2IDE3Ljc4MzUgNDkuMzkxNyAyMS4wMzA1IDQ3LjEwNjMgMjMuNDE1OEM0NC44MjA5IDI1LjgwMTEgNDEuNzQ4OCAyNi45ODc1IDM3LjkyNzMgMjYuOTg3NUMzNC4xMDU5IDI2Ljk4NzUgMzAuOTU4OCAyNS44MDExIDI4LjY3MzQgMjMuNDQwOEMyNi4zODggMjEuMDY4IDI1LjIzOTEgMTcuODA4NSAyNS4yMzkxIDEzLjY2MjNNMzAuNjU5MSAxMy40NzVDMzAuNjU5MSAxNi40MzQ4IDMxLjM0NTkgMTguNjcwMiAzMi43MDcyIDIwLjE5MzhDMzQuMDY4NCAyMS43MTc0IDM1LjgwNDMgMjIuNDc5MiAzNy45MDI0IDIyLjQ3OTJDNDAuMDAwNCAyMi40NzkyIDQxLjcyMzggMjEuNzE3NCA0My4wNzI2IDIwLjIwNjNDNDQuNDIxMyAxOC42OTUyIDQ1LjA5NTcgMTYuNDIyMyA0NS4wOTU3IDEzLjQwMDFDNDUuMDk1NyAxMC4zNzc5IDQ0LjQ0NjMgOC4xNzk5MiA0My4xMzUgNi43MDYyOUM0MS44MjM3IDUuMjMyNjUgNDAuMDg3OCA0LjQ5NTg0IDM3LjkxNDggNC40OTU4NEMzNS43NDE5IDQuNDk1ODQgMzMuOTkzNSA1LjI0NTE0IDMyLjY2OTcgNi43MzEyN0MzMS4zNDU5IDguMjE3MzkgMzAuNjcxNSAxMC40NjUzIDMwLjY3MTUgMTMuNDYyNSIgZmlsbD0iIzI0MjQyNCIvPgogIDxwYXRoIGQ9Ik01NC42MzY5IDAuNDQ5MjE5SDY0LjI2NTVDNjYuNDM4NSAwLjQ0OTIxOSA2OC4wODY5IDAuNjExNTY4IDY5LjIzNTkgMC45NDg3NTZDNzAuNzcyIDEuMzk4MzQgNzIuMDgzMiAyLjE5NzYgNzMuMTY5NyAzLjM0NjU0Qzc0LjI1NjIgNC40OTU0NyA3NS4wOTMgNS45MDY2NyA3NS42Njc0IDcuNTY3NjNDNzYuMjQxOSA5LjI0MTA4IDc2LjUxNjYgMTEuMjg5MiA3Ni41MTY2IDEzLjczNjlDNzYuNTE2NiAxNS44ODQ5IDc2LjI1NDQgMTcuNzMzMiA3NS43MTc0IDE5LjI5NDNDNzUuMDY4IDIxLjE5MjUgNzQuMTMxMyAyMi43Mjg2IDcyLjkyIDIzLjkwMjVDNzIuMDA4MyAyNC43ODkyIDcwLjc3MiAyNS40ODg1IDY5LjIyMzQgMjUuOTg4MUM2OC4wNjIgMjYuMzUwMiA2Ni41MDA5IDI2LjUzNzYgNjQuNTY1MiAyNi41Mzc2SDU0LjY0OTRWMC40NDkyMTlINTQuNjM2OVpNNTkuOTA3IDQuODU3NjRWMjIuMTQxNkg2My44NDA5QzY1LjMxNDUgMjIuMTQxNiA2Ni4zNzYgMjIuMDU0MiA2Ny4wMjU0IDIxLjg5MTlDNjcuODc0NiAyMS42Nzk2IDY4LjU4NjUgMjEuMzE3NCA2OS4xNDg1IDIwLjgwNTRDNjkuNzEwNCAyMC4yOTMzIDcwLjE3MjUgMTkuNDU2NiA3MC41MjIyIDE4LjI4MjdDNzAuODg0NCAxNy4xMDg4IDcxLjA1OTIgMTUuNTIyOCA3MS4wNTkyIDEzLjQ5OTZDNzEuMDU5MiAxMS40NzY1IDcwLjg4NDQgOS45NDA0MyA3MC41MjIyIDguODUzOTRDNzAuMTYgNy43Nzk5MyA2OS42NzMgNi45MzA3MiA2OS4wMjM2IDYuMzMxMjdDNjguMzg2NyA1LjczMTgzIDY3LjU3NDkgNS4zMTk3MSA2Ni41ODgzIDUuMTA3NDFDNjUuODUxNSA0Ljk0NTA2IDY0LjQxNTMgNC44NTc2NCA2Mi4yNjczIDQuODU3NjRINTkuOTA3WiIgZmlsbD0iIzI0MjQyNCIvPgogIDxwYXRoIGQ9Ik04Ny44MzExIDI2LjUzNzZWMTUuNTYwMkw3OC4yNzc0IDAuNDQ5MjE5SDg0LjQ0NjdMOTAuNTkxIDEwLjc2NDdMOTYuNjEwNSAwLjQ0OTIxOUgxMDIuNjhMOTMuMDc2MiAxNS41ODUyVjI2LjUzNzZIODcuODMxMVoiIGZpbGw9IiMyNDI0MjQiLz4KICA8cGF0aCBkPSJNMTA1LjMxNSAyNi41Mzc2VjAuNDQ5MjE5SDExMC41NzNWMTAuNzE0N0gxMjAuOTAxVjAuNDQ5MjE5SDEyNi4xNzFWMjYuNTM3NkgxMjAuOTAxVjE1LjEyMzFIMTEwLjU3M1YyNi41Mzc2SDEwNS4zMTVaIiBmaWxsPSIjMjQyNDI0Ii8+CiAgPHBhdGggZD0iTTEzMC41NDIgMTMuNjQ5OUMxMzAuNTQyIDEwLjk4OTggMTMwLjk0MSA4Ljc2Njg4IDEzMS43MjggNi45NTYwNkMxMzIuMzI4IDUuNjMyMjggMTMzLjEyNyA0LjQzMzM5IDEzNC4xNjMgMy4zNzE4OEMxMzUuMTg3IDIuMzIyODUgMTM2LjMxMSAxLjUzNjA4IDEzNy41MzUgMS4wMjQwNUMxMzkuMTcxIDAuMzQ5Njc2IDE0MS4wNDQgMCAxNDMuMTY3IDBDMTQ3LjAxNCAwIDE1MC4wODYgMS4xODY0IDE1Mi4zOTYgMy41NzE2OUMxNTQuNzA3IDUuOTU2OTggMTU1Ljg1NiA5LjI2NjQyIDE1NS44NTYgMTMuNTI1QzE1NS44NTYgMTcuNzgzNSAxNTQuNzA3IDIxLjAzMDUgMTUyLjQyMSAyMy40MTU4QzE1MC4xMzYgMjUuODAxMSAxNDcuMDY0IDI2Ljk4NzUgMTQzLjI0MiAyNi45ODc1QzEzOS40MjEgMjYuOTg3NSAxMzYuMjc0IDI1LjgwMTEgMTMzLjk4OCAyMy40NDA4QzEzMS43MDMgMjEuMDY4IDEzMC41NTQgMTcuODA4NSAxMzAuNTU0IDEzLjY2MjNNMTM1Ljk3NCAxMy40NzVDMTM1Ljk3NCAxNi40MzQ4IDEzNi42NjEgMTguNjcwMiAxMzguMDIyIDIwLjE5MzhDMTM5LjM4MyAyMS43MTc0IDE0MS4xMTkgMjIuNDc5MiAxNDMuMjE3IDIyLjQ3OTJDMTQ1LjMxNSAyMi40NzkyIDE0Ny4wMzkgMjEuNzE3NCAxNDguMzg4IDIwLjIwNjNDMTQ5LjczNiAxOC42OTUyIDE1MC40MTEgMTYuNDIyMyAxNTAuNDExIDEzLjQwMDFDMTUwLjQxMSAxMC4zNzc5IDE0OS43NDkgOC4xNzk5MiAxNDguNDM4IDYuNzA2MjlDMTQ3LjEyNiA1LjIzMjY1IDE0NS4zOSA0LjQ5NTg0IDE0My4yMTcgNC40OTU4NEMxNDEuMDQ0IDQuNDk1ODQgMTM5LjI5NiA1LjI0NTE0IDEzNy45NzIgNi43MzEyN0MxMzYuNjQ5IDguMjE3MzkgMTM1Ljk3NCAxMC40NjUzIDEzNS45NzQgMTMuNDYyNSIgZmlsbD0iIzI0MjQyNCIvPgogIDxwYXRoIGQ9Ik0xNjAgMEgxNjUuMjdWMTQuMTM2OUMxNjUuMjcgMTYuMzcyMyAxNjUuMzMzIDE3LjgzMzUgMTY1LjQ3IDE4LjQ5NTRDMTY1LjY5NSAxOS41NTY5IDE2Ni4yMzIgMjAuNDE4NiAxNjcuMDgxIDIxLjA2OEMxNjcuOTMgMjEuNzE3NCAxNjkuMDkyIDIyLjA0MjEgMTcwLjU2NSAyMi4wNDIxQzE3Mi4wMzkgMjIuMDQyMSAxNzMuMTg4IDIxLjc0MjQgMTczLjk1IDIxLjEzMDRDMTc0LjcxMSAyMC41MTg1IDE3NS4xNjEgMTkuNzY5MiAxNzUuMzIzIDE4Ljg4MjVDMTc1LjQ3MyAxNy45OTU4IDE3NS41NDggMTYuNTA5NyAxNzUuNTQ4IDE0LjQ0OTFWMEgxODAuODE4VjEzLjY5OThDMTgwLjgxOCAxNi44MzQ0IDE4MC42ODEgMTkuMDQ0OSAxODAuMzk0IDIwLjMzMTJDMTgwLjEwNiAyMS42MyAxNzkuNTgyIDIyLjcxNjUgMTc4LjgyIDIzLjYwMzFDMTc4LjA1OCAyNC40ODk4IDE3Ny4wMzQgMjUuMjAxNyAxNzUuNzQ4IDI1LjcyNjJDMTc0LjQ2MiAyNi4yNTA3IDE3Mi43ODggMjYuNTEyOSAxNzAuNzI4IDI2LjUxMjlDMTY4LjI0MiAyNi41MTI5IDE2Ni4zNDQgMjYuMjI1NyAxNjUuMDU4IDI1LjY1MTJDMTYzLjc3MiAyNS4wNzY4IDE2Mi43NDcgMjQuMzI3NSAxNjIuMDExIDIzLjQwMzNDMTYxLjI2MSAyMi40NzkyIDE2MC43NzQgMjEuNTE3NiAxNjAuNTM3IDIwLjUwNkMxNjAuMiAxOS4wMDc0IDE2MC4wMjUgMTYuODA5NCAxNjAuMDI1IDEzLjg4NzFWMEgxNjBaIiBmaWxsPSIjMjQyNDI0Ii8+CiAgPHBhdGggZD0iTTE4NC45NTQgMTguMDQ1OEwxOTAuMDc0IDE3LjU0NjNDMTkwLjM4NiAxOS4yNjk3IDE5MS4wMTEgMjAuNTMxIDE5MS45NDcgMjEuMzQyN0MxOTIuODk2IDIyLjE1NDUgMTk0LjE1OCAyMi41NTQxIDE5NS43NjkgMjIuNTU0MUMxOTcuNDY3IDIyLjU1NDEgMTk4Ljc0MSAyMi4xOTIgMTk5LjYwMyAyMS40ODAxQzIwMC40NjQgMjAuNzY4MyAyMDAuODg5IDE5LjkxOTEgMjAwLjg4OSAxOC45NTc0QzIwMC44ODkgMTguMzQ1NSAyMDAuNzAyIDE3LjgyMSAyMDAuMzUyIDE3LjM4MzlDMTk5Ljk5IDE2Ljk0NjggMTk5LjM1MyAxNi41NzIyIDE5OC40NTQgMTYuMjU5OUMxOTcuODQyIDE2LjA0NzYgMTk2LjQzMSAxNS42NzMgMTk0LjIzMyAxNS4xMjM1QzE5MS40MSAxNC40MjQxIDE4OS40MjUgMTMuNTYyNCAxODguMjg4IDEyLjUzODRDMTg2LjY5IDExLjEwMjIgMTg1Ljg5IDkuMzUzODQgMTg1Ljg5IDcuMjkzMjVDMTg1Ljg5IDUuOTY5NDcgMTg2LjI2NSA0LjcyMDYzIDE4Ny4wMTQgMy41NTkyQzE4Ny43NjQgMi4zOTc3OCAxODguODUgMS41MjM1OSAxOTAuMjc0IDAuOTExNjU2QzE5MS42OTggMC4zMTIyMTEgMTkzLjQwOSAwIDE5NS40MDcgMEMxOTguNjc5IDAgMjAxLjE1MSAwLjcyNDMyOSAyMDIuOCAyLjE0ODAxQzIwNC40NjEgMy41ODQxOCAyMDUuMzIyIDUuNTA3NCAyMDUuNDEgNy44OTI2OUwyMDAuMTQgOC4xMjk5N0MxOTkuOTE1IDYuNzkzNzEgMTk5LjQyOCA1LjgxOTYxIDE5OC42OTEgNS4yMzI2NkMxOTcuOTU0IDQuNjQ1NyAxOTYuODQzIDQuMzU4NDYgMTk1LjM1NyA0LjM1ODQ2QzE5My44NzEgNC4zNTg0NiAxOTIuNjM0IDQuNjcwNjggMTkxLjc2IDUuMzA3NTlDMTkxLjE5OCA1LjcwNzIyIDE5MC45MjMgNi4yNTY3MSAxOTAuOTIzIDYuOTMxMDhDMTkwLjkyMyA3LjU0MzAyIDE5MS4xODYgOC4wODAwMiAxOTEuNzEgOC41MTcxMUMxOTIuMzcyIDkuMDc5MDkgMTkzLjk4MyA5LjY1MzU2IDE5Ni41NTYgMTAuMjY1NUMxOTkuMTE2IDEwLjg2NDkgMjAxLjAxNCAxMS41MDE5IDIwMi4yMzggMTIuMTM4OEMyMDMuNDYyIDEyLjc4ODIgMjA0LjQyMyAxMy42NzQ4IDIwNS4xMjMgMTQuNzg2M0MyMDUuODIyIDE1Ljg5NzggMjA2LjE1OSAxNy4yOTY1IDIwNi4xNTkgMTguOTQ1QzIwNi4xNTkgMjAuNDQzNiAyMDUuNzQ3IDIxLjg0MjMgMjA0LjkxIDIzLjE0MTFDMjA0LjA4NiAyNC40Mzk5IDIwMi45IDI1LjQxNCAyMDEuMzg5IDI2LjA1MDlDMTk5Ljg2NSAyNi42ODc4IDE5Ny45NzkgMjcgMTk1LjcwNiAyN0MxOTIuNDA5IDI3IDE4OS44NzQgMjYuMjM4MiAxODguMTAxIDI0LjcxNDZDMTg2LjMyOCAyMy4xOTEgMTg1LjI3OSAyMC45NjgxIDE4NC45MjkgMTguMDQ1OCIgZmlsbD0iIzI0MjQyNCIvPgogIDxwYXRoIGQ9Ik0yMTAuNjA1IDI2LjUzNzZWMC40NDkyMTlIMjI5Ljk1VjQuODU3NjRIMjE1Ljg3NVYxMC42Mzk4SDIyOC45NzZWMTUuMDM1N0gyMTUuODc1VjIyLjE0MTZIMjMwLjQ0OVYyNi41Mzc2SDIxMC42MDVaIiBmaWxsPSIjMjQyNDI0Ii8+Cjwvc3ZnPgo=" alt="Body House">
+                </div>
+                <div class="brand-text">
+                    <h1>Boutique Valence</h1>
+                    <p>Synthèse Annuelle • Performance Meta Ads & Google Ads</p>
+                </div>
+            </div>
+            <div class="header-badges">
+                <div class="budget-total">Budget total : <strong>8 196 €</strong></div>
+                <div class="period-badge">2025</div>
+            </div>
+        </header>
+
+        <!-- META ADS Section -->
+        <section class="platform-section meta-section">
+            <div class="platform-header">
+                <div class="platform-title-row">
+                    <h2 class="section-title">Performance des Campagnes Meta</h2>
+                </div>
+                <div class="platform-budget">Budget : 3 585 €</div>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value">240 895</div>
+                    <div class="metric-label">Personnes<br>touchées</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                            <polyline points="10 17 15 12 10 7"/>
+                            <line x1="15" y1="12" x2="3" y2="12"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value">24 510</div>
+                    <div class="metric-label">Clics<br>générés</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value">1 038 776</div>
+                    <div class="metric-label">Impressions<br>totales</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value">0,15 €</div>
+                    <div class="metric-label">CPC<br>moyen</div>
+                </div>
+            </div>
+
+            <div class="campaigns-grid">
+                <div class="campaign-card">
+                    <div class="campaign-header">
+                        <span class="campaign-badge badge-trafic">Trafic</span>
+                        <span class="campaign-title">Trafic</span>
+                    </div>
+                    <div class="campaign-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">240 895</div>
+                            <div class="stat-label">Couverture</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">24 510</div>
+                            <div class="stat-label">Clics totaux</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">0,15 €</div>
+                            <div class="stat-label">CPC moyen</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">4,31</div>
+                            <div class="stat-label">Fréquence moy.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-bar">
+                <div class="comparison-title">Répartition de la Couverture & Performance</div>
+                <div class="bar-chart">
+                    <div class="bar-item">
+                        <span class="bar-label">Trafic</span>
+                        <div class="bar-container">
+                            <div class="bar-fill bar-fill-pink" style="width: 80%;">
+                                <span class="bar-value">240 895 personnes • 1 038 776 impressions</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GOOGLE ADS Section -->
+        <section class="platform-section google-section">
+            <div class="platform-header">
+                <div class="platform-title-row">
+                    <div class="platform-icon google-icon">
+                        <svg viewBox="0 0 24 24" width="12" height="12">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                    </div>
+                    <h2 class="section-title">Performance Google Search</h2>
+                </div>
+                <div class="platform-budget">Budget : 4 611 €</div>
+            </div>
+
+            <div class="metrics-grid metrics-grid-4">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                            <polyline points="10 17 15 12 10 7"/>
+                            <line x1="15" y1="12" x2="3" y2="12"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value">13 850</div>
+                    <div class="metric-label">Clics<br>générés</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value">59 729</div>
+                    <div class="metric-label">Impressions<br>diffusées</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value">23,19%</div>
+                    <div class="metric-label">Taux<br>d'interaction</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value">0,33 €</div>
+                    <div class="metric-label">CPC<br>moyen</div>
+                </div>
+            </div>
+
+            <div class="comparison-bar">
+                <div class="comparison-title">Performance vs Références Secteur</div>
+                <div class="bar-chart">
+                    <div class="bar-item">
+                        <span class="bar-label">Taux interaction</span>
+                        <div class="bar-container">
+                            <div class="bar-fill bar-fill-red" style="width: 90%;">
+                                <span class="bar-value">23,19% obtenu vs 2-5% benchmark secteur</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-item">
+                        <span class="bar-label">CPC moyen</span>
+                        <div class="bar-container">
+                            <div class="bar-fill bar-fill-blue" style="width: 40%;">
+                                <span class="bar-value">0,33€ obtenu vs 0,50-1€ benchmark secteur</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Highlights & ROI -->
+        <div class="highlights-grid">
+            <div class="highlights-card">
+                <h3 class="highlights-title">Points Clés 2025</h3>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                            <polyline points="17 6 23 6 23 12"/>
+                        </svg>
+                    </div>
+                    <p class="highlight-text">
+                        <strong>Meta :</strong> 240 895 personnes touchées, 24 510 clics générés à 0,15€/clic
+                    </p>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                    <p class="highlight-text">
+                        <strong>Google :</strong> Taux d'interaction de 23,19% (vs 2-5% benchmark secteur)
+                    </p>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <p class="highlight-text">
+                        <strong>Visibilité :</strong> 240 895 personnes touchées + 59 729 impressions search
+                    </p>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                        </svg>
+                    </div>
+                    <p class="highlight-text">
+                        <strong>Impressions :</strong> 1,04M impressions Meta totales, 38 360 clics générés
+                    </p>
+                </div>
+            </div>
+
+            <div class="roi-card">
+                <div class="roi-title">Performance par Canal</div>
+                <div class="roi-dual">
+                    <div class="roi-item">
+                        <div class="roi-item-label">Meta</div>
+                        <div class="roi-item-value">0,15€</div>
+                        <div class="roi-item-desc">par clic</div>
+                    </div>
+                    <div class="roi-item">
+                        <div class="roi-item-label">Google</div>
+                        <div class="roi-item-value">0,33€</div>
+                        <div class="roi-item-desc">par clic</div>
+                    </div>
+                </div>
+                <div class="roi-detail">
+                    <div class="ctr-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Coûts inférieurs aux références secteur
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <span class="footer-text">Données Meta Ads & Google Ads • Année 2025</span>
+            <span class="footer-brand">bodyhouse.fr</span>
+        </footer>
+    </div>
+</body>
+</html>

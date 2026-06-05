@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta-Advertising — Édition #01</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0A0A12;
+            color: #E0E0F0;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ===== CONTAINER ===== */
+        .newsletter {
+            max-width: 660px;
+            margin: 0 auto;
+            background: #111120;
+            box-shadow: 0 0 80px rgba(102, 126, 234, 0.08);
+        }
+
+        /* ===== HERO HEADER ===== */
+        .hero {
+            position: relative;
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 35%, #A855F7 65%, #EC4899 100%);
+            padding: 56px 44px 64px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -20%;
+            width: 140%;
+            height: 180%;
+            background:
+                radial-gradient(ellipse at 25% 60%, rgba(255,255,255,0.12) 0%, transparent 55%),
+                radial-gradient(ellipse at 75% 40%, rgba(255,255,255,0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        }
+
+        .hero-logo {
+            position: relative;
+            z-index: 2;
+            font-size: 60px;
+            font-weight: 100;
+            color: #FFFFFF;
+            line-height: 1;
+            margin-bottom: 10px;
+            text-shadow: 0 0 60px rgba(255,255,255,0.4), 0 0 120px rgba(255,255,255,0.1);
+        }
+
+        .hero-title {
+            position: relative;
+            z-index: 2;
+            font-family: 'Inter', sans-serif;
+            font-size: 26px;
+            font-weight: 900;
+            color: #FFFFFF;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .hero-subtitle {
+            position: relative;
+            z-index: 2;
+            font-size: 12.5px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .hero-badge {
+            position: relative;
+            z-index: 2;
+            display: inline-block;
+            margin-top: 28px;
+            padding: 7px 22px;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 100px;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.92);
+            letter-spacing: 1.5px;
+        }
+
+        /* ===== ÉDITO ===== */
+        .edito {
+            padding: 48px 44px 44px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 10.5px;
+            font-weight: 800;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: #A855F7;
+            margin-bottom: 18px;
+        }
+
+        .label::before {
+            content: '';
+            width: 22px;
+            height: 2.5px;
+            background: linear-gradient(90deg, #4F46E5, #EC4899);
+            border-radius: 4px;
+        }
+
+        .edito-heading {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 25px;
+            font-weight: 800;
+            color: #FFFFFF;
+            line-height: 1.35;
+            margin-bottom: 18px;
+        }
+
+        .edito-body {
+            font-size: 15px;
+            color: #9898B0;
+            line-height: 1.85;
+        }
+
+        .edito-body strong {
+            color: #D8D8F0;
+            font-weight: 600;
+        }
+
+        .edito-sign {
+            margin-top: 22px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .edito-sign span {
+            background: linear-gradient(90deg, #A855F7, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ===== SOMMAIRE ===== */
+        .summary-bar {
+            margin: 0 44px;
+            padding: 20px 28px;
+            background: linear-gradient(135deg, rgba(79,70,229,0.08), rgba(168,85,247,0.08));
+            border: 1px solid rgba(168,85,247,0.12);
+            border-radius: 12px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .summary-item {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .summary-number {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #4F46E5, #7C3AED);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 800;
+            color: #FFFFFF;
+        }
+
+        .summary-text {
+            font-size: 12.5px;
+            color: #B0B0C8;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        /* ===== ARTICLES ===== */
+        .articles {
+            padding: 40px 44px;
+        }
+
+        .card {
+            background: linear-gradient(160deg, #181830, #14142A);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 36px;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 240px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-img-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(0deg, #14142A, transparent);
+            pointer-events: none;
+        }
+
+        .card-content {
+            padding: 28px 30px 32px;
+        }
+
+        .card-tag {
+            display: inline-block;
+            padding: 5px 14px;
+            background: linear-gradient(135deg, rgba(79,70,229,0.15), rgba(168,85,247,0.15));
+            border: 1px solid rgba(168,85,247,0.25);
+            border-radius: 100px;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #C084FC;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 21px;
+            font-weight: 800;
+            color: #FFFFFF;
+            line-height: 1.35;
+            margin-bottom: 16px;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: #8888A8;
+            line-height: 1.8;
+            margin-bottom: 22px;
+        }
+
+        .card-text strong {
+            color: #C8C8E0;
+            font-weight: 600;
+        }
+
+        .key-points {
+            background: rgba(79,70,229,0.05);
+            border-left: 3px solid;
+            border-image: linear-gradient(180deg, #4F46E5, #EC4899) 1;
+            border-radius: 0 10px 10px 0;
+            padding: 18px 22px;
+            margin-bottom: 22px;
+        }
+
+        .key-points-title {
+            font-size: 10.5px;
+            font-weight: 800;
+            color: #EC4899;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .key-points ul {
+            list-style: none;
+        }
+
+        .key-points li {
+            position: relative;
+            padding-left: 20px;
+            font-size: 13px;
+            color: #A0A0C0;
+            margin-bottom: 7px;
+            line-height: 1.65;
+        }
+
+        .key-points li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #7C3AED;
+            font-weight: 800;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #818CF8;
+            text-decoration: none;
+            letter-spacing: 0.3px;
+            transition: all 0.25s ease;
+        }
+
+        .card-link:hover {
+            color: #C084FC;
+            gap: 14px;
+        }
+
+        .card-link .arr {
+            transition: transform 0.25s ease;
+        }
+
+        .card-link:hover .arr {
+            transform: translateX(4px);
+        }
+
+        /* ===== CHIFFRE CLÉ ===== */
+        .stat-block {
+            margin: 0 44px 44px;
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 40%, #A855F7 70%, #EC4899 100%);
+            border-radius: 18px;
+            padding: 44px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-block::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(0,0,0,0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .stat-label {
+            position: relative;
+            font-size: 10.5px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 14px;
+        }
+
+        .stat-number {
+            position: relative;
+            font-family: 'Inter', sans-serif;
+            font-size: 72px;
+            font-weight: 900;
+            color: #FFFFFF;
+            line-height: 1;
+            margin-bottom: 14px;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.25);
+        }
+
+        .stat-desc {
+            position: relative;
+            font-size: 15px;
+            color: rgba(255,255,255,0.85);
+            max-width: 420px;
+            margin: 0 auto;
+            line-height: 1.65;
+        }
+
+        .stat-source {
+            position: relative;
+            margin-top: 18px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            font-style: italic;
+        }
+
+        /* ===== CTA ===== */
+        .cta {
+            padding: 0 44px 52px;
+            text-align: center;
+        }
+
+        .cta-box {
+            background: linear-gradient(160deg, #181830, #14142A);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 18px;
+            padding: 40px 36px;
+        }
+
+        .cta-heading {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: #FFFFFF;
+            margin-bottom: 12px;
+        }
+
+        .cta-text {
+            font-size: 14px;
+            color: #8888A8;
+            margin-bottom: 28px;
+            line-height: 1.75;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #4F46E5, #7C3AED, #A855F7);
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-radius: 100px;
+            box-shadow: 0 4px 24px rgba(79,70,229,0.4), 0 1px 3px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 36px rgba(79,70,229,0.55);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #0A0A14;
+            padding: 44px 44px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .footer-logo {
+            font-size: 34px;
+            font-weight: 100;
+            color: rgba(255,255,255,0.2);
+            margin-bottom: 4px;
+            text-shadow: 0 0 30px rgba(168,85,247,0.15);
+        }
+
+        .footer-brand {
+            font-size: 12px;
+            font-weight: 800;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .social {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50%;
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .social:hover {
+            background: linear-gradient(135deg, #4F46E5, #7C3AED);
+            border-color: transparent;
+            color: #FFFFFF;
+            transform: translateY(-2px);
+        }
+
+        .footer-line {
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+            margin: 0 auto 24px;
+        }
+
+        .footer-legal {
+            font-size: 11px;
+            color: rgba(255,255,255,0.2);
+            line-height: 2;
+        }
+
+        .footer-legal a {
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: color 0.2s;
+        }
+
+        .footer-legal a:hover {
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 640px) {
+            .hero { padding: 40px 24px 48px; }
+            .hero-title { font-size: 18px; letter-spacing: 4px; }
+            .hero-logo { font-size: 46px; }
+            .edito, .articles, .cta { padding-left: 22px; padding-right: 22px; }
+            .stat-block, .summary-bar { margin-left: 22px; margin-right: 22px; }
+            .card-content { padding: 22px; }
+            .card-title { font-size: 18px; }
+            .edito-heading { font-size: 21px; }
+            .stat-number { font-size: 52px; }
+            .footer { padding: 36px 22px; }
+            .summary-bar { flex-direction: column; gap: 14px; }
+        }
+
+        /* ===== PRINT / PDF ===== */
+        @media print {
+            body { background: #0A0A12; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .newsletter { max-width: 100%; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="newsletter">
+
+    <!-- ══════════ HERO ══════════ -->
+    <header class="hero">
+        <div class="hero-logo">∞</div>
+        <div class="hero-title">Meta-Advertising</div>
+        <div class="hero-subtitle">L'essentiel du marketing digital</div>
+        <div class="hero-badge">Édition #01 — Semaine du 24 février 2026</div>
+    </header>
+
+    <!-- ══════════ ÉDITO ══════════ -->
+    <section class="edito">
+        <div class="label">Édito</div>
+        <h2 class="edito-heading">L'IA agentique et la régulation européenne : deux forces qui redessinent le marketing digital sous nos yeux.</h2>
+        <p class="edito-body">
+            Cette semaine, deux actualités majeures méritent votre attention. D'un côté, <strong>Perplexity</strong> franchit un cap avec un outil d'IA capable de piloter des projets entiers de manière autonome. De l'autre, <strong>Google</strong> est contraint par l'Europe de revoir l'affichage de ses résultats — un séisme pour les stratégies SEO et Ads. Deux signaux forts qui confirment une chose : <strong>le paysage publicitaire digital se transforme à une vitesse inédite</strong>.
+        </p>
+        <p class="edito-sign">— L'équipe <span>Meta-Advertising ∞</span></p>
+    </section>
+
+    <!-- ══════════ SOMMAIRE ══════════ -->
+    <div class="summary-bar">
+        <div class="summary-item">
+            <div class="summary-number">1</div>
+            <div class="summary-text">Perplexity Computer : l'IA qui gère vos projets de A à Z</div>
+        </div>
+        <div class="summary-item">
+            <div class="summary-number">2</div>
+            <div class="summary-text">Google contraint par l'Europe : quel impact sur votre visibilité ?</div>
+        </div>
+    </div>
+
+    <!-- ══════════ ARTICLES ══════════ -->
+    <section class="articles">
+
+        <div class="label">À la une</div>
+
+        <!-- ARTICLE 1 — PERPLEXITY -->
+        <article class="card">
+            <div class="card-img">
+                <img src="https://f.hellowork.com/blogdumoderateur/2026/02/perplexity-computer-presentation.jpg" alt="Perplexity Computer — IA agentique">
+                <div class="card-img-overlay"></div>
+            </div>
+            <div class="card-content">
+                <span class="card-tag">Intelligence artificielle</span>
+                <h3 class="card-title">Perplexity lance « Computer » : l'IA agentique passe à la vitesse supérieure</h3>
+                <p class="card-text">
+                    Perplexity vient de dévoiler <strong>Computer</strong>, un système d'orchestration multi-agents capable de gérer des projets complets de manière autonome. L'outil décompose vos objectifs en tâches et sous-tâches, mobilise des agents IA spécialisés (raisonnement, code, recherche…), et s'intègre à <strong>plus de 100 outils tiers</strong> comme Slack, Asana ou Airtable. Le tout avec une mémoire persistante qui apprend de vos projets précédents.
+                </p>
+                <div class="key-points">
+                    <div class="key-points-title">Ce qu'il faut retenir</div>
+                    <ul>
+                        <li>Architecture multi-modèles : chaque tâche est confiée au modèle IA le plus adapté</li>
+                        <li>Automatisation de bout en bout : recherche, création, déploiement</li>
+                        <li>Disponible pour 200$/mois via l'abonnement Perplexity Max</li>
+                        <li>Impact marketing : campagnes, contenus et reporting pilotables par IA</li>
+                    </ul>
+                </div>
+                <a href="https://www.blogdumoderateur.com/perplexity-franchit-nouveau-cap-ia-agentique-computer/" class="card-link">
+                    Lire l'article complet <span class="arr">→</span>
+                </a>
+            </div>
+        </article>
+
+        <!-- ARTICLE 2 — GOOGLE / EUROPE -->
+        <article class="card">
+            <div class="card-img">
+                <img src="https://f.hellowork.com/blogdumoderateur/2026/02/google-flight.jpg" alt="Google contraint par l'Europe — DMA">
+                <div class="card-img-overlay"></div>
+            </div>
+            <div class="card-content">
+                <span class="card-tag">SEO & Régulation</span>
+                <h3 class="card-title">Google contraint par l'Europe de valoriser ses concurrents : ce qui change pour votre stratégie</h3>
+                <p class="card-text">
+                    Sous la pression du <strong>Digital Markets Act (DMA)</strong>, Google modifie l'affichage de ses résultats en Europe pour donner davantage de visibilité aux comparateurs tiers. Google Flights, Google Hotels et les modules locaux perdent leur position privilégiée. Les <strong>amendes possibles atteignent 10% du chiffre d'affaires mondial</strong> du géant en cas de non-conformité. Un bouleversement qui impacte directement les stratégies SEO et publicitaires de tous les annonceurs européens.
+                </p>
+                <div class="key-points">
+                    <div class="key-points-title">Ce qu'il faut retenir</div>
+                    <ul>
+                        <li>Les comparateurs tiers gagnent en visibilité dans les résultats Google</li>
+                        <li>Le DMA interdit les mécanismes d'auto-préférence de Google</li>
+                        <li>Première vague sur l'hébergement, extension progressive à venir</li>
+                        <li>Précédent : Maps déjà dégradé en 2024, navigation plus complexe</li>
+                    </ul>
+                </div>
+                <a href="https://www.blogdumoderateur.com/vols-hotels-restaurants-europe-google-contraint-valoriser-concurrents/" class="card-link">
+                    Lire l'article complet <span class="arr">→</span>
+                </a>
+            </div>
+        </article>
+
+    </section>
+
+    <!-- ══════════ CHIFFRE CLÉ ══════════ -->
+    <section class="stat-block">
+        <div class="stat-label">Le chiffre de la semaine</div>
+        <div class="stat-number">200$</div>
+        <p class="stat-desc">
+            C'est le prix mensuel de Perplexity Max, qui donne accès à Computer — l'IA agentique qui pourrait remplacer une partie de vos outils marketing.
+        </p>
+        <p class="stat-source">Source : Blog du Modérateur, février 2026</p>
+    </section>
+
+    <!-- ══════════ CTA ══════════ -->
+    <section class="cta">
+        <div class="cta-box">
+            <h3 class="cta-heading">Vous avez aimé cette édition ?</h3>
+            <p class="cta-text">
+                Partagez Meta-Advertising avec un collègue ou un ami passionné de marketing digital. Chaque semaine, l'essentiel en 3 minutes de lecture.
+            </p>
+            <a href="#" class="cta-btn">Partager la newsletter</a>
+        </div>
+    </section>
+
+    <!-- ══════════ FOOTER ══════════ -->
+    <footer class="footer">
+        <div class="footer-logo">∞</div>
+        <div class="footer-brand">Meta-Advertising</div>
+        <div class="socials">
+            <a href="#" class="social" title="LinkedIn">in</a>
+            <a href="#" class="social" title="Instagram">Ig</a>
+            <a href="#" class="social" title="X (Twitter)">𝕏</a>
+        </div>
+        <div class="footer-line"></div>
+        <div class="footer-legal">
+            Vous recevez cet email car vous êtes abonné(e) à Meta-Advertising.<br>
+            <a href="#">Se désabonner</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#">Préférences</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#">Voir en ligne</a>
+        </div>
+    </footer>
+
+</div>
+
+</body>
+</html>

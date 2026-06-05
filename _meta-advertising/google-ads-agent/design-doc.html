@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Ads Agent — Design Documentation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; color: #333; line-height: 1.6; padding: 40px 60px; max-width: 900px; margin: 0 auto; }
+        h1 { font-size: 28px; color: #1a73e8; margin-bottom: 5px; }
+        h2 { font-size: 20px; color: #1a73e8; margin-top: 35px; margin-bottom: 12px; border-bottom: 2px solid #e8eaed; padding-bottom: 6px; }
+        h3 { font-size: 16px; color: #555; margin-top: 20px; margin-bottom: 8px; }
+        .subtitle { color: #666; font-size: 14px; margin-bottom: 30px; }
+        p { margin-bottom: 10px; font-size: 14px; }
+        ul { margin-left: 20px; margin-bottom: 12px; }
+        li { font-size: 14px; margin-bottom: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+        th { background: #1a73e8; color: white; padding: 10px 12px; text-align: left; }
+        td { padding: 8px 12px; border-bottom: 1px solid #e8eaed; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        .badge { display: inline-block; background: #e8f0fe; color: #1a73e8; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+        .section-box { background: #f8f9fa; border-left: 4px solid #1a73e8; padding: 15px 20px; margin: 15px 0; border-radius: 0 4px 4px 0; }
+        .flow-step { display: flex; align-items: center; margin: 8px 0; }
+        .flow-num { background: #1a73e8; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: bold; margin-right: 12px; flex-shrink: 0; }
+        .flow-arrow { color: #1a73e8; font-size: 18px; margin: 2px 0 2px 12px; }
+        .footer { margin-top: 40px; padding-top: 15px; border-top: 1px solid #e8eaed; color: #999; font-size: 12px; }
+        code { background: #f1f3f4; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
+    </style>
+</head>
+<body>
+
+    <h1>Google Ads Agent — Design Documentation</h1>
+    <p class="subtitle">Meta-advertising · Internal Tool · Version 1.0 · March 2026</p>
+
+    <h2>1. Overview</h2>
+    <p>Google Ads Agent is an <strong>internal command-line tool</strong> built by Meta-advertising to manage Google Ads campaigns for our clients. The tool provides a unified interface to create, manage, and monitor campaigns across multiple client accounts.</p>
+
+    <div class="section-box">
+        <strong>Purpose:</strong> Streamline Google Ads campaign management for our agency team by automating repetitive tasks (campaign creation, keyword management, reporting) through the Google Ads API.
+    </div>
+
+    <h2>2. Company Information</h2>
+    <table>
+        <tr><td><strong>Company</strong></td><td>Meta-advertising</td></tr>
+        <tr><td><strong>Website</strong></td><td>https://meta-advertising.io/</td></tr>
+        <tr><td><strong>Industry</strong></td><td>Digital Marketing Agency (SEM/SEA)</td></tr>
+        <tr><td><strong>Location</strong></td><td>France</td></tr>
+        <tr><td><strong>Contact</strong></td><td>hamza@meta-advertising.io</td></tr>
+    </table>
+
+    <h2>3. Tool Architecture</h2>
+
+    <h3>3.1 Technology Stack</h3>
+    <table>
+        <tr><th>Component</th><th>Technology</th></tr>
+        <tr><td>Language</td><td>Python 3.x</td></tr>
+        <tr><td>Google Ads SDK</td><td>google-ads (official Python client library)</td></tr>
+        <tr><td>Authentication</td><td>OAuth 2.0 (Desktop application flow)</td></tr>
+        <tr><td>Interface</td><td>CLI (Command-Line Interface) with Rich formatting</td></tr>
+        <tr><td>Configuration</td><td>Environment variables (.env file)</td></tr>
+    </table>
+
+    <h3>3.2 Module Structure</h3>
+    <table>
+        <tr><th>Module</th><th>Responsibility</th></tr>
+        <tr><td><code>config.py</code></td><td>API initialization, OAuth2 credential management</td></tr>
+        <tr><td><code>accounts.py</code></td><td>List and switch between client ad accounts</td></tr>
+        <tr><td><code>campaigns.py</code></td><td>Create, pause, activate, and delete campaigns</td></tr>
+        <tr><td><code>keywords.py</code></td><td>Manage ad groups, keywords, and negative keywords</td></tr>
+        <tr><td><code>ads.py</code></td><td>Create and manage Responsive Search Ads (RSA)</td></tr>
+        <tr><td><code>analytics.py</code></td><td>Fetch account, campaign, daily, and keyword-level reports</td></tr>
+        <tr><td><code>agent.py</code></td><td>Interactive CLI interface (command router)</td></tr>
+    </table>
+
+    <h2>4. Features &amp; API Usage</h2>
+
+    <h3>4.1 Campaign Management</h3>
+    <ul>
+        <li>Create campaigns (Search, Display, Performance Max, Video, Demand Gen)</li>
+        <li>Set daily budgets with automatic budget resource creation</li>
+        <li>Pause, activate, or remove campaigns</li>
+        <li>List all campaigns with status and budget information</li>
+    </ul>
+
+    <h3>4.2 Ad Group &amp; Keyword Management</h3>
+    <ul>
+        <li>Create ad groups within campaigns with optional CPC bids</li>
+        <li>Add keywords with match type control (Broad, Phrase, Exact)</li>
+        <li>Add negative keywords at campaign level</li>
+        <li>List and monitor keyword performance</li>
+    </ul>
+
+    <h3>4.3 Ad Creation</h3>
+    <ul>
+        <li>Create Responsive Search Ads (RSA) with multiple headlines and descriptions</li>
+        <li>Set final URLs and call-to-action</li>
+        <li>Pause or remove underperforming ads</li>
+    </ul>
+
+    <h3>4.4 Reporting &amp; Analytics</h3>
+    <ul>
+        <li>Account-level performance metrics (impressions, clicks, CTR, CPC, conversions)</li>
+        <li>Campaign-level comparison reports</li>
+        <li>Daily breakdown reports per campaign</li>
+        <li>Keyword-level performance reports (top 50)</li>
+        <li>Configurable date ranges (7, 14, 30 days)</li>
+    </ul>
+
+    <h2>5. API Methods Used</h2>
+    <table>
+        <tr><th>Service</th><th>Methods</th><th>Purpose</th></tr>
+        <tr><td>CustomerService</td><td>ListAccessibleCustomers</td><td>List available ad accounts</td></tr>
+        <tr><td>GoogleAdsService</td><td>Search, SearchStream</td><td>Query campaigns, ads, keywords, metrics</td></tr>
+        <tr><td>CampaignService</td><td>MutateCampaigns</td><td>Create/update/delete campaigns</td></tr>
+        <tr><td>CampaignBudgetService</td><td>MutateCampaignBudgets</td><td>Create and manage budgets</td></tr>
+        <tr><td>AdGroupService</td><td>MutateAdGroups</td><td>Create/update ad groups</td></tr>
+        <tr><td>AdGroupCriterionService</td><td>MutateAdGroupCriteria</td><td>Add/remove keywords</td></tr>
+        <tr><td>CampaignCriterionService</td><td>MutateCampaignCriteria</td><td>Add negative keywords</td></tr>
+        <tr><td>AdGroupAdService</td><td>MutateAdGroupAds</td><td>Create/update ads</td></tr>
+    </table>
+
+    <h2>6. User Flow</h2>
+    <div class="flow-step"><div class="flow-num">1</div><div>Agent authenticates via OAuth2 and loads credentials</div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-num">2</div><div>User selects a client ad account</div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-num">3</div><div>User enters commands (create campaign, add keywords, view stats...)</div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-num">4</div><div>Agent executes API calls and displays formatted results</div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-num">5</div><div>User reviews and iterates (pause campaigns, adjust keywords, etc.)</div></div>
+
+    <h2>7. Security &amp; Data Handling</h2>
+    <ul>
+        <li><strong>Authentication:</strong> OAuth 2.0 with refresh tokens stored locally in environment variables (.env file, git-ignored)</li>
+        <li><strong>Access control:</strong> Internal use only — restricted to Meta-advertising employees</li>
+        <li><strong>Data storage:</strong> No customer data is stored locally; all data is read in real-time from the Google Ads API</li>
+        <li><strong>Credentials:</strong> Developer token, client ID/secret, and refresh tokens are never committed to version control</li>
+        <li><strong>Scope:</strong> Only requests the <code>https://www.googleapis.com/auth/adwords</code> OAuth scope</li>
+    </ul>
+
+    <h2>8. Compliance</h2>
+    <ul>
+        <li>The tool complies with <strong>Google Ads API Terms of Service</strong></li>
+        <li>No automated bidding beyond what Google Ads natively provides</li>
+        <li>No scraping or unauthorized data collection</li>
+        <li>All API calls respect rate limits and best practices</li>
+        <li>GDPR compliant — no personal data is stored outside Google's infrastructure</li>
+    </ul>
+
+    <div class="footer">
+        <p>Meta-advertising — Google Ads Agent Design Document — March 2026</p>
+        <p>Contact: hamza@meta-advertising.io</p>
+    </div>
+
+</body>
+</html>

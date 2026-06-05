@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOA Sushi — Dashboard Franchise</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#2D5A27;
+  --primary-light:#3D7A35;
+  --accent:#D4A853;
+  --bg:#0a0f08;
+  --text:#e8f0e6;
+  --card-bg:rgba(45,90,39,.12);
+  --card-border:rgba(212,168,83,.15);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:'Roboto',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* ── Animated background ── */
+.bg-layer{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+}
+.bg-layer::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 30%,rgba(45,90,39,.35) 0%,transparent 70%),
+    radial-gradient(ellipse 50% 60% at 80% 70%,rgba(61,122,53,.25) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 40% at 50% 50%,rgba(212,168,83,.08) 0%,transparent 60%);
+  animation:glowShift 15s ease-in-out infinite alternate;
+}
+.bg-layer::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(212,168,83,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(212,168,83,.03) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 70%);
+}
+@keyframes glowShift{
+  0%{transform:scale(1) translate(0,0);opacity:.8}
+  33%{transform:scale(1.05) translate(2%,-1%);opacity:1}
+  66%{transform:scale(.97) translate(-1%,2%);opacity:.85}
+  100%{transform:scale(1.03) translate(1%,-2%);opacity:.95}
+}
+
+/* ── Main container ── */
+.portal{
+  position:relative;z-index:1;
+  width:100%;max-width:1100px;
+  padding:3rem 1.5rem;
+  display:flex;flex-direction:column;align-items:center;
+  min-height:100vh;
+}
+
+/* ── Hero ── */
+.hero{text-align:center;margin-bottom:3rem}
+.logo{
+  width:200px;height:auto;
+  filter:drop-shadow(0 0 30px rgba(45,90,39,.6)) drop-shadow(0 0 60px rgba(45,90,39,.3));
+  animation:logoGlow 4s ease-in-out infinite alternate;
+}
+@keyframes logoGlow{
+  0%{filter:drop-shadow(0 0 25px rgba(45,90,39,.5)) drop-shadow(0 0 50px rgba(45,90,39,.2))}
+  100%{filter:drop-shadow(0 0 40px rgba(61,122,53,.7)) drop-shadow(0 0 80px rgba(45,90,39,.35))}
+}
+.hero-title{
+  font-family:'Montserrat',sans-serif;
+  font-weight:300;
+  font-size:clamp(1rem,2.5vw,1.35rem);
+  text-transform:uppercase;
+  letter-spacing:4px;
+  margin-top:1.5rem;
+  background:linear-gradient(90deg,var(--accent),#f0d48a,var(--accent));
+  background-size:200% 100%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer{
+  0%{background-position:100% 50%}
+  50%{background-position:0% 50%}
+  100%{background-position:100% 50%}
+}
+.hero-line{
+  width:min(300px,80%);height:1px;
+  margin:1.8rem auto 0;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:.5;
+}
+
+/* ── KPI Section ── */
+.kpi-section{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+  width:100%;
+  margin-bottom:3.5rem;
+}
+.kpi-card{
+  text-align:center;
+  padding:1.8rem 1rem;
+  border-radius:16px;
+  background:rgba(45,90,39,.06);
+  border:1px solid rgba(45,90,39,.15);
+  transition:border-color .3s;
+}
+.kpi-card:hover{border-color:rgba(212,168,83,.3)}
+.kpi-label{
+  font-family:'Montserrat',sans-serif;
+  font-size:.7rem;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  color:rgba(232,240,230,.5);
+  margin-bottom:.8rem;
+}
+.kpi-value{
+  font-family:'Montserrat',sans-serif;
+  font-size:clamp(1.6rem,4vw,2.4rem);
+  font-weight:600;
+  color:var(--accent);
+  min-height:2.8rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.kpi-value .unit{
+  font-size:.55em;font-weight:400;opacity:.7;margin-left:.3em;
+}
+
+/* ── Nav Cards ── */
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+  width:100%;
+  margin-bottom:3rem;
+}
+.nav-card{
+  position:relative;
+  padding:2.2rem 1.5rem;
+  border-radius:18px;
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  text-decoration:none;
+  color:var(--text);
+  transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .35s,box-shadow .35s;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  opacity:0;transform:translateY(30px);
+  cursor:pointer;
+}
+.nav-card.visible{
+  opacity:1;transform:translateY(0);
+  transition:transform .7s cubic-bezier(.22,1,.36,1),opacity .7s ease,border-color .35s,box-shadow .35s;
+}
+.nav-card:hover{
+  transform:translateY(-4px) scale(1.03);
+  border-color:rgba(212,168,83,.45);
+  box-shadow:0 8px 40px rgba(212,168,83,.12),0 0 60px rgba(45,90,39,.15);
+}
+.card-icon{
+  width:48px;height:48px;
+  margin-bottom:1.2rem;
+  filter:drop-shadow(0 0 12px rgba(45,90,39,.5));
+}
+.card-icon svg{width:100%;height:100%}
+.card-title{
+  font-family:'Montserrat',sans-serif;
+  font-size:1.05rem;
+  font-weight:600;
+  margin-bottom:.5rem;
+  letter-spacing:.5px;
+}
+.card-desc{
+  font-size:.85rem;
+  color:rgba(232,240,230,.55);
+  line-height:1.5;
+}
+
+/* ── Footer ── */
+.footer{
+  margin-top:auto;
+  padding:2rem 0;
+  text-align:center;
+  font-size:.75rem;
+  color:rgba(232,240,230,.3);
+  letter-spacing:1px;
+  font-family:'Montserrat',sans-serif;
+}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  .kpi-section{grid-template-columns:1fr;gap:1rem}
+  .cards-grid{grid-template-columns:1fr;gap:1rem}
+  .portal{padding:2rem 1rem}
+  .logo{width:150px}
+}
+@media(min-width:769px) and (max-width:1024px){
+  .kpi-section{gap:1rem}
+  .cards-grid{gap:1rem}
+}
+
+/* ── Loading spinner ── */
+.kpi-loading{
+  width:20px;height:20px;
+  border:2px solid rgba(212,168,83,.2);
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+
+<div class="portal">
+
+  <!-- Hero -->
+  <section class="hero">
+    <img src="https://toasushi.fr/wp-content/uploads/2025/08/logo-toasushi.svg" alt="TOA Sushi" class="logo">
+    <h1 class="hero-title">Dashboard Franchise</h1>
+    <div class="hero-line"></div>
+  </section>
+
+  <!-- KPI Counters -->
+  <section class="kpi-section">
+    <div class="kpi-card">
+      <div class="kpi-label">Dépenses totales</div>
+      <div class="kpi-value" id="kpi-spend"><div class="kpi-loading"></div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Prospects générés</div>
+      <div class="kpi-value" id="kpi-leads"><div class="kpi-loading"></div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">CPL moyen</div>
+      <div class="kpi-value" id="kpi-cpl"><div class="kpi-loading"></div></div>
+    </div>
+  </section>
+
+  <!-- Navigation Cards -->
+  <section class="cards-grid">
+
+    <a href="dashboard-toa-sushi.html#overview" class="nav-card">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3D7A35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+          <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+        </svg>
+      </div>
+      <div class="card-title">Vue d'ensemble</div>
+      <div class="card-desc">Performances globales</div>
+    </a>
+
+    <a href="dashboard-toa-sushi.html#audiences" class="nav-card">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3D7A35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="7" r="3.5"/>
+          <path d="M2 21v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/>
+          <circle cx="18" cy="9" r="2.5"/>
+          <path d="M18 13.5c2.5 0 4 1.5 4 3.5v1"/>
+        </svg>
+      </div>
+      <div class="card-title">Audiences</div>
+      <div class="card-desc">Analyse des ad sets</div>
+    </a>
+
+    <a href="dashboard-toa-sushi.html#evolution" class="nav-card">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3D7A35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 20 9 14 13 18 21 6"/>
+          <polyline points="16 6 21 6 21 11"/>
+        </svg>
+      </div>
+      <div class="card-title">Évolution</div>
+      <div class="card-desc">Bilan &amp; tendances</div>
+    </a>
+
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">TOA Sushi &copy; 2026</footer>
+
+</div>
+
+<script>
+(function(){
+
+  /* ── CSV Fetch & Parse ── */
+  const BASE='https://docs.google.com/spreadsheets/d/e/2PACX-1vRiWc8yPpg7phWPVu5gl2kvhvtGyldz8reMO5MX6PbGz7iAtirz35vlJtez3JQgtO4Km0LMO6OOmn_9/pub?output=csv&single=true&gid=2095849632';
+
+  function pN(v){
+    if(!v||v==='')return 0;
+    return parseFloat(String(v).replace(/"/g,'').replace(',','.').replace(/\s/g,''))||0;
+  }
+
+  function parseCSV(text){
+    const lines=text.split('\n').filter(l=>l.trim());
+    if(lines.length<2)return[];
+    const headers=lines[0].split(',').map(h=>h.trim().replace(/^"|"$/g,''));
+    const rows=[];
+    for(let i=1;i<lines.length;i++){
+      const vals=[];
+      let current='',inQuotes=false;
+      for(let c=0;c<lines[i].length;c++){
+        const ch=lines[i][c];
+        if(ch==='"'){inQuotes=!inQuotes}
+        else if(ch===','&&!inQuotes){vals.push(current.trim());current=''}
+        else{current+=ch}
+      }
+      vals.push(current.trim());
+      const row={};
+      headers.forEach((h,idx)=>row[h]=vals[idx]||'');
+      rows.push(row);
+    }
+    return rows;
+  }
+
+  /* ── Animated counter ── */
+  function animateValue(el,target,formatter,duration){
+    duration=duration||2000;
+    const start=performance.now();
+    function step(now){
+      const t=Math.min((now-start)/duration,1);
+      const ease=1-Math.pow(1-t,3);
+      const val=target*ease;
+      el.innerHTML=formatter(val,t>=1);
+      if(t<1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function fmtSpend(v,done){
+    const s=Math.round(v).toLocaleString('fr-FR').replace(/\u202f/g,' ');
+    return s+' <span class="unit">\u20AC</span>';
+  }
+  function fmtLeads(v){return Math.round(v).toLocaleString('fr-FR').replace(/\u202f/g,' ')}
+  function fmtCPL(v,done){
+    const s=done?v.toFixed(2).replace('.',','):v.toFixed(2).replace('.',',');
+    return s+' <span class="unit">\u20AC</span>';
+  }
+
+  fetch(BASE)
+    .then(r=>r.text())
+    .then(text=>{
+      const rows=parseCSV(text);
+      let totalSpend=0,totalLeads=0;
+      rows.forEach(r=>{
+        totalSpend+=pN(r['Coût (EUR)']||r['Co\u00fbt (EUR)']);
+        totalLeads+=pN(r['Prospects sur Facebook']);
+      });
+      const cpl=totalLeads>0?totalSpend/totalLeads:0;
+
+      animateValue(document.getElementById('kpi-spend'),totalSpend,fmtSpend,2000);
+      animateValue(document.getElementById('kpi-leads'),totalLeads,fmtLeads,2000);
+      animateValue(document.getElementById('kpi-cpl'),cpl,fmtCPL,2000);
+    })
+    .catch(()=>{
+      document.getElementById('kpi-spend').textContent='\u2014';
+      document.getElementById('kpi-leads').textContent='\u2014';
+      document.getElementById('kpi-cpl').textContent='\u2014';
+    });
+
+  /* ── Staggered card entrance ── */
+  const cards=document.querySelectorAll('.nav-card');
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const idx=[...cards].indexOf(e.target);
+        setTimeout(()=>e.target.classList.add('visible'),idx*100);
+        observer.unobserve(e.target);
+      }
+    });
+  },{threshold:.1});
+  cards.forEach(c=>observer.observe(c));
+
+  setTimeout(()=>cards.forEach((c,i)=>{
+    if(!c.classList.contains('visible'))setTimeout(()=>c.classList.add('visible'),i*100);
+  }),300);
+
+})();
+</script>
+</body>
+</html>

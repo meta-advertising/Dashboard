@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 140" width="480" height="140">
+  <!-- Style Notion : noir et blanc pur, icône outline, élégant -->
+
+  <!-- Icône : carré arrondi outline avec K dedans -->
+  <rect x="24" y="24" width="92" height="92" rx="18" fill="white" stroke="#111111" stroke-width="3"/>
+  <!-- K simplifié en lignes -->
+  <line x1="52" y1="46" x2="52" y2="94" stroke="#111111" stroke-width="4.5" stroke-linecap="round"/>
+  <line x1="54" y1="70" x2="82" y2="46" stroke="#111111" stroke-width="4.5" stroke-linecap="round"/>
+  <line x1="54" y1="70" x2="82" y2="94" stroke="#111111" stroke-width="4.5" stroke-linecap="round"/>
+
+  <!-- Wordmark -->
+  <text x="138" y="82" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="400" fill="#111111" letter-spacing="0">Kodify</text>
+
+  <!-- Point séparateur simple -->
+  <circle cx="370" cy="76" r="3" fill="#111111"/>
+</svg>

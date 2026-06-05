@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <defs>
+    <linearGradient id="g9" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0ea5e9"/>
+      <stop offset="100%" style="stop-color:#2563eb"/>
+    </linearGradient>
+  </defs>
+  <!-- Fond -->
+  <rect width="400" height="120" fill="#f8fafc"/>
+  <!-- Double cercle monogramme -->
+  <circle cx="55" cy="60" r="42" fill="none" stroke="#e2e8f0" stroke-width="2"/>
+  <circle cx="55" cy="60" r="34" fill="none" stroke="url(#g9)" stroke-width="2.5"/>
+  <!-- K stylisé - lignes géométriques -->
+  <line x1="40" y1="38" x2="40" y2="82" stroke="url(#g9)" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="40" y1="60" x2="68" y2="38" stroke="url(#g9)" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="40" y1="60" x2="68" y2="82" stroke="url(#g9)" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Point d'accent -->
+  <circle cx="70" cy="38" r="3" fill="#0ea5e9"/>
+  <!-- Texte -->
+  <text x="115" y="55" font-family="'Segoe UI', system-ui, sans-serif" font-size="36" font-weight="300" fill="#334155" letter-spacing="2">Kōdify</text>
+  <rect x="115" y="64" width="40" height="2" rx="1" fill="url(#g9)"/>
+  <text x="115" y="82" font-family="'Segoe UI', system-ui, sans-serif" font-size="11" fill="#94a3b8" letter-spacing="4">STUDIO WEB</text>
+  <!-- Décoration subtile -->
+  <circle cx="370" cy="25" r="15" fill="#0ea5e9" opacity="0.06"/>
+  <circle cx="360" cy="95" r="10" fill="#2563eb" opacity="0.06"/>
+</svg>

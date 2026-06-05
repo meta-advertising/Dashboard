@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <defs>
+    <linearGradient id="g6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <circle cx="55" cy="60" r="44" fill="none" stroke="url(#g6)" stroke-width="3"/>
+  <circle cx="55" cy="60" r="36" fill="url(#g6)"/>
+  <text x="55" y="68" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="700" fill="white" text-anchor="middle" letter-spacing="-1">&lt;/&gt;</text>
+  <circle cx="55" cy="20" r="4" fill="#3b82f6"/>
+  <circle cx="55" cy="100" r="4" fill="#1d4ed8"/>
+  <circle cx="15" cy="60" r="3" fill="#60a5fa" opacity="0.6"/>
+  <circle cx="95" cy="60" r="3" fill="#60a5fa" opacity="0.6"/>
+  <text x="118" y="55" font-family="'Segoe UI', system-ui, sans-serif" font-size="40" font-weight="300" fill="#1e293b" letter-spacing="4">Kōdify</text>
+  <line x1="118" y1="68" x2="178" y2="68" stroke="#3b82f6" stroke-width="2"/>
+  <text x="118" y="86" font-family="'Segoe UI', system-ui, sans-serif" font-size="12" fill="#64748b" letter-spacing="3">SITES &amp; APPLICATIONS</text>
+</svg>

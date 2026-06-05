@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Moulin d'Elise — Portail Marketing</title>
+<link rel="icon" href="https://moulindelise.com/wp-content/uploads/2024/03/cropped-logo-moulin-elise-01-1-32x32.png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#BF8D50;
+  --gold-light:#d4a96a;
+  --gold-dark:#a07640;
+  --gold-glow:rgba(191,141,80,0.35);
+  --gold-soft:rgba(191,141,80,0.15);
+  --gradient-gold:linear-gradient(135deg,#BF8D50 0%,#d4a96a 100%);
+  --wheat:#e8d5b7;
+  --cream:#f5ead6;
+  --bg-dark:#0f0b07;
+  --bg-secondary:#181310;
+  --bg-card:rgba(191,141,80,0.06);
+  --bg-card-hover:rgba(191,141,80,0.12);
+  --text-primary:#f5f0e8;
+  --text-secondary:rgba(245,240,232,0.6);
+  --text-tertiary:rgba(245,240,232,0.35);
+  --border:rgba(191,141,80,0.18);
+  --border-hover:rgba(191,141,80,0.45);
+  --radius-sm:8px;
+  --radius-md:14px;
+  --radius-lg:20px;
+  --radius-xl:28px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans','Inter',-apple-system,sans-serif;background:var(--bg-dark);color:var(--text-primary);min-height:100vh;overflow-x:hidden}
+
+/* ══ ANIMATED BACKGROUND ══ */
+.bg-scene{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%,rgba(191,141,80,0.08) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 80%,rgba(191,141,80,0.05) 0%,transparent 50%),
+    radial-gradient(ellipse 40% 40% at 50% 50%,rgba(160,118,64,0.04) 0%,transparent 40%),
+    linear-gradient(180deg,#0f0b07 0%,#12100a 50%,#0f0b07 100%)}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(191,141,80,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(191,141,80,0.03) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 70% 70% at 50% 30%,black,transparent)}
+.wrapper{position:relative;z-index:1;min-height:100vh}
+
+/* ══ HEADER ══ */
+.header{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);backdrop-filter:blur(20px);background:rgba(15,11,7,0.7);position:sticky;top:0;z-index:100}
+.header-left{display:flex;align-items:center;gap:16px}
+.header-logo{height:44px;width:auto;filter:brightness(1.1)}
+.header-brand{display:flex;flex-direction:column}
+.header-title{font-size:18px;font-weight:800;letter-spacing:-.3px;background:linear-gradient(135deg,var(--cream) 0%,var(--gold-light) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header-sub{font-size:11px;color:var(--text-tertiary);font-weight:500;text-transform:uppercase;letter-spacing:1.5px}
+.header-right{display:flex;align-items:center;gap:20px}
+
+/* ══ DATE PICKER TRIGGER ══ */
+.dp-trigger{display:flex;align-items:center;gap:10px;padding:8px 14px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;font-size:13px;font-weight:600;color:var(--text-primary);cursor:pointer;transition:all .25s;font-family:inherit}
+.dp-trigger:hover{background:rgba(255,255,255,0.08);border-color:var(--gold-soft)}
+.dp-trigger.open{background:rgba(191,141,80,0.1);border-color:var(--gold)}
+.dp-icon{width:16px;height:16px;color:var(--gold)}
+.dp-label{white-space:nowrap}
+.dp-chevron{width:14px;height:14px;color:var(--text-tertiary);transition:transform .3s var(--ease)}
+.dp-trigger.open .dp-chevron{transform:rotate(180deg)}
+
+/* ══ CALENDAR OVERLAY ══ */
+.cal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(8,8,8,0.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.cal-overlay.show{display:block}
+
+/* ══ CALENDAR DROPDOWN ══ */
+.cal-dropdown{display:none;position:fixed;top:80px;right:32px;z-index:1001;background:var(--bg-secondary);border:1px solid var(--border);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.3);overflow:hidden;flex-direction:row}
+.cal-dropdown.show{display:flex;animation:calSlide .35s var(--ease)}
+@keyframes calSlide{from{opacity:0;transform:translateY(-12px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* ══ CALENDAR SIDEBAR ══ */
+.cal-sidebar{width:180px;padding:20px 14px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:4px}
+.cal-year-tabs{display:flex;gap:4px;margin-bottom:16px;border-radius:10px;padding:3px}
+.cal-year-tab{flex:1;padding:7px 8px;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;background:transparent;color:var(--text-secondary);transition:all .25s;font-family:inherit}
+.cal-year-tab.active{background:var(--gradient-gold);color:#fff}
+.cal-year-tab:hover:not(.active){color:var(--gold)}
+.cal-preset-label{font-size:9px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1px;padding:8px 10px 4px}
+.cal-preset{padding:9px 12px;border-radius:10px;font-size:12px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all .2s}
+.cal-preset:hover{background:rgba(255,255,255,0.05);color:var(--text-primary)}
+.cal-preset.active{background:var(--gold-soft);color:var(--gold)}
+
+/* ══ CALENDAR MAIN ══ */
+.cal-main{padding:20px 24px 24px;min-width:520px}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.cal-nav-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text-secondary);display:flex;align-items:center;justify-content:center;transition:all .2s;cursor:pointer;font-family:inherit}
+.cal-nav-btn:hover{background:rgba(255,255,255,0.06);color:var(--gold);border-color:var(--border-hover)}
+.cal-nav-btn svg{width:16px;height:16px}
+.cal-nav-title{font-size:15px;font-weight:800;letter-spacing:-.2px}
+.cal-months{display:flex;gap:28px}
+.cal-month{flex:1}
+.cal-month-label{font-size:11px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;text-align:center}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:6px}
+.cal-wd{text-align:center;font-size:10px;font-weight:600;color:var(--text-tertiary);padding:4px 0}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-day{text-align:center;padding:7px 2px;border-radius:8px;font-size:12px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all .12s;min-width:32px}
+.cal-day:hover{background:rgba(255,255,255,0.07);color:var(--text-primary)}
+.cal-day.empty{visibility:hidden;pointer-events:none}
+.cal-day.today{color:var(--gold);font-weight:700;box-shadow:inset 0 -2px 0 var(--gold)}
+.cal-day.selected,.cal-day.range-start,.cal-day.range-end{background:var(--gradient-gold);color:#fff;font-weight:700}
+.cal-day.in-range{background:rgba(191,141,80,0.12);color:var(--gold-light);border-radius:4px}
+.cal-day.range-start{border-radius:8px 4px 4px 8px}
+.cal-day.range-end{border-radius:4px 8px 8px 4px}
+.cal-day.range-start.range-end{border-radius:8px}
+.cal-footer{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--border);margin-top:16px}
+.cal-selection-text{font-size:13px;font-weight:600;color:var(--gold)}
+.cal-apply-btn{padding:8px 20px;border:none;border-radius:10px;background:var(--gradient-gold);color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:all .25s;font-family:inherit}
+.cal-apply-btn:hover{box-shadow:0 4px 20px rgba(191,141,80,0.4);transform:translateY(-1px)}
+
+/* ══ HERO ══ */
+.hero{padding:70px 40px 50px;text-align:center;position:relative}
+.hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(191,141,80,0.12) 0%,transparent 70%);top:-150px;left:50%;transform:translateX(-50%);pointer-events:none;animation:pulse-glow 6s ease-in-out infinite}
+@keyframes pulse-glow{0%,100%{opacity:.6;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
+.hero-logo{height:90px;width:auto;margin-bottom:24px;filter:drop-shadow(0 0 40px rgba(191,141,80,0.3));animation:float-logo 4s ease-in-out infinite}
+@keyframes float-logo{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.hero h1{font-size:46px;font-weight:900;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px;position:relative}
+.hero h1 span{background:linear-gradient(135deg,var(--cream) 0%,#ffffff 40%,var(--gold-light) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:16px;color:var(--text-secondary);max-width:520px;margin:0 auto 48px;line-height:1.6}
+
+/* ══ STATS BAR ══ */
+.stats-bar{display:flex;justify-content:center;gap:48px;margin-bottom:20px}
+.stat-item{text-align:center}
+.stat-value{font-size:32px;font-weight:900;color:var(--gold-light);letter-spacing:-1px}
+.stat-label{font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-top:4px}
+
+/* ══ SECTION ══ */
+.section{padding:40px 40px 80px;max-width:1200px;margin:0 auto}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:32px}
+.section-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+.section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--text-tertiary);white-space:nowrap}
+
+/* ══ CAMPAIGN CARDS ══ */
+.campaigns-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
+.camp-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;cursor:pointer;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;text-decoration:none;color:inherit;display:block}
+.camp-card::before{content:'';position:absolute;inset:0;border-radius:var(--radius-lg);background:linear-gradient(135deg,rgba(191,141,80,0.08) 0%,transparent 60%);opacity:0;transition:opacity .4s}
+.camp-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));opacity:0;transition:opacity .3s}
+.camp-card:hover{border-color:var(--border-hover);transform:translateY(-6px);box-shadow:0 20px 60px rgba(191,141,80,0.12),0 8px 24px rgba(0,0,0,0.3)}
+.camp-card:hover::before{opacity:1}
+.camp-card:hover::after{opacity:1}
+.camp-card:hover .camp-arrow{transform:translateX(4px);opacity:1}
+.camp-card:hover .camp-icon{transform:scale(1.05);box-shadow:0 0 20px var(--gold-glow)}
+
+.camp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;position:relative;z-index:1}
+.camp-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,rgba(191,141,80,0.2),rgba(191,141,80,0.08));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all .4s}
+.camp-icon svg{width:24px;height:24px;color:var(--gold-light)}
+.camp-status{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--gold-light);text-transform:uppercase;letter-spacing:.5px}
+.camp-status .pulse{width:7px;height:7px;border-radius:50%;background:var(--gold-light);animation:status-pulse 2s ease-in-out infinite}
+@keyframes status-pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 var(--gold-glow)}50%{opacity:.7;box-shadow:0 0 0 6px transparent}}
+
+.camp-name{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-bottom:4px;position:relative;z-index:1}
+.camp-location{font-size:12px;color:var(--text-tertiary);font-weight:500;margin-bottom:20px;position:relative;z-index:1}
+
+.camp-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;position:relative;z-index:1}
+.camp-tag{font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
+.camp-tag.trafic{background:rgba(52,152,219,0.12);border:1px solid rgba(52,152,219,0.18);color:#5dade2}
+.camp-tag.engagement{background:rgba(230,126,34,0.12);border:1px solid rgba(230,126,34,0.18);color:#e67e22}
+.camp-tag.notoriete{background:rgba(155,89,182,0.12);border:1px solid rgba(155,89,182,0.18);color:#bb8fce}
+.camp-tag.recrutement{background:rgba(39,174,96,0.12);border:1px solid rgba(39,174,96,0.18);color:#58d68d}
+.camp-tag.leadgen{background:rgba(192,57,43,0.12);border:1px solid rgba(192,57,43,0.18);color:#ec7063}
+.camp-tag.googleads{background:rgba(52,168,83,0.12);border:1px solid rgba(52,168,83,0.18);color:#34a853}
+
+/* ══ KPI ROW IN CARD ══ */
+.camp-kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;position:relative;z-index:1}
+.camp-kpi{padding:10px 12px;background:rgba(191,141,80,0.04);border:1px solid rgba(191,141,80,0.08);border-radius:var(--radius-sm)}
+.camp-kpi-val{font-size:18px;font-weight:800;letter-spacing:-.3px;color:var(--text-primary)}
+.camp-kpi-label{font-size:10px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.camp-kpi.highlight{background:rgba(191,141,80,0.1);border-color:rgba(191,141,80,0.2)}
+.camp-kpi.highlight .camp-kpi-val{color:var(--gold-light)}
+
+.camp-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--border);position:relative;z-index:1}
+.camp-link{font-size:12px;font-weight:600;color:var(--text-secondary)}
+.camp-arrow{color:var(--gold-light);opacity:.4;transition:all .3s}
+.camp-arrow svg{width:18px;height:18px}
+
+/* ══ DAY TABLE ══ */
+.day-controls{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+.day-entity-pills{display:flex;gap:6px;flex-wrap:wrap}
+.day-entity-pill{font-family:inherit;font-size:12px;font-weight:600;padding:7px 16px;border:1px solid var(--border);background:transparent;color:var(--text-secondary);cursor:pointer;border-radius:20px;transition:all .2s}
+.day-entity-pill:hover{border-color:var(--gold);color:var(--gold-light)}
+.day-entity-pill.active{background:var(--gold);color:#fff;border-color:var(--gold)}
+.day-month-nav{display:flex;align-items:center;gap:12px}
+.day-month-title{font-size:15px;font-weight:700;color:var(--text-primary);min-width:160px;text-align:center}
+.day-btn{width:34px;height:34px;border:1px solid var(--border);background:rgba(191,141,80,0.06);border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--text-secondary);font-family:inherit}
+.day-btn:hover{border-color:var(--gold);color:var(--gold-light)}
+.day-btn:disabled{opacity:.3;cursor:default}
+.day-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.day-table{width:100%;border-collapse:separate;border-spacing:0;background:rgba(191,141,80,0.03);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.day-table thead th{font-size:10px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.6px;padding:12px 10px;text-align:right;background:rgba(191,141,80,0.06);border-bottom:1px solid var(--border)}
+.day-table thead th:first-child{text-align:left;padding-left:16px}
+.day-table tbody td{font-size:13px;font-weight:500;padding:9px 10px;text-align:right;border-bottom:1px solid rgba(191,141,80,0.06);color:var(--text-primary);font-variant-numeric:tabular-nums}
+.day-table tbody td:first-child{text-align:left;font-weight:600;color:var(--text-secondary);padding-left:16px;font-size:12px}
+.day-table tbody tr:last-child td{border-bottom:none}
+.day-table tbody tr:hover td{background:rgba(191,141,80,0.08)}
+.day-table tbody tr.empty td{opacity:.3}
+.day-table tfoot td{font-size:13px;font-weight:800;padding:12px 10px;text-align:right;background:rgba(191,141,80,0.1);border-top:2px solid var(--gold);color:var(--text-primary)}
+.day-table tfoot td:first-child{text-align:left;padding-left:16px;color:var(--gold)}
+.day-table td.val-cost{color:#e74c3c}
+.day-table td.val-leads{color:var(--gold-light);font-weight:700}
+
+/* ══ SOCIAL INSIGHTS BAND ══ */
+.camp-insights{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(191,141,80,0.12);position:relative;z-index:1}
+.camp-insights::before{content:'FB & Instagram';position:absolute;top:-8px;left:12px;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);background:var(--bg-card);padding:0 8px}
+.camp-insight-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 6px;border-radius:var(--radius-sm);background:rgba(191,141,80,0.04);border:1px solid rgba(191,141,80,0.06);transition:all .3s var(--ease)}
+.camp-card:hover .camp-insight-item{background:rgba(191,141,80,0.08);border-color:rgba(191,141,80,0.12)}
+.camp-insight-icon{width:16px;height:16px;color:var(--gold);opacity:.7}
+.camp-insight-val{font-size:15px;font-weight:800;letter-spacing:-.3px;color:var(--gold-light)}
+.camp-insight-val.delta::before{content:'+';color:rgba(46,204,113,0.9)}
+.camp-insight-val.delta.neg::before{content:'';color:rgba(231,76,60,0.9)}
+.camp-insight-label{font-size:8.5px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.8px;text-align:center}
+
+/* ══ LOADING ══ */
+.loading{text-align:center;padding:60px 20px}
+.loading-spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:14px;color:var(--text-tertiary)}
+
+/* ══ FOOTER ══ */
+.footer{text-align:center;padding:40px;border-top:1px solid var(--border);color:var(--text-tertiary);font-size:11px;font-weight:500;letter-spacing:.5px}
+.footer a{color:var(--gold-light);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1024px){.campaigns-grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}.hero h1{font-size:40px}.section{padding:30px 24px 60px}}
+@media(max-width:768px){
+  .header{padding:16px 20px;flex-wrap:wrap;gap:12px}.header-right{width:100%;justify-content:flex-end}
+  .hero{padding:50px 20px 40px}.hero h1{font-size:32px}.hero-desc{font-size:14px}.hero-logo{height:70px}
+  .stats-bar{gap:24px}.stat-value{font-size:24px}
+  .section{padding:20px 20px 60px}.campaigns-grid{grid-template-columns:1fr}
+  .camp-card{padding:22px}.camp-card:hover{transform:translateY(-3px)}
+  .cal-dropdown{top:auto;right:8px;left:8px;flex-direction:column;max-height:90vh;overflow-y:auto}
+  .cal-sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border);flex-direction:row;flex-wrap:wrap;padding:14px}
+  .cal-year-tabs{margin-bottom:0;width:auto}
+  .cal-preset-label{padding:4px 10px}
+  .cal-main{min-width:auto;padding:16px}
+  .cal-months{flex-direction:column;gap:20px}
+}
+@media(max-width:480px){
+  .header{padding:12px 16px}.header-logo{height:32px}.header-title{font-size:15px}.header-sub{font-size:9px}
+  .dp-trigger{padding:6px 10px;font-size:11px;gap:6px}
+  .hero{padding:36px 16px 28px}.hero h1{font-size:26px;letter-spacing:-1px}.hero-desc{font-size:13px;margin-bottom:28px}.hero-logo{height:56px}
+  .stats-bar{flex-direction:column;gap:12px}.stat-value{font-size:22px}.stat-label{font-size:10px}
+  .section{padding:16px 16px 40px}.section-header{margin-bottom:20px}.section-title{font-size:11px;letter-spacing:1.5px}
+  .camp-card{padding:18px}.camp-name{font-size:18px}.camp-location{font-size:11px;margin-bottom:14px}
+  .camp-icon{width:42px;height:42px;border-radius:10px}.camp-icon svg{width:20px;height:20px}
+  .camp-tag{font-size:9px;padding:3px 8px}.camp-tags{gap:6px;margin-bottom:14px}
+  .camp-kpis{grid-template-columns:1fr 1fr 1fr;gap:8px}.camp-kpi-val{font-size:15px}
+  .camp-insights{grid-template-columns:1fr 1fr;gap:6px}.camp-insight-val{font-size:13px}.camp-insight-label{font-size:7.5px}.camp-insights::before{font-size:7px}
+  .camp-bottom{padding-top:12px}.camp-link{font-size:11px}
+  .footer{padding:24px 16px;font-size:10px}
+}
+</style>
+</head>
+<body>
+<div class="bg-scene"></div>
+<div class="bg-grid"></div>
+
+<div class="wrapper">
+
+<!-- ══ HEADER ══ -->
+<header class="header">
+  <div class="header-left">
+    <img class="header-logo" src="https://moulindelise.com/wp-content/uploads/logo-moulin-elise-01.svg" alt="Le Moulin d'Elise">
+    <div class="header-brand">
+      <div class="header-title">Le Moulin d'Elise</div>
+      <div class="header-sub">Portail Marketing</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="dp-trigger" id="dpTrigger" onclick="toggleCalendar()">
+      <svg class="dp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span class="dp-label" id="dpLabel">Cumul annuel — 2026</span>
+      <svg class="dp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </div>
+</header>
+
+<!-- ══ CALENDAR OVERLAY + DROPDOWN ══ -->
+<div class="cal-overlay" id="calOverlay" onclick="closeCalendar()"></div>
+<div class="cal-dropdown" id="calDropdown">
+  <div class="cal-sidebar">
+    <div class="cal-year-tabs">
+      <button class="cal-year-tab" onclick="calSwitchYear('2025')">2025</button>
+      <button class="cal-year-tab active" onclick="calSwitchYear('2026')">2026</button>
+    </div>
+    <div class="cal-preset-label">Periodes</div>
+    <div class="cal-preset active" onclick="calPreset('annual')">Cumul annuel</div>
+    <div class="cal-preset" onclick="calPreset('t1')">Trimestre 1</div>
+    <div class="cal-preset" onclick="calPreset('t2')">Trimestre 2</div>
+    <div class="cal-preset" onclick="calPreset('t3')">Trimestre 3</div>
+    <div class="cal-preset" onclick="calPreset('t4')">Trimestre 4</div>
+    <div class="cal-preset-label">Semestres</div>
+    <div class="cal-preset" onclick="calPreset('s1')">Semestre 1</div>
+    <div class="cal-preset" onclick="calPreset('s2')">Semestre 2</div>
+  </div>
+  <div class="cal-main">
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="calNav(-2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <div class="cal-nav-title" id="calNavTitle"></div>
+      <button class="cal-nav-btn" onclick="calNav(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+    <div class="cal-months" id="calMonths"></div>
+    <div class="cal-footer">
+      <div class="cal-selection-text" id="calSelText">Cumul annuel — 2026</div>
+      <button class="cal-apply-btn" onclick="calApply()">Appliquer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <img class="hero-logo" src="https://moulindelise.com/wp-content/uploads/logo-moulin-elise-01.svg" alt="Le Moulin d'Elise">
+  <h1><span>La boulangerie au naturel</span></h1>
+  <p class="hero-desc">Suivi en temps reel de vos campagnes marketing Meta Ads et Google Ads — performances, leads et investissements par boutique.</p>
+  <div class="stats-bar" id="statsBar">
+    <div class="stat-item"><div class="stat-value" id="statImp">--</div><div class="stat-label">Impressions</div></div>
+    <div class="stat-item"><div class="stat-value" id="statClk">--</div><div class="stat-label">Clics</div></div>
+    <div class="stat-item"><div class="stat-value" id="statDep">--</div><div class="stat-label">Depenses</div></div>
+    <div class="stat-item"><div class="stat-value" id="statLeads">--</div><div class="stat-label">Leads</div></div>
+  </div>
+</section>
+
+<!-- ══ CAMPAIGNS ══ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Vos campagnes</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="loading" id="loadingState">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Chargement des donnees...</div>
+  </div>
+
+  <div class="campaigns-grid" id="campaignsGrid" style="display:none"></div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  Le Moulin d'Elise — Portail Marketing &middot; Donnees <a href="#">Supermetrics</a>
+</footer>
+
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   LE MOULIN D'ELISE — PORTAIL MARKETING
+   ══════════════════════════════════════════════ */
+
+const BASE_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vQZZqBeck80LcNEZUPOx-EjBHY_xnR1yGINcHIllM-P7lBh_rT1zdZTLxp6nyOE06ppyCagPog6Dxx1/pub?output=csv&single=true&gid=';
+const GIDS={national:'0',carquefou:'699035284',saintbrieuc:'1380587692',paimpol:'805515773'};
+const GADS_GID='2003247368';
+const INSIGHTS_GIDS={national:'961127881',carquefou:'693836138',saintbrieuc:'1101235754',paimpol:'1999060150'};
+const ENTITIES=[
+  {key:'national',label:'National',location:'France entiere \u00b7 Campagnes BtoC + Recrutement + Lead Gen',icon:'globe',dashboard:'dashboard-moulin-national.html',highlight:'leads',highlightLabel:'Leads'},
+  {key:'carquefou',label:'Carquefou',location:'Loire-Atlantique (44) \u00b7 Meta Ads + Google Ads',icon:'store',dashboard:'dashboard-moulin-carquefou.html',highlight:'clicks',highlightLabel:'Clics'},
+  {key:'saintbrieuc',label:'Saint-Brieuc',location:"Cotes-d'Armor (22) \u00b7 Meta Ads + Google Ads",icon:'store',dashboard:'dashboard-moulin-saintbrieuc.html',highlight:'clicks',highlightLabel:'Clics'},
+  {key:'paimpol',label:'Paimpol',location:"Cotes-d'Armor (22) \u00b7 Meta Ads",icon:'store',dashboard:'dashboard-moulin-paimpol.html',highlight:'leads',highlightLabel:'Leads'},
+  {key:'langueux',label:'Langueux',location:"Cotes-d'Armor (22) \u00b7 Google Ads uniquement",icon:'store',dashboard:'dashboard-moulin-langueux.html',highlight:'clicks',highlightLabel:'Clics',googleAdsOnly:true}
+];
+const CAMPAIGN_DETECT=[
+  {type:'LeadGen',cls:'leadgen',match:['leadgen','lead_gen','lead gen']},
+  {type:'Trafic',cls:'trafic',match:['trafic']},
+  {type:'Engagement',cls:'engagement',match:['engagement']},
+  {type:'Notoriete',cls:'notoriete',match:['notori']},
+  {type:'Recrutement',cls:'recrutement',match:['recrutement']}
+];
+
+const MONTH_NAMES=['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
+const MONTH_SHORT=['Jan','Fev','Mar','Avr','Mai','Jun','Jul','Aou','Sep','Oct','Nov','Dec'];
+const WEEKDAYS=['L','M','M','J','V','S','D'];
+
+const DATA={};
+const ICONS={
+  globe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  store:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
+};
+
+/* ══ CALENDAR STATE ══ */
+let currentYear='2026';
+let selMode='annual';
+let selStart={month:0,day:0};
+let selEnd={month:11,day:30};
+let calViewMonth=0;
+let calViewYear=2026;
+let calSelStartDay=null;
+let calSelEndDay=null;
+let calOpen=false;
+
+
+/* ══ CSV PARSER ══ */
+function parseCSV(text){
+  const lines=text.trim().split('\n');if(lines.length<2)return[];
+  const headers=parseLine(lines[0]);const rows=[];
+  for(let i=1;i<lines.length;i++){const vals=parseLine(lines[i]);if(vals.length<headers.length)continue;const row={};headers.forEach((h,j)=>row[h.trim()]=vals[j]);rows.push(row)}
+  return rows;
+}
+function parseLine(line){const r=[];let c='',q=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(q&&line[i+1]==='"'){c+='"';i++}else q=!q}else if(ch===','&&!q){r.push(c);c=''}else c+=ch}r.push(c);return r}
+function parseFR(v){if(!v||v==='')return 0;return parseFloat(String(v).replace(/"/g,'').replace(',','.').replace(/\s/g,''))||0}
+
+function parseInsightsCSV(text){
+  const lines=text.trim().split('\n');if(lines.length<2)return{rows:[],igFollowers:0};
+  const rows=[];let igFollowers=0;
+  for(let i=1;i<lines.length;i++){
+    const vals=parseLine(lines[i]);
+    const date=vals[0]||'';
+    if(date&&date.match(/^\d{4}-\d{2}-\d{2}$/)){
+      rows.push({date:date,reactions:parseFR(vals[1]),pageFollowers:parseFR(vals[2]),pageVisits:parseFR(vals[3])});
+    }
+    const igVal=parseFR(vals[8]||vals[7]||'');
+    if(igVal>0&&igFollowers===0)igFollowers=igVal;
+  }
+  return{rows,igFollowers};
+}
+
+function computeInsights(data){
+  const range=getDateRange();
+  const filtered=data.rows.filter(r=>r.date>=range.start&&r.date<=range.end);
+  if(filtered.length===0)return{pageVisits:0,fbDelta:0,fbTotal:0,reactions:0,igFollowers:data.igFollowers};
+  let pageVisits=0,reactions=0;
+  filtered.forEach(r=>{pageVisits+=r.pageVisits;reactions+=r.reactions});
+  const fbFirst=filtered[0].pageFollowers;
+  const fbLast=filtered[filtered.length-1].pageFollowers;
+  const fbDelta=fbLast-fbFirst;
+  return{pageVisits,fbDelta,fbTotal:fbLast,reactions,igFollowers:data.igFollowers};
+}
+
+function detectTypes(rows){
+  const found=new Set();
+  rows.forEach(r=>{const n=(r['Campaign name']||'').toLowerCase();CAMPAIGN_DETECT.forEach(d=>{if(d.match.some(m=>n.includes(m)))found.add(d.type)})});
+  return [...found];
+}
+
+function fmt(n){return n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?Math.round(n).toLocaleString('fr-FR'):String(Math.round(n))}
+function fmtE(n){return n.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' \u20ac'}
+
+/* ══ DATE RANGE FILTER ══ */
+function getDateRange(){
+  const yr=parseInt(currentYear);
+  if(selMode==='annual') return{start:yr+'-01-01',end:yr+'-12-31'};
+  if(calSelStartDay&&calSelEndDay){
+    const s=calSelStartDay,e=calSelEndDay;
+    return{
+      start:s.year+'-'+String(s.month+1).padStart(2,'0')+'-'+String(s.day).padStart(2,'0'),
+      end:e.year+'-'+String(e.month+1).padStart(2,'0')+'-'+String(e.day).padStart(2,'0')
+    };
+  }
+  const sm=selStart.month,sd=selStart.day+1;
+  const em=selEnd.month,ed=selEnd.day+1;
+  return{
+    start:yr+'-'+String(sm+1).padStart(2,'0')+'-'+String(sd).padStart(2,'0'),
+    end:yr+'-'+String(em+1).padStart(2,'0')+'-'+String(ed).padStart(2,'0')
+  };
+}
+
+function filterRows(rows){
+  const range=getDateRange();
+  return rows.filter(r=>{const d=r['Date'];return d>=range.start&&d<=range.end});
+}
+
+function computeTotals(rows,isGads){
+  let imp=0,clk=0,cost=0,leads=0,react=0;
+  rows.forEach(r=>{imp+=parseFR(r['Impressions']);clk+=parseFR(r[isGads?'Clicks':'Clicks (all)']);cost+=parseFR(r['Cost (EUR)']);if(!isGads){leads+=parseFR(r['On-Facebook leads']);react+=parseFR(r['Post reactions'])}});
+  return{impressions:imp,clicks:clk,cost,leads,reactions:react};
+}
+
+/* ══ LOAD DATA ══ */
+async function loadData(){
+  try{
+    const t=Date.now();
+    const fetches=Object.entries(GIDS).map(async([key,gid])=>{
+      const url=BASE_URL+gid+'&_t='+t;
+      const resp=await fetch(url,{redirect:'follow',credentials:'omit'});
+      if(!resp.ok)throw new Error(key+': HTTP '+resp.status);
+      const text=await resp.text();
+      if(!text||text.length<20)throw new Error(key+': reponse vide');
+      const rows=parseCSV(text);
+      if(rows.length===0)throw new Error(key+': aucune donnee');
+      DATA[key]={rows,types:detectTypes(rows)};
+    });
+    await Promise.all(fetches);
+    try{
+      const gResp=await fetch(BASE_URL+GADS_GID+'&_t='+t,{redirect:'follow',credentials:'omit'});
+      if(gResp.ok){
+        const gText=await gResp.text();
+        const gRows=parseCSV(gText);
+        const langueuxRows=gRows.filter(r=>(r['Campaign name']||'').toLowerCase().includes('langueux'));
+        DATA.langueux={rows:langueuxRows,types:['Google Ads'],googleAdsOnly:true};
+      }
+    }catch(ge){console.warn('Google Ads:',ge)}
+    /* ══ INSIGHTS (FB & Instagram) ══ */
+    try{
+      const iFetches=Object.entries(INSIGHTS_GIDS).map(async([key,gid])=>{
+        const resp=await fetch(BASE_URL+gid+'&_t='+t,{redirect:'follow',credentials:'omit'});
+        if(!resp.ok)return;
+        const text=await resp.text();
+        if(!text||text.length<10)return;
+        const parsed=parseInsightsCSV(text);
+        if(DATA[key])DATA[key].insights=parsed;
+      });
+      await Promise.all(iFetches);
+    }catch(ie){console.warn('Insights:',ie)}
+    document.getElementById('loadingState').style.display='none';
+    renderAll();
+  }catch(e){
+    console.error('Erreur:',e);
+    document.querySelector('.loading-text').innerHTML='Erreur de chargement: '+e.message+'<br><small style="color:var(--text-tertiary)">Actualisez la page (Ctrl+Maj+R)</small>';
+  }
+}
+
+/* ══ RENDER ALL ══ */
+function renderAll(){
+  renderStats();
+  renderCards();
+}
+
+function renderStats(){
+  let totImp=0,totClk=0,totDep=0,totLeads=0;
+  ENTITIES.forEach(ent=>{
+    const d=DATA[ent.key];if(!d)return;
+    const t=computeTotals(filterRows(d.rows),!!ent.googleAdsOnly);
+    totImp+=t.impressions;totClk+=t.clicks;totDep+=t.cost;totLeads+=t.leads;
+  });
+  document.getElementById('statImp').textContent=fmt(totImp);
+  document.getElementById('statClk').textContent=fmt(totClk);
+  document.getElementById('statDep').textContent=fmtE(totDep);
+  document.getElementById('statLeads').textContent=fmt(totLeads);
+}
+
+function renderCards(){
+  const grid=document.getElementById('campaignsGrid');
+  grid.style.display='';
+  grid.innerHTML='';
+
+  ENTITIES.forEach(ent=>{
+    const d=DATA[ent.key];if(!d)return;
+    const filtered=filterRows(d.rows);
+    const t=computeTotals(filtered,!!ent.googleAdsOnly);
+    const types=d.types;
+
+    let hlVal,hlLabel;
+    if(ent.highlight==='leads'){hlVal=fmt(t.leads);hlLabel='Leads'}
+    else{hlVal=fmt(t.clicks);hlLabel='Clics'}
+
+    const tags=types.map(type=>{
+      if(type==='Google Ads')return'<span class="camp-tag googleads">Google Ads</span>';
+      const det=CAMPAIGN_DETECT.find(c=>c.type===type);
+      return det?'<span class="camp-tag '+det.cls+'">'+det.type+'</span>':'';
+    }).join('');
+
+    let insightsHTML='';
+    if(d.insights){
+      const ins=computeInsights(d.insights);
+      const deltaClass=ins.fbDelta>=0?'delta':'delta neg';
+      insightsHTML='<div class="camp-insights">'
+        +'<div class="camp-insight-item"><svg class="camp-insight-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><div class="camp-insight-val">'+fmt(ins.pageVisits)+'</div><div class="camp-insight-label">Visites page</div></div>'
+        +'<div class="camp-insight-item"><svg class="camp-insight-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><div class="camp-insight-val '+deltaClass+'">'+fmt(Math.abs(ins.fbDelta))+'</div><div class="camp-insight-label">Abonnes FB</div></div>'
+        +'<div class="camp-insight-item"><svg class="camp-insight-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><div class="camp-insight-val">'+fmt(ins.reactions)+'</div><div class="camp-insight-label">Reactions</div></div>'
+        +'<div class="camp-insight-item"><svg class="camp-insight-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg><div class="camp-insight-val">'+fmt(ins.igFollowers)+'</div><div class="camp-insight-label">Instagram</div></div>'
+      +'</div>';
+    }
+
+    grid.innerHTML+='<a class="camp-card" href="'+ent.dashboard+'">'
+      +'<div class="camp-top"><div class="camp-icon">'+ICONS[ent.icon]+'</div><div class="camp-status"><div class="pulse"></div>Actif</div></div>'
+      +'<div class="camp-name">'+ent.label+'</div>'
+      +'<div class="camp-location">'+ent.location+'</div>'
+      +'<div class="camp-tags">'+tags+'</div>'
+      +'<div class="camp-kpis">'
+        +'<div class="camp-kpi highlight"><div class="camp-kpi-val">'+hlVal+'</div><div class="camp-kpi-label">'+hlLabel+'</div></div>'
+        +'<div class="camp-kpi"><div class="camp-kpi-val">'+fmt(t.impressions)+'</div><div class="camp-kpi-label">Impressions</div></div>'
+        +'<div class="camp-kpi"><div class="camp-kpi-val">'+fmtE(t.cost)+'</div><div class="camp-kpi-label">Depenses</div></div>'
+      +'</div>'
+      +insightsHTML
+      +'<div class="camp-bottom"><span class="camp-link">Voir le dashboard complet</span><div class="camp-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>'
+    +'</a>';
+  });
+}
+
+/* ══ CALENDAR DATE PICKER ══ */
+function daysInMonthCal(year,month){return new Date(year,month+1,0).getDate()}
+function firstDayOfMonth(year,month){const d=new Date(year,month,1).getDay();return d===0?6:d-1}
+
+function getPeriodLabel(){
+  if(selMode==='annual')return'Cumul annuel \u2014 '+currentYear;
+  const yr=parseInt(currentYear);
+  if(calSelStartDay&&calSelEndDay){
+    const s=calSelStartDay,e=calSelEndDay;
+    const sLabel=s.day+' '+MONTH_SHORT[s.month];
+    const eLabel=e.day+' '+MONTH_SHORT[e.month];
+    if(s.year===e.year&&s.month===e.month&&s.day===e.day)return sLabel+' '+s.year;
+    return sLabel+' \u2014 '+eLabel+' '+e.year;
+  }
+  const sDay=selStart.day+1;const eDay=selEnd.day+1;
+  if(selStart.day===0&&selEnd.day>=daysInMonthCal(yr,selEnd.month)-1){
+    if(selStart.month===selEnd.month)return MONTH_NAMES[selStart.month]+' '+currentYear;
+    return MONTH_NAMES[selStart.month]+' \u2014 '+MONTH_NAMES[selEnd.month]+' '+currentYear;
+  }
+  const sLabel=sDay+' '+MONTH_SHORT[selStart.month];
+  const eLabel=eDay+' '+MONTH_SHORT[selEnd.month];
+  if(selStart.month===selEnd.month&&selStart.day===selEnd.day)return sLabel+' '+currentYear;
+  return sLabel+' \u2014 '+eLabel+' '+currentYear;
+}
+
+function toggleCalendar(){
+  calOpen=!calOpen;
+  document.getElementById('calDropdown').classList.toggle('show',calOpen);
+  document.getElementById('calOverlay').classList.toggle('show',calOpen);
+  document.getElementById('dpTrigger').classList.toggle('open',calOpen);
+  if(calOpen){
+    calViewYear=parseInt(currentYear);
+    calViewMonth=selMode==='range'?selStart.month-(selStart.month%2):0;
+    renderCalendar();
+  }
+}
+function closeCalendar(){
+  calOpen=false;
+  document.getElementById('calDropdown').classList.remove('show');
+  document.getElementById('calOverlay').classList.remove('show');
+  document.getElementById('dpTrigger').classList.remove('open');
+}
+
+function calNav(delta){
+  calViewMonth+=delta;
+  if(calViewMonth<0){calViewMonth+=12;calViewYear--}
+  if(calViewMonth>10){calViewMonth-=12;calViewYear++}
+  if(calViewYear<2025){calViewYear=2025;calViewMonth=0}
+  if(calViewYear>2026){calViewYear=2026;calViewMonth=10}
+  renderCalendar();
+}
+
+function calSwitchYear(y){
+  currentYear=y;
+  calViewYear=parseInt(y);
+  calViewMonth=0;
+  calSelStartDay=null;calSelEndDay=null;
+  selMode='annual';
+  document.querySelectorAll('.cal-year-tab').forEach(b=>b.classList.toggle('active',b.textContent===y));
+  updatePresetUI();
+  updateSelectionText();
+  renderCalendar();
+}
+
+function calPreset(p){
+  currentYear=String(calViewYear);
+  const yr=calViewYear;
+  calSelStartDay=null;calSelEndDay=null;
+  if(p==='annual'){selMode='annual'}
+  else{
+    selMode='range';
+    let fm,tm;
+    if(p==='t1'){fm=0;tm=2}
+    else if(p==='t2'){fm=3;tm=5}
+    else if(p==='t3'){fm=6;tm=8}
+    else if(p==='t4'){fm=9;tm=11}
+    else if(p==='s1'){fm=0;tm=5}
+    else if(p==='s2'){fm=6;tm=11}
+    selStart={month:fm,day:0};
+    selEnd={month:tm,day:daysInMonthCal(yr,tm)-1};
+  }
+  updatePresetUI();
+  updateSelectionText();
+  renderCalendar();
+}
+
+function calDayClick(year,month,day){
+  currentYear=String(year);
+  selMode='range';
+  if(!calSelStartDay||calSelEndDay){
+    calSelStartDay={year,month,day};
+    calSelEndDay=null;
+  }else{
+    calSelEndDay={year,month,day};
+    const sv=calSelStartDay.year*10000+calSelStartDay.month*100+calSelStartDay.day;
+    const ev=calSelEndDay.year*10000+calSelEndDay.month*100+calSelEndDay.day;
+    if(sv>ev){const tmp=calSelStartDay;calSelStartDay=calSelEndDay;calSelEndDay=tmp}
+    selStart={month:calSelStartDay.month,day:calSelStartDay.day-1};
+    selEnd={month:calSelEndDay.month,day:calSelEndDay.day-1};
+  }
+  document.querySelectorAll('.cal-year-tab').forEach(b=>b.classList.toggle('active',b.textContent===currentYear));
+  updatePresetUI();
+  updateSelectionText();
+  renderCalendar();
+}
+
+function calApply(){
+  document.getElementById('dpLabel').textContent=getPeriodLabel();
+  renderStats();
+  renderCards();
+  closeCalendar();
+}
+
+function updatePresetUI(){
+  document.querySelectorAll('.cal-preset').forEach(el=>el.classList.remove('active'));
+  if(selMode==='annual'){
+    const el=document.querySelector('.cal-preset[onclick*="annual"]');
+    if(el)el.classList.add('active');
+  }else{
+    const fm=selStart.month,tm=selEnd.month;
+    const yr=parseInt(currentYear);
+    const full=selStart.day===0&&selEnd.day>=daysInMonthCal(yr,tm)-1;
+    if(full){
+      let sel=null;
+      if(fm===0&&tm===2)sel='t1';
+      else if(fm===3&&tm===5)sel='t2';
+      else if(fm===6&&tm===8)sel='t3';
+      else if(fm===9&&tm===11)sel='t4';
+      else if(fm===0&&tm===5)sel='s1';
+      else if(fm===6&&tm===11)sel='s2';
+      if(sel){const el=document.querySelector('.cal-preset[onclick*="'+sel+'"]');if(el)el.classList.add('active')}
+    }
+  }
+}
+
+function updateSelectionText(){
+  const txt=document.getElementById('calSelText');
+  if(txt)txt.textContent=getPeriodLabel();
+}
+
+function renderCalendar(){
+  const container=document.getElementById('calMonths');
+  const title=document.getElementById('calNavTitle');
+  const m1=calViewMonth;
+  const m2=calViewMonth+1;
+  const y1=calViewYear;
+  const y2=m2>11?calViewYear+1:calViewYear;
+  const m2adj=m2>11?0:m2;
+  if(y1!==y2)title.textContent=MONTH_NAMES[m1]+' '+y1+' \u2014 '+MONTH_NAMES[m2adj]+' '+y2;
+  else title.textContent=MONTH_NAMES[m1]+' \u2014 '+MONTH_NAMES[m2adj]+' '+y1;
+  container.innerHTML=renderMonthGrid(y1,m1)+renderMonthGrid(y2,m2adj);
+  updateSelectionText();
+}
+
+function renderMonthGrid(year,month){
+  const days=daysInMonthCal(year,month);
+  const firstDay=firstDayOfMonth(year,month);
+  const today=new Date();
+  const isCurrentMonth=today.getFullYear()===year&&today.getMonth()===month;
+  const cy=parseInt(currentYear);
+
+  let html='<div class="cal-month">';
+  html+='<div class="cal-month-label">'+MONTH_NAMES[month]+' '+year+'</div>';
+  html+='<div class="cal-weekdays">'+WEEKDAYS.map(w=>'<div class="cal-wd">'+w+'</div>').join('')+'</div>';
+  html+='<div class="cal-days">';
+
+  for(let i=0;i<firstDay;i++)html+='<div class="cal-day empty"></div>';
+
+  for(let d=1;d<=days;d++){
+    let cls='cal-day';
+    if(isCurrentMonth&&d===today.getDate())cls+=' today';
+
+    if(calSelStartDay&&calSelEndDay){
+      const dv=year*10000+month*100+d;
+      const sv=calSelStartDay.year*10000+calSelStartDay.month*100+calSelStartDay.day;
+      const ev=calSelEndDay.year*10000+calSelEndDay.month*100+calSelEndDay.day;
+      if(dv===sv&&dv===ev)cls+=' selected';
+      else if(dv===sv)cls+=' range-start';
+      else if(dv===ev)cls+=' range-end';
+      else if(dv>sv&&dv<ev)cls+=' in-range';
+    }else if(calSelStartDay&&!calSelEndDay){
+      const dv=year*10000+month*100+d;
+      const sv=calSelStartDay.year*10000+calSelStartDay.month*100+calSelStartDay.day;
+      if(dv===sv)cls+=' selected';
+    }else if(year===cy){
+      if(selMode==='annual'){
+        cls+=' in-range';
+      }else{
+        const dv=month*100+d;
+        const sv=selStart.month*100+(selStart.day+1);
+        const ev=selEnd.month*100+(selEnd.day+1);
+        if(dv===sv&&dv===ev)cls+=' selected';
+        else if(dv===sv)cls+=' range-start';
+        else if(dv===ev)cls+=' range-end';
+        else if(dv>sv&&dv<ev)cls+=' in-range';
+      }
+    }
+
+    html+='<div class="'+cls+'" onclick="calDayClick('+year+','+month+','+d+')">'+d+'</div>';
+  }
+
+  html+='</div></div>';
+  return html;
+}
+
+/* ══ INIT ══ */
+loadData();
+</script>
+</body>
+</html>

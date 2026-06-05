@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Audit Meta Ads — RNPC B2C</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --vert: #4CAF7D;
+      --vert-fonce: #2E7D52;
+      --anthracite: #1A1A2E;
+      --blanc: #FFFFFF;
+      --fond: #F5F6F8;
+      --rouge: #E63946;
+      --orange: #F4A261;
+      --jaune: #FFD166;
+      --bleu-meta: #1877F2;
+      --gris: #6C757D;
+      --gris-clair: #DEE2E6;
+      --rouge-bg: #FDECED;
+      --rouge-bg2: #FFF5F5;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 297mm;
+      height: 210mm;
+      font-family: 'Inter', sans-serif;
+      background: var(--fond);
+      color: var(--anthracite);
+      font-size: 10px;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      width: 297mm;
+      height: 210mm;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: var(--fond);
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background: var(--anthracite);
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .header-logo img { height: 32px; filter: brightness(10); }
+    .header-logo-fallback { display: none; font-size: 18px; font-weight: 900; color: var(--vert); }
+    .h-title { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: -0.2px; }
+    .h-sub { font-size: 7.5px; color: rgba(255,255,255,0.6); margin-top: 1px; }
+    .header-right { display: flex; align-items: center; gap: 10px; }
+    .badge-meta { background: var(--bleu-meta); color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 7px; font-weight: 700; letter-spacing: 0.3px; }
+    .h-date { font-size: 7.5px; color: rgba(255,255,255,0.5); }
+
+    /* ===== KPIs ===== */
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0;
+      flex-shrink: 0;
+    }
+    .kpi {
+      padding: 9px 8px;
+      text-align: center;
+      position: relative;
+      background: var(--blanc);
+      border-right: 1px solid var(--gris-clair);
+    }
+    .kpi:last-child { border-right: none; }
+    .kpi::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+    .kpi.r::after { background: var(--rouge); }
+    .kpi.o::after { background: var(--orange); }
+    .kpi.b::after { background: var(--bleu-meta); }
+    .kpi-label { font-size: 6.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gris); margin-bottom: 2px; }
+    .kpi-val { font-size: 19px; font-weight: 900; line-height: 1.1; }
+    .kpi.r .kpi-val { color: var(--rouge); }
+    .kpi.o .kpi-val { color: var(--orange); }
+    .kpi.b .kpi-val { color: var(--bleu-meta); }
+    .kpi-sub { font-size: 6px; color: var(--gris); margin-top: 1px; }
+
+    /* ===== BODY ===== */
+    .body {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 0.8fr;
+      gap: 0;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .col {
+      padding: 10px 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .col-1 { background: var(--blanc); border-right: 1px solid var(--gris-clair); }
+    .col-2 { background: var(--blanc); border-right: 1px solid var(--gris-clair); }
+    .col-3 { background: var(--fond); }
+
+    .sec-title {
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--vert-fonce);
+      margin-bottom: 5px;
+      padding-bottom: 3px;
+      border-bottom: 2px solid var(--vert);
+    }
+
+    /* ===== COL 1: DIAGNOSTIC ===== */
+    .diag-list { display: flex; flex-direction: column; gap: 3px; margin-bottom: 8px; }
+    .diag {
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+      padding: 4px 5px;
+      border-radius: 4px;
+      background: var(--fond);
+      border: 1px solid transparent;
+    }
+    .diag:hover { border-color: var(--gris-clair); }
+    .d-badge {
+      flex-shrink: 0;
+      padding: 1.5px 4px;
+      border-radius: 2px;
+      font-size: 5.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      white-space: nowrap;
+      margin-top: 1px;
+    }
+    .d-badge.cr { background: var(--rouge); color: #fff; }
+    .d-badge.im { background: var(--orange); color: #fff; }
+    .d-badge.su { background: var(--jaune); color: var(--anthracite); }
+    .d-txt strong { font-size: 7.5px; font-weight: 700; display: block; color: var(--anthracite); }
+    .d-txt span { font-size: 6.5px; color: var(--gris); line-height: 1.3; }
+
+    /* PERSONAS */
+    .p-table { width: 100%; border-collapse: collapse; font-size: 6.5px; margin-bottom: 5px; }
+    .p-table thead th {
+      background: var(--anthracite); color: #fff; padding: 3px 4px; text-align: center;
+      font-size: 6.5px; font-weight: 700; text-transform: uppercase;
+    }
+    .p-table thead th:first-child { text-align: left; border-radius: 4px 0 0 0; }
+    .p-table thead th:last-child { border-radius: 0 4px 0 0; }
+    .p-table td { padding: 3px 4px; border-bottom: 1px solid var(--gris-clair); text-align: center; font-size: 6.5px; }
+    .p-table td:first-child { text-align: left; font-weight: 600; background: var(--fond); white-space: nowrap; }
+    .id-tag { background: var(--rouge); color: #fff; padding: 1px 4px; border-radius: 2px; font-size: 5.5px; font-weight: 700; }
+    .interests-cell { font-size: 5.5px; white-space: normal; line-height: 1.3; text-align: left !important; }
+
+    .verdict {
+      background: var(--rouge-bg2);
+      border-left: 3px solid var(--rouge);
+      border-radius: 0 5px 5px 0;
+      padding: 5px 6px;
+      flex: 1;
+    }
+    .verdict h4 { font-size: 7px; font-weight: 700; color: var(--rouge); margin-bottom: 3px; }
+    .verdict ul { list-style: none; padding: 0; }
+    .verdict li { font-size: 6.5px; padding: 1.5px 0; line-height: 1.35; }
+    .verdict li::before { content: '▸ '; color: var(--rouge); font-weight: 700; }
+    .verdict-end {
+      margin-top: 4px; padding: 4px 6px; background: var(--rouge); color: #fff;
+      border-radius: 3px; font-size: 6.5px; font-weight: 700; line-height: 1.35;
+    }
+
+    /* ===== COL 2: TABLE + CHART ===== */
+    table.perf { width: 100%; border-collapse: collapse; font-size: 7.5px; }
+    table.perf thead th {
+      background: var(--anthracite); color: #fff; padding: 4px 4px; text-align: left;
+      font-weight: 600; font-size: 6.5px; text-transform: uppercase; letter-spacing: 0.2px; white-space: nowrap;
+    }
+    table.perf thead th:first-child { border-radius: 4px 0 0 0; }
+    table.perf thead th:last-child { border-radius: 0 4px 0 0; }
+    table.perf td { padding: 3.5px 4px; border-bottom: 1px solid var(--gris-clair); white-space: nowrap; }
+    table.perf tr:nth-child(even) { background: var(--fond); }
+    .cr { background: var(--rouge-bg) !important; font-weight: 700; color: var(--rouge); }
+    .st { font-size: 6.5px; padding: 1.5px 4px; border-radius: 2px; font-weight: 600; white-space: nowrap; }
+    .st-b { background: var(--rouge-bg); color: var(--rouge); }
+    .st-d { background: var(--anthracite); color: #fff; }
+
+    .chart-box {
+      margin-top: 8px;
+      padding: 8px 10px;
+      background: var(--fond);
+      border-radius: 6px;
+      border: 1px solid var(--gris-clair);
+      flex: 1;
+    }
+    .chart-box .ct { font-size: 7.5px; font-weight: 700; margin-bottom: 6px; color: var(--anthracite); }
+
+    /* ===== COL 3: ACTIONS ===== */
+    .act-col { margin-bottom: 6px; }
+    .act-col h4 {
+      font-size: 7.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+      padding: 4px 6px; border-radius: 5px 5px 0 0;
+    }
+    .act-col.u h4 { background: var(--rouge); color: #fff; }
+    .act-col.i h4 { background: var(--orange); color: #fff; }
+    .act-items {
+      border: 1px solid var(--gris-clair); border-top: none;
+      border-radius: 0 0 5px 5px; padding: 4px 5px; background: var(--blanc);
+    }
+    .act {
+      padding: 3px 0; border-bottom: 1px solid #ECEEF0;
+      font-size: 7px; line-height: 1.4;
+    }
+    .act:last-child { border-bottom: none; }
+    .act-n {
+      display: inline-block; width: 12px; height: 12px; border-radius: 50%;
+      text-align: center; line-height: 12px; font-size: 6.5px; font-weight: 700;
+      color: #fff; margin-right: 2px; vertical-align: middle;
+    }
+    .u .act-n { background: var(--rouge); }
+    .i .act-n { background: var(--orange); }
+    .act strong { font-weight: 600; }
+    .act-d { display: block; margin-left: 14px; color: var(--gris); font-size: 6px; line-height: 1.3; margin-top: 1px; }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 6px 20px; background: var(--anthracite); color: rgba(255,255,255,0.5);
+      font-size: 6.5px; flex-shrink: 0;
+    }
+    .footer strong { color: rgba(255,255,255,0.8); }
+    .footer-right { display: flex; align-items: center; gap: 8px; }
+    .footer-right img { height: 14px; filter: brightness(10); opacity: 0.3; }
+    .conf { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); padding: 2px 6px; border-radius: 2px; font-size: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    @page { size: A4 landscape; margin: 0; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <div class="header-logo">
+        <img src="https://www.rnpc.fr/wp-content/uploads/2021/03/logo-RNPC.png" alt="RNPC" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+        <span class="header-logo-fallback">RNPC®</span>
+      </div>
+      <div>
+        <div class="h-title">Audit Performance Meta Ads — RNPC Groupe Éthique et Santé B2C</div>
+        <div class="h-sub">Période : 12 jan → 13 mar 2026 &nbsp;|&nbsp; Campagnes actives (7/97) &nbsp;|&nbsp; Confidentiel</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="badge-meta">● Meta Ads</span>
+      <span class="h-date">13 mars 2026</span>
+    </div>
+  </header>
+
+  <!-- KPIs -->
+  <section class="kpis">
+    <div class="kpi b">
+      <div class="kpi-label">Campagnes actives</div>
+      <div class="kpi-val">7</div>
+      <div class="kpi-sub">sur 97 dans le compte</div>
+    </div>
+    <div class="kpi r">
+      <div class="kpi-label">Budget dépensé</div>
+      <div class="kpi-val">4 254 €</div>
+      <div class="kpi-sub">sur 60 jours</div>
+    </div>
+    <div class="kpi r">
+      <div class="kpi-label">Leads générés</div>
+      <div class="kpi-val">8</div>
+      <div class="kpi-sub">tous centres confondus</div>
+    </div>
+    <div class="kpi r">
+      <div class="kpi-label">CPL moyen</div>
+      <div class="kpi-val">532 €</div>
+      <div class="kpi-sub">hors plafond rentable</div>
+    </div>
+    <div class="kpi o">
+      <div class="kpi-label">Fréquence moy.</div>
+      <div class="kpi-val">5,37</div>
+      <div class="kpi-sub">saturation audiences</div>
+    </div>
+    <div class="kpi r">
+      <div class="kpi-label">Centres sans lead</div>
+      <div class="kpi-val">2 / 7</div>
+      <div class="kpi-sub">Le Havre &amp; Voiron</div>
+    </div>
+  </section>
+
+  <!-- 3 COLUMNS BODY -->
+  <div class="body">
+
+    <!-- COL 1: DIAGNOSTIC + PERSONAS -->
+    <div class="col col-1">
+      <div class="sec-title">⚠ Diagnostic</div>
+      <div class="diag-list">
+        <div class="diag">
+          <span class="d-badge cr">CRITIQUE</span>
+          <div class="d-txt">
+            <strong>Saturation des audiences</strong>
+            <span>Fréquence moy. 5,37 en 60j → fatigue créa, engagement en chute</span>
+          </div>
+        </div>
+        <div class="diag">
+          <span class="d-badge cr">CRITIQUE</span>
+          <div class="d-txt">
+            <strong>CPL hors plafond rentable</strong>
+            <span>CPL moy. 531 €. Agen : 1 008 €. Le Havre &amp; Voiron : 0 lead</span>
+          </div>
+        </div>
+        <div class="diag">
+          <span class="d-badge im">IMPORTANT</span>
+          <div class="d-txt">
+            <strong>Budgets sous seuil d'apprentissage</strong>
+            <span>6 à 16,67 €/j → Meta ne peut pas optimiser</span>
+          </div>
+        </div>
+        <div class="diag">
+          <span class="d-badge su">SURVEILLER</span>
+          <div class="d-txt">
+            <strong>CTR faibles (0,73 %–1,37 %)</strong>
+            <span>Créa fatiguée ou ciblage inadapté</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-title">🔬 Personas Sylvie / Jeanine / Gérard</div>
+      <table class="p-table">
+        <thead>
+          <tr><th></th><th>Sylvie</th><th>Jeanine</th><th>Gérard</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Géo</td>
+            <td style="font-size:6px;">Chambéry +8 communes</td>
+            <td><span class="id-tag">IDENTIQUE</span></td>
+            <td><span class="id-tag">IDENTIQUE</span></td>
+          </tr>
+          <tr>
+            <td>Âge</td>
+            <td>Non défini</td>
+            <td>40-65+</td>
+            <td>40-65+</td>
+          </tr>
+          <tr>
+            <td>Genre</td>
+            <td>Non défini</td>
+            <td>Tous</td>
+            <td>Tous</td>
+          </tr>
+          <tr>
+            <td>Intérêts</td>
+            <td class="interests-cell">Stress, Soin visage, Santé beauté, Soins capillaires, Crème anti-âge, Soins peau</td>
+            <td><span class="id-tag">IDENTIQUE</span></td>
+            <td><span class="id-tag">IDENTIQUE</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="verdict">
+        <h4>⚠ Verdict</h4>
+        <ul>
+          <li><strong>3 personas identiques</strong> — copiés-collés, renommés</li>
+          <li>Intérêts <strong>"Votre suggestion"</strong> = auto-générés par Meta</li>
+          <li><strong>Gérard</strong> cible des intérêts 100 % féminins → non intentionnel</li>
+          <li>4 ad sets en concurrence interne → CPM gonflé → 0 lead</li>
+        </ul>
+        <div class="verdict-end">➜ 1 audience dupliquée 3 fois = cause structurelle principale.</div>
+      </div>
+    </div>
+
+    <!-- COL 2: TABLE + CHART -->
+    <div class="col col-2">
+      <div class="sec-title">📊 Performance par centre</div>
+      <table class="perf">
+        <thead>
+          <tr>
+            <th>Centre</th><th>Leads</th><th>Dépensé</th><th>CPL</th><th>CPM</th><th>CTR</th><th>Fréq.</th><th>€/j</th><th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>La Ravoire</strong></td><td>2</td><td>503 €</td>
+            <td class="cr">252 €</td><td>10,98</td><td>1,24 %</td><td>4,87</td><td>8,33</td>
+            <td><span class="st st-b">🔴 CPL très élevé</span></td>
+          </tr>
+          <tr>
+            <td><strong>Montauban</strong></td><td>2</td><td>605 €</td>
+            <td class="cr">303 €</td><td>10,03</td><td>1,06 %</td><td>6,06</td><td>10,00</td>
+            <td><span class="st st-b">🔴 CPL très élevé</span></td>
+          </tr>
+          <tr>
+            <td><strong>Cesson-Sévigné</strong></td><td>2</td><td>706 €</td>
+            <td class="cr">353 €</td><td>10,77</td><td>1,21 %</td><td>5,55</td><td>11,67</td>
+            <td><span class="st st-b">🔴 CPL très élevé</span></td>
+          </tr>
+          <tr>
+            <td><strong>Villeneuve-s/-Lot</strong></td><td>1</td><td>706 €</td>
+            <td class="cr">706 €</td><td>9,07</td><td>0,84 %</td><td>5,68</td><td>11,67</td>
+            <td><span class="st st-b">🔴 CPL très élevé</span></td>
+          </tr>
+          <tr>
+            <td><strong>Agen</strong></td><td>1</td><td>1 009 €</td>
+            <td class="cr">1 009 €</td><td>8,02</td><td>0,73 %</td><td>5,31</td><td>16,67</td>
+            <td><span class="st st-b">🔴 CPL très élevé</span></td>
+          </tr>
+          <tr>
+            <td><strong>Le Havre</strong></td><td>0</td><td>363 €</td>
+            <td class="cr">—</td><td>9,54</td><td>1,37 %</td><td>5,08</td><td>6,00</td>
+            <td><span class="st st-d">⛔ 0 lead</span></td>
+          </tr>
+          <tr>
+            <td><strong>Voiron</strong></td><td>0</td><td>363 €</td>
+            <td class="cr">—</td><td>10,19</td><td>1,11 %</td><td>5,03</td><td>6,00</td>
+            <td><span class="st st-d">⛔ 0 lead</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="chart-box">
+        <div class="ct">Coût par lead (CPL) par centre</div>
+        <svg viewBox="0 0 380 75" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+          <!-- Grid lines -->
+          <line x1="0" y1="58" x2="380" y2="58" stroke="#DEE2E6" stroke-width="0.5"/>
+          <line x1="0" y1="40" x2="380" y2="40" stroke="#DEE2E6" stroke-width="0.3" stroke-dasharray="3,3"/>
+          <line x1="0" y1="22" x2="380" y2="22" stroke="#DEE2E6" stroke-width="0.3" stroke-dasharray="3,3"/>
+          <!-- Bars -->
+          <rect x="8" y="38" width="36" height="20" rx="3" fill="#E63946" opacity="0.75"/>
+          <text x="26" y="34" text-anchor="middle" font-size="6.5" font-weight="700" fill="#E63946" font-family="Inter,sans-serif">252 €</text>
+          <text x="26" y="68" text-anchor="middle" font-size="5" fill="#6C757D" font-family="Inter,sans-serif">Ravoire</text>
+          <rect x="54" y="35" width="36" height="23" rx="3" fill="#E63946" opacity="0.8"/>
+          <text x="72" y="31" text-anchor="middle" font-size="6.5" font-weight="700" fill="#E63946" font-family="Inter,sans-serif">303 €</text>
+          <text x="72" y="68" text-anchor="middle" font-size="5" fill="#6C757D" font-family="Inter,sans-serif">Montauban</text>
+          <rect x="100" y="32" width="36" height="26" rx="3" fill="#E63946" opacity="0.85"/>
+          <text x="118" y="28" text-anchor="middle" font-size="6.5" font-weight="700" fill="#E63946" font-family="Inter,sans-serif">353 €</text>
+          <text x="118" y="68" text-anchor="middle" font-size="5" fill="#6C757D" font-family="Inter,sans-serif">Cesson</text>
+          <rect x="146" y="18" width="36" height="40" rx="3" fill="#E63946" opacity="0.9"/>
+          <text x="164" y="14" text-anchor="middle" font-size="6.5" font-weight="700" fill="#E63946" font-family="Inter,sans-serif">706 €</text>
+          <text x="164" y="68" text-anchor="middle" font-size="5" fill="#6C757D" font-family="Inter,sans-serif">V.-s/-Lot</text>
+          <rect x="192" y="6" width="36" height="52" rx="3" fill="#E63946"/>
+          <text x="210" y="3" text-anchor="middle" font-size="6.5" font-weight="800" fill="#E63946" font-family="Inter,sans-serif">1 009 €</text>
+          <text x="210" y="68" text-anchor="middle" font-size="5" fill="#6C757D" font-family="Inter,sans-serif">Agen</text>
+          <rect x="248" y="49" width="36" height="9" rx="3" fill="#1A1A2E" opacity="0.6"/>
+          <text x="266" y="46" text-anchor="middle" font-size="6" font-weight="600" fill="#1A1A2E" font-family="Inter,sans-serif">0 lead</text>
+          <text x="266" y="68" text-anchor="middle" font-size="5" fill="#6C757D" font-family="Inter,sans-serif">Le Havre</text>
+          <rect x="294" y="49" width="36" height="9" rx="3" fill="#1A1A2E" opacity="0.6"/>
+          <text x="312" y="46" text-anchor="middle" font-size="6" font-weight="600" fill="#1A1A2E" font-family="Inter,sans-serif">0 lead</text>
+          <text x="312" y="68" text-anchor="middle" font-size="5" fill="#6C757D" font-family="Inter,sans-serif">Voiron</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- COL 3: PLAN D'ACTION -->
+    <div class="col col-3">
+      <div class="sec-title">🎯 Plan d'action</div>
+
+      <div class="act-col u">
+        <h4>🔴 Urgent</h4>
+        <div class="act-items">
+          <div class="act">
+            <span class="act-n">1</span>
+            <strong>Renouveler toutes les créas</strong>
+            <span class="act-d">Fréquence > 5 = fatigue pub. Nouveaux visuels et copies sur les 7 centres pour casser la saturation.</span>
+          </div>
+          <div class="act">
+            <span class="act-n">2</span>
+            <strong>Supprimer Sylvie, Jeanine &amp; Gérard</strong>
+            <span class="act-d">3 ad sets identiques en concurrence interne. Ne garder que l'Advantage+ par centre, budget consolidé (min 20 €/j).</span>
+          </div>
+          <div class="act">
+            <span class="act-n">3</span>
+            <strong>Budgets → min 20 €/j</strong>
+            <span class="act-d">6-16 €/j = sous le seuil d'apprentissage. L'algo Meta ne peut pas optimiser sans signal suffisant.</span>
+          </div>
+          <div class="act">
+            <span class="act-n">4</span>
+            <strong>Retravailler le ciblage (tous centres)</strong>
+            <span class="act-d">Remplacer "Votre suggestion" par un ciblage intentionnel : âge, comportement d'achat, intention santé/nutrition.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="act-col i">
+        <h4>🟠 Important</h4>
+        <div class="act-items">
+          <div class="act">
+            <span class="act-n">5</span>
+            <strong>Géo → rayon km</strong>
+            <span class="act-d">Remplacer listes de communes manuelles par un rayon. Plus fluide pour l'algo Meta.</span>
+          </div>
+          <div class="act">
+            <span class="act-n">6</span>
+            <strong>Construire de vrais personas</strong>
+            <span class="act-d">Si segmentation : par âge, comportement, intention (post-grossesse, senior, rééducation) — pas des intérêts cosmétiques copiés.</span>
+          </div>
+          <div class="act">
+            <span class="act-n">7</span>
+            <strong>Tester Lead Ads</strong>
+            <span class="act-d">Toutes inactives. Potentiellement CPL plus bas en supprimant la friction landing page.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div>
+      Rapport généré par <strong>meta-advertising.io</strong> &nbsp;|&nbsp; 13 mars 2026<br>
+      Données source : Export Ads Manager Meta — Période 12 jan → 13 mar 2026
+    </div>
+    <div class="footer-right">
+      <span class="conf">Confidentiel — Usage interne</span>
+      <img src="https://www.rnpc.fr/wp-content/uploads/2021/03/logo-RNPC.png" alt="RNPC" onerror="this.outerHTML='<span style=\'font-weight:700;color:rgba(255,255,255,0.5);font-size:8px\'>RNPC®</span>'">
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

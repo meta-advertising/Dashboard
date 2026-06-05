@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Body House — Rapport Performance Skeepers</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:#fdf6f2;color:#242424;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+/* === COVER === */
+.cover{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#2d2024 0%,#242424 40%,#1a1818 100%);color:#fff;text-align:center;padding:40px;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:rgba(241,157,118,0.06);top:-180px;right:-180px}
+.cover::after{content:'';position:absolute;width:350px;height:350px;border-radius:50%;background:rgba(241,157,118,0.05);bottom:-100px;left:-100px}
+.cover img{height:80px;filter:brightness(0) invert(1);margin-bottom:44px;position:relative;z-index:1}
+.cover h1{font-size:2.6rem;font-weight:800;letter-spacing:-1px;margin-bottom:8px;position:relative;z-index:1}
+.cover h2{font-size:1.3rem;font-weight:400;opacity:.85;position:relative;z-index:1;margin-bottom:6px}
+.cover .subtitle{font-size:1rem;opacity:.55;position:relative;z-index:1}
+.cover .period{margin-top:36px;padding:10px 28px;border:1px solid rgba(241,157,118,.35);border-radius:30px;font-size:.9rem;letter-spacing:.5px;position:relative;z-index:1;color:#F19D76}
+.cover .footer{position:absolute;bottom:30px;font-size:.75rem;opacity:.35;z-index:1}
+
+/* === LAYOUT === */
+.page{max-width:1100px;margin:0 auto;padding:50px 40px}
+.page-break{page-break-before:always}
+
+/* === SECTION HEADER === */
+.sh{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:2px solid #F19D76}
+.sh .num{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#F19D76,#d4845c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;flex-shrink:0}
+.sh h2{font-size:1.45rem;font-weight:700;color:#242424}
+.sh .tag{font-size:.7rem;background:#fdf6f2;color:#d4845c;padding:3px 10px;border-radius:20px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;border:1px solid #f1dbcf}
+
+/* === EXEC SUMMARY === */
+.exec-title{font-size:1.8rem;font-weight:800;color:#242424;margin-bottom:6px}
+.exec-sub{color:#888;margin-bottom:32px;font-size:.95rem}
+
+/* === KPI CARDS === */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px}
+.kpi{background:#fff;border-radius:14px;padding:22px 20px;box-shadow:0 1px 4px rgba(0,0,0,.06);position:relative;overflow:hidden}
+.kpi::after{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,#F19D76,#d4845c)}
+.kpi .kl{font-size:.7rem;text-transform:uppercase;letter-spacing:.6px;color:#999;margin-bottom:8px;font-weight:600}
+.kpi .kv{font-size:1.65rem;font-weight:800;color:#242424}
+.kpi .ks{font-size:.75rem;color:#aaa;margin-top:4px}
+
+/* === TOP RANKING === */
+.ranking{background:#fff;border-radius:14px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);margin-bottom:32px}
+.ranking h3{font-size:1rem;font-weight:700;margin-bottom:20px;color:#242424}
+.rank-item{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.rank-item:last-child{margin-bottom:0}
+.rank-pos{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0}
+.rank-pos.g{background:linear-gradient(135deg,#ffd700,#ffb300);color:#5d4200}
+.rank-pos.s{background:linear-gradient(135deg,#e0e0e0,#bdbdbd);color:#424242}
+.rank-pos.b{background:linear-gradient(135deg,#d4a373,#bc8a5f);color:#3e2723}
+.rank-pos.n{background:#f5f0ed;color:#666}
+.rank-name{font-weight:600;font-size:.85rem;flex:1;min-width:130px}
+.rank-val{font-weight:700;color:#d4845c;font-size:.8rem;font-variant-numeric:tabular-nums;min-width:75px;text-align:right}
+.rank-bar-bg{flex:2;height:7px;background:#f5f0ed;border-radius:4px;overflow:hidden}
+.rank-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,#F19D76,#f1c4a8)}
+
+/* === BOUTIQUE BARS === */
+.bout-bars{background:#fff;border-radius:14px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);margin-bottom:32px}
+.bout-bars h3{font-size:1rem;font-weight:700;margin-bottom:20px;color:#242424}
+.bb-item{display:flex;align-items:center;gap:12px;margin-bottom:10px;font-size:.85rem}
+.bb-item:last-child{margin-bottom:0}
+.bb-name{width:120px;text-align:right;font-weight:600;flex-shrink:0}
+.bb-bar-bg{flex:1;height:10px;background:#f5f0ed;border-radius:5px;overflow:hidden}
+.bb-bar{height:100%;border-radius:5px;background:linear-gradient(90deg,#F19D76,#f1c4a8)}
+.bb-val{width:90px;font-weight:700;color:#d4845c;font-variant-numeric:tabular-nums;font-size:.8rem}
+.bb-note{font-size:.72rem;color:#bbb;font-style:italic}
+
+/* === TABLE === */
+.tbl-wrap{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06);margin-bottom:24px}
+table{width:100%;border-collapse:collapse}
+th{background:#242424;color:#fff;padding:11px 14px;text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+th:not(:first-child){text-align:right}
+td{padding:10px 14px;border-bottom:1px solid #f0ebe8;font-size:.85rem}
+td:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+tr:nth-child(even) td{background:#fdfaf8}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:600}
+.total-row td{background:#fdf6f2!important;font-weight:700;color:#d4845c;border-top:2px solid #F19D76}
+
+/* === ANALYSIS === */
+.analysis{background:linear-gradient(135deg,#fdf6f2 0%,#f1dbcf 100%);border-radius:14px;padding:20px 24px;font-size:.88rem;line-height:1.7;color:#4a3028;margin-bottom:10px}
+.analysis strong{color:#c2714a}
+
+/* === NO DATA === */
+.no-data{background:#f5f0ed;border-radius:14px;padding:40px;text-align:center;color:#999;font-size:.95rem}
+
+/* === PRINT === */
+@media print{
+  body{background:#fff}
+  .page{padding:30px 20px}
+  .cover{min-height:100vh}
+  .kpis{grid-template-columns:repeat(4,1fr)}
+  .no-print{display:none}
+}
+@page{size:A4 landscape;margin:12mm}
+
+@media(max-width:768px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .cover h1{font-size:1.8rem}
+  .page{padding:24px 16px}
+  table{font-size:.75rem}
+  th,td{padding:8px 10px}
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER ==================== -->
+<div class="cover">
+  <img src="https://bodyhouse.fr/themes/ARPA3-BodyHouse/assets/img/header/logo.svg" alt="Body House">
+  <h1>Rapport Performance Skeepers</h1>
+  <h2>Analyse des contenus influenceuses sponsorisés</h2>
+  <div class="subtitle">Contenus période fêtes de fin d'année — Campagne Meta Ads</div>
+  <div class="period">Octobre — Décembre 2025</div>
+  <div class="footer">Préparé par Meta-Advertising</div>
+</div>
+
+<div id="app"></div>
+
+<script>
+// ======================== DATA ========================
+// Doublons fusionnés par boutique — CTR = moyenne pondérée
+const BOUTIQUES = [
+  {
+    name: 'National',
+    label: 'Campagne Nationale',
+    isNational: true,
+    ads: [
+      {i:'Sandra',imp:156335,reach:104350,ctr:6.70,eng:81806,react:487,clicks:10521,w100:18010,w50:43373},
+      {i:'Mommy Lilly Off',imp:60100,reach:33036,ctr:6.98,eng:26712,react:487,clicks:4928,w100:224,w50:2698},
+      {i:'Coralie Diary',imp:9143,reach:8297,ctr:8.18,eng:5136,react:60,clicks:729,w100:65,w50:797},
+      {i:'Kakarine du 30',imp:7310,reach:5651,ctr:3.05,eng:2351,react:32,clicks:246,w100:460,w50:612},
+      {i:'Lauranne',imp:4508,reach:3798,ctr:7.41,eng:1994,react:18,clicks:331,w100:98,w50:434},
+      {i:'Jodie Chpln',imp:221,reach:209,ctr:7.69,eng:103,react:1,clicks:16,w100:15,w50:29},
+      {i:'Johanna Todisco',imp:58,reach:56,ctr:5.17,eng:23,react:1,clicks:3,w100:1,w50:3},
+      {i:'Elisa B',imp:31,reach:30,ctr:3.23,eng:12,react:1,clicks:1,w100:0,w50:4},
+      {i:'La Vie de la Meute',imp:29,reach:28,ctr:17.24,eng:16,react:0,clicks:5,w100:1,w50:4},
+      {i:'Miamore',imp:21,reach:20,ctr:0,eng:3,react:0,clicks:0,w100:0,w50:0}
+    ],
+    analysis:"Les vidéos de <strong>Sandra</strong> cumulent 156K impressions avec un CTR moyen de 6,7%, ce qui en fait les contenus les plus diffusés de la campagne nationale. La vidéo de <strong>Mommy Lilly Off</strong> atteint 60K impressions pour 27K engagements. Coralie Diary se distingue par le meilleur CTR de la campagne à 8,2%. Les autres contenus ont bénéficié d'une diffusion plus limitée."
+  },
+  {
+    name: 'Valence',
+    ads: [
+      {i:'Jodie Chpln',imp:45143,reach:24793,ctr:2.23,eng:11214,react:153,clicks:1008,w100:1658,w50:2906},
+      {i:'Coralie Diary',imp:2550,reach:2144,ctr:4.34,eng:970,react:7,clicks:114,w100:11,w50:151},
+      {i:'Johanna Todisco',imp:611,reach:522,ctr:3.44,eng:173,react:4,clicks:23,w100:8,w50:19},
+      {i:'Mommy Lilly Off',imp:240,reach:217,ctr:2.50,eng:74,react:1,clicks:9,w100:1,w50:10},
+      {i:'Elisa B',imp:239,reach:219,ctr:3.13,eng:66,react:2,clicks:7,w100:5,w50:13}
+    ],
+    analysis:"La vidéo de <strong>Jodie Chpln</strong> concentre 93% des impressions de la boutique (45K) avec 11K engagements. Les vidéos de Coralie Diary et Johanna Todisco affichent des volumes plus modestes mais des CTR corrects (autour de 3 à 4%). La diffusion reste inégale entre les contenus."
+  },
+  {
+    name: 'Montélimar',
+    ads: [
+      {i:'Coralie Diary',imp:105978,reach:48118,ctr:0.17,eng:48118,react:197,clicks:1762,w100:612,w50:4456},
+      {i:'Mommy Lilly Off',imp:40693,reach:17243,ctr:0.27,eng:17247,react:139,clicks:2721,w100:630,w50:4612},
+      {i:'Jodie Chpln',imp:31609,reach:15586,ctr:0.17,eng:11329,react:50,clicks:544,w100:1417,w50:2463},
+      {i:'Elisa B',imp:25342,reach:15455,ctr:0.14,eng:10782,react:42,clicks:431,w100:621,w50:1454},
+      {i:'Johanna Todisco',imp:10492,reach:5472,ctr:0.29,eng:4227,react:24,clicks:260,w100:181,w50:373}
+    ],
+    analysis:"La vidéo de <strong>Coralie Diary</strong> totalise 106K impressions et 48K engagements, représentant près de la moitié de la visibilité de la boutique. La vidéo de <strong>Mommy Lilly Off</strong> complète avec 41K impressions et le plus grand nombre de clics (2 721). Les 5 contenus couvrent un spectre d'audience cohérent avec un taux d'engagement global de 43%."
+  },
+  {
+    name: 'Lyon',
+    ads: [
+      {i:'Elisa B',imp:15904,reach:11882,ctr:0.18,eng:7383,react:44,clicks:211,w100:555,w50:1230},
+      {i:'Stephya',imp:7276,reach:6261,ctr:0.14,eng:3563,react:75,clicks:161,w100:491,w50:893}
+    ],
+    analysis:"La vidéo d'<strong>Elisa B</strong> porte 69% des impressions de la boutique avec 16K impressions et 7,4K engagements. Les vidéos de <strong>Stephya</strong> apportent un complément avec 7,3K impressions cumulées. Le taux d'engagement global atteint 47%."
+  },
+  {
+    name: 'Grenoble',
+    ads: [
+      {i:'Coralie Diary',imp:112852,reach:58104,ctr:0.16,eng:58979,react:292,clicks:1535,w100:868,w50:9137},
+      {i:'Mommy Lilly Off',imp:52554,reach:28340,ctr:0.23,eng:26321,react:225,clicks:1001,w100:328,w50:3444},
+      {i:'Jodie Chpln',imp:6605,reach:4199,ctr:0.11,eng:2839,react:13,clicks:81,w100:358,w50:655},
+      {i:'Johanna Todisco',imp:4631,reach:3114,ctr:0.17,eng:1927,react:18,clicks:100,w100:88,w50:193},
+      {i:'Elisa B',imp:1662,reach:1251,ctr:0.06,eng:807,react:9,clicks:22,w100:45,w50:124}
+    ],
+    analysis:"La vidéo de <strong>Coralie Diary</strong> génère 113K impressions et 59K engagements. La vidéo de <strong>Mommy Lilly Off</strong> suit avec 53K impressions. Ces deux contenus représentent 93% de la visibilité sur Grenoble. Les autres contenus restent en retrait en termes de diffusion."
+  },
+  {
+    name: 'Avignon Nord',
+    ads: [
+      {i:'La Vie de la Meute',imp:340668,reach:null,ctr:0.22,eng:135316,react:890,clicks:6235,w100:7140,w50:23402},
+      {i:'Coralie Diary',imp:34156,reach:24059,ctr:0.16,eng:16086,react:102,clicks:506,w100:297,w50:2478},
+      {i:'Mommy Lilly Off',imp:31278,reach:19843,ctr:0.25,eng:15695,react:143,clicks:699,w100:277,w50:2408},
+      {i:'Elisa B',imp:12518,reach:10763,ctr:0.07,eng:2831,react:14,clicks:74,w100:108,w50:285},
+      {i:'Jodie Chpln',imp:8001,reach:6104,ctr:0.10,eng:3392,react:23,clicks:117,w100:478,w50:757},
+      {i:'Johanna Todisco',imp:5104,reach:4113,ctr:0.22,eng:2023,react:26,clicks:163,w100:100,w50:224}
+    ],
+    analysis:"La vidéo de <strong>La Vie de la Meute</strong> génère 341K impressions et 135K engagements, portant l'essentiel de la visibilité de la boutique. Les vidéos de <strong>Coralie Diary</strong> (34K) et <strong>Mommy Lilly Off</strong> (31K) complètent le dispositif. Avignon Nord est la boutique la plus visible de l'ensemble de la campagne avec 432K impressions cumulées."
+  },
+  {
+    name: 'Avignon Sud',
+    ads: [
+      {i:'Coralie Diary',imp:216699,reach:101272,ctr:0.15,eng:101933,react:453,clicks:2828,w100:1715,w50:14947},
+      {i:'La Vie de la Meute',imp:38583,reach:25055,ctr:0.23,eng:16641,react:110,clicks:578,w100:554,w50:2411},
+      {i:'Jodie Chpln',imp:37660,reach:21690,ctr:0.21,eng:15104,react:66,clicks:525,w100:1852,w50:2983},
+      {i:'Johanna Todisco',imp:19597,reach:12032,ctr:0.18,eng:7625,react:54,clicks:414,w100:315,w50:766},
+      {i:'Mommy Lilly Off',imp:17882,reach:12791,ctr:0.18,eng:8321,react:98,clicks:356,w100:127,w50:919},
+      {i:'Elisa B',imp:6477,reach:4527,ctr:0.12,eng:2977,react:31,clicks:82,w100:173,w50:388}
+    ],
+    analysis:"La vidéo de <strong>Coralie Diary</strong> cumule 217K impressions et 102K engagements, représentant 64% de la visibilité de la boutique. Les vidéos de <strong>La Vie de la Meute</strong> (39K) et <strong>Jodie Chpln</strong> (38K) apportent un complément significatif. Deuxième boutique en volume d'impressions après Avignon Nord."
+  },
+  {
+    name: 'Nîmes',
+    ads: [
+      {i:'Alice Vinct',imp:38805,reach:31085,ctr:0.44,eng:18640,react:527,clicks:684,w100:1800,w50:4575}
+    ],
+    analysis:"La vidéo d'<strong>Alice Vinct</strong> est le seul contenu activé sur cette boutique. Elle atteint 39K impressions avec un taux d'engagement de 48% et une rétention vidéo à 50% de 11,8%, indiquant un bon niveau d'attention de l'audience locale."
+  },
+  {
+    name: 'Salaise',
+    noData: true,
+    ads: [],
+    analysis:""
+  },
+  {
+    name: 'Aubière',
+    ads: [
+      {i:'Jenn Qre',imp:98653,reach:60726,ctr:0.26,eng:49763,react:474,clicks:740,w100:1791,w50:8558},
+      {i:'Loulouchana',imp:58740,reach:41350,ctr:0.59,eng:24265,react:227,clicks:1002,w100:2320,w50:4038},
+      {i:'Alice',imp:6645,reach:4788,ctr:0.62,eng:2627,react:39,clicks:157,w100:170,w50:344}
+    ],
+    analysis:"Les vidéos de <strong>Jenn Qre</strong> cumulent 99K impressions et 50K engagements sur deux contenus. La vidéo de <strong>Loulouchana</strong> affiche un CTR de 0,59% et une bonne rétention vidéo. La vidéo d'<strong>Alice</strong> obtient le CTR le plus élevé de la boutique à 0,62%."
+  },
+  {
+    name: 'Biganos',
+    noData: true,
+    ads: [],
+    analysis:""
+  },
+  {
+    name: 'Villefranche',
+    ads: [
+      {i:'Coralie Diary',imp:11442,reach:9504,ctr:0.42,eng:5964,react:51,clicks:92,w100:100,w50:1079},
+      {i:'Elisa B',imp:7404,reach:4923,ctr:2.54,eng:2020,react:27,clicks:215,w100:147,w50:391},
+      {i:'Mommy Lilly Off',imp:5127,reach:3997,ctr:3.10,eng:1508,react:20,clicks:204,w100:25,w50:246},
+      {i:'Lauranne',imp:3295,reach:2648,ctr:0.42,eng:1349,react:19,clicks:20,w100:59,w50:225},
+      {i:'Miamore',imp:1454,reach:1454,ctr:0.07,eng:164,react:2,clicks:5,w100:11,w50:32},
+      {i:'La Vie de la Meute',imp:854,reach:843,ctr:0,eng:146,react:1,clicks:6,w100:2,w50:21}
+    ],
+    analysis:"La vidéo de <strong>Coralie Diary</strong> mène avec 11K impressions et le taux d'engagement le plus élevé. La vidéo de <strong>Mommy Lilly Off</strong> obtient un CTR de 3,1%. Le dispositif couvre 6 influenceuses sur différents objectifs (Engagement, Notoriété, Trafic)."
+  },
+  {
+    name: 'Chambéry',
+    ads: [
+      {i:'Non identifiée',imp:6095,reach:4635,ctr:0.18,eng:1824,react:14,clicks:21,w100:268,w50:456}
+    ],
+    analysis:"Un seul contenu a été activé, dont le nom d'influenceuse n'est pas identifié dans les données. La performance atteint 6K impressions avec un taux d'engagement de 30% et une rétention vidéo à 50% de 7,5%."
+  },
+  {
+    name: 'Sainte-Eulalie',
+    ads: [
+      {i:'Melissedlisse',imp:9092,reach:7230,ctr:0.22,eng:3832,react:31,clicks:75,w100:70,w50:510}
+    ],
+    analysis:"La vidéo de <strong>Melissedlisse</strong> est le seul contenu activé sur cette boutique avec 9K impressions et un taux d'engagement de 42%. La rétention à 50% se situe à 5,6%."
+  }
+];
+
+// ======================== UTILS ========================
+function fmt(n){
+  if(n==null) return '—';
+  return n.toLocaleString('fr-FR');
+}
+function pct(n,d){
+  if(!d||n==null) return '—';
+  return (n/d*100).toFixed(1).replace('.',',')+' %';
+}
+function sumField(ads,f){
+  return ads.reduce((s,a)=>{const v=a[f];return v!=null?s+v:s},0);
+}
+function shortNum(n){
+  if(n==null) return '—';
+  if(n>=1000000) return (n/1000000).toFixed(1).replace('.',',')+' M';
+  if(n>=1000) return (n/1000).toFixed(1).replace('.',',')+' K';
+  return n.toString();
+}
+
+// ======================== RENDER ========================
+function render(){
+  const app = document.getElementById('app');
+  let html = '';
+
+  // --- EXECUTIVE SUMMARY ---
+  let totalImp=0, totalReach=0, totalEng=0, totalAds=0, influencerSet=new Set();
+
+  BOUTIQUES.forEach(b=>{
+    b.ads.forEach(a=>{
+      if(a.imp!=null) totalImp+=a.imp;
+      if(a.reach!=null) totalReach+=a.reach;
+      totalEng+=a.eng;
+      totalAds++;
+      influencerSet.add(a.i);
+    });
+  });
+
+  html += '<div class="page page-break">';
+  html += '<div class="exec-title">Vue d\'ensemble</div>';
+  html += '<div class="exec-sub">Synthèse de la campagne Skeepers — Contenus influenceuses sponsorisés via Meta Ads</div>';
+
+  html += '<div class="kpis">';
+  html += kpiCard('Impressions totales',shortNum(totalImp),'Tous contenus confondus');
+  html += kpiCard('Audience unique totale',shortNum(totalReach),'Nombre de personnes atteintes');
+  html += kpiCard('Contenus sponsorisés',totalAds.toString(),influencerSet.size+' influenceuses mobilisées');
+  html += kpiCard('Engagements totaux',shortNum(totalEng),'Interactions sur les contenus');
+  html += '</div>';
+
+  // ALL influencers ranking
+  const influencerTotals = {};
+  BOUTIQUES.forEach(b=>{
+    b.ads.forEach(a=>{
+      if(!influencerTotals[a.i]) influencerTotals[a.i]={imp:0,eng:0,count:0};
+      if(a.imp!=null) influencerTotals[a.i].imp+=a.imp;
+      influencerTotals[a.i].eng+=a.eng;
+      influencerTotals[a.i].count++;
+    });
+  });
+  const allInfluencers = Object.entries(influencerTotals)
+    .sort((a,b)=>b[1].imp-a[1].imp);
+  const maxImp = allInfluencers[0][1].imp;
+
+  html += '<div class="ranking"><h3>Classement des influenceuses — par impressions totales</h3>';
+  allInfluencers.forEach(([name,d],idx)=>{
+    const cls = idx===0?'g':idx===1?'s':idx===2?'b':'n';
+    const pctW = (d.imp/maxImp*100).toFixed(0);
+    html += `<div class="rank-item">
+      <div class="rank-pos ${cls}">${idx+1}</div>
+      <div class="rank-name">${name}</div>
+      <div class="rank-bar-bg"><div class="rank-bar" style="width:${pctW}%"></div></div>
+      <div class="rank-val">${shortNum(d.imp)}</div>
+    </div>`;
+  });
+  html += '</div>';
+
+  // Boutique comparison bars — includes all boutiques
+  const boutData = BOUTIQUES.filter(b=>!b.isNational).map(b=>({
+    name:b.name,
+    imp:b.noData?0:sumField(b.ads,'imp'),
+    noData:!!b.noData
+  })).sort((a,b)=>b.imp-a.imp);
+  const maxBout = boutData[0].imp;
+
+  html += '<div class="bout-bars"><h3>Impressions par boutique</h3>';
+  boutData.forEach(b=>{
+    const pctW = maxBout ? (b.imp/maxBout*100).toFixed(0) : '0';
+    html += `<div class="bb-item">
+      <div class="bb-name">${b.name}</div>
+      <div class="bb-bar-bg"><div class="bb-bar" style="width:${pctW}%"></div></div>
+      <div class="bb-val">${b.noData?'<span class="bb-note">Pas de contenu Skeepers</span>':shortNum(b.imp)}</div>
+    </div>`;
+  });
+  html += '</div>';
+  html += '</div>'; // end exec page
+
+  // --- PER BOUTIQUE SECTIONS ---
+  let num = 0;
+  BOUTIQUES.forEach(b=>{
+    num++;
+    html += '<div class="page page-break">';
+
+    // Header
+    const tag = b.isNational ? 'National' : b.noData ? 'Pas de données' : b.ads.length+' contenu'+(b.ads.length>1?'s':'');
+    html += `<div class="sh">
+      <div class="num">${num}</div>
+      <h2>${b.label||b.name}</h2>
+      <span class="tag">${tag}</span>
+    </div>`;
+
+    if(b.noData){
+      html += '<div class="no-data">Pas de contenu Skeepers activé sur cette boutique durant la période.<br>Les campagnes utilisaient uniquement des visuels et vidéos internes Body House.</div>';
+      html += '</div>';
+      return;
+    }
+
+    // KPI cards
+    const tImp = sumField(b.ads,'imp');
+    const tReach = sumField(b.ads,'reach');
+    const tEng = sumField(b.ads,'eng');
+    const tW50 = sumField(b.ads,'w50');
+    const tW100 = sumField(b.ads,'w100');
+
+    html += '<div class="kpis">';
+    html += kpiCard('Impressions',shortNum(tImp), tImp?'':'Donnée partielle');
+    html += kpiCard('Audience unique',shortNum(tReach), tReach?'':'Donnée partielle');
+    html += kpiCard('Engagements',shortNum(tEng), tImp?'Taux : '+pct(tEng,tImp):'');
+    html += kpiCard('Rétention 50%',tImp?pct(tW50,tImp):'—', tW50?'Complétion : '+pct(tW100,tW50):'');
+    html += '</div>';
+
+    // Table
+    html += '<div class="tbl-wrap"><table>';
+    html += '<tr><th>Influenceuse</th><th>Impressions</th><th>Audience unique</th><th>Engagements</th><th>Réactions</th><th>Clics</th><th>CTR</th><th>Vues 50%</th><th>Vues 100%</th></tr>';
+
+    b.ads.forEach(a=>{
+      html += `<tr>
+        <td>${a.i}</td>
+        <td>${fmt(a.imp)}</td>
+        <td>${fmt(a.reach)}</td>
+        <td>${fmt(a.eng)}</td>
+        <td>${fmt(a.react)}</td>
+        <td>${fmt(a.clicks)}</td>
+        <td>${a.ctr?a.ctr.toFixed(2).replace('.',',')+'%':'—'}</td>
+        <td>${fmt(a.w50)}</td>
+        <td>${fmt(a.w100)}</td>
+      </tr>`;
+    });
+
+    // Total row
+    if(b.ads.length > 1){
+      const tClicks = sumField(b.ads,'clicks');
+      const tReact = sumField(b.ads,'react');
+      html += `<tr class="total-row">
+        <td>TOTAL</td>
+        <td>${fmt(tImp)}</td>
+        <td>${fmt(tReach)}</td>
+        <td>${fmt(tEng)}</td>
+        <td>${fmt(tReact)}</td>
+        <td>${fmt(tClicks)}</td>
+        <td>—</td>
+        <td>${fmt(tW50)}</td>
+        <td>${fmt(tW100)}</td>
+      </tr>`;
+    }
+    html += '</table></div>';
+
+    // Analysis
+    if(b.analysis){
+      html += `<div class="analysis">${b.analysis}</div>`;
+    }
+
+    html += '</div>'; // end page
+  });
+
+  app.innerHTML = html;
+}
+
+function kpiCard(label,value,sub){
+  return `<div class="kpi">
+    <div class="kl">${label}</div>
+    <div class="kv">${value}</div>
+    ${sub?'<div class="ks">'+sub+'</div>':''}
+  </div>`;
+}
+
+render();
+</script>
+</body>
+</html>

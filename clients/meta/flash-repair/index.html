@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Repair — Dashboard Marketing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #080808;
+            color: #f0f0f0;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Animated background */
+        .bg-animated {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+            animation: float 8s ease-in-out infinite;
+        }
+        .bg-orb-1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #FF2A00 0%, transparent 70%);
+            top: -150px; left: -100px;
+            animation-delay: 0s;
+        }
+        .bg-orb-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #CC2200 0%, transparent 70%);
+            bottom: -100px; right: -100px;
+            animation-delay: -4s;
+        }
+        .bg-orb-3 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, #FF2A00 0%, transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.15;
+            animation-delay: -2s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        /* Screens */
+        .screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.95);
+        }
+
+        /* Landing */
+        .landing-logo {
+            width: 220px;
+            margin-bottom: 20px;
+            position: relative;
+            filter: drop-shadow(0 0 40px rgba(255,42,0,0.5)) drop-shadow(0 0 80px rgba(255,42,0,0.3));
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 40px rgba(255,42,0,0.5)) drop-shadow(0 0 80px rgba(255,42,0,0.3)); }
+            50% { filter: drop-shadow(0 0 60px rgba(255,42,0,0.7)) drop-shadow(0 0 100px rgba(255,42,0,0.4)); }
+        }
+        .landing-tagline {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: rgba(240,240,240,0.50);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+        .btn-primary {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 14px 48px;
+            background: linear-gradient(135deg, #FF2A00, #CC2200);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255,42,0,0.4);
+        }
+
+        /* Portal */
+        .portal-topbar {
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .portal-topbar img {
+            height: 40px;
+        }
+        .portal-topbar span {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: rgba(240,240,240,0.50);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .portal-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        .channel-pills {
+            display: flex;
+            gap: 12px;
+        }
+        .pill {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 8px 20px;
+            border-radius: 50px;
+            background: rgba(255,42,0,0.08);
+            border: 1px solid rgba(255,42,0,0.20);
+            color: #FF2A00;
+            letter-spacing: 0.5px;
+        }
+        .portal-card {
+            background: rgba(255,42,0,0.04);
+            border: 1px solid rgba(255,42,0,0.10);
+            border-radius: 16px;
+            padding: 40px 60px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        .portal-card:hover {
+            border-color: rgba(255,42,0,0.30);
+            box-shadow: 0 10px 40px rgba(255,42,0,0.1);
+            transform: translateY(-3px);
+        }
+        .portal-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        .portal-card p {
+            color: rgba(240,240,240,0.50);
+            font-size: 0.9rem;
+        }
+        .btn-back {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 0.85rem;
+            color: rgba(240,240,240,0.50);
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: color 0.3s;
+        }
+        .btn-back:hover {
+            color: #f0f0f0;
+        }
+    
+@media(max-width:768px){
+  .landing-logo,.logo-main{width:180px!important;height:auto!important}
+  .portal-topbar,.topbar{flex-wrap:wrap;padding:12px 16px!important}
+  .cards,.grid,.clients{grid-template-columns:1fr!important}
+  .stats-band,.channels-row{flex-wrap:wrap;gap:12px!important}
+  .card,.dash-card,.cta-card{padding:20px!important}
+  body{font-size:14px}
+}
+
+</style>
+</head>
+<body>
+    <div class="bg-animated">
+        <div class="bg-orb bg-orb-1"></div>
+        <div class="bg-orb bg-orb-2"></div>
+        <div class="bg-orb bg-orb-3"></div>
+    </div>
+
+    <!-- Landing Screen -->
+    <div class="screen" id="landing">
+        <img src="flashrepair-logo.png" alt="Flash Repair" class="landing-logo">
+        <p class="landing-tagline">Dashboard Marketing</p>
+        <button class="btn-primary" onclick="showPortal()">Accéder</button>
+    </div>
+
+    <!-- Portal Screen -->
+    <div class="screen hidden" id="portal">
+        <div class="portal-topbar">
+            <img src="flashrepair-logo.png" alt="Flash Repair">
+            <span>Flash Repair</span>
+        </div>
+        <div class="portal-content">
+            <div class="channel-pills">
+                <span class="pill">Meta Ads</span>
+                <span class="pill">Google Ads</span>
+            </div>
+            <a href="dashboard.html" class="portal-card">
+                <h3>Dashboard Marketing</h3>
+                <p>Performances Meta Ads & Google Ads</p>
+            </a>
+            <button class="btn-back" onclick="showLanding()">&larr; Retour</button>
+        </div>
+    </div>
+
+    <script>
+        function showPortal() {
+            document.getElementById('landing').classList.add('hidden');
+            document.getElementById('portal').classList.remove('hidden');
+        }
+        function showLanding() {
+            document.getElementById('portal').classList.add('hidden');
+            document.getElementById('landing').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

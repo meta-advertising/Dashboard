@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Kōdify - Logos Premium</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #050510;
+      color: white;
+      padding: 50px 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 6px;
+      color: #64748b;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    h2.main-title {
+      text-align: center;
+      font-size: 36px;
+      font-weight: 200;
+      letter-spacing: 2px;
+      margin-bottom: 60px;
+      background: linear-gradient(90deg, #7c3aed, #00f5ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section {
+      max-width: 1000px;
+      margin: 0 auto 60px;
+    }
+    .section-title {
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: #475569;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      padding-left: 4px;
+    }
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: start;
+    }
+    .card {
+      border-radius: 20px;
+      padding: 28px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+    }
+    .card.original {
+      background: #111827;
+      border: 1px solid #1e293b;
+    }
+    .card.original:hover {
+      box-shadow: 0 16px 50px rgba(0,0,0,0.3);
+    }
+    .card.premium {
+      background: linear-gradient(135deg, #0f0f2e 0%, #1a0a2e 100%);
+      border: 1px solid rgba(124, 58, 237, 0.2);
+    }
+    .card.premium:hover {
+      box-shadow: 0 16px 50px rgba(124, 58, 237, 0.15);
+    }
+    .card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .badge.old {
+      background: #1e293b;
+      color: #64748b;
+    }
+    .badge.new {
+      background: linear-gradient(90deg, rgba(124,58,237,0.2), rgba(217,70,239,0.2));
+      color: #c084fc;
+    }
+    .card .name {
+      margin-top: 16px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .card .desc {
+      margin-top: 4px;
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, #7c3aed, transparent);
+      margin: 60px auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Propositions finales</h1>
+  <h2 class="main-title">Kōdify</h2>
+
+  <!-- PROPOSITION 1 -->
+  <div class="section">
+    <div class="section-title">Proposition 01 — Gradient Moderne</div>
+    <div class="compare">
+      <div class="card original">
+        <span class="badge old">Avant</span>
+        <img src="logo-01-gradient-moderne.svg" alt="Logo 1 original">
+        <div class="name">Version initiale</div>
+        <div class="desc">Carré violet, K en police monospace, accolades simples</div>
+      </div>
+      <div class="card premium">
+        <span class="badge new">Premium</span>
+        <img src="logo-01-premium.svg" alt="Logo 1 premium">
+        <div class="name">Version Premium</div>
+        <div class="desc">Dégradé enrichi 4 tons, K dessiné en paths, ombre portée violette, reflet glass, ligne séparatrice, typographie plus bold</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROPOSITION 2 -->
+  <div class="section">
+    <div class="section-title">Proposition 02 — Néon Futuriste</div>
+    <div class="compare">
+      <div class="card original">
+        <span class="badge old">Avant</span>
+        <img src="logo-02-neon-futuriste.svg" alt="Logo 2 original">
+        <div class="name">Version initiale</div>
+        <div class="desc">Fond sombre, &lt;/&gt; néon basique, glow simple</div>
+      </div>
+      <div class="card premium">
+        <span class="badge new">Premium</span>
+        <img src="logo-02-premium.svg" alt="Logo 2 premium">
+        <div class="name">Version Premium</div>
+        <div class="desc">Noir profond avec grille subtile, cadre néon dégradé cyan→violet, double glow layeré, points orbitaux lumineux, particules d'ambiance, ligne bas dégradée</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

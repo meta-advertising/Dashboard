@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koven × Tío Bigotes Francia — Proposition Commerciale</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1e1e1e;
+  --surface: #2a2a2a;
+  --border: #3a3a3a;
+  --text: #f0f0f0;
+  --text2: #b0b0b0;
+  --text3: #707070;
+  --accent: #36a9e1;
+  --lavender: #b8a9e8;
+  --gold: #d4a04a;
+  --blue-card: #d0e8f7;
+  --orange-card: #f5c77d;
+  --pink-card: #f0b8d8;
+  --green: #10b981;
+  --green-card: #a7f3d0;
+  --koven-orange: #f7933b;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+.slides-container { width:100vw; height:100vh; position:relative; }
+
+.slide {
+  position:absolute; top:0; left:0;
+  width:100%; height:100%;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:flex-start;
+  padding:50px 80px 60px;
+  opacity:0; visibility:hidden;
+  transition:opacity 0.5s, transform 0.5s;
+  pointer-events:none; overflow:hidden;
+  background:var(--bg);
+}
+
+.slide.active { opacity:1; visibility:visible; transform:translateX(0)!important; pointer-events:all; }
+.slide.center-slide { align-items:center; }
+
+/* NAV */
+.nav-bar {
+  position:fixed; bottom:0; left:0; right:0;
+  height:50px; background:rgba(30,30,30,0.95);
+  backdrop-filter:blur(20px);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 30px; z-index:100;
+  border-top:1px solid var(--border);
+}
+
+.slide-counter { font-size:12px; font-weight:600; color:var(--text3); letter-spacing:2px; }
+
+.nav-btn {
+  background:var(--surface); border:1px solid var(--border);
+  color:var(--lavender); width:36px; height:36px;
+  border-radius:8px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; transition:all 0.25s;
+}
+.nav-btn:hover { background:var(--lavender); color:var(--bg); }
+
+.progress-bar {
+  position:fixed; top:0; left:0; height:3px;
+  background:linear-gradient(90deg, var(--lavender), var(--accent));
+  transition:width 0.5s; z-index:101;
+}
+
+/* TYPO */
+h1, h2 { font-family:'Oswald', sans-serif; text-transform:uppercase; letter-spacing:1px; }
+.slide-title { font-size:48px; font-weight:500; color:var(--lavender); margin-bottom:20px; line-height:1.1; }
+.slide-subtitle { font-size:16px; color:var(--text2); line-height:1.6; max-width:700px; }
+
+.section-title { font-family:'Oswald'; font-size:36px; font-weight:500; color:var(--lavender); margin-bottom:16px; text-transform:uppercase; letter-spacing:1px; }
+.section-title span { color:var(--text); }
+
+/* LOGOS */
+.logo-koven img { height:50px; }
+.logo-tio img { height:60px; }
+.cover-logos { display:flex; align-items:center; gap:20px; margin-bottom:30px; }
+
+/* CARDS COLORED (like 17.45) */
+.tier-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; width:100%; max-width:1100px; }
+
+.tier-card {
+  border-radius:16px; padding:28px 22px;
+  color:#1a1a1a; position:relative;
+  border:2px solid transparent;
+  transition:all 0.3s;
+}
+.tier-card:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(0,0,0,0.3); }
+
+.tier-card h3 { font-family:'Oswald'; font-size:20px; font-weight:500; text-transform:uppercase; letter-spacing:2px; margin-bottom:10px; text-align:center; }
+.tier-card .tier-price { font-family:'Oswald'; font-size:32px; font-weight:500; text-align:center; margin-bottom:4px; }
+.tier-card .tier-split { font-size:11px; text-align:center; margin-bottom:14px; opacity:0.7; }
+.tier-card .tier-list { font-size:12px; line-height:1.9; }
+.tier-card .tier-result {
+  margin-top:14px; padding:12px 14px;
+  border-radius:10px; text-align:center;
+  font-family:'Oswald'; font-size:16px; font-weight:500;
+  letter-spacing:1px;
+  min-height:46px;
+  display:flex; align-items:center; justify-content:center;
+}
+
+.card-blue { background:var(--blue-card); }
+.card-blue .tier-result { background:rgba(0,0,0,0.08); }
+
+.card-orange { background:var(--orange-card); }
+.card-orange .tier-result { background:rgba(0,0,0,0.08); }
+
+.card-pink { background:var(--pink-card); }
+.card-pink .tier-result { background:rgba(0,0,0,0.08); }
+
+.card-green { background:var(--green-card); color:#1a1a1a; }
+.card-green .tier-result { background:rgba(0,0,0,0.08); }
+
+/* DIAGNOSTIC BOXES */
+.diag-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; width:100%; max-width:1000px; margin-bottom:24px; }
+
+.diag-box {
+  border:1.5px solid var(--border); border-radius:14px;
+  padding:24px; background:var(--surface);
+}
+
+.diag-box h3 { font-family:'Oswald'; font-size:16px; font-weight:500; color:var(--lavender); text-transform:uppercase; letter-spacing:2px; margin-bottom:12px; }
+.diag-box ul { list-style:disc; padding-left:20px; font-size:14px; color:var(--text2); line-height:1.8; }
+.diag-box ul strong { color:var(--text); }
+
+/* RESPONSE BAR */
+.response-bar {
+  width:100%; max-width:1000px;
+  background:var(--blue-card); color:#1a1a1a;
+  border-radius:14px; padding:20px 28px;
+}
+
+.response-bar h3 { font-family:'Oswald'; font-size:18px; font-weight:500; margin-bottom:12px; }
+
+.response-targets { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.response-target h4 { font-family:'Oswald'; font-size:14px; font-weight:500; color:var(--lavender); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+.response-target p { font-size:12px; color:#444; }
+
+/* PHASE 0 CARDS */
+.phase-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; width:100%; max-width:1100px; }
+
+.phase-card {
+  background:var(--lavender); color:#1a1a1a;
+  border-radius:14px; padding:22px 18px;
+  border:2px solid transparent;
+}
+.phase-card.highlighted { border-color:var(--orange-card); }
+
+.phase-card h3 { font-family:'Oswald'; font-size:15px; font-weight:500; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; text-align:center; }
+.phase-card ul { list-style:disc; padding-left:18px; font-size:12px; line-height:1.8; }
+
+/* CAMPAIGN TABLE */
+.campaign-table {
+  width:100%; max-width:1100px;
+  border-collapse:separate; border-spacing:0;
+  font-size:13px;
+}
+
+.campaign-table thead th {
+  background:var(--pink-card); color:#1a1a1a;
+  padding:14px 16px; font-family:'Oswald';
+  font-weight:500; font-size:14px;
+  text-transform:uppercase; letter-spacing:1px;
+}
+
+.campaign-table thead th:first-child { border-radius:12px 0 0 0; }
+.campaign-table thead th:last-child { border-radius:0 12px 0 0; }
+
+.campaign-table tbody td {
+  padding:14px 16px; border-bottom:1px solid var(--border);
+  color:var(--text2); vertical-align:top;
+}
+
+.campaign-table tbody td:first-child { color:var(--text); font-weight:600; }
+
+/* FUNNEL */
+.funnel-boxes { display:flex; flex-direction:column; gap:10px; width:100%; max-width:800px; }
+
+.funnel-box {
+  border:1.5px solid var(--border); border-radius:14px;
+  padding:16px 22px; background:var(--surface);
+}
+
+.funnel-box h4 { font-family:'Oswald'; font-size:15px; font-weight:500; color:var(--lavender); margin-bottom:6px; }
+.funnel-box ul { list-style:disc; padding-left:20px; font-size:13px; color:var(--text2); line-height:1.7; }
+
+.funnel-box.f-pink { border-color:rgba(240,184,216,0.3); }
+.funnel-box.f-orange { border-color:rgba(245,199,125,0.3); }
+.funnel-box.f-blue { border-color:rgba(208,232,247,0.3); }
+
+.funnel-channel {
+  display:inline-block; padding:6px 14px;
+  border-radius:8px; font-size:11px;
+  font-weight:600; margin-left:auto;
+  float:right; margin-top:-24px;
+}
+
+.ch-pink { background:var(--pink-card); color:#1a1a1a; }
+.ch-orange { background:var(--orange-card); color:#1a1a1a; }
+.ch-blue { background:var(--blue-card); color:#1a1a1a; }
+
+/* RECAP TABLE */
+.recap-table {
+  width:100%; max-width:1060px;
+  border-collapse:separate; border-spacing:0 4px;
+  font-size:14px;
+}
+
+.recap-table thead th {
+  padding:14px 16px; font-family:'Oswald';
+  font-weight:500; letter-spacing:1px;
+  text-transform:uppercase; font-size:14px;
+}
+
+.recap-table thead th:nth-child(2) { background:var(--blue-card); color:#1a1a1a; border-radius:10px 0 0 10px; }
+.recap-table thead th:nth-child(3) { background:var(--orange-card); color:#1a1a1a; }
+.recap-table thead th:nth-child(4) { background:var(--pink-card); color:#1a1a1a; border-radius:0 10px 10px 0; }
+
+.recap-table tbody td {
+  padding:12px 16px; background:var(--surface);
+  text-align:center; color:var(--text2);
+}
+.recap-table tbody td:first-child { text-align:left; color:var(--text); font-weight:500; border-radius:8px 0 0 8px; }
+.recap-table tbody td:last-child { border-radius:0 8px 8px 0; }
+
+.recap-table .total-row td { font-weight:700; font-family:'Oswald'; font-size:18px; }
+.recap-table .total-row td:nth-child(2) { color:var(--accent); background:rgba(54,169,225,0.1); border-radius:10px 0 0 10px; }
+.recap-table .total-row td:nth-child(3) { color:var(--gold); background:rgba(212,160,74,0.1); }
+.recap-table .total-row td:nth-child(4) { color:var(--koven-orange); background:rgba(247,147,59,0.1); border-radius:0 10px 10px 0; }
+
+/* ENGAGEMENT CARDS */
+.engage-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; width:100%; max-width:1000px; }
+
+.engage-card {
+  border:1.5px solid; border-radius:14px;
+  padding:22px 18px; background:var(--surface);
+}
+
+.engage-card h4 { font-family:'Oswald'; font-size:15px; font-weight:500; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; color:var(--text); }
+.engage-card p { font-size:12px; color:var(--text2); line-height:1.7; }
+
+.engage-card:nth-child(1) { border-color:var(--lavender); }
+.engage-card:nth-child(2) { border-color:var(--pink-card); }
+.engage-card:nth-child(3) { border-color:var(--accent); }
+.engage-card:nth-child(4) { border-color:var(--green-card); }
+.engage-card:nth-child(5) { border-color:var(--orange-card); }
+.engage-card:nth-child(6) { border-color:var(--blue-card); }
+
+/* NOTES */
+.notes-bar {
+  width:100%; max-width:1060px;
+  background:var(--blue-card); color:#1a1a1a;
+  border-radius:12px; padding:16px 22px;
+  font-size:12px; line-height:1.7;
+  margin-top:14px;
+}
+.notes-bar ul { list-style:disc; padding-left:18px; }
+
+/* DECO */
+.deco { position:absolute; pointer-events:none; z-index:0; border-radius:16px; }
+.deco-1 { width:280px; bottom:-30px; right:-20px; opacity:0.05; filter:brightness(0.7) saturate(0.4); }
+.deco-2 { width:220px; top:-15px; left:-10px; opacity:0.04; filter:brightness(0.7) saturate(0.4); }
+
+.slide > *:not(.deco) { position:relative; z-index:1; }
+
+/* Phase 0 footer */
+.phase-footer {
+  font-family:'Oswald'; font-size:18px; font-weight:500;
+  color:var(--lavender); margin-top:18px;
+  letter-spacing:1px;
+}
+
+@media print {
+  .nav-bar, .progress-bar { display:none!important; }
+  .slide { position:relative!important; opacity:1!important; visibility:visible!important; transform:none!important; pointer-events:all!important; page-break-after:always; height:auto; min-height:100vh; overflow:visible; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="slides-container" id="slidesContainer">
+
+<!-- ===== SLIDE 1 : COVER ===== -->
+<div class="slide center-slide active" data-slide="1">
+  <img src="https://tiobigotes.fr/cdn/shop/files/boiteempanadasaemporter.jpg?v=1693489886&width=800" class="deco deco-1" alt="">
+  <img src="https://tiobigotes.fr/cdn/shop/files/cordobesa-tamano.jpg?v=1702930863&width=600" class="deco deco-2" alt="">
+  <div class="logo-tio" style="margin-bottom:10px;"><img src="https://tiobigotes.fr/cdn/shop/files/logo-blanc.png?v=1692804243&width=600" alt="Tío Bigotes" style="height:50px;"></div>
+  <h1 class="slide-title" style="font-size:64px;max-width:900px;text-align:left;">PROPOSITION<br><span style="color:var(--accent);">COMMERCIALE</span></h1>
+  <p class="slide-subtitle" style="margin-bottom:8px;">Acquisition digitale : B2C clients & préparation franchise</p>
+  <p style="font-size:13px;color:var(--text3);">Confidentiel — Avril 2026</p>
+  <div style="position:absolute;bottom:60px;left:80px;">
+    <div class="logo-koven"><img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven" style="height:40px;"></div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 2 : DIAGNOSTIC ===== -->
+<div class="slide" data-slide="2">
+  <h2 class="section-title">DIAGNOSTIC — <span>CE QUE NOUS AVONS COMPRIS</span></h2>
+  <div class="diag-grid">
+    <div class="diag-box">
+      <h3>Constats actuels :</h3>
+      <ul>
+        <li>Aucun budget publicitaire Meta ou Google actif à ce jour</li>
+        <li>Site B2B (franchise) existant → <strong>retirer la promotion Franchise Expo</strong> obsolète</li>
+        <li>Site B2C espagnol à exploiter → <strong>ajouter un module langue française</strong> pour les futures campagnes</li>
+        <li>Aucun tracking conversions actif → algorithmes « aveugles »</li>
+        <li>Communauté Instagram France <strong>encore à construire</strong></li>
+      </ul>
+    </div>
+    <div class="diag-box">
+      <h3>Forces de la marque :</h3>
+      <ul>
+        <li>Concept unique et authentique → <strong>empanada argentine artisanale</strong></li>
+        <li>Réseau international → Espagne, Pays-Bas, France</li>
+        <li>Compte Instagram espagnol puissant : <strong>39 000 followers</strong></li>
+        <li>Qualité produit et visuels exceptionnels</li>
+        <li>Boutique Paris 11e → emplacement stratégique</li>
+      </ul>
+    </div>
+  </div>
+  <div class="response-bar">
+    <h3 style="font-family:'Oswald';letter-spacing:1px;">NOTRE RÉPONSE : 2 CIBLES, 1 STRATÉGIE INTÉGRÉE</h3>
+    <div class="response-targets">
+      <div class="response-target">
+        <h4>Cible 1 : B2C Clients</h4>
+        <p>Créer la désirabilité de la marque, développer la communauté et générer du trafic en boutique</p>
+      </div>
+      <div class="response-target">
+        <h4>Cible 2 : B2B Franchise (au 6ème mois)</h4>
+        <p>Recruter des candidats franchisés qualifiés une fois la marque installée en France</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 3 : PHASE 0 ===== -->
+<div class="slide" data-slide="3">
+  <h2 class="section-title">PHASE 0 : <span>SETUP TECHNIQUE & FONDATIONS</span></h2>
+  <div class="phase-grid">
+    <div class="phase-card">
+      <h3>Setup Comptes</h3>
+      <ul>
+        <li>Configuration Business Manager</li>
+        <li>Configuration Ads Manager Meta</li>
+        <li>Création compte Google Ads</li>
+        <li>Liaison comptes IG FR + FB</li>
+        <li>Stratégie compte national + local</li>
+      </ul>
+    </div>
+    <div class="phase-card highlighted">
+      <h3>Setup Tracking</h3>
+      <ul>
+        <li>Pixel Meta sur tiobigotes.fr</li>
+        <li>Tag Manager + événements conversion</li>
+        <li>GA4 configuré avec objectifs</li>
+        <li>Suivi parcours prospect (source Meta / Google)</li>
+      </ul>
+    </div>
+    <div class="phase-card">
+      <h3>Acquisition Followers</h3>
+      <ul>
+        <li>Campagne followers ciblée food / empanadas / cuisine latine</li>
+        <li>Objectif : +500-1000/mois</li>
+        <li>Coût estimé : 0,50-0,70€/follower</li>
+        <li>Crédibilisation avant lancement ads</li>
+      </ul>
+    </div>
+    <div class="phase-card">
+      <h3>Base Audiences</h3>
+      <ul>
+        <li>Création lookalike depuis les 39K followers espagnols</li>
+        <li>Audiences ultra-personnalisées (persona client)</li>
+        <li>Segmentation cold / warm / hot</li>
+        <li>Audiences géo Paris + IDF</li>
+      </ul>
+    </div>
+  </div>
+  <p class="phase-footer">PHASE 0 — FORFAIT SETUP UNIQUE : 1 500€ HT</p>
+</div>
+
+<!-- ===== SLIDE 4 : CIBLE 1 B2C TABLEAU ===== -->
+<div class="slide" data-slide="4">
+  <h2 class="section-title">CIBLE 1 : <span>B2C CLIENTS</span></h2>
+  <table class="campaign-table">
+    <thead>
+      <tr>
+        <th>Campagnes</th>
+        <th>Canal</th>
+        <th>Format</th>
+        <th>Ciblage</th>
+        <th>KPI cible</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Trafic & Followers</td>
+        <td>Meta (IG + FB)</td>
+        <td>Reels, carrousels, visuels fixes</td>
+        <td>Audiences ultra-personnalisées + lookalike ES (39K), food, 18-45 ans, Paris + IDF</td>
+        <td>Coût par follower &lt; 0,60€<br>+500 à 1 000 followers/mois</td>
+      </tr>
+      <tr>
+        <td>Engagement</td>
+        <td>Meta (IG + FB)</td>
+        <td>Reels, carrousels, visuels fixes</td>
+        <td>Followers + look-alike clients existants</td>
+        <td>Taux d'engagement &gt; 4%<br>Taux de partage &gt; 2%</td>
+      </tr>
+      <tr>
+        <td>Notoriété</td>
+        <td>Meta (IG + FB)</td>
+        <td>Reels vidéo 15-30s, visuels fixes</td>
+        <td>18-45 ans, foodie, cuisine latine, sorties Paris</td>
+        <td>Coût pour 1 000 vues &lt; 6€<br>Portée &gt; 200 000/mois</td>
+      </tr>
+      <tr>
+        <td>Search Ads</td>
+        <td>Google Search</td>
+        <td>Annonces texte + extensions lieu</td>
+        <td>Mots-clés : empanadas Paris, restaurant argentin, à emporter</td>
+        <td>Taux de clic &gt; 5%<br>Coût par clic &lt; 0,80€</td>
+      </tr>
+      <tr>
+        <td>Remarketing</td>
+        <td>Google + Meta</td>
+        <td>Retargeting multi-canal</td>
+        <td>Visiteurs site + viewers 50%+ vidéos, non-convertis 30j</td>
+        <td>Coût par clic &lt; 0,50€<br>Taux de clic &gt; 1%</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:14px;padding:12px 20px;background:rgba(184,169,232,0.1);border:1px solid rgba(184,169,232,0.2);border-radius:12px;max-width:1100px;display:flex;justify-content:space-between;align-items:center;">
+    <p style="font-size:13px;color:var(--lavender);font-weight:600;">⚠️ Les campagnes Meta fonctionnent en simultané et doivent être maintenues en continu.</p>
+    <p style="font-size:13px;color:var(--accent);font-weight:600;">Répartition : 70% Meta / 30% Google</p>
+  </div>
+</div>
+
+<!-- ===== SLIDE 5 : STRATÉGIE DE CONTENU ===== -->
+<div class="slide" data-slide="5">
+  <h2 class="section-title">STRATÉGIE DE <span>CONTENU</span></h2>
+  <div class="phase-grid">
+    <div class="phase-card">
+      <h3>Vidéo Reels</h3>
+      <ul>
+        <li>Format n°1 sur Instagram</li>
+        <li>Vidéos 20-40s : ambiance, coulisses, fabrication</li>
+        <li>Mix pro + authentique (filmé iPhone)</li>
+        <li>Le contenu « amateur » génère plus d'engagement</li>
+      </ul>
+    </div>
+    <div class="phase-card highlighted">
+      <h3>Contenu espagnol</h3>
+      <ul>
+        <li>Recyclage vidéos du compte ES (39K)</li>
+        <li>Sous-titres français ajoutés</li>
+        <li>Collaborations vidéos avec franchisés internationaux</li>
+        <li>L'authenticité internationale est une force</li>
+      </ul>
+    </div>
+    <div class="phase-card">
+      <h3>Nano-influenceurs</h3>
+      <ul>
+        <li>Partenariats food creators Paris</li>
+        <li>Audiences engagées et spécialisées</li>
+        <li>Dotations produit en échange de contenu</li>
+        <li>UGC (contenu généré par les clients)</li>
+      </ul>
+    </div>
+    <div class="phase-card">
+      <h3>Personal Branding</h3>
+      <ul>
+        <li>Incarner la marque par les fondateurs</li>
+        <li>Les consommateurs veulent connaître l'histoire</li>
+        <li>Vidéos longues (3-4 min) découpées en reels</li>
+        <li>Min. 2 publications/semaine</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:16px;padding:14px 22px;background:var(--surface);border:1px solid var(--border);border-radius:12px;max-width:1100px;">
+    <p style="font-size:13px;color:var(--text2);text-align:center;">📌 Production recommandée : ~10 vidéos pro/an + ~50 vidéos authentiques + recyclage contenu ES. Préparer 3 mois en une session = 12 vidéos = 1 mois de publications (2/semaine).</p>
+  </div>
+</div>
+
+<!-- ===== SLIDE 6 : B2C BUDGET À TIROIR ===== -->
+<div class="slide" data-slide="6">
+  <h2 class="section-title">B2C CLIENTS / <span>BUDGET À TIROIR</span></h2>
+  <div class="tier-grid">
+    <div class="tier-card card-blue">
+      <h3>Essentiel</h3>
+      <div class="tier-price">1 500€/mois</div>
+      <div class="tier-split">média : 1 000€ / honoraires : 500€</div>
+      <div class="tier-list">
+        Trafic Meta + acquisition followers<br>
+        Notoriété Meta (IG + FB)<br>
+        Audiences lookalike Espagne<br>
+        1-2 audiences personnalisées<br>
+        Dashboard personnalisé 24h/24<br>
+        Reporting mensuel
+      </div>
+      <div class="tier-result">~Reach 100-150K/mois</div>
+    </div>
+    <div class="tier-card card-orange">
+      <h3>Performance</h3>
+      <div class="tier-price">2 000€/mois</div>
+      <div class="tier-split">média : 1 300€ / honoraires : 700€</div>
+      <div class="tier-list">
+        Trafic + Engagement + Notoriété Meta<br>
+        Google Search + Remarketing<br>
+        3-4 audiences testées<br>
+        Tracking complet du site<br>
+        Contenu recyclé ES → FR<br>
+        Dashboard unifié 24h/24
+      </div>
+      <div class="tier-result">~Reach 250-400K/mois</div>
+    </div>
+    <div class="tier-card card-pink">
+      <h3>Accélération</h3>
+      <div class="tier-price">3 000€/mois</div>
+      <div class="tier-split">média : 2 000€ / honoraires : 1 000€</div>
+      <div class="tier-list">
+        Full activation Meta multi-objectifs<br>
+        Google Search + Remarketing avancé<br>
+        5-6 audiences testées<br>
+        Stratégie nano-influenceurs<br>
+        Acquisition followers continue<br>
+        Canal WhatsApp équipe Koven 7j/7
+      </div>
+      <div class="tier-result">~Reach 500K+/mois</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 7 : CIBLE 2 B2B FRANCHISE ===== -->
+<div class="slide" data-slide="7">
+  <h2 class="section-title">CIBLE 2 : <span>B2B FRANCHISE (À PARTIR DU 6ÈME MOIS)</span></h2>
+  <p class="slide-subtitle" style="margin-bottom:20px;">La notoriété B2C construit la désirabilité de la marque. Les futurs franchisés vérifieront votre présence digitale — une communauté forte est votre meilleur argument.</p>
+  <div class="funnel-boxes">
+    <div class="funnel-box f-pink">
+      <span class="funnel-channel ch-pink">CANAUX : Meta (IG + FB)</span>
+      <h4>TOFU — Notoriété / 40% du budget</h4>
+      <ul>
+        <li>Vidéos fondateurs (personal branding)</li>
+        <li>Contenu B2C exploitable pour le recrutement franchise</li>
+        <li>Stories coulisses réseau, ambiance boutique</li>
+        <li>Objectif : éduquer l'audience, créer le lien</li>
+      </ul>
+    </div>
+    <div class="funnel-box f-orange">
+      <span class="funnel-channel ch-orange">CANAUX : Meta + Google Search</span>
+      <h4>MOFU — Considération / 35% du budget</h4>
+      <ul>
+        <li>Témoignages franchisés internationaux (Espagne, Pays-Bas)</li>
+        <li>Carrousels chiffres clés & étapes pour devenir franchisé</li>
+        <li>Contenu « Pourquoi Tío Bigotes » — retargeting viewers 50%+ vidéos TOFU</li>
+      </ul>
+    </div>
+    <div class="funnel-box f-blue">
+      <span class="funnel-channel ch-blue">CANAUX : Meta + Google Search</span>
+      <h4>BOFU — Conversion / 25% du budget</h4>
+      <ul>
+        <li>Lead Ads formulaire qualifié (Meta)</li>
+        <li>Google Search : « franchise empanadas », « ouvrir restaurant argentin »</li>
+        <li>Retargeting visiteurs page franchise</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 8 : B2B FRANCHISE BUDGET ===== -->
+<div class="slide" data-slide="8">
+  <h2 class="section-title">B2B FRANCHISE / <span>BUDGET À TIROIR</span></h2>
+  <div class="tier-grid">
+    <div class="tier-card card-blue">
+      <h3>Essentiel</h3>
+      <div class="tier-price">1 200€/mois</div>
+      <div class="tier-split">média : 700€ / honoraires : 500€</div>
+      <div class="tier-list">
+        Meta Lead Ads (BOFU uniquement)<br>
+        Google Search marque + générique<br>
+        Remarketing site franchise<br>
+        1 audience lookalike<br>
+        Reporting mensuel<br>
+        Pipeline de suivi des leads
+      </div>
+      <div class="tier-result">~20-35 leads/mois</div>
+    </div>
+    <div class="tier-card card-orange">
+      <h3>Performance</h3>
+      <div class="tier-price">2 200€/mois</div>
+      <div class="tier-split">média : 1 500€ / honoraires : 700€</div>
+      <div class="tier-list">
+        TOFU vidéo fondateurs + BOFU Lead Ads<br>
+        Google Search + Remarketing<br>
+        3-5 audiences testées<br>
+        Créatifs renouvelés mensuellement<br>
+        Dashboard personnalisé 24h/24
+      </div>
+      <div class="tier-result">~50-80 leads/mois</div>
+    </div>
+    <div class="tier-card card-pink">
+      <h3>Accélération</h3>
+      <div class="tier-price">3 500€/mois</div>
+      <div class="tier-split">média : 2 500€ / honoraires : 1 000€</div>
+      <div class="tier-list">
+        Full funnel TOFU + MOFU + BOFU<br>
+        Google Search + Remarketing avancé<br>
+        Meta multi-objectifs<br>
+        Acquisition followers continue<br>
+        Créatifs renouvelés mensuellement<br>
+        Canal WhatsApp équipe Koven 7j/7
+      </div>
+      <div class="tier-result">~100-150 leads/mois</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 9 : RÉCAPITULATIF ===== -->
+<div class="slide" data-slide="9">
+  <h2 class="section-title">RÉCAPITULATIF / <span>INVESTISSEMENT GLOBAL MENSUEL</span></h2>
+  <table class="recap-table">
+    <thead>
+      <tr>
+        <th style="text-align:left;color:var(--text3);"></th>
+        <th>Essentiel</th>
+        <th>Performance</th>
+        <th>Accélération</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Cible 1 / B2C Clients — Média</td>
+        <td>1 000€</td>
+        <td>1 300€</td>
+        <td>2 000€</td>
+      </tr>
+      <tr>
+        <td>Cible 1 / B2C Clients — Honoraires</td>
+        <td>500€</td>
+        <td>700€</td>
+        <td>1 000€</td>
+      </tr>
+      <tr>
+        <td>Cible 2 / B2B Franchise — Média <span style="font-size:11px;color:var(--text3);">(au 6ème mois)</span></td>
+        <td>700€</td>
+        <td>1 500€</td>
+        <td>2 500€</td>
+      </tr>
+      <tr>
+        <td>Cible 2 / B2B Franchise — Honoraires <span style="font-size:11px;color:var(--text3);">(au 6ème mois)</span></td>
+        <td>500€</td>
+        <td>700€</td>
+        <td>1 000€</td>
+      </tr>
+      <tr class="total-row">
+        <td style="font-size:16px;">Total mensuel (B2C seul)</td>
+        <td>1 500€/mois</td>
+        <td>2 000€/mois</td>
+        <td>3 000€/mois</td>
+      </tr>
+      <tr class="total-row">
+        <td style="font-size:16px;">Total mensuel (B2C + B2B)</td>
+        <td>2 700€/mois</td>
+        <td>4 200€/mois</td>
+        <td>6 500€/mois</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="notes-bar">
+    <ul>
+      <li>PHASE 0 (setup unique) : 1 500€ HT — inclus dans le 1er mois</li>
+      <li>Les cibles sont activables indépendamment / vous pouvez mixer les paliers (ex : Performance B2C + Essentiel B2B)</li>
+      <li>Honoraires = gestion, optimisation, reporting, dashboard. Budget média = versé directement à Meta/Google</li>
+      <li>Engagement minimum recommandé : 3 mois / les algorithmes ont besoin de données pour optimiser</li>
+      <li>Les comptes publicitaires, pages et données restent 100% propriété de Tío Bigotes — aucune rétention</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== SLIDE 10 : SCÉNARIOS ===== -->
+<div class="slide" data-slide="10">
+  <h2 class="section-title">SCÉNARIOS</h2>
+  <div class="tier-grid">
+    <div class="tier-card card-blue">
+      <h3>Scénario A / Lancement</h3>
+      <div class="tier-price">1 500€/mois</div>
+      <div class="tier-split">puis +1 200€/mois à M6 (franchise)</div>
+      <div class="tier-list" style="margin-top:10px;">
+        B2C Essentiel (1 000€ média)<br>
+        Trafic + Engagement + Notoriété<br>
+        Acquisition followers lookalike ES<br>
+        + Honoraires (500€)<br><br>
+        <strong>À partir du 6ème mois :</strong><br>
+        + B2B Franchise Essentiel (700€ média + 500€ honoraires)
+      </div>
+      <div class="tier-result">Construire la base, puis activer la franchise</div>
+    </div>
+    <div class="tier-card card-orange">
+      <h3>Scénario B / Équilibré</h3>
+      <div class="tier-price">2 000€/mois</div>
+      <div class="tier-split">puis +2 200€/mois à M6 (franchise)</div>
+      <div class="tier-list" style="margin-top:10px;">
+        B2C Performance (1 300€ média)<br>
+        Meta + Google Search + Remarketing<br>
+        Tracking complet + dashboard 24/7<br>
+        + Honoraires (700€)<br><br>
+        <strong>À partir du 6ème mois :</strong><br>
+        + B2B Franchise Performance (1 500€ média + 700€ honoraires)
+      </div>
+      <div class="tier-result">RECOMMANDÉ : meilleur ratio impact/budget</div>
+    </div>
+    <div class="tier-card card-pink">
+      <h3>Scénario C / Accélération</h3>
+      <div class="tier-price">3 000€/mois</div>
+      <div class="tier-split">puis +3 500€/mois à M6 (franchise)</div>
+      <div class="tier-list" style="margin-top:10px;">
+        B2C Accélération (2 000€ média)<br>
+        Full activation Meta + Google<br>
+        Nano-influenceurs + WhatsApp 7j/7<br>
+        + Honoraires (1 000€)<br><br>
+        <strong>À partir du 6ème mois :</strong><br>
+        + B2B Franchise Accélération (2 500€ média + 1 000€ honoraires)
+      </div>
+      <div class="tier-result">Croissance maximale sur tous les fronts</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 11 : ENGAGEMENTS ===== -->
+<div class="slide" data-slide="11">
+  <h2 class="section-title">NOS <span>ENGAGEMENTS</span></h2>
+  <div class="engage-grid">
+    <div class="engage-card">
+      <h4>Propriété totale</h4>
+      <p>Tous les comptes, pages, pixels et données créés restent 100% propriété de Tío Bigotes. Aucune rétention en cas de fin de collaboration.</p>
+    </div>
+    <div class="engage-card">
+      <h4>Transparence</h4>
+      <p>Dashboard personnalisé accessible 24h/24. Budget média versé directement aux plateformes. Reporting détaillé avec preuves de dépenses.</p>
+    </div>
+    <div class="engage-card">
+      <h4>Réactivité</h4>
+      <p>Réponse < 3h en semaine. Optimisations en continu. Call de suivi régulier. Ajustement des campagnes sans délai.</p>
+    </div>
+    <div class="engage-card">
+      <h4>Flexibilité</h4>
+      <p>Engagement 3 mois renouvelable. Possibilité de monter ou descendre de palier chaque trimestre. Offre modulable par cible.</p>
+    </div>
+    <div class="engage-card">
+      <h4>Expertise Restauration</h4>
+      <p>Ôcargo, The Crying Tiger, Mamie Bigoude, Olla Poké, Biba Brunch, Toa Sushi, Marvely — notre secteur de prédilection.</p>
+    </div>
+    <div class="engage-card">
+      <h4>Stratégie sur-mesure</h4>
+      <p>Exploitation du compte espagnol (39K) en lookalike. Recyclage contenu international. Approche B2C d'abord, B2B franchise au 6ème mois.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 12 : CTA ===== -->
+<div class="slide center-slide" data-slide="12">
+  <img src="https://tiobigotes.fr/cdn/shop/files/boiteempanadasaemporter.jpg?v=1693489886&width=800" class="deco deco-1" alt="">
+  <div class="cover-logos" style="margin-bottom:30px;">
+    <div class="logo-koven"><img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven" style="height:50px;"></div>
+    <span style="color:var(--text3);font-size:20px;font-weight:300;">×</span>
+    <div class="logo-tio"><img src="https://tiobigotes.fr/cdn/shop/files/logo-blanc.png?v=1692804243&width=600" alt="Tío Bigotes" style="height:55px;"></div>
+  </div>
+  <h2 style="font-family:'Oswald';font-size:52px;font-weight:500;text-transform:uppercase;letter-spacing:2px;">PASSONS À <em style="color:var(--accent);font-style:italic;">L'ACTION.</em></h2>
+</div>
+
+</div>
+
+<!-- NAV -->
+<div class="nav-bar">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <img src="https://www.koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven" style="height:20px;">
+    <span style="color:var(--text3);font-size:10px;">×</span>
+    <img src="https://tiobigotes.fr/cdn/shop/files/logo-blanc.png?v=1692804243&width=600" alt="Tío Bigotes" style="height:18px;">
+    <span class="slide-counter" id="slideCounter">01 / 12</span>
+  </div>
+  <div style="display:flex;gap:8px;">
+    <button class="nav-btn" onclick="changeSlide(-1)">&#8592;</button>
+    <button class="nav-btn" onclick="changeSlide(1)">&#8594;</button>
+  </div>
+</div>
+
+<script>
+let currentSlide = 1;
+const totalSlides = 12;
+let isAnimating = false;
+
+function changeSlide(direction) {
+  if (isAnimating) return;
+  const next = currentSlide + direction;
+  if (next < 1 || next > totalSlides) return;
+  isAnimating = true;
+  const currentEl = document.querySelector('.slide[data-slide="' + currentSlide + '"]');
+  const nextEl = document.querySelector('.slide[data-slide="' + next + '"]');
+  nextEl.style.transition = 'none';
+  nextEl.style.transform = direction > 0 ? 'translateX(50px)' : 'translateX(-50px)';
+  nextEl.style.opacity = '0';
+  nextEl.style.visibility = 'visible';
+  nextEl.offsetHeight;
+  nextEl.style.transition = '';
+  currentEl.style.transition = '';
+  currentEl.classList.remove('active');
+  currentEl.style.transform = direction > 0 ? 'translateX(-50px)' : 'translateX(50px)';
+  currentEl.style.opacity = '0';
+  nextEl.classList.add('active');
+  nextEl.style.transform = 'translateX(0)';
+  nextEl.style.opacity = '1';
+  currentSlide = next;
+  updateUI();
+  setTimeout(function() {
+    currentEl.style.visibility = 'hidden';
+    currentEl.style.transform = '';
+    currentEl.style.opacity = '';
+    isAnimating = false;
+  }, 550);
+}
+
+function updateUI() {
+  document.getElementById('slideCounter').textContent =
+    String(currentSlide).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+  document.getElementById('progress').style.width =
+    ((currentSlide / totalSlides) * 100) + '%';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+});
+
+var touchStartX = 0;
+document.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', function(e) {
+  var diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+});
+
+updateUI();
+</script>
+</body>
+</html>

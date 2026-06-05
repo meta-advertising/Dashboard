@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 140" width="480" height="140">
+  <!-- Style Figma : icône géométrique colorée + wordmark noir propre -->
+
+  <!-- Icône : K formé de formes géométriques simples (3 pièces) -->
+  <!-- Barre verticale -->
+  <rect x="32" y="30" width="20" height="80" rx="10" fill="#111111"/>
+  <!-- Triangle haut -->
+  <path d="M56 30 L92 30 L56 68 Z" fill="#635BFF" rx="4"/>
+  <!-- Triangle bas -->
+  <path d="M56 72 L92 110 L56 110 Z" fill="#FF4081"/>
+
+  <!-- Wordmark -->
+  <text x="120" y="86" font-family="-apple-system, 'SF Pro Display', 'Inter', 'Segoe UI', sans-serif" font-size="48" font-weight="700" fill="#111111" letter-spacing="-1.5">kodify</text>
+</svg>

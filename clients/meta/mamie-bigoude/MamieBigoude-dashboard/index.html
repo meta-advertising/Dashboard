@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comptoir Mamie Bigoude — Dashboard Campagnes</title>
+    <link rel="icon" href="https://mediab.izipass.cloud/ComptoirMB/Content/images/accueil-general/visuel-accueil-responsive.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        @font-face{font-family:'ReginaBlack';src:url(https://mediab.izipass.cloud/ComptoirMB/Content/Font/ReginaBlack-Solid.woff) format('woff');font-weight:normal;font-style:normal}
+        :root {
+            --mb-rose: #c4567a;
+            --mb-rose-light: #d4738f;
+            --mb-rose-dark: #a34161;
+            --mb-rose-soft: rgba(196,86,122,0.08);
+            --mb-rose-glow: rgba(196,86,122,0.15);
+            --mb-burgundy: #7a2e4a;
+            --mb-burgundy-dark: #5c1e36;
+            --mb-cream: #faf5f0;
+            --mb-gold: #c9a96e;
+            --mb-gold-soft: rgba(201,169,110,0.1);
+            --bg-primary: #faf8f6;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-hover: #f7f3ef;
+            --text-primary: #2d1f2b;
+            --text-secondary: #5e4a5a;
+            --text-tertiary: #9a8994;
+            --border-light: rgba(45,31,43,0.06);
+            --border-medium: rgba(45,31,43,0.12);
+            --success: #2e7d32;
+            --success-bg: rgba(46,125,50,0.08);
+            --danger: #c62828;
+            --danger-bg: rgba(198,40,40,0.08);
+            --warning: #ef6c00;
+            --warning-bg: rgba(239,108,0,0.08);
+            --meta-blue: #1877f2;
+            --meta-blue-soft: rgba(24,119,242,0.08);
+            --google-blue: #4285f4;
+            --google-soft: rgba(66,133,244,0.08);
+            --web-purple: #7c3aed;
+            --web-purple-soft: rgba(124,58,237,0.08);
+            --shadow-xs: 0 1px 2px rgba(45,31,43,0.04);
+            --shadow-sm: 0 2px 8px rgba(45,31,43,0.06);
+            --shadow-md: 0 4px 16px rgba(45,31,43,0.08);
+            --shadow-lg: 0 8px 32px rgba(45,31,43,0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --ease-out: cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+        body{font-family:'Plus Jakarta Sans','Inter',-apple-system,sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.6;overflow-x:hidden}
+        .dashboard-layout{display:flex;min-height:100vh}
+
+        /* ══ SIDEBAR ══ */
+        .sidebar{width:280px;background:linear-gradient(180deg,#3d1a2a 0%,#4e2238 40%,#3d1a2a 100%);position:fixed;top:0;left:0;bottom:0;z-index:100;display:flex;flex-direction:column;transition:transform .3s var(--ease-out);box-shadow:4px 0 24px rgba(0,0,0,0.2)}
+        .sidebar-header{padding:18px 16px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px}
+        .sidebar-logo-wrap{display:flex;align-items:center;gap:10px}
+        .sidebar-logo-block{background:linear-gradient(135deg,#fffaf5,#f8e8ef);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 16px rgba(196,86,122,0.25),0 0 0 2px rgba(196,86,122,0.15);flex-shrink:0;width:48px;height:48px;overflow:hidden}
+        .sidebar-logo-block img{height:auto;width:44px;object-fit:contain;margin-top:4px}
+        .sidebar-brand{display:flex;flex-direction:column}
+        .sidebar-brand-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#fff;line-height:1.2}
+        .sidebar-brand-sub{font-size:9.5px;color:rgba(255,255,255,0.4);letter-spacing:.5px;text-transform:uppercase;font-weight:600}
+        .sidebar-badge{font-size:9px;font-weight:700;background:rgba(196,86,122,0.25);color:#e8a0b8;padding:2px 8px;border-radius:10px;letter-spacing:.5px;text-transform:uppercase;margin-left:auto}
+        .sidebar-nav{flex:1;padding:12px 10px;overflow-y:auto}
+        .nav-section{margin-bottom:4px}
+        .nav-section-title{font-size:9.5px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.8px;padding:14px 14px 6px}
+        .nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:var(--radius-sm);color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;font-weight:500;transition:all .2s var(--ease-out);cursor:pointer;margin-bottom:1px;position:relative}
+        .nav-item:hover{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.9)}
+        .nav-item.active{background:rgba(196,86,122,0.2);color:#e8a0b8;font-weight:600}
+        .nav-item.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:20px;background:var(--mb-rose);border-radius:0 3px 3px 0}
+        .nav-item svg{width:17px;height:17px;flex-shrink:0;opacity:.65}
+        .nav-item.active svg{opacity:1}
+        .nav-badge{margin-left:auto;background:rgba(196,86,122,0.25);color:#e8a0b8;font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px;min-width:20px;text-align:center}
+        .nav-sub{padding-left:18px}
+        .nav-sub .nav-item{font-size:12px;padding:6px 14px;color:rgba(255,255,255,0.38)}
+        .nav-sub .nav-item.active{color:#e8a0b8;background:rgba(196,86,122,0.12)}
+        /* ══ CALENDAR DROPDOWN ══ */
+        .month-nav{position:relative}
+        .month-label{cursor:pointer;user-select:none}
+        .month-label:hover{color:var(--mb-rose)}
+        .cal-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);z-index:200;min-width:320px;padding:0;display:none;overflow:hidden}
+        .cal-dropdown.open{display:block;animation:fadeIn .2s var(--ease-out)}
+        .cal-year-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--border-light)}
+        .cal-year-label{font-size:15px;font-weight:700;font-family:'Playfair Display',serif}
+        .cal-year-btn{width:28px;height:28px;border:1px solid var(--border-light);border-radius:6px;background:var(--bg-secondary);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);transition:all .15s}
+        .cal-year-btn:hover{background:var(--mb-rose-soft);color:var(--mb-rose);border-color:var(--mb-rose)}
+        .cal-year-btn:disabled{opacity:.3;cursor:default}
+        .cal-year-btn svg{width:14px;height:14px}
+        .cal-months{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:12px}
+        .cal-month{padding:10px 6px;border-radius:8px;text-align:center;cursor:pointer;font-size:12px;font-weight:500;color:var(--text-secondary);transition:all .15s;position:relative;border:1.5px solid transparent}
+        .cal-month:hover{background:var(--mb-rose-soft);color:var(--mb-rose)}
+        .cal-month.active{background:var(--mb-rose);color:#fff;font-weight:700;border-color:var(--mb-rose)}
+        .cal-month.has-data::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:var(--mb-rose)}
+        .cal-month.active::after{background:#fff}
+        .cal-month.no-data{color:var(--text-tertiary);opacity:.55}
+        .cal-month.no-data:hover{background:var(--bg-hover);color:var(--text-secondary);opacity:1}
+        .cal-context{padding:10px 16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--text-tertiary)}
+        .cal-context .dot{width:5px;height:5px;border-radius:50%;background:var(--mb-rose)}
+
+        /* ══ MAIN ══ */
+        .main-content{flex:1;margin-left:280px;min-height:100vh}
+        .topbar{position:sticky;top:0;z-index:50;background:rgba(250,248,246,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between}
+        .topbar-left{display:flex;align-items:center;gap:16px}
+        .mobile-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:8px;border-radius:var(--radius-sm);color:var(--text-secondary)}
+        .breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-tertiary)}
+        .breadcrumb .sep{font-size:11px;opacity:.5}
+        .breadcrumb .current{color:var(--text-primary);font-weight:600}
+        .topbar-right{display:flex;align-items:center;gap:8px}
+        .topbar-btn{width:36px;height:36px;border-radius:var(--radius-sm);border:1px solid var(--border-light);background:var(--bg-secondary);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);transition:all .2s;position:relative}
+        .topbar-btn:hover{border-color:var(--border-medium);color:var(--text-primary);box-shadow:var(--shadow-xs)}
+        .topbar-btn svg{width:16px;height:16px}
+        .notif-dot{position:absolute;top:7px;right:7px;width:6px;height:6px;background:var(--danger);border-radius:50%;border:1.5px solid var(--bg-secondary)}
+        .live-indicator{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:var(--success-bg);border-radius:20px;font-size:10px;font-weight:700;color:var(--success);text-transform:uppercase;letter-spacing:.5px}
+        .live-dot{width:5px;height:5px;background:var(--success);border-radius:50%;animation:blink 1.5s infinite}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+        /* ══ MONTH SELECTOR ══ */
+        .month-nav{display:flex;align-items:center;gap:6px;background:var(--bg-secondary);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:3px}
+        .month-nav-btn{width:30px;height:30px;border:none;background:none;cursor:pointer;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--text-tertiary);transition:all .2s}
+        .month-nav-btn:hover{background:var(--bg-hover);color:var(--text-primary)}
+        .month-nav-btn:disabled{opacity:.3;cursor:default}
+        .month-nav-btn svg{width:14px;height:14px}
+        .month-label{font-size:12.5px;font-weight:600;color:var(--text-primary);min-width:120px;text-align:center}
+
+        /* ══ PAGE ══ */
+        .page-content{padding:24px 32px 48px;max-width:1480px}
+        .page-view{display:none;animation:fadeIn .35s var(--ease-out)}
+        .page-view.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        .page-header{margin-bottom:24px}
+        .page-header h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:800;letter-spacing:-.3px;margin-bottom:2px;color:var(--text-primary)}
+        .page-header p{font-size:13px;color:var(--text-tertiary)}
+        .header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+        .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius-sm);font-size:12.5px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s var(--ease-out);border:none;text-decoration:none}
+        .btn svg{width:15px;height:15px}
+        .btn-primary{background:var(--mb-rose);color:#fff;box-shadow:0 2px 8px rgba(196,86,122,.25)}
+        .btn-primary:hover{background:var(--mb-rose-dark);transform:translateY(-1px)}
+        .btn-outline{background:var(--bg-secondary);color:var(--text-secondary);border:1px solid var(--border-light)}
+        .btn-outline:hover{border-color:var(--border-medium);color:var(--text-primary)}
+
+        /* ══ TABS ══ */
+        .platform-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--bg-secondary);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:3px;width:fit-content}
+        .platform-tab{display:flex;align-items:center;gap:7px;padding:8px 18px;border-radius:7px;font-size:12.5px;font-weight:600;color:var(--text-tertiary);background:0;border:0;cursor:pointer;transition:all .2s var(--ease-out);font-family:inherit}
+        .platform-tab:hover{color:var(--text-secondary);background:var(--bg-hover)}
+        .platform-tab.active{color:var(--text-primary);background:var(--bg-secondary);box-shadow:var(--shadow-sm)}
+        .tab-dot{width:7px;height:7px;border-radius:50%}
+        .tab-dot.meta{background:var(--meta-blue)}.tab-dot.google{background:var(--google-blue)}.tab-dot.web{background:var(--web-purple)}.tab-dot.all{background:var(--mb-rose)}
+
+        /* ══ KPI ══ */
+        .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+        .kpi-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-lg);padding:18px 20px;transition:all .25s var(--ease-out);position:relative;overflow:hidden}
+        .kpi-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;background:var(--mb-rose);opacity:0;transition:opacity .25s}
+        .kpi-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+        .kpi-card:hover::after{opacity:1}
+        .kpi-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+        .kpi-label{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.4px}
+        .kpi-icon{width:34px;height:34px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center}
+        .kpi-icon svg{width:16px;height:16px}
+        .kpi-icon.rose{background:var(--mb-rose-soft);color:var(--mb-rose)}
+        .kpi-icon.gold{background:var(--mb-gold-soft);color:var(--mb-gold)}
+        .kpi-icon.meta-i{background:var(--meta-blue-soft);color:var(--meta-blue)}
+        .kpi-icon.google-i{background:var(--google-soft);color:var(--google-blue)}
+        .kpi-icon.web-i{background:var(--web-purple-soft);color:var(--web-purple)}
+        .kpi-value{font-size:26px;font-weight:800;color:var(--text-primary);line-height:1;margin-bottom:6px;letter-spacing:-.8px}
+        .kpi-footer{display:flex;align-items:center;gap:6px}
+        .kpi-sub{font-size:11px;color:var(--text-tertiary)}
+        .kpi-trend{font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:2px;padding:1px 6px;border-radius:10px}
+        .kpi-trend.up{color:var(--success);background:var(--success-bg)}
+        .kpi-trend.down{color:var(--danger);background:var(--danger-bg)}
+
+        /* ══ CHARTS ══ */
+        .grid-1-1{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+        .card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-lg);padding:22px;transition:box-shadow .3s}
+        .card:hover{box-shadow:var(--shadow-sm)}
+        .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+        .card-title{font-size:14px;font-weight:700}
+        .card-subtitle{font-size:11.5px;color:var(--text-tertiary);margin-top:1px}
+        .chart-legend{display:flex;gap:14px}
+        .legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-secondary);font-weight:500}
+        .legend-dot{width:7px;height:7px;border-radius:50%}
+        .chart-container{position:relative;height:280px}
+
+        /* ══ TABLE ══ */
+        .table-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:20px}
+        .table-top{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--border-light)}
+        .table-top h3{font-size:14px;font-weight:700}
+        table{width:100%;border-collapse:collapse}
+        thead th{font-size:10px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.5px;padding:10px 14px;text-align:left;background:var(--bg-hover);border-bottom:1px solid var(--border-light)}
+        tbody td{padding:11px 14px;font-size:12.5px;border-bottom:1px solid var(--border-light);color:var(--text-secondary)}
+        tbody tr{transition:background .15s}
+        tbody tr:hover{background:var(--bg-hover)}
+        tbody tr:last-child td{border-bottom:none}
+        .td-b{font-weight:600;color:var(--text-primary)}
+
+        /* ══ RESTAURANT CARDS ══ */
+        .restaurant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-bottom:20px}
+        .restaurant-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-lg);padding:20px;transition:all .25s var(--ease-out);cursor:pointer;position:relative;overflow:hidden}
+        .restaurant-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--mb-rose),var(--mb-gold));opacity:0;transition:opacity .3s}
+        .restaurant-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+        .restaurant-card:hover::before{opacity:1}
+        .restaurant-card.active{border-color:var(--mb-rose)}
+        .restaurant-card.active::before{opacity:1}
+        .resto-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+        .resto-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--mb-rose-soft),var(--mb-rose-glow));border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--mb-rose);font-size:16px;font-weight:800;font-family:'Playfair Display',serif}
+        .resto-info h4{font-size:14px;font-weight:700;color:var(--text-primary)}
+        .resto-info p{font-size:11px;color:var(--text-tertiary)}
+        .resto-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+        .resto-metric{padding:8px 10px;background:var(--bg-hover);border-radius:8px}
+        .resto-metric .lbl{font-size:9.5px;color:var(--text-tertiary);text-transform:uppercase;font-weight:700;letter-spacing:.3px}
+        .resto-metric .val{font-size:15px;font-weight:800;margin-top:1px;color:var(--text-primary)}
+
+        /* ══ DETAIL PANEL ══ */
+        .detail-panel{display:none;animation:fadeIn .35s var(--ease-out)}
+        .detail-panel.active{display:block}
+        .detail-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text-secondary);cursor:pointer;margin-bottom:16px;padding:6px 12px;border-radius:var(--radius-sm);border:none;background:var(--bg-hover);transition:all .2s;font-family:inherit}
+        .detail-back:hover{color:var(--text-primary);background:var(--border-light)}
+        .detail-back svg{width:16px;height:16px}
+
+        /* ══ DATA STATUS ══ */
+        .data-status{padding:12px 18px;border-radius:var(--radius-md);margin-bottom:20px;display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:500}
+        .data-status.success{background:var(--success-bg);color:var(--success);border:1px solid rgba(46,125,50,.12)}
+        .data-status.error{background:var(--danger-bg);color:var(--danger);border:1px solid rgba(198,40,40,.12)}
+        .data-status svg{width:16px;height:16px;flex-shrink:0}
+        .data-status.loading{background:var(--mb-rose-soft);color:var(--mb-rose);border:1px solid rgba(196,86,122,.12)}
+
+        /* ══ FILTER CHIPS ══ */
+        .filter-chips{display:flex;gap:4px;flex-wrap:wrap}
+        .filter-chip{padding:4px 12px;border-radius:20px;font-size:11.5px;font-weight:600;border:1px solid var(--border-light);background:0;color:var(--text-tertiary);cursor:pointer;transition:all .2s;font-family:inherit}
+        .filter-chip:hover,.filter-chip.active{background:var(--mb-rose-soft);border-color:var(--mb-rose);color:var(--mb-rose)}
+
+        /* ══ OVERLAY / MOBILE ══ */
+        .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99}
+        .sidebar-overlay.show{display:block}
+        .loading-overlay{position:fixed;inset:0;background:var(--bg-primary);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s,visibility .5s}
+        .loading-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
+        .loading-spinner{width:48px;height:48px;position:relative;margin-bottom:18px}
+        .loading-spinner::before{content:'';position:absolute;inset:0;border:3.5px solid var(--border-light);border-top-color:var(--mb-rose);border-radius:50%;animation:spin .7s linear infinite}
+        .loading-spinner::after{content:'';position:absolute;inset:6px;border:3px solid var(--border-light);border-bottom-color:var(--mb-gold);border-radius:50%;animation:spin 1.1s linear infinite reverse}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .loading-text{font-size:13px;color:var(--text-tertiary);font-weight:500}
+
+        ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:0}::-webkit-scrollbar-thumb{background:var(--border-medium);border-radius:3px}
+
+        @media(max-width:1200px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.grid-1-1{grid-template-columns:1fr}.restaurant-grid{grid-template-columns:1fr}}
+        @media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main-content{margin-left:0}.mobile-menu-btn{display:flex}.page-content{padding:16px}.kpi-grid{grid-template-columns:repeat(2,1fr)}.topbar{padding:0 12px}.topbar-right{gap:4px}.page-header h2{font-size:20px}.page-header p{font-size:12px}.kpi-value{font-size:22px}.chart-container{height:220px}.chart-container.sm{height:180px}.platform-tabs{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.platform-tabs::-webkit-scrollbar{display:none}.platform-tab{white-space:nowrap;padding:7px 12px;font-size:11.5px}.table-top{flex-direction:column;align-items:flex-start;gap:10px}.table-filters{flex-wrap:wrap}.conn-item{flex-direction:column;align-items:flex-start;gap:10px}.card{padding:16px}.card-header{flex-direction:column;align-items:flex-start;gap:8px}.header-row{flex-direction:column;align-items:flex-start}.btn{padding:7px 12px;font-size:11.5px}.plat-metrics{grid-template-columns:1fr 1fr}.chart-legend{gap:8px;flex-wrap:wrap}.legend-item{font-size:10px}}
+        @media(max-width:480px){.kpi-grid{grid-template-columns:1fr}.kpi-card{padding:14px 16px}.kpi-value{font-size:20px}.kpi-icon{width:28px;height:28px}.kpi-icon svg{width:13px;height:13px}.chart-container{height:200px}.chart-container.sm{height:160px}.plat-metrics{grid-template-columns:1fr}.topbar{height:50px}.sidebar-header{padding:16px}.page-content{padding:12px}.conn-logo{width:32px;height:32px}.conn-det h4{font-size:12px}}
+    </style>
+</head>
+<body>
+<div class="loading-overlay" id="loader">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Chargement des donn&eacute;es Mamie Bigoude...</div>
+</div>
+
+<div class="dashboard-layout">
+<!-- ══ SIDEBAR ══ -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-logo-wrap">
+            <div class="sidebar-logo-block">
+                <img src="https://mediab.izipass.cloud/ComptoirMB/Content/images/accueil-general/visuel-accueil-responsive.png" alt="Mamie Bigoude">
+            </div>
+            <div class="sidebar-brand">
+                <span class="sidebar-brand-name">Mamie Bigoude</span>
+                <span class="sidebar-brand-sub">Dashboard Campagnes</span>
+            </div>
+        </div>
+    </div>
+    <nav class="sidebar-nav">
+        <div class="nav-section">
+            <div class="nav-section-title">Tableau de bord</div>
+            <a class="nav-item active" data-page="overview">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                Vue d'ensemble
+            </a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Compte National</div>
+            <a class="nav-item" data-page="national">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Mamie Bigoude France
+                <span class="nav-badge">Lead Gen</span>
+            </a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Restaurants</div>
+            <a class="nav-item" data-page="restaurants">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                Tous les restaurants
+                <span class="nav-badge" id="restoBadge">0</span>
+            </a>
+            <div class="nav-sub" id="restoSubNav"></div>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Rapports</div>
+            <a class="nav-item" data-page="reports">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                Rapports
+            </a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Configuration</div>
+            <a class="nav-item" data-page="settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                Param&egrave;tres
+            </a>
+        </div>
+    </nav>
+
+    <a href="https://koven-agency.vercel.app/" style="display:block;margin-top:8px;padding:8px 14px;border-radius:8px;font-size:.72rem;color:rgba(255,255,255,0.3);text-decoration:none;text-align:center;transition:color .2s;letter-spacing:.5px" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'" target="_blank">&#8592; Portail Koven</a>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ══ MAIN ══ -->
+<main class="main-content">
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+            <div class="breadcrumb"><span>Dashboard</span><span class="sep">/</span><span class="current" id="breadcrumbPage">Vue d'ensemble</span></div>
+        </div>
+        <div class="topbar-right">
+            <div class="live-indicator"><span class="live-dot"></span>Live</div>
+            <div class="month-nav" id="monthNav">
+                <button class="month-nav-btn" id="prevMonth"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+                <span class="month-label" id="currentMonthLabel" onclick="toggleCalendar()">...</span>
+                <button class="month-nav-btn" id="nextMonth"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                <div class="cal-dropdown" id="calDropdown">
+                    <div class="cal-year-header">
+                        <button class="cal-year-btn" id="calPrevYear" onclick="calChangeYear(-1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+                        <span class="cal-year-label" id="calYearLabel">2025</span>
+                        <button class="cal-year-btn" id="calNextYear" onclick="calChangeYear(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                    </div>
+                    <div class="cal-months" id="calMonthsGrid"></div>
+                    <div class="cal-context"><span class="dot"></span> Mois avec donn&eacute;es disponibles</div>
+                </div>
+            </div>
+            <button class="topbar-btn" onclick="location.reload()" title="Actualiser"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+        </div>
+    </header>
+
+    <div class="page-content">
+        <div id="dataStatus"></div>
+
+        <!-- ═══ PAGE: VUE D'ENSEMBLE ═══ -->
+        <div class="page-view active" id="page-overview">
+            <div class="page-header"><div class="header-row"><div><h2>Vue d'ensemble</h2><p>Comptoir Mamie Bigoude &bull; Pilotage des campagnes</p></div><div><button class="btn btn-outline" onclick="location.reload()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>Actualiser</button></div></div></div>
+            <div class="filter-chips" id="overviewFilter" style="margin-bottom:16px"></div>
+            <div class="kpi-grid" id="overviewKpis"></div>
+            <div class="grid-1-1">
+                <div class="card"><div class="card-header"><div><div class="card-title">D&eacute;penses mensuelles</div><div class="card-subtitle">Meta + Google &mdash; National</div></div><div class="chart-legend"><div class="legend-item"><span class="legend-dot" style="background:#1877f2"></span>Meta</div><div class="legend-item"><span class="legend-dot" style="background:#d32f2f"></span>Google</div></div></div><div class="chart-container"><canvas id="overviewSpendChart"></canvas></div></div>
+                <div class="card"><div class="card-header"><div><div class="card-title">Visites site web</div><div class="card-subtitle">&Eacute;volution mensuelle GA4</div></div></div><div class="chart-container"><canvas id="overviewWebChart"></canvas></div></div>
+            </div>
+            <div class="card" style="margin-bottom:20px"><div class="card-header"><div><div class="card-title">D&eacute;penses Meta par restaurant</div><div class="card-subtitle">Mois s&eacute;lectionn&eacute;</div></div></div><div class="chart-container"><canvas id="restoBarChart"></canvas></div></div>
+        </div>
+
+        <!-- ═══ PAGE: NATIONAL ═══ -->
+        <div class="page-view" id="page-national">
+            <div class="page-header"><h2>Mamie Bigoude France</h2><p>Compte national &bull; G&eacute;n&eacute;ration de leads</p></div>
+            <div class="platform-tabs" id="nationalTabs">
+                <button class="platform-tab active" onclick="switchNatTab('meta',this)"><span class="tab-dot meta"></span>Meta Ads</button>
+                <button class="platform-tab" onclick="switchNatTab('google',this)"><span class="tab-dot google"></span>Google Ads</button>
+                <button class="platform-tab" onclick="switchNatTab('web',this)"><span class="tab-dot web"></span>Site Web</button>
+            </div>
+            <div class="kpi-grid" id="natKpis"></div>
+            <div class="grid-1-1">
+                <div class="card"><div class="card-header"><div><div class="card-title" id="natC1Title">Impressions &amp; Clics</div></div></div><div class="chart-container"><canvas id="natChart1"></canvas></div></div>
+                <div class="card"><div class="card-header"><div><div class="card-title" id="natC2Title">D&eacute;penses</div></div></div><div class="chart-container"><canvas id="natChart2"></canvas></div></div>
+            </div>
+            <div class="table-card"><div class="table-top"><h3 id="natTblTitle">D&eacute;tail mensuel</h3></div><div style="overflow-x:auto"><table><thead id="natTblHead"></thead><tbody id="natTblBody"></tbody></table></div></div>
+        </div>
+
+        <!-- ═══ PAGE: RESTAURANTS ═══ -->
+        <div class="page-view" id="page-restaurants">
+            <div class="page-header"><h2>Restaurants</h2><p>Comptes par restaurant &bull; Campagnes Meta &amp; Google locales</p></div>
+            <div id="restaurantListWrap"><div class="restaurant-grid" id="restaurantGrid"></div></div>
+            <div class="detail-panel" id="restoDetail">
+                <button class="detail-back" onclick="backToRestoList()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Retour</button>
+                <div class="page-header"><h2 id="rdTitle">Restaurant</h2><p id="rdSub">Meta Ads</p></div>
+                <div class="platform-tabs" id="rdPlatformTabs" style="display:none"></div>
+                <div class="kpi-grid" id="rdKpis"></div>
+                <div class="grid-1-1">
+                    <div class="card"><div class="card-header"><div><div class="card-title">Impressions &amp; Engagement</div></div></div><div class="chart-container"><canvas id="rdChart1"></canvas></div></div>
+                    <div class="card"><div class="card-header"><div><div class="card-title">D&eacute;penses mensuelles</div></div></div><div class="chart-container"><canvas id="rdChart2"></canvas></div></div>
+                </div>
+                <div class="table-card"><div class="table-top"><h3 id="rdTblTitle">D&eacute;tail</h3></div><div style="overflow-x:auto"><table><thead id="rdTblHead"><tr><th>Mois</th><th>Impressions</th><th>Clics</th><th>Engagement</th><th>D&eacute;penses</th></tr></thead><tbody id="rdTblBody"></tbody></table></div></div>
+            </div>
+        </div>
+
+        <!-- ═══ PAGE: RAPPORTS ═══ -->
+        <div class="page-view" id="page-reports">
+            <div class="page-header"><h2>Rapports</h2><p>Synth&egrave;se compl&egrave;te des performances</p></div>
+            <div class="grid-1-1" id="reportSummary"></div>
+            <div class="card" style="margin-bottom:20px"><div class="card-header"><div><div class="card-title">Top restaurants par impressions Meta</div></div></div><div class="chart-container"><canvas id="reportRestoChart"></canvas></div></div>
+        </div>
+
+        <!-- ═══ PAGE: PARAMETRES ═══ -->
+        <div class="page-view" id="page-settings">
+            <div class="page-header"><h2>Param&egrave;tres</h2><p>Configuration du dashboard</p></div>
+            <div class="card" style="padding:24px">
+                <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px">
+                    <div style="width:56px;height:56px;background:linear-gradient(135deg,#fffaf5,#f8e8ef);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(196,86,122,0.25),0 0 0 2px rgba(196,86,122,0.15);overflow:hidden"><img src="https://mediab.izipass.cloud/ComptoirMB/Content/images/accueil-general/visuel-accueil-responsive.png" style="width:48px;height:auto;object-fit:contain;margin-top:4px"></div>
+                    <div><div style="font-size:16px;font-weight:700;font-family:'Playfair Display',serif">Comptoir Mamie Bigoude</div><div style="font-size:12px;color:var(--text-tertiary)">Cr&ecirc;perie d&eacute;cal&eacute;e &bull; Cuisine bretonne</div></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                    <div style="padding:16px;border:1px solid var(--border-light);border-radius:var(--radius-md)"><div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;font-weight:600;margin-bottom:4px">Source</div><div style="font-size:14px;font-weight:600">Google Sheets via Supermetrics</div></div>
+                    <div style="padding:16px;border:1px solid var(--border-light);border-radius:var(--radius-md)"><div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;font-weight:600;margin-bottom:4px">Site web</div><div style="font-size:14px;font-weight:600"><a href="https://comptoirmamiebigoude.com/" target="_blank" style="color:var(--mb-rose);text-decoration:none">comptoirmamiebigoude.com</a></div></div>
+                    <div style="padding:16px;border:1px solid var(--border-light);border-radius:var(--radius-md)"><div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;font-weight:600;margin-bottom:4px">Sheet ID</div><div style="font-size:12px;font-weight:500;font-family:monospace;word-break:break-all">1A7DRYdcDe...lPA</div></div>
+                    <div style="padding:16px;border:1px solid var(--border-light);border-radius:var(--radius-md)"><div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;font-weight:600;margin-bottom:4px">Dashboard</div><div style="font-size:14px;font-weight:600">v2.0 &mdash; Live</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   COMPTOIR MAMIE BIGOUDE — DASHBOARD ENGINE v2.0 (Live Data)
+   ══════════════════════════════════════════════════════════════════ */
+const PUB_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR-oximcJ18BHNbcRb9FZSP7fWWArSLvwMlqvkVksSV5SY7iWSzrJAn9dv2S1sGha1g83xRXoZUYk8v/pub?output=csv&single=true&gid=';
+const URLS = {
+    franceFB: PUB_BASE + '1325169406',
+    google:   PUB_BASE + '1713978084',
+    ga4:      PUB_BASE + '17155295',
+    nimes:    PUB_BASE + '1180339242',
+    bourges:  PUB_BASE + '1619662920',
+    saintmalo: PUB_BASE + '910601949',
+    chateauroux: PUB_BASE + '1269997890'
+};
+
+Chart.defaults.font.family = "'Plus Jakarta Sans','Inter',sans-serif";
+Chart.defaults.color = '#9a8994';
+
+// ── State ──
+let allMetaNat=[], allMetaResto={}, allGoogle=[], allGoogleResto={}, allGA4=[], allMonthKeys=[];
+let charts={}, currentMonthIdx=0, currentNatTab='meta', selectedResto=null, calYear=2025;
+
+// ── CSV Parser ──
+function parseCSV(t){const ls=t.split('\n');if(ls.length<2)return[];const h=csvLine(ls[0]);const d=[];for(let i=1;i<ls.length;i++){const l=ls[i].trim();if(!l)continue;const v=csvLine(l);const r={};h.forEach((k,j)=>{r[k.trim().replace(/^"|"$/g,'')]=(v[j]||'').replace(/^"|"$/g,'')});d.push(r)}return d}
+function csvLine(l){const r=[];let c='',q=false;for(let i=0;i<l.length;i++){const ch=l[i];if(ch==='"'){if(q&&l[i+1]==='"'){c+='"';i++}else q=!q}else if(ch===','&&!q){r.push(c);c=''}else c+=ch}r.push(c);return r}
+function pN(v){if(!v||v==='-'||v==='')return 0;let s=String(v).replace(/\s/g,'').replace(/[^0-9.,-]/g,'');if(s.includes(',')&&s.includes('.')){s.lastIndexOf(',')>s.lastIndexOf('.')?s=s.replace(/\./g,'').replace(',','.'):s=s.replace(/,/g,'')}else if(s.includes(','))s=s.replace(',','.');return parseFloat(s)||0}
+function fC(r,ns){for(const n of ns)if(r[n]!==undefined&&r[n]!=='')return r[n];return''}
+async function fetchCSV(u){const r=await fetch(u);if(!r.ok)throw new Error(r.status);return parseCSV(await r.text())}
+
+// ── Formatters ──
+const MN=['Janv.','Fév.','Mars','Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'];
+const MN_FULL=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const fE=n=>new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',minimumFractionDigits:0,maximumFractionDigits:0}).format(n);
+const fE2=n=>new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',minimumFractionDigits:2,maximumFractionDigits:2}).format(n);
+const fN=n=>new Intl.NumberFormat('fr-FR').format(Math.round(n));
+const fPct=n=>n.toFixed(2).replace('.',',')+' %';
+const sum=(a,f)=>a.reduce((s,r)=>s+(r[f]||0),0);
+function mKey(dt){if(!dt)return null;const m=dt.match(/(\d{4})-(\d{2})/);return m?m[1]+'-'+m[2]:null}
+function mLabel(k){const[y,m]=k.split('-');return MN[parseInt(m)-1]+' '+y.slice(2)}
+function mFull(k){const[y,m]=k.split('-');return MN_FULL[parseInt(m)-1]+' '+y}
+
+// ── Campaign classification ──
+const NATIONAL_PATTERNS = ['Franchise_Conversion','Franchise_LeadAds','NATIO_Engagement','Franchise_ConversionAds'];
+const CITY_MAP = {
+    '#A#': 'Angers', '#L#': 'Limoges', '#M#': 'Montluçon',
+    'Amboise': 'Amboise', 'Blois': 'Blois', 'Orléans': 'Orléans',
+    'Tours': 'Tours', 'Poitiers': 'Poitiers', 'Montluçon': 'Montluçon',
+    'Bourges': 'Bourges', 'BOURGES': 'Bourges',
+    'Châteauroux': 'Châteauroux', 'CHATEAUROUX': 'Châteauroux', 'Chateauroux': 'Châteauroux'
+};
+
+function classifyCampaign(name) {
+    if (!name) return { type:'national', city:null };
+    for (const p of NATIONAL_PATTERNS) {
+        if (name.includes(p)) return { type:'national', city:null };
+    }
+    // Check hash codes first
+    if (name.includes('#A#')) return { type:'restaurant', city:'Angers' };
+    if (name.includes('#L#')) return { type:'restaurant', city:'Limoges' };
+    if (name.includes('#M#')) return { type:'restaurant', city:'Montluçon' };
+    // Check city names
+    for (const [pattern, city] of Object.entries(CITY_MAP)) {
+        if (name.includes(pattern)) return { type:'restaurant', city };
+    }
+    return { type:'national', city:null };
+}
+
+function mapMetaRow(r) {
+    const name = fC(r,['Nom de la campagne','Campaign name']);
+    const engagement = pN(fC(r,["J'aime la page"]))+pN(fC(r,['Commentaires sur les publications']))+pN(fC(r,['Réactions aux publications']))+pN(fC(r,['Partages de publications']))+pN(fC(r,['Enregistrements de publications']));
+    return {
+        camp: name,
+        dt: fC(r,['Date']),
+        cost: pN(fC(r,['Coût (EUR)','Cost (EUR)'])),
+        reach: pN(fC(r,['Portée','Reach'])),
+        imp: pN(fC(r,['Impressions'])),
+        cl: pN(fC(r,['Clics (tous)','Clicks (all)'])),
+        ctr: pN(fC(r,['CTR (tous)','CTR'])),
+        engagement: engagement,
+        leads: pN(fC(r,['Prospects sur Facebook','Leads']))
+    };
+}
+function mapGoogleRow(r) {
+    return {
+        camp: fC(r,['Nom de la campagne','Campaign name','Campaign']),
+        dt: fC(r,['Date','Day']),
+        imp: pN(fC(r,['Impressions','Impr.'])),
+        cl: pN(fC(r,['Clics','Clicks'])),
+        cost: pN(fC(r,['Coût (EUR)','Cost (EUR)','Cost','Coût'])),
+        conv: pN(fC(r,['Conversions','Conv.']))
+    };
+}
+function mapGA4Row(r) {
+    return {
+        dt: fC(r,['Date']),
+        page: fC(r,['Page title']),
+        sessions: pN(fC(r,['Sessions'])),
+        users: pN(fC(r,['Total users'])),
+        avgTime: pN(fC(r,['Average session length (sec)'])),
+        bounceRate: pN(fC(r,['Bounce rate']))
+    };
+}
+
+// ── Group by month ──
+function grpMonth(data) {
+    const g = {};
+    data.forEach(r => { const k=mKey(r.dt); if(k){if(!g[k])g[k]=[];g[k].push(r)} });
+    return g;
+}
+
+// ── Chart factories ──
+function makeChart(id,type,labels,datasets,scaleOpts={},extra={}) {
+    const ctx=document.getElementById(id);if(!ctx)return;
+    if(charts[id])charts[id].destroy();
+    charts[id]=new Chart(ctx,{type,data:{labels,datasets:datasets.map(d=>({...d,barPercentage:.6,categoryPercentage:.7}))},options:{responsive:true,maintainAspectRatio:false,...extra,plugins:{legend:{display:false},tooltip:{backgroundColor:'#2d1f2b',titleFont:{size:11,weight:'600'},bodyFont:{size:11},padding:10,cornerRadius:8,boxPadding:3}},scales:{x:{grid:{display:false},ticks:{font:{size:10,weight:'500'}},border:{display:false},...(scaleOpts.x||{})},y:{grid:{color:'rgba(0,0,0,.04)',drawBorder:false},ticks:{font:{size:10}},border:{display:false},...(scaleOpts.y||{})}}}});
+}
+
+// ── KPI Helpers ──
+function trend(cur,prev){if(!prev||prev===0)return null;const p=((cur-prev)/prev)*100;return{pct:Math.abs(p).toFixed(1),dir:p>=0?'up':'down'}}
+function trendH(t){if(!t)return'';return `<span class="kpi-trend ${t.dir}">${t.dir==='up'?'↑':'↓'} ${t.pct}%</span>`}
+function kpiHTML(items){return items.map(i=>`<div class="kpi-card"><div class="kpi-header"><span class="kpi-label">${i.label}</span><div class="kpi-icon ${i.icon}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${i.svg}</svg></div></div><div class="kpi-value">${i.value}</div><div class="kpi-footer">${i.trend?trendH(i.trend):''}<span class="kpi-sub">${i.sub}</span></div></div>`).join('')}
+const SVG={
+    spend:'<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
+    users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>',
+    eye:'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
+    click:'<path d="M15 15l-2 5L9 9l11 4-5 2z"/>',
+    heart:'<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+    globe:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+    clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+    chart:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>'
+};
+
+// ══════════════════════════════════════════
+// MONTH NAV + DYNAMIC CALENDAR
+// ══════════════════════════════════════════
+function getCurMonth(){
+    if(currentMonthIdx===-1 && calSelectedMK) return calSelectedMK;
+    return allMonthKeys.length>0 && currentMonthIdx>=0 && currentMonthIdx<allMonthKeys.length ? allMonthKeys[allMonthKeys.length-1-currentMonthIdx] : calSelectedMK||null;
+}
+function getPrevMonth(){ const cur=getCurMonth(); if(!cur)return null; const idx=allMonthKeys.indexOf(cur); return idx>0?allMonthKeys[idx-1]:null; }
+function updateMonthLabel(){ const m=getCurMonth(); document.getElementById('currentMonthLabel').textContent=m?mFull(m):'Aucune donnée'; document.getElementById('prevMonth').disabled=currentMonthIdx>=allMonthKeys.length-1; document.getElementById('nextMonth').disabled=currentMonthIdx<=0; renderCalendar(); }
+document.getElementById('prevMonth').addEventListener('click',()=>{if(currentMonthIdx===-1){const idx=allMonthKeys.length-1;currentMonthIdx=idx;calSelectedMK=null;}else if(currentMonthIdx<allMonthKeys.length-1){currentMonthIdx++;}calSelectedMK=null;updateMonthLabel();renderAll()});
+document.getElementById('nextMonth').addEventListener('click',()=>{if(currentMonthIdx===-1){currentMonthIdx=0;calSelectedMK=null;}else if(currentMonthIdx>0){currentMonthIdx--;}calSelectedMK=null;updateMonthLabel();renderAll()});
+
+function getContextMonths() {
+    if (selectedResto) {
+        const metaData = allMetaResto[selectedResto] || [];
+        const googleData = allGoogleResto[selectedResto] || [];
+        return new Set([...metaData, ...googleData].map(r => mKey(r.dt)).filter(Boolean));
+    }
+    return new Set(allMonthKeys);
+}
+function toggleCalendar() {
+    const dd = document.getElementById('calDropdown');
+    dd.classList.toggle('open');
+    if (dd.classList.contains('open')) renderCalendar();
+}
+function calChangeYear(dir) {
+    const years = [...new Set(allMonthKeys.map(k => parseInt(k.split('-')[0])))].sort();
+    if (!years.length) return;
+    const newY = calYear + dir;
+    if (newY >= years[0] && newY <= years[years.length - 1]) { calYear = newY; renderCalendar(); }
+}
+function renderCalendar() {
+    const grid = document.getElementById('calMonthsGrid');
+    if (!grid) return;
+    const curMK = getCurMonth() || calSelectedMK;
+    const ctxMonths = getContextMonths();
+    document.getElementById('calYearLabel').textContent = calYear;
+    document.getElementById('calPrevYear').disabled = false;
+    document.getElementById('calNextYear').disabled = false;
+    const mNames = ['Janv.','Fév.','Mars','Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'];
+    grid.innerHTML = mNames.map((m, i) => {
+        const mk = calYear + '-' + String(i + 1).padStart(2, '0');
+        const hasData = ctxMonths.has(mk);
+        const isActive = mk === curMK;
+        const cls = [isActive ? 'active' : '', hasData ? 'has-data' : ''].filter(Boolean).join(' ');
+        return `<div class="cal-month ${cls}" onclick="selectCalMonth('${mk}')">${m}</div>`;
+    }).join('');
+}
+let calSelectedMK = null;
+function selectCalMonth(mk) {
+    calSelectedMK = mk;
+    const idx = allMonthKeys.indexOf(mk);
+    if (idx >= 0) {
+        currentMonthIdx = allMonthKeys.length - 1 - idx;
+    } else {
+        // Month without data: find nearest month or keep label
+        currentMonthIdx = -1;
+    }
+    calYear = parseInt(mk.split('-')[0]);
+    document.getElementById('currentMonthLabel').textContent = mFull(mk);
+    document.getElementById('prevMonth').disabled = false;
+    document.getElementById('nextMonth').disabled = false;
+    renderCalendar();
+    renderAll();
+    if (selectedResto) showRestoDetail(selectedResto);
+    document.getElementById('calDropdown').classList.remove('open');
+}
+document.addEventListener('click', function(e) {
+    const nav = document.getElementById('monthNav');
+    const dd = document.getElementById('calDropdown');
+    if (dd && dd.classList.contains('open') && nav && !nav.contains(e.target)) dd.classList.remove('open');
+});
+
+// ══════════════════════════════════════════
+// DATA: Get monthly aggregated data
+// ══════════════════════════════════════════
+function getMonthData(data, mk) {
+    return data.filter(r => mKey(r.dt) === mk);
+}
+function getRestoMonthly(city) {
+    const data = allMetaResto[city] || [];
+    const g = grpMonth(data);
+    return allMonthKeys.map(k => {
+        const rows = g[k] || [];
+        return { month:k, imp:sum(rows,'imp'), cl:sum(rows,'cl'), engagement:sum(rows,'engagement'), cost:sum(rows,'cost'), leads:sum(rows,'leads') };
+    });
+}
+function getGoogleRestoMonthly(city) {
+    const data = allGoogleResto[city] || [];
+    const g = grpMonth(data);
+    return allMonthKeys.map(k => {
+        const rows = g[k] || [];
+        return { month:k, imp:sum(rows,'imp'), cl:sum(rows,'cl'), conv:sum(rows,'conv'), cost:sum(rows,'cost') };
+    });
+}
+function cityHasGoogle(city) { return allGoogleResto[city] && allGoogleResto[city].length > 0; }
+
+// ══════════════════════════════════════════
+// RENDER: OVERVIEW
+// ══════════════════════════════════════════
+let overviewFilter = 'all'; // 'all', 'national', or city name
+
+function setOverviewFilter(val) {
+    overviewFilter = val;
+    renderOverviewFilterChips();
+    renderOverview();
+}
+
+function renderOverviewFilterChips() {
+    const cities = getAllRestoCities();
+    const el = document.getElementById('overviewFilter');
+    let html = `<button class="filter-chip${overviewFilter==='all'?' active':''}" onclick="setOverviewFilter('all')">Tous</button>`;
+    html += `<button class="filter-chip${overviewFilter==='national'?' active':''}" onclick="setOverviewFilter('national')">National</button>`;
+    cities.forEach(c => {
+        html += `<button class="filter-chip${overviewFilter===c?' active':''}" onclick="setOverviewFilter('${c}')">${c}</button>`;
+    });
+    el.innerHTML = html;
+}
+
+function renderOverview() {
+    const mk=getCurMonth(); if(!mk)return;
+    const pk=getPrevMonth();
+    const f = overviewFilter;
+
+    // Render filter chips on first load
+    if (!document.getElementById('overviewFilter').innerHTML) renderOverviewFilterChips();
+
+    // ── Compute data based on filter ──
+    let totalSpend=0, prevTotalSpend=0, totalImp=0, prevImp=0, kpiSub='';
+    let webSess=0, prevWebSess=0, webUsers=0;
+    let gConv=0, prevConv=0, gCost=0;
+
+    const wM=allGA4.filter(r=>mKey(r.dt)===mk), wMp=pk?allGA4.filter(r=>mKey(r.dt)===pk):[];
+
+    if (f === 'all') {
+        // All: national + all restaurants
+        const natM=getMonthData(allMetaNat,mk), natMp=pk?getMonthData(allMetaNat,pk):[];
+        const gM=getMonthData(allGoogle,mk), gMp=pk?getMonthData(allGoogle,pk):[];
+        let restoMeta=0; Object.keys(allMetaResto).forEach(c=>{restoMeta+=sum(getMonthData(allMetaResto[c],mk),'cost')});
+        let restoGoogle=0; Object.keys(allGoogleResto).forEach(c=>{restoGoogle+=sum(getMonthData(allGoogleResto[c],mk),'cost')});
+        totalSpend=sum(natM,'cost')+sum(gM,'cost')+restoMeta+restoGoogle;
+        const prevRM=pk?Object.keys(allMetaResto).reduce((a,c)=>a+sum(getMonthData(allMetaResto[c],pk),'cost'),0):0;
+        const prevRG=pk?Object.keys(allGoogleResto).reduce((a,c)=>a+sum(getMonthData(allGoogleResto[c],pk),'cost'),0):0;
+        prevTotalSpend=pk?(sum(natMp,'cost')+sum(gMp,'cost')+prevRM+prevRG):0;
+        totalImp=sum(natM,'imp')+sum(gM,'imp'); prevImp=pk?sum(natMp,'imp')+sum(gMp,'imp'):0;
+        gConv=sum(gM,'conv'); prevConv=pk?sum(gMp,'conv'):0; gCost=sum(gM,'cost');
+        kpiSub='National + Restaurants';
+    } else if (f === 'national') {
+        // National only
+        const natM=getMonthData(allMetaNat,mk), natMp=pk?getMonthData(allMetaNat,pk):[];
+        const gM=getMonthData(allGoogle,mk), gMp=pk?getMonthData(allGoogle,pk):[];
+        totalSpend=sum(natM,'cost')+sum(gM,'cost');
+        prevTotalSpend=pk?(sum(natMp,'cost')+sum(gMp,'cost')):0;
+        totalImp=sum(natM,'imp')+sum(gM,'imp'); prevImp=pk?sum(natMp,'imp')+sum(gMp,'imp'):0;
+        gConv=sum(gM,'conv'); prevConv=pk?sum(gMp,'conv'):0; gCost=sum(gM,'cost');
+        kpiSub='National uniquement';
+    } else {
+        // Specific restaurant
+        const rm=getMonthData(allMetaResto[f]||[],mk), rmp=pk?getMonthData(allMetaResto[f]||[],pk):[];
+        const rgm=getMonthData(allGoogleResto[f]||[],mk), rgmp=pk?getMonthData(allGoogleResto[f]||[],pk):[];
+        totalSpend=sum(rm,'cost')+sum(rgm,'cost');
+        prevTotalSpend=pk?(sum(rmp,'cost')+sum(rgmp,'cost')):0;
+        totalImp=sum(rm,'imp')+sum(rgm,'imp'); prevImp=pk?sum(rmp,'imp')+sum(rgmp,'imp'):0;
+        gConv=sum(rgm,'conv'); prevConv=pk?sum(rgmp,'conv'):0; gCost=sum(rgm,'cost');
+        kpiSub=f;
+    }
+
+    webSess=sum(wM,'sessions'); prevWebSess=pk?sum(wMp,'sessions'):0; webUsers=sum(wM,'users');
+
+    document.getElementById('overviewKpis').innerHTML=kpiHTML([
+        {label:'Dépenses totales',value:fE(totalSpend),sub:kpiSub,icon:'rose',svg:SVG.spend,trend:trend(totalSpend,prevTotalSpend)},
+        {label:'Impressions',value:fN(totalImp),sub:'Meta + Google',icon:'gold',svg:SVG.eye,trend:trend(totalImp,prevImp)},
+        {label:'Visites site web',value:fN(webSess),sub:fN(webUsers)+' utilisateurs',icon:'web-i',svg:SVG.globe,trend:trend(webSess,prevWebSess)},
+        {label:'Conversions Google',value:fN(gConv),sub:gConv>0?'CPL: '+fE2(gCost/gConv):'-',icon:'google-i',svg:SVG.users,trend:trend(gConv,prevConv)}
+    ]);
+
+    // Spend chart — adapt to filter
+    if (f === 'all' || f === 'national') {
+        const natMG=grpMonth(allMetaNat), gMG=grpMonth(allGoogle);
+        makeChart('overviewSpendChart','bar',allMonthKeys.map(mLabel),[
+            {label:'Meta',data:allMonthKeys.map(k=>sum(natMG[k]||[],'cost')),backgroundColor:'rgba(24,119,242,.8)',borderRadius:6,borderSkipped:false},
+            {label:'Google',data:allMonthKeys.map(k=>sum(gMG[k]||[],'cost')),backgroundColor:'rgba(211,47,47,.7)',borderRadius:6,borderSkipped:false}
+        ],{y:{ticks:{callback:v=>fE(v)}}});
+    } else {
+        const rMG=grpMonth(allMetaResto[f]||[]), rGMG=grpMonth(allGoogleResto[f]||[]);
+        makeChart('overviewSpendChart','bar',allMonthKeys.map(mLabel),[
+            {label:'Meta',data:allMonthKeys.map(k=>sum(rMG[k]||[],'cost')),backgroundColor:'rgba(24,119,242,.8)',borderRadius:6,borderSkipped:false},
+            {label:'Google',data:allMonthKeys.map(k=>sum(rGMG[k]||[],'cost')),backgroundColor:'rgba(211,47,47,.7)',borderRadius:6,borderSkipped:false}
+        ],{y:{ticks:{callback:v=>fE(v)}}});
+    }
+
+    // Web chart
+    const wMG={};allGA4.forEach(r=>{const k=mKey(r.dt);if(k){if(!wMG[k])wMG[k]={sessions:0,users:0};wMG[k].sessions+=r.sessions;wMG[k].users+=r.users}});
+    makeChart('overviewWebChart','line',allMonthKeys.map(mLabel),[
+        {label:'Sessions',data:allMonthKeys.map(k=>wMG[k]?.sessions||0),borderColor:'#7c3aed',backgroundColor:'rgba(124,58,237,.08)',borderWidth:2.5,fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'#7c3aed'},
+        {label:'Utilisateurs',data:allMonthKeys.map(k=>wMG[k]?.users||0),borderColor:'#c4567a',backgroundColor:'rgba(196,86,122,.06)',borderWidth:2,fill:false,tension:.4,pointRadius:3,pointBackgroundColor:'#c4567a',borderDash:[5,5]}
+    ],{y:{beginAtZero:true,ticks:{callback:v=>fN(v)}}});
+
+    // Restaurant bar
+    const cities=Object.keys(allMetaResto).sort();
+    const restoSpends=cities.map(c=>sum(getMonthData(allMetaResto[c],mk),'cost'));
+    const colors=['#c4567a','#d4738f','#c9a96e','#7c3aed','#1877f2','#34a853','#ef6c00','#e91e63','#9c27b0','#00bcd4'];
+    makeChart('restoBarChart','bar',cities,
+        [{data:restoSpends,backgroundColor:colors.slice(0,cities.length),borderRadius:8,borderSkipped:false}],
+        {y:{ticks:{callback:v=>fE(v)}}});
+}
+
+// ══════════════════════════════════════════
+// RENDER: NATIONAL
+// ══════════════════════════════════════════
+function renderNational() {
+    const mk=getCurMonth(), pk=getPrevMonth(), tab=currentNatTab;
+
+    if (tab==='meta') {
+        const d=getMonthData(allMetaNat,mk), p=pk?getMonthData(allMetaNat,pk):[];
+        const imp=sum(d,'imp'),cl=sum(d,'cl'),eng=sum(d,'engagement'),cost=sum(d,'cost'),leads=sum(d,'leads');
+        const pImp=sum(p,'imp'),pCl=sum(p,'cl'),pEng=sum(p,'engagement'),pCost=sum(p,'cost');
+        document.getElementById('natKpis').innerHTML=kpiHTML([
+            {label:'Impressions',value:fN(imp),sub:'Meta Ads National',icon:'meta-i',svg:SVG.eye,trend:trend(imp,pImp)},
+            {label:'Clics',value:fN(cl),sub:'CTR: '+fPct(imp>0?cl/imp*100:0),icon:'meta-i',svg:SVG.click,trend:trend(cl,pCl)},
+            {label:'Engagement',value:fN(eng),sub:'Réactions, partages...',icon:'meta-i',svg:SVG.heart,trend:trend(eng,pEng)},
+            {label:'Dépenses',value:fE(cost),sub:leads>0?fN(leads)+' leads':'CPC: '+(cl>0?fE2(cost/cl):'-'),icon:'meta-i',svg:SVG.spend,trend:trend(cost,pCost)}
+        ]);
+        document.getElementById('natC1Title').textContent='Impressions & Clics';
+        document.getElementById('natC2Title').textContent='Dépenses Meta';
+        document.getElementById('natTblTitle').textContent='Détail Meta — National';
+
+        const mg=grpMonth(allMetaNat);
+        makeChart('natChart1','line',allMonthKeys.map(mLabel),[
+            {label:'Impressions',data:allMonthKeys.map(k=>sum(mg[k]||[],'imp')),borderColor:'#1877f2',backgroundColor:'rgba(24,119,242,.08)',borderWidth:2.5,fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'#1877f2'},
+            {label:'Clics',data:allMonthKeys.map(k=>sum(mg[k]||[],'cl')),borderColor:'#c4567a',backgroundColor:'rgba(196,86,122,.06)',borderWidth:2,fill:false,tension:.4,pointRadius:3,pointBackgroundColor:'#c4567a',yAxisID:'y2'}
+        ],{},{scales:{x:{grid:{display:false},ticks:{font:{size:10}},border:{display:false}},y:{type:'linear',position:'left',grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:10},callback:v=>fN(v)},border:{display:false}},y2:{type:'linear',position:'right',grid:{display:false},ticks:{font:{size:10}},border:{display:false}}}});
+
+        makeChart('natChart2','bar',allMonthKeys.map(mLabel),[{data:allMonthKeys.map(k=>sum(mg[k]||[],'cost')),backgroundColor:'rgba(24,119,242,.7)',borderRadius:6,borderSkipped:false}],{y:{ticks:{callback:v=>fE(v)}}});
+
+        document.getElementById('natTblHead').innerHTML='<tr><th>Mois</th><th>Impressions</th><th>Clics</th><th>CTR</th><th>Engagement</th><th>Leads</th><th>Dépenses</th></tr>';
+        document.getElementById('natTblBody').innerHTML=allMonthKeys.slice().reverse().map(k=>{const r=mg[k]||[];const i=sum(r,'imp'),c=sum(r,'cl'),e=sum(r,'engagement'),l=sum(r,'leads'),co=sum(r,'cost');return`<tr><td class="td-b">${mLabel(k)}</td><td>${fN(i)}</td><td>${fN(c)}</td><td class="td-b">${fPct(i>0?c/i*100:0)}</td><td>${fN(e)}</td><td class="td-b">${fN(l)}</td><td class="td-b">${fE(co)}</td></tr>`}).join('');
+
+    } else if (tab==='google') {
+        const d=getMonthData(allGoogle,mk), p=pk?getMonthData(allGoogle,pk):[];
+        const imp=sum(d,'imp'),cl=sum(d,'cl'),conv=sum(d,'conv'),cost=sum(d,'cost');
+        const pImp=sum(p,'imp'),pCl=sum(p,'cl'),pConv=sum(p,'conv'),pCost=sum(p,'cost');
+        document.getElementById('natKpis').innerHTML=kpiHTML([
+            {label:'Impressions',value:fN(imp),sub:'Google Ads',icon:'google-i',svg:SVG.eye,trend:trend(imp,pImp)},
+            {label:'Clics',value:fN(cl),sub:'CTR: '+fPct(imp>0?cl/imp*100:0),icon:'google-i',svg:SVG.click,trend:trend(cl,pCl)},
+            {label:'Conversions',value:fN(conv),sub:conv>0?'CPL: '+fE2(cost/conv):'-',icon:'google-i',svg:SVG.users,trend:trend(conv,pConv)},
+            {label:'Dépenses',value:fE(cost),sub:'CPC: '+(cl>0?fE2(cost/cl):'-'),icon:'google-i',svg:SVG.spend,trend:trend(cost,pCost)}
+        ]);
+        document.getElementById('natC1Title').textContent='Impressions & Conversions';
+        document.getElementById('natC2Title').textContent='Dépenses Google';
+        document.getElementById('natTblTitle').textContent='Détail Google — National';
+
+        const mg=grpMonth(allGoogle);
+        makeChart('natChart1','line',allMonthKeys.map(mLabel),[
+            {label:'Impressions',data:allMonthKeys.map(k=>sum(mg[k]||[],'imp')),borderColor:'#4285f4',backgroundColor:'rgba(66,133,244,.08)',borderWidth:2.5,fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'#4285f4'},
+            {label:'Conversions',data:allMonthKeys.map(k=>sum(mg[k]||[],'conv')),borderColor:'#34a853',backgroundColor:'rgba(52,168,83,.06)',borderWidth:2,fill:false,tension:.4,pointRadius:3,pointBackgroundColor:'#34a853',yAxisID:'y2'}
+        ],{},{scales:{x:{grid:{display:false},ticks:{font:{size:10}},border:{display:false}},y:{type:'linear',position:'left',grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:10},callback:v=>fN(v)},border:{display:false}},y2:{type:'linear',position:'right',grid:{display:false},ticks:{font:{size:10}},border:{display:false}}}});
+
+        makeChart('natChart2','bar',allMonthKeys.map(mLabel),[{data:allMonthKeys.map(k=>sum(mg[k]||[],'cost')),backgroundColor:'rgba(66,133,244,.7)',borderRadius:6,borderSkipped:false}],{y:{ticks:{callback:v=>fE(v)}}});
+
+        document.getElementById('natTblHead').innerHTML='<tr><th>Mois</th><th>Impressions</th><th>Clics</th><th>CTR</th><th>Conversions</th><th>Dépenses</th><th>CPL</th></tr>';
+        document.getElementById('natTblBody').innerHTML=allMonthKeys.slice().reverse().map(k=>{const r=mg[k]||[];const i=sum(r,'imp'),c=sum(r,'cl'),cv=sum(r,'conv'),co=sum(r,'cost');return`<tr><td class="td-b">${mLabel(k)}</td><td>${fN(i)}</td><td>${fN(c)}</td><td class="td-b">${fPct(i>0?c/i*100:0)}</td><td class="td-b">${fN(cv)}</td><td class="td-b">${fE(co)}</td><td>${cv>0?fE2(co/cv):'-'}</td></tr>`}).join('');
+
+    } else if (tab==='web') {
+        const wAll={};allGA4.forEach(r=>{const k=mKey(r.dt);if(k){if(!wAll[k])wAll[k]=[];wAll[k].push(r)}});
+        const wd=wAll[mk]||[], wp=pk?wAll[pk]||[]:[];
+        const sess=sum(wd,'sessions'),users=sum(wd,'users');
+        const pSess=sum(wp,'sessions'),pUsers=sum(wp,'users');
+        const avgT=wd.length>0?wd.reduce((a,r)=>a+r.avgTime*r.sessions,0)/(sess||1):0;
+        const avgB=wd.length>0?wd.reduce((a,r)=>a+r.bounceRate*r.sessions,0)/(sess||1):0;
+        const pAvgT=wp.length>0?wp.reduce((a,r)=>a+r.avgTime*r.sessions,0)/(pSess||1):0;
+        const pAvgB=wp.length>0?wp.reduce((a,r)=>a+r.bounceRate*r.sessions,0)/(pSess||1):0;
+
+        document.getElementById('natKpis').innerHTML=kpiHTML([
+            {label:'Visites',value:fN(sess),sub:'Sessions totales',icon:'web-i',svg:SVG.globe,trend:trend(sess,pSess)},
+            {label:'Utilisateurs',value:fN(users),sub:'Visiteurs uniques',icon:'web-i',svg:SVG.users,trend:trend(users,pUsers)},
+            {label:'Temps moyen',value:Math.round(avgT)+'s',sub:'Durée de session',icon:'web-i',svg:SVG.clock,trend:trend(avgT,pAvgT)},
+            {label:'Taux de rebond',value:fPct(avgB*100),sub:'Visites à une page',icon:'web-i',svg:SVG.chart,trend:avgB<pAvgB?{pct:Math.abs((avgB-pAvgB)*100).toFixed(1),dir:'up'}:pAvgB>0?{pct:Math.abs((avgB-pAvgB)*100).toFixed(1),dir:'down'}:null}
+        ]);
+
+        document.getElementById('natC1Title').textContent='Visites & Utilisateurs';
+        document.getElementById('natC2Title').textContent='Taux de rebond';
+        document.getElementById('natTblTitle').textContent='Détail Site Web';
+
+        makeChart('natChart1','line',allMonthKeys.map(mLabel),[
+            {label:'Sessions',data:allMonthKeys.map(k=>sum(wAll[k]||[],'sessions')),borderColor:'#7c3aed',backgroundColor:'rgba(124,58,237,.08)',borderWidth:2.5,fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'#7c3aed'},
+            {label:'Utilisateurs',data:allMonthKeys.map(k=>sum(wAll[k]||[],'users')),borderColor:'#c4567a',backgroundColor:'rgba(196,86,122,.06)',borderWidth:2,fill:false,tension:.4,pointRadius:3,pointBackgroundColor:'#c4567a'}
+        ],{y:{beginAtZero:true,ticks:{callback:v=>fN(v)}}});
+
+        const brData=allMonthKeys.map(k=>{const d=wAll[k]||[];const s=sum(d,'sessions');return s>0?d.reduce((a,r)=>a+r.bounceRate*r.sessions,0)/s*100:0});
+        makeChart('natChart2','line',allMonthKeys.map(mLabel),[{data:brData,borderColor:'#ef6c00',backgroundColor:'rgba(239,108,0,.08)',borderWidth:2.5,fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'#ef6c00'}],{y:{ticks:{callback:v=>v.toFixed(0)+' %'}}});
+
+        document.getElementById('natTblHead').innerHTML='<tr><th>Mois</th><th>Visites</th><th>Utilisateurs</th><th>Temps moy. (s)</th><th>Taux de rebond</th></tr>';
+        document.getElementById('natTblBody').innerHTML=allMonthKeys.slice().reverse().map(k=>{const d=wAll[k]||[];const s=sum(d,'sessions'),u=sum(d,'users');const at=s>0?d.reduce((a,r)=>a+r.avgTime*r.sessions,0)/s:0;const br=s>0?d.reduce((a,r)=>a+r.bounceRate*r.sessions,0)/s*100:0;return`<tr><td class="td-b">${mLabel(k)}</td><td>${fN(s)}</td><td>${fN(u)}</td><td class="td-b">${Math.round(at)}s</td><td class="td-b">${fPct(br)}</td></tr>`}).join('');
+    }
+}
+function switchNatTab(tab,btn){currentNatTab=tab;document.querySelectorAll('#nationalTabs .platform-tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');renderNational()}
+
+// ══════════════════════════════════════════
+// RENDER: RESTAURANTS
+// ══════════════════════════════════════════
+function getAllRestoCities() {
+    const s = new Set([...Object.keys(allMetaResto), ...Object.keys(allGoogleResto)]);
+    return [...s].sort();
+}
+
+function renderRestaurants() {
+    const mk=getCurMonth(), pk=getPrevMonth();
+    const cities=getAllRestoCities();
+    document.getElementById('restoBadge').textContent=cities.length;
+
+    const grid=document.getElementById('restaurantGrid');
+    grid.innerHTML=cities.map(city=>{
+        const metaD=getMonthData(allMetaResto[city]||[],mk);
+        const googleD=getMonthData(allGoogleResto[city]||[],mk);
+        const imp=sum(metaD,'imp')+sum(googleD,'imp'), cl=sum(metaD,'cl')+sum(googleD,'cl');
+        const eng=sum(metaD,'engagement'), cost=sum(metaD,'cost')+sum(googleD,'cost');
+        const hasG=cityHasGoogle(city);
+        const platforms = hasG ? 'Meta + Google Ads' : 'Meta Ads';
+        return `<div class="restaurant-card ${selectedResto===city?'active':''}" onclick="showRestoDetail('${city}')">
+            <div class="resto-header"><div class="resto-icon">${city[0]}</div><div class="resto-info"><h4>Mamie Bigoude ${city}</h4><p>${platforms}</p></div>${hasG?'<span style="font-size:9px;font-weight:700;background:var(--google-soft);color:var(--google-blue);padding:2px 7px;border-radius:10px;margin-left:auto">GOOGLE</span>':''}</div>
+            <div class="resto-metrics">
+                <div class="resto-metric"><div class="lbl">Impressions</div><div class="val">${fN(imp)}</div></div>
+                <div class="resto-metric"><div class="lbl">Clics</div><div class="val">${fN(cl)}</div></div>
+                <div class="resto-metric"><div class="lbl">Engagement</div><div class="val">${fN(eng)}</div></div>
+                <div class="resto-metric"><div class="lbl">Dépenses</div><div class="val">${fE(cost)}</div></div>
+            </div></div>`;
+    }).join('');
+
+    // Sub nav
+    document.getElementById('restoSubNav').innerHTML=cities.map(c=>
+        `<a class="nav-item ${selectedResto===c?'active':''}" onclick="navigateTo('restaurants');showRestoDetail('${c}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/></svg>${c}${cityHasGoogle(c)?' (G)':''}</a>`
+    ).join('');
+}
+
+let restoDetailTab = 'meta';
+
+function showRestoDetail(city) {
+    selectedResto=city;
+    restoDetailTab='meta';
+    document.getElementById('restaurantListWrap').style.display='none';
+    document.getElementById('restoDetail').classList.add('active');
+    document.getElementById('rdTitle').textContent='Mamie Bigoude '+city;
+
+    const hasG = cityHasGoogle(city);
+    const tabsEl = document.getElementById('rdPlatformTabs');
+    if (hasG) {
+        tabsEl.style.display = 'flex';
+        tabsEl.innerHTML = `<button class="platform-tab active" onclick="switchRestoTab('meta',this,'${city}')"><span class="tab-dot meta"></span>Meta Ads</button><button class="platform-tab" onclick="switchRestoTab('google',this,'${city}')"><span class="tab-dot google"></span>Google Ads</button>`;
+    } else {
+        tabsEl.style.display = 'none';
+    }
+
+    renderRestoTabContent(city);
+    renderCalendar();
+    renderRestaurants();
+}
+
+function switchRestoTab(tab, btn, city) {
+    restoDetailTab = tab;
+    document.querySelectorAll('#rdPlatformTabs .platform-tab').forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');
+    renderRestoTabContent(city);
+}
+
+function renderRestoTabContent(city) {
+    const mk=getCurMonth(),pk=getPrevMonth();
+    const hasG = cityHasGoogle(city);
+
+    if (restoDetailTab === 'meta') {
+        document.getElementById('rdSub').textContent='Meta Ads — '+city;
+        document.getElementById('rdTblTitle').textContent='Détail mensuel Meta — '+city;
+        const d=getMonthData(allMetaResto[city]||[],mk),p=pk?getMonthData(allMetaResto[city]||[],pk):[];
+        const imp=sum(d,'imp'),cl=sum(d,'cl'),eng=sum(d,'engagement'),cost=sum(d,'cost');
+
+        document.getElementById('rdKpis').innerHTML=kpiHTML([
+            {label:'Impressions',value:fN(imp),sub:'Meta Ads',icon:'meta-i',svg:SVG.eye,trend:trend(imp,sum(p,'imp'))},
+            {label:'Clics',value:fN(cl),sub:'CTR: '+fPct(imp>0?cl/imp*100:0),icon:'meta-i',svg:SVG.click,trend:trend(cl,sum(p,'cl'))},
+            {label:'Engagement',value:fN(eng),sub:'Réactions, partages',icon:'meta-i',svg:SVG.heart,trend:trend(eng,sum(p,'engagement'))},
+            {label:'Dépenses',value:fE(cost),sub:'CPC: '+(cl>0?fE2(cost/cl):'-'),icon:'meta-i',svg:SVG.spend,trend:trend(cost,sum(p,'cost'))}
+        ]);
+
+        const monthly=getRestoMonthly(city);
+        makeChart('rdChart1','line',allMonthKeys.map(mLabel),[
+            {label:'Impressions',data:monthly.map(m=>m.imp),borderColor:'#1877f2',backgroundColor:'rgba(24,119,242,.08)',borderWidth:2.5,fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'#1877f2'},
+            {label:'Engagement',data:monthly.map(m=>m.engagement),borderColor:'#c4567a',backgroundColor:'rgba(196,86,122,.06)',borderWidth:2,fill:false,tension:.4,pointRadius:3,pointBackgroundColor:'#c4567a',yAxisID:'y2'}
+        ],{},{scales:{x:{grid:{display:false},ticks:{font:{size:10}},border:{display:false}},y:{type:'linear',position:'left',grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:10},callback:v=>fN(v)},border:{display:false}},y2:{type:'linear',position:'right',grid:{display:false},ticks:{font:{size:10}},border:{display:false}}}});
+
+        makeChart('rdChart2','bar',allMonthKeys.map(mLabel),[{data:monthly.map(m=>m.cost),backgroundColor:'rgba(196,86,122,.65)',borderRadius:6,borderSkipped:false}],{y:{ticks:{callback:v=>fE(v)}}});
+
+        document.getElementById('rdTblHead').innerHTML='<tr><th>Mois</th><th>Impressions</th><th>Clics</th><th>Engagement</th><th>Dépenses</th></tr>';
+        document.getElementById('rdTblBody').innerHTML=monthly.slice().reverse().map(m=>`<tr><td class="td-b">${mLabel(m.month)}</td><td>${fN(m.imp)}</td><td>${fN(m.cl)}</td><td>${fN(m.engagement)}</td><td class="td-b">${fE(m.cost)}</td></tr>`).join('');
+    }
+    else if (restoDetailTab === 'google' && hasG) {
+        document.getElementById('rdSub').textContent='Google Ads — '+city;
+        document.getElementById('rdTblTitle').textContent='Détail mensuel Google — '+city;
+        const d=getMonthData(allGoogleResto[city]||[],mk),p=pk?getMonthData(allGoogleResto[city]||[],pk):[];
+        const imp=sum(d,'imp'),cl=sum(d,'cl'),conv=sum(d,'conv'),cost=sum(d,'cost');
+
+        document.getElementById('rdKpis').innerHTML=kpiHTML([
+            {label:'Impressions',value:fN(imp),sub:'Google Ads',icon:'google-i',svg:SVG.eye,trend:trend(imp,sum(p,'imp'))},
+            {label:'Clics',value:fN(cl),sub:'CTR: '+fPct(imp>0?cl/imp*100:0),icon:'google-i',svg:SVG.click,trend:trend(cl,sum(p,'cl'))},
+            {label:'Conversions',value:fN(conv),sub:conv>0?'CPL: '+fE2(cost/conv):'-',icon:'google-i',svg:SVG.users,trend:trend(conv,sum(p,'conv'))},
+            {label:'Dépenses',value:fE(cost),sub:'CPC: '+(cl>0?fE2(cost/cl):'-'),icon:'google-i',svg:SVG.spend,trend:trend(cost,sum(p,'cost'))}
+        ]);
+
+        const monthly=getGoogleRestoMonthly(city);
+        makeChart('rdChart1','line',allMonthKeys.map(mLabel),[
+            {label:'Impressions',data:monthly.map(m=>m.imp),borderColor:'#4285f4',backgroundColor:'rgba(66,133,244,.08)',borderWidth:2.5,fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'#4285f4'},
+            {label:'Clics',data:monthly.map(m=>m.cl),borderColor:'#34a853',backgroundColor:'rgba(52,168,83,.06)',borderWidth:2,fill:false,tension:.4,pointRadius:3,pointBackgroundColor:'#34a853',yAxisID:'y2'}
+        ],{},{scales:{x:{grid:{display:false},ticks:{font:{size:10}},border:{display:false}},y:{type:'linear',position:'left',grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:10},callback:v=>fN(v)},border:{display:false}},y2:{type:'linear',position:'right',grid:{display:false},ticks:{font:{size:10}},border:{display:false}}}});
+
+        makeChart('rdChart2','bar',allMonthKeys.map(mLabel),[{data:monthly.map(m=>m.cost),backgroundColor:'rgba(66,133,244,.65)',borderRadius:6,borderSkipped:false}],{y:{ticks:{callback:v=>fE(v)}}});
+
+        document.getElementById('rdTblHead').innerHTML='<tr><th>Mois</th><th>Impressions</th><th>Clics</th><th>Conversions</th><th>Dépenses</th></tr>';
+        document.getElementById('rdTblBody').innerHTML=monthly.slice().reverse().map(m=>`<tr><td class="td-b">${mLabel(m.month)}</td><td>${fN(m.imp)}</td><td>${fN(m.cl)}</td><td>${fN(m.conv)}</td><td class="td-b">${fE(m.cost)}</td></tr>`).join('');
+    }
+}
+
+function backToRestoList(){selectedResto=null;restoDetailTab='meta';document.getElementById('restaurantListWrap').style.display='';document.getElementById('restoDetail').classList.remove('active');renderRestaurants();renderCalendar()}
+
+// ══════════════════════════════════════════
+// RENDER: REPORTS
+// ══════════════════════════════════════════
+function renderReports() {
+    const el=document.getElementById('reportSummary');
+    const metaT={imp:0,cl:0,eng:0,cost:0,leads:0};allMetaNat.forEach(r=>{metaT.imp+=r.imp;metaT.cl+=r.cl;metaT.eng+=r.engagement;metaT.cost+=r.cost;metaT.leads+=r.leads});
+    const gNatT={imp:0,cl:0,conv:0,cost:0};allGoogle.forEach(r=>{gNatT.imp+=r.imp;gNatT.cl+=r.cl;gNatT.conv+=r.conv;gNatT.cost+=r.cost});
+    const gRestoT={imp:0,cl:0,conv:0,cost:0};Object.values(allGoogleResto).flat().forEach(r=>{gRestoT.imp+=r.imp;gRestoT.cl+=r.cl;gRestoT.conv+=r.conv;gRestoT.cost+=r.cost});
+    const wT={sess:0,users:0};allGA4.forEach(r=>{wT.sess+=r.sessions;wT.users+=r.users});
+
+    const cards = [
+        {l:'Meta Ads (National)',c:'var(--meta-blue)',bg:'var(--meta-blue-soft)',metrics:[['Impressions',fN(metaT.imp)],['Clics',fN(metaT.cl)],['Engagement',fN(metaT.eng)],['Dépenses',fE(metaT.cost)],['Leads',fN(metaT.leads)]]},
+        {l:'Google Ads (National)',c:'var(--google-blue)',bg:'var(--google-soft)',metrics:[['Impressions',fN(gNatT.imp)],['Clics',fN(gNatT.cl)],['Conversions',fN(gNatT.conv)],['Dépenses',fE(gNatT.cost)],['CPL',gNatT.conv>0?fE2(gNatT.cost/gNatT.conv):'-']]},
+        {l:'Site Web (GA4)',c:'var(--web-purple)',bg:'var(--web-purple-soft)',metrics:[['Sessions',fN(wT.sess)],['Utilisateurs',fN(wT.users)]]}
+    ];
+    if (gRestoT.imp > 0) {
+        cards.push({l:'Google Ads (Restaurants)',c:'#34a853',bg:'rgba(52,168,83,.08)',metrics:[['Impressions',fN(gRestoT.imp)],['Clics',fN(gRestoT.cl)],['Conversions',fN(gRestoT.conv)],['Dépenses',fE(gRestoT.cost)],['Villes',Object.keys(allGoogleResto).join(', ')]]});
+    }
+    el.innerHTML=cards.map(p=>`<div class="card"><div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><div style="width:9px;height:9px;border-radius:50%;background:${p.c}"></div><strong style="font-size:13px">${p.l}</strong></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">${p.metrics.map(([l,v])=>`<div style="padding:10px;border-radius:8px;background:${p.bg}"><div style="font-size:9.5px;color:var(--text-tertiary);text-transform:uppercase;font-weight:700;letter-spacing:.3px">${l}</div><div style="font-size:17px;font-weight:800;margin-top:2px">${v}</div></div>`).join('')}</div></div>`).join('');
+
+    // Restaurant comparison
+    const mk=getCurMonth();const cities=getAllRestoCities();
+    makeChart('reportRestoChart','bar',cities,[
+        {label:'Impressions Meta',data:cities.map(c=>sum(getMonthData(allMetaResto[c]||[],mk),'imp')),backgroundColor:'rgba(196,86,122,.6)',borderRadius:6,borderSkipped:false},
+        {label:'Impressions Google',data:cities.map(c=>sum(getMonthData(allGoogleResto[c]||[],mk),'imp')),backgroundColor:'rgba(66,133,244,.5)',borderRadius:6,borderSkipped:false},
+        {label:'Engagement',data:cities.map(c=>sum(getMonthData(allMetaResto[c]||[],mk),'engagement')),backgroundColor:'rgba(201,169,110,.5)',borderRadius:6,borderSkipped:false}
+    ],{y:{ticks:{callback:v=>fN(v)}}});
+}
+
+// ══════════════════════════════════════════
+// NAV
+// ══════════════════════════════════════════
+function navigateTo(page){
+    document.querySelectorAll('.sidebar-nav .nav-item').forEach(n=>n.classList.remove('active'));
+    const navItem=document.querySelector(`.nav-item[data-page="${page}"]`);
+    if(navItem)navItem.classList.add('active');
+    document.querySelectorAll('.page-view').forEach(v=>v.classList.remove('active'));
+    const el=document.getElementById('page-'+page);if(el)el.classList.add('active');
+    document.getElementById('breadcrumbPage').textContent=navItem?navItem.textContent.trim():page;
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('show');
+}
+document.querySelectorAll('.nav-item[data-page]').forEach(item=>{
+    item.addEventListener('click',function(){navigateTo(this.dataset.page)});
+});
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarOverlay').classList.toggle('show')}
+document.getElementById('sidebarOverlay').addEventListener('click',toggleSidebar);
+
+// ══════════════════════════════════════════
+// RENDER ALL
+// ══════════════════════════════════════════
+function renderAll(){renderOverview();renderNational();renderRestaurants();renderReports();if(selectedResto)renderRestoTabContent(selectedResto)}
+
+// ══════════════════════════════════════════
+// INIT — Fetch all data
+// ══════════════════════════════════════════
+async function init() {
+    const st=document.getElementById('dataStatus');
+    let fbOk=false,gOk=false,gaOk=false,nimOk=false,bourOk=false,smOk=false;
+
+    try {
+        // 1. France FB
+        try {
+            console.log('Fetching France FB...');
+            const raw=await fetchCSV(URLS.franceFB);
+            console.log('France FB rows:',raw.length);
+            raw.forEach(r=>{
+                const row=mapMetaRow(r);if(!row.dt)return;
+                const cls=classifyCampaign(row.camp);
+                if(cls.type==='national'){allMetaNat.push(row)}
+                else{if(!allMetaResto[cls.city])allMetaResto[cls.city]=[];allMetaResto[cls.city].push(row)}
+            });
+            fbOk=true;
+            console.log('National Meta:',allMetaNat.length,'rows. Restaurants:',Object.keys(allMetaResto).join(', '));
+        } catch(e){console.error('France FB:',e)}
+
+        // 2. Google
+        try {
+            console.log('Fetching Google...');
+            const raw=await fetchCSV(URLS.google);
+            console.log('Google rows:',raw.length);
+            raw.forEach(r=>{
+                const row=mapGoogleRow(r);if(!row.dt)return;
+                if(row.camp&&row.camp.includes('Angers')){
+                    if(!allGoogleResto['Angers'])allGoogleResto['Angers']=[];
+                    allGoogleResto['Angers'].push(row);
+                } else {
+                    allGoogle.push(row);
+                }
+            });
+            gOk=true;
+            console.log('National Google:',allGoogle.length,'rows. Google Resto:',Object.keys(allGoogleResto).join(', '));
+        } catch(e){console.error('Google:',e)}
+
+        // 3. GA4
+        try {
+            console.log('Fetching GA4...');
+            const raw=await fetchCSV(URLS.ga4);
+            console.log('GA4 rows:',raw.length);
+            allGA4=raw.map(mapGA4Row).filter(r=>r.dt);
+            gaOk=true;
+        } catch(e){console.error('GA4:',e)}
+
+        // 4. Nîmes
+        try {
+            console.log('Fetching Nîmes...');
+            const raw=await fetchCSV(URLS.nimes);
+            console.log('Nîmes rows:',raw.length);
+            raw.forEach(r=>{
+                const row=mapMetaRow(r);if(!row.dt)return;
+                if(!allMetaResto['Nîmes'])allMetaResto['Nîmes']=[];
+                allMetaResto['Nîmes'].push(row);
+            });
+            nimOk=true;
+        } catch(e){console.error('Nîmes:',e)}
+
+        // 5. Bourges
+        try {
+            console.log('Fetching Bourges...');
+            const raw=await fetchCSV(URLS.bourges);
+            console.log('Bourges rows:',raw.length);
+            raw.forEach(r=>{
+                const row=mapMetaRow(r);if(!row.dt)return;
+                if(!allMetaResto['Bourges'])allMetaResto['Bourges']=[];
+                allMetaResto['Bourges'].push(row);
+            });
+            bourOk=true;
+        } catch(e){console.error('Bourges:',e)}
+
+        // 6. Saint-Malo
+        try {
+            console.log('Fetching Saint-Malo...');
+            const raw=await fetchCSV(URLS.saintmalo);
+            console.log('Saint-Malo rows:',raw.length);
+            raw.forEach(r=>{
+                const row=mapMetaRow(r);if(!row.dt)return;
+                if(!allMetaResto['Saint-Malo'])allMetaResto['Saint-Malo']=[];
+                allMetaResto['Saint-Malo'].push(row);
+            });
+            smOk=true;
+        } catch(e){console.error('Saint-Malo:',e)}
+
+        // 7. Châteauroux
+        try {
+            console.log('Fetching Châteauroux...');
+            const raw=await fetchCSV(URLS.chateauroux);
+            console.log('Châteauroux rows:',raw.length);
+            raw.forEach(r=>{
+                const row=mapMetaRow(r);if(!row.dt)return;
+                if(!allMetaResto['Châteauroux'])allMetaResto['Châteauroux']=[];
+                allMetaResto['Châteauroux'].push(row);
+            });
+        } catch(e){console.error('Châteauroux:',e)}
+
+        // Compute month keys
+        const allDates=[...allMetaNat,...allGoogle,...allGA4,...Object.values(allMetaResto).flat(),...Object.values(allGoogleResto).flat()].map(r=>mKey(r.dt)).filter(Boolean);
+        allMonthKeys=[...new Set(allDates)].sort();
+        calYear=allMonthKeys.length>0?parseInt(allMonthKeys[allMonthKeys.length-1].split('-')[0]):2025;
+        console.log('Months found:',allMonthKeys.length,allMonthKeys);
+
+        if(fbOk||gOk||gaOk){st.innerHTML=''}
+        else{st.innerHTML='<div class="data-status error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Impossible de charger les données. Vérifiez que le Google Sheet est bien publié sur le Web (Fichier > Partager > Publier sur le Web).</div>'}
+
+        if(allMonthKeys.length>0){
+            updateMonthLabel();
+            renderAll();
+        }
+    } catch(e) {
+        console.error('Init error:',e);
+        st.innerHTML='<div class="data-status error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Erreur lors du chargement: '+e.message+'</div>';
+    }
+
+    document.getElementById('loader').classList.add('hidden');
+}
+
+init();
+</script>
+</body>
+</html>

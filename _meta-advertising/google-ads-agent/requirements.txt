@@ -1,0 +1,5 @@
+google-ads==25.1.0
+python-dotenv==1.0.1
+rich==13.9.4
+google-auth==2.38.0
+google-auth-oauthlib==1.2.1

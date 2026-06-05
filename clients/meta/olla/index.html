@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olla | Oasis Urbaine — Dashboard Marketing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #2D5F3F;
+            --primary-light: #3D7A55;
+            --accent: #E8956F;
+            --bg: #080a08;
+            --bg-secondary: #0e120e;
+            --card-bg: rgba(45,95,63,0.05);
+            --card-border: rgba(45,95,63,0.12);
+            --text: #eaf0ea;
+            --text-secondary: rgba(234,240,234,0.50);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; }
+
+        /* Landing Screen */
+        .landing {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .landing.hidden { display: none; }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .orb-green {
+            width: 500px;
+            height: 500px;
+            background: var(--primary);
+            top: -100px;
+            left: -100px;
+        }
+
+        .orb-orange {
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            bottom: -80px;
+            right: -80px;
+            opacity: 0.25;
+        }
+
+        .orb-green2 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary-light);
+            bottom: 10%;
+            left: 20%;
+            opacity: 0.2;
+        }
+
+        .landing-logo {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            filter: brightness(0) invert(1) drop-shadow(0 0 40px rgba(45,95,63,0.5));
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .landing-tagline {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.4rem;
+            color: var(--text);
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .landing-tagline span {
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-size: 1rem;
+            display: block;
+            margin-top: 8px;
+        }
+
+        .btn-enter {
+            position: relative;
+            z-index: 1;
+            padding: 14px 48px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 24px rgba(45,95,63,0.3);
+        }
+
+        .btn-enter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(45,95,63,0.5);
+        }
+
+        /* Portal Screen */
+        .portal {
+            display: none;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .portal.active { display: flex; }
+
+        .portal-topbar {
+            display: flex;
+            align-items: center;
+            padding: 16px 32px;
+            border-bottom: 1px solid var(--card-border);
+            background: var(--bg-secondary);
+        }
+
+        .portal-topbar img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            margin-right: 16px;
+        }
+
+        .portal-topbar h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .portal-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 24px;
+        }
+
+        .channel-pills {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .pill {
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .pill.meta { border-color: var(--primary); color: var(--primary-light); }
+        .pill.google { border-color: var(--accent); color: var(--accent); }
+
+        .portal-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 32px 48px;
+            text-align: center;
+            transition: transform 0.2s, border-color 0.2s;
+            text-decoration: none;
+            color: var(--text);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary-light);
+        }
+
+        .portal-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .portal-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .portal-card .arrow {
+            display: inline-block;
+            margin-top: 16px;
+            font-size: 1.4rem;
+            color: var(--primary-light);
+        }
+
+        @media (max-width: 600px) {
+            .landing-logo { width: 130px; height: 130px; }
+            .landing-tagline { font-size: 1.1rem; text-align: center; }
+            .portal-topbar { padding: 12px 16px; }
+            .portal-card { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Landing -->
+    <div class="landing" id="landing">
+        <div class="orb orb-green"></div>
+        <div class="orb orb-orange"></div>
+        <div class="orb orb-green2"></div>
+        <div style="background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);border-radius:14px;padding:16px 24px;position:relative;z-index:1;margin-bottom:24px;">
+            <img src="https://static.wixstatic.com/media/5c7300_f92d9af83db0442cac12e7d8a2cb036c~mv2.png" alt="Olla Logo" class="landing-logo" style="margin-bottom:0;">
+        </div>
+        <div class="landing-tagline">
+            Dashboard Marketing
+            <span>Olla | Oasis Urbaine</span>
+        </div>
+        <button class="btn-enter" onclick="enterPortal()">Acceder</button>
+    </div>
+
+    <!-- Portal -->
+    <div class="portal" id="portal">
+        <div class="portal-topbar">
+            <div style="margin-right:16px;display:inline-flex;">
+                <img src="https://static.wixstatic.com/media/5c7300_f92d9af83db0442cac12e7d8a2cb036c~mv2.png" alt="Olla Logo" style="margin-right:0;filter:brightness(0) invert(1);height:32px;width:auto;">
+            </div>
+            <h2>Olla | Oasis Urbaine</h2>
+        </div>
+        <div class="portal-content">
+            <div class="channel-pills">
+                <span class="pill meta">Meta Ads</span>
+                <span class="pill google">Google Ads</span>
+            </div>
+            <a href="dashboard.html" class="portal-card">
+                <h3>Dashboard Performance</h3>
+                <p>Suivez vos campagnes Meta Ads et Google Ads en temps reel</p>
+                <span class="arrow">&rarr;</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function enterPortal() {
+            document.getElementById('landing').classList.add('hidden');
+            document.getElementById('portal').classList.add('active');
+        }
+    </script>
+</body>
+</html>

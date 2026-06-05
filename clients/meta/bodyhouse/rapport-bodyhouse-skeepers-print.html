@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Body House — Rapport Performance Skeepers</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#242424;line-height:1.4;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff}
+
+@page{size:A4 landscape;margin:0}
+
+/* === PAGES === */
+.pg{width:297mm;height:210mm;padding:12mm 16mm;position:relative;overflow:hidden;page-break-after:always;page-break-inside:avoid}
+.pg:last-child{page-break-after:auto}
+
+/* === COVER === */
+.cover{width:297mm;height:210mm;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#2d2024 0%,#242424 40%,#1a1818 100%);color:#fff;text-align:center;padding:20mm;position:relative;overflow:hidden;page-break-after:always}
+.cover::before{content:'';position:absolute;width:160mm;height:160mm;border-radius:50%;background:rgba(241,157,118,0.06);top:-50mm;right:-50mm}
+.cover::after{content:'';position:absolute;width:100mm;height:100mm;border-radius:50%;background:rgba(241,157,118,0.05);bottom:-30mm;left:-30mm}
+.cover img{height:22mm;filter:brightness(0) invert(1);margin-bottom:12mm;position:relative;z-index:1}
+.cover h1{font-size:28pt;font-weight:800;letter-spacing:-0.5px;margin-bottom:3mm;position:relative;z-index:1}
+.cover h2{font-size:13pt;font-weight:400;opacity:.85;position:relative;z-index:1;margin-bottom:2mm}
+.cover .subtitle{font-size:10pt;opacity:.55;position:relative;z-index:1}
+.cover .period{margin-top:10mm;padding:2.5mm 8mm;border:0.3mm solid rgba(241,157,118,.35);border-radius:8mm;font-size:9.5pt;letter-spacing:.3px;position:relative;z-index:1;color:#F19D76}
+.cover .footer{position:absolute;bottom:8mm;font-size:7.5pt;opacity:.35;z-index:1}
+
+/* === SECTION HEADER === */
+.sh{display:flex;align-items:center;gap:3.5mm;margin-bottom:5mm;padding-bottom:3mm;border-bottom:0.6mm solid #F19D76}
+.sh .num{width:10mm;height:10mm;border-radius:50%;background:linear-gradient(135deg,#F19D76,#d4845c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:10pt;flex-shrink:0}
+.sh h2{font-size:13pt;font-weight:700;color:#242424}
+.sh .tag{font-size:6.5pt;background:#fdf6f2;color:#d4845c;padding:1mm 3mm;border-radius:5mm;font-weight:600;text-transform:uppercase;letter-spacing:.3px;border:0.3mm solid #f1dbcf}
+
+/* === EXEC === */
+.exec-title{font-size:16pt;font-weight:800;color:#242424;margin-bottom:1.5mm}
+.exec-sub{color:#888;margin-bottom:5mm;font-size:8.5pt}
+
+/* === KPI === */
+.kpis{display:flex;gap:3mm;margin-bottom:5mm}
+.kpi{flex:1;background:#fdf6f2;border-radius:3mm;padding:4mm;position:relative;overflow:hidden;border-left:1mm solid #F19D76}
+.kpi .kl{font-size:6pt;text-transform:uppercase;letter-spacing:.4px;color:#999;margin-bottom:1.5mm;font-weight:600}
+.kpi .kv{font-size:14pt;font-weight:800;color:#242424}
+.kpi .ks{font-size:6pt;color:#aaa;margin-top:1mm}
+
+/* === RANKING === */
+.ranking{margin-bottom:5mm}
+.ranking h3{font-size:9pt;font-weight:700;margin-bottom:3mm;color:#242424}
+.rank-cols{display:flex;gap:8mm}
+.rank-col{flex:1}
+.rank-item{display:flex;align-items:center;gap:2.5mm;margin-bottom:2mm;font-size:7.5pt}
+.rank-pos{width:5.5mm;height:5.5mm;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:6pt;flex-shrink:0;background:#f5f0ed;color:#666}
+.rank-pos.g{background:linear-gradient(135deg,#ffd700,#ffb300);color:#5d4200}
+.rank-pos.s{background:linear-gradient(135deg,#e0e0e0,#bdbdbd);color:#424242}
+.rank-pos.b{background:linear-gradient(135deg,#d4a373,#bc8a5f);color:#3e2723}
+.rank-name{font-weight:600;flex:1}
+.rank-bar-bg{flex:1.5;height:1.8mm;background:#f5f0ed;border-radius:1mm;overflow:hidden}
+.rank-bar{height:100%;border-radius:1mm;background:linear-gradient(90deg,#F19D76,#f1c4a8)}
+.rank-val{font-weight:700;color:#d4845c;min-width:14mm;text-align:right}
+
+/* === BOUTIQUE BARS === */
+.bout-bars{margin-bottom:4mm}
+.bout-bars h3{font-size:9pt;font-weight:700;margin-bottom:3mm;color:#242424}
+.bb-cols{display:flex;gap:8mm}
+.bb-col{flex:1}
+.bb-item{display:flex;align-items:center;gap:2.5mm;margin-bottom:2.2mm;font-size:7.5pt}
+.bb-name{width:22mm;text-align:right;font-weight:600;flex-shrink:0}
+.bb-bar-bg{flex:1;height:2.5mm;background:#f5f0ed;border-radius:1.2mm;overflow:hidden}
+.bb-bar{height:100%;border-radius:1.2mm;background:linear-gradient(90deg,#F19D76,#f1c4a8)}
+.bb-val{min-width:18mm;font-weight:700;color:#d4845c;text-align:right}
+.bb-note{font-size:6pt;color:#bbb;font-style:italic}
+
+/* === TABLE === */
+.tbl-wrap{border-radius:2mm;overflow:hidden;margin-bottom:4mm;border:0.3mm solid #f0ebe8}
+table{width:100%;border-collapse:collapse}
+th{background:#242424;color:#fff;padding:2mm 2.5mm;text-align:left;font-size:6pt;text-transform:uppercase;letter-spacing:.4px;font-weight:600}
+th:not(:first-child){text-align:right}
+td{padding:1.8mm 2.5mm;border-bottom:0.2mm solid #f0ebe8;font-size:7.5pt}
+td:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+tr:nth-child(even) td{background:#fdfaf8}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:600}
+.total-row td{background:#fdf6f2!important;font-weight:700;color:#d4845c;border-top:0.4mm solid #F19D76}
+
+/* === ANALYSIS === */
+.analysis{background:linear-gradient(135deg,#fdf6f2 0%,#f1dbcf 100%);border-radius:2.5mm;padding:3.5mm 5mm;font-size:7.5pt;line-height:1.6;color:#4a3028}
+.analysis strong{color:#c2714a}
+
+/* === NO DATA === */
+.no-data{background:#f5f0ed;border-radius:3mm;padding:15mm;text-align:center;color:#999;font-size:9pt}
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER ==================== -->
+<div class="cover">
+  <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjMxIiBoZWlnaHQ9IjI3IiB2aWV3Qm94PSIwIDAgMjMxIDI3IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxwYXRoIGQ9Ik0wIDAuNDQ5MjE5SDEwLjQyNzhDMTIuNDg4NCAwLjQ0OTIxOSAxNC4wMzcgMC41MzY2MzggMTUuMDQ4NiAwLjcxMTQ3NkMxNi4wNjAxIDAuODg2MzE0IDE2Ljk3MTggMS4yMzU5OSAxNy43NzEgMS43ODU0OEMxOC41NzAzIDIuMzM0OTcgMTkuMjQ0NyAzLjA1OTMgMTkuNzY5MiAzLjk3MDk2QzIwLjMwNjIgNC44ODI2MSAyMC41Njg1IDUuODk0MTggMjAuNTY4NSA3LjAxODE0QzIwLjU2ODUgOC4yNDIgMjAuMjQzOCA5LjM2NTk2IDE5LjU4MTkgMTAuMzc3NUMxOC45MiAxMS40MDE2IDE4LjAzMzMgMTIuMTYzNCAxNi44OTY5IDEyLjY3NTRDMTguNDgyOSAxMy4xMzc1IDE5LjcwNjggMTMuOTI0MiAyMC41Njg1IDE1LjA0ODJDMjEuNDE3NyAxNi4xNTk3IDIxLjg1NDggMTcuNDcxIDIxLjg1NDggMTguOTgyMUMyMS44NTQ4IDIwLjE2ODUgMjEuNTggMjEuMzE3NCAyMS4wMzA1IDIyLjQ0MTRDMjAuNDgxIDIzLjU2NTMgMTkuNzE5MiAyNC40NTIgMTguNzcwMSAyNS4xMjY0QzE3LjgyMSAyNS44MDA3IDE2LjYzNDYgMjYuMjEyOSAxNS4yMzU5IDI2LjM2MjdDMTQuMzYxNyAyNi40NjI2IDEyLjIzODcgMjYuNTEyNiA4Ljg3OTI4IDI2LjUzNzZIMFYwLjQ0OTIxOVpNNS4yNzAxMiA0Ljc4MjcxVjEwLjgxNDZIOC43MTY5M0MxMC43NjUgMTAuODE0NiAxMi4wMzg5IDEwLjc4OTYgMTIuNTM4NCAxMC43MjcyQzEzLjQzNzYgMTAuNjE0OCAxNC4xNDk0IDEwLjMwMjYgMTQuNjYxNCA5Ljc5MDU3QzE1LjE3MzQgOS4yNzg1NCAxNS40MzU3IDguNTkxNjggMTUuNDM1NyA3Ljc1NDk1QzE1LjQzNTcgNi45MTgyMyAxNS4yMTA5IDYuMjkzODEgMTQuNzczOCA1Ljc4MTc4QzE0LjMyNDIgNS4yODIyNCAxMy42NjIzIDQuOTcwMDMgMTIuNzg4MiA0Ljg3MDEzQzEyLjI2MzYgNC44MDc2OCAxMC43NjUgNC43ODI3MSA4LjI5MjMyIDQuNzgyNzFINS4yNzAxMlpNNS4yNzAxMiAxNS4xNjA2VjIyLjE0MTZIMTAuMTQwNkMxMi4wMzg5IDIyLjE0MTYgMTMuMjM3NyAyMi4wOTE3IDEzLjc0OTggMjEuOTc5M0MxNC41MzY1IDIxLjg0MTkgMTUuMTczNCAyMS40OTIyIDE1LjY2MDUgMjAuOTQyN0MxNi4xNDc1IDIwLjM5MzMgMTYuMzk3MyAxOS42NTY0IDE2LjM5NzMgMTguNzE5OEMxNi4zOTczIDE3LjkzMyAxNi4yMSAxNy4yNzExIDE1LjgyMjggMTYuNzIxN0MxNS40MzU3IDE2LjE3MjIgMTQuODk4NyAxNS43NzI1IDE0LjE3NDQgMTUuNTIyOEMxMy40NjI1IDE1LjI3MyAxMS45MDE1IDE1LjE0ODEgOS41MDM3IDE1LjE0ODFINS4yNDUxNEw1LjI3MDEyIDE1LjE2MDZaIiBmaWxsPSIjMjQyNDI0Ii8+CiAgPHBhdGggZD0iTTI1LjIzOTEgMTMuNjQ5OUMyNS4yMzkxIDEwLjk4OTggMjUuNjM4NyA4Ljc2Njg4IDI2LjQzOCA2Ljk1NjA2QzI3LjAyNDkgNS42MzIyOCAyNy44MzY3IDQuNDMzMzkgMjguODYwNyAzLjM3MTg4QzI5Ljg4NDggMi4zMjI4NSAzMS4wMDg3IDEuNTM2MDggMzIuMjMyNiAxLjAyNDA1QzMzLjg1NjEgMC4zNDk2NzYgMzUuNzI5NCAwIDM3Ljg1MjQgMEM0MS42OTg4IDAgNDQuNzcxIDEuMTg2NCA0Ny4wODE0IDMuNTcxNjlDNDkuMzkxNyA1Ljk1Njk4IDUwLjU0MDYgOS4yNjY0MiA1MC41NDA2IDEzLjUyNUM1MC41NDA2IDE3Ljc4MzUgNDkuMzkxNyAyMS4wMzA1IDQ3LjEwNjMgMjMuNDE1OEM0NC44MjA5IDI1LjgwMTEgNDEuNzQ4OCAyNi45ODc1IDM3LjkyNzMgMjYuOTg3NUMzNC4xMDU5IDI2Ljk4NzUgMzAuOTU4OCAyNS44MDExIDI4LjY3MzQgMjMuNDQwOEMyNi4zODggMjEuMDY4IDI1LjIzOTEgMTcuODA4NSAyNS4yMzkxIDEzLjY2MjNNMzAuNjU5MSAxMy40NzVDMzAuNjU5MSAxNi40MzQ4IDMxLjM0NTkgMTguNjcwMiAzMi43MDcyIDIwLjE5MzhDMzQuMDY4NCAyMS43MTc0IDM1LjgwNDMgMjIuNDc5MiAzNy45MDI0IDIyLjQ3OTJDNDAuMDAwNCAyMi40NzkyIDQxLjcyMzggMjEuNzE3NCA0My4wNzI2IDIwLjIwNjNDNDQuNDIxMyAxOC42OTUyIDQ1LjA5NTcgMTYuNDIyMyA0NS4wOTU3IDEzLjQwMDFDNDUuMDk1NyAxMC4zNzc5IDQ0LjQ0NjMgOC4xNzk5MiA0My4xMzUgNi43MDYyOUM0MS44MjM3IDUuMjMyNjUgNDAuMDg3OCA0LjQ5NTg0IDM3LjkxNDggNC40OTU4NEMzNS43NDE5IDQuNDk1ODQgMzMuOTkzNSA1LjI0NTE0IDMyLjY2OTcgNi43MzEyN0MzMS4zNDU5IDguMjE3MzkgMzAuNjcxNSAxMC40NjUzIDMwLjY3MTUgMTMuNDYyNSIgZmlsbD0iIzI0MjQyNCIvPgogIDxwYXRoIGQ9Ik01NC42MzY5IDAuNDQ5MjE5SDY0LjI2NTVDNjYuNDM4NSAwLjQ0OTIxOSA2OC4wODY5IDAuNjExNTY4IDY5LjIzNTkgMC45NDg3NTZDNzAuNzcyIDEuMzk4MzQgNzIuMDgzMiAyLjE5NzYgNzMuMTY5NyAzLjM0NjU0Qzc0LjI1NjIgNC40OTU0NyA3NS4wOTMgNS45MDY2NyA3NS42Njc0IDcuNTY3NjNDNzYuMjQxOSA5LjI0MTA4IDc2LjUxNjYgMTEuMjg5MiA3Ni41MTY2IDEzLjczNjlDNzYuNTE2NiAxNS44ODQ5IDc2LjI1NDQgMTcuNzMzMiA3NS43MTc0IDE5LjI5NDNDNzUuMDY4IDIxLjE5MjUgNzQuMTMxMyAyMi43Mjg2IDcyLjkyIDIzLjkwMjVDNzIuMDA4MyAyNC43ODkyIDcwLjc3MiAyNS40ODg1IDY5LjIyMzQgMjUuOTg4MUM2OC4wNjIgMjYuMzUwMiA2Ni41MDA5IDI2LjUzNzYgNjQuNTY1MiAyNi41Mzc2SDU0LjY0OTRWMC40NDkyMTlINTQuNjM2OVpNNTkuOTA3IDQuODU3NjRWMjIuMTQxNkg2My44NDA5QzY1LjMxNDUgMjIuMTQxNiA2Ni4zNzYgMjIuMDU0MiA2Ny4wMjU0IDIxLjg5MTlDNjcuODc0NiAyMS42Nzk2IDY4LjU4NjUgMjEuMzE3NCA2OS4xNDg1IDIwLjgwNTRDNjkuNzEwNCAyMC4yOTMzIDcwLjE3MjUgMTkuNDU2NiA3MC41MjIyIDE4LjI4MjdDNzAuODg0NCAxNy4xMDg4IDcxLjA1OTIgMTUuNTIyOCA3MS4wNTkyIDEzLjQ5OTZDNzEuMDU5MiAxMS40NzY1IDcwLjg4NDQgOS45NDA0MyA3MC41MjIyIDguODUzOTRDNzAuMTYgNy43Nzk5MyA2OS42NzMgNi45MzA3MiA2OS4wMjM2IDYuMzMxMjdDNjguMzg2NyA1LjczMTgzIDY3LjU3NDkgNS4zMTk3MSA2Ni41ODgzIDUuMTA3NDFDNjUuODUxNSA0Ljk0NTA2IDY0LjQxNTMgNC44NTc2NCA2Mi4yNjczIDQuODU3NjRINTkuOTA3WiIgZmlsbD0iIzI0MjQyNCIvPgogIDxwYXRoIGQ9Ik04Ny44MzExIDI2LjUzNzZWMTUuNTYwMkw3OC4yNzc0IDAuNDQ5MjE5SDg0LjQ0NjdMOTAuNTkxIDEwLjc2NDdMOTYuNjEwNSAwLjQ0OTIxOUgxMDIuNjhMOTMuMDc2MiAxNS41ODUyVjI2LjUzNzZIODcuODMxMVoiIGZpbGw9IiMyNDI0MjQiLz4KICA8cGF0aCBkPSJNMTA1LjMxNSAyNi41Mzc2VjAuNDQ5MjE5SDExMC41NzNWMTAuNzE0N0gxMjAuOTAxVjAuNDQ5MjE5SDEyNi4xNzFWMjYuNTM3NkgxMjAuOTAxVjE1LjEyMzFIMTEwLjU3M1YyNi41Mzc2SDEwNS4zMTVaIiBmaWxsPSIjMjQyNDI0Ii8+CiAgPHBhdGggZD0iTTEzMC41NDIgMTMuNjQ5OUMxMzAuNTQyIDEwLjk4OTggMTMwLjk0MSA4Ljc2Njg4IDEzMS43MjggNi45NTYwNkMxMzIuMzI4IDUuNjMyMjggMTMzLjEyNyA0LjQzMzM5IDEzNC4xNjMgMy4zNzE4OEMxMzUuMTg3IDIuMzIyODUgMTM2LjMxMSAxLjUzNjA4IDEzNy41MzUgMS4wMjQwNUMxMzkuMTcxIDAuMzQ5Njc2IDE0MS4wNDQgMCAxNDMuMTY3IDBDMTQ3LjAxNCAwIDE1MC4wODYgMS4xODY0IDE1Mi4zOTYgMy41NzE2OUMxNTQuNzA3IDUuOTU2OTggMTU1Ljg1NiA5LjI2NjQyIDE1NS44NTYgMTMuNTI1QzE1NS44NTYgMTcuNzgzNSAxNTQuNzA3IDIxLjAzMDUgMTUyLjQyMSAyMy40MTU4QzE1MC4xMzYgMjUuODAxMSAxNDcuMDY0IDI2Ljk4NzUgMTQzLjI0MiAyNi45ODc1QzEzOS40MjEgMjYuOTg3NSAxMzYuMjc0IDI1LjgwMTEgMTMzLjk4OCAyMy40NDA4QzEzMS43MDMgMjEuMDY4IDEzMC41NTQgMTcuODA4NSAxMzAuNTU0IDEzLjY2MjNNMTM1Ljk3NCAxMy40NzVDMTM1Ljk3NCAxNi40MzQ4IDEzNi42NjEgMTguNjcwMiAxMzguMDIyIDIwLjE5MzhDMTM5LjM4MyAyMS43MTc0IDE0MS4xMTkgMjIuNDc5MiAxNDMuMjE3IDIyLjQ3OTJDMTQ1LjMxNSAyMi40NzkyIDE0Ny4wMzkgMjEuNzE3NCAxNDguMzg4IDIwLjIwNjNDMTQ5LjczNiAxOC42OTUyIDE1MC40MTEgMTYuNDIyMyAxNTAuNDExIDEzLjQwMDFDMTUwLjQxMSAxMC4zNzc5IDE0OS43NDkgOC4xNzk5MiAxNDguNDM4IDYuNzA2MjlDMTQ3LjEyNiA1LjIzMjY1IDE0NS4zOSA0LjQ5NTg0IDE0My4yMTcgNC40OTU4NEMxNDEuMDQ0IDQuNDk1ODQgMTM5LjI5NiA1LjI0NTE0IDEzNy45NzIgNi43MzEyN0MxMzYuNjQ5IDguMjE3MzkgMTM1Ljk3NCAxMC40NjUzIDEzNS45NzQgMTMuNDYyNSIgZmlsbD0iIzI0MjQyNCIvPgogIDxwYXRoIGQ9Ik0xNjAgMEgxNjUuMjdWMTQuMTM2OUMxNjUuMjcgMTYuMzcyMyAxNjUuMzMzIDE3LjgzMzUgMTY1LjQ3IDE4LjQ5NTRDMTY1LjY5NSAxOS41NTY5IDE2Ni4yMzIgMjAuNDE4NiAxNjcuMDgxIDIxLjA2OEMxNjcuOTMgMjEuNzE3NCAxNjkuMDkyIDIyLjA0MjEgMTcwLjU2NSAyMi4wNDIxQzE3Mi4wMzkgMjIuMDQyMSAxNzMuMTg4IDIxLjc0MjQgMTczLjk1IDIxLjEzMDRDMTc0LjcxMSAyMC41MTg1IDE3NS4xNjEgMTkuNzY5MiAxNzUuMzIzIDE4Ljg4MjVDMTc1LjQ3MyAxNy45OTU4IDE3NS41NDggMTYuNTA5NyAxNzUuNTQ4IDE0LjQ0OTFWMEgxODAuODE4VjEzLjY5OThDMTgwLjgxOCAxNi44MzQ0IDE4MC42ODEgMTkuMDQ0OSAxODAuMzk0IDIwLjMzMTJDMTgwLjEwNiAyMS42MyAxNzkuNTgyIDIyLjcxNjUgMTc4LjgyIDIzLjYwMzFDMTc4LjA1OCAyNC40ODk4IDE3Ny4wMzQgMjUuMjAxNyAxNzUuNzQ4IDI1LjcyNjJDMTc0LjQ2MiAyNi4yNTA3IDE3Mi43ODggMjYuNTEyOSAxNzAuNzI4IDI2LjUxMjlDMTY4LjI0MiAyNi41MTI5IDE2Ni4zNDQgMjYuMjI1NyAxNjUuMDU4IDI1LjY1MTJDMTYzLjc3MiAyNS4wNzY4IDE2Mi43NDcgMjQuMzI3NSAxNjIuMDExIDIzLjQwMzNDMTYxLjI2MSAyMi40NzkyIDE2MC43NzQgMjEuNTE3NiAxNjAuNTM3IDIwLjUwNkMxNjAuMiAxOS4wMDc0IDE2MC4wMjUgMTYuODA5NCAxNjAuMDI1IDEzLjg4NzFWMEgxNjBaIiBmaWxsPSIjMjQyNDI0Ii8+CiAgPHBhdGggZD0iTTE4NC45NTQgMTguMDQ1OEwxOTAuMDc0IDE3LjU0NjNDMTkwLjM4NiAxOS4yNjk3IDE5MS4wMTEgMjAuNTMxIDE5MS45NDcgMjEuMzQyN0MxOTIuODk2IDIyLjE1NDUgMTk0LjE1OCAyMi41NTQxIDE5NS43NjkgMjIuNTU0MUMxOTcuNDY3IDIyLjU1NDEgMTk4Ljc0MSAyMi4xOTIgMTk5LjYwMyAyMS40ODAxQzIwMC40NjQgMjAuNzY4MyAyMDAuODg5IDE5LjkxOTEgMjAwLjg4OSAxOC45NTc0QzIwMC44ODkgMTguMzQ1NSAyMDAuNzAyIDE3LjgyMSAyMDAuMzUyIDE3LjM4MzlDMTk5Ljk5IDE2Ljk0NjggMTk5LjM1MyAxNi41NzIyIDE5OC40NTQgMTYuMjU5OUMxOTcuODQyIDE2LjA0NzYgMTk2LjQzMSAxNS42NzMgMTk0LjIzMyAxNS4xMjM1QzE5MS40MSAxNC40MjQxIDE4OS40MjUgMTMuNTYyNCAxODguMjg4IDEyLjUzODRDMTg2LjY5IDExLjEwMjIgMTg1Ljg5IDkuMzUzODQgMTg1Ljg5IDcuMjkzMjVDMTg1Ljg5IDUuOTY5NDcgMTg2LjI2NSA0LjcyMDYzIDE4Ny4wMTQgMy41NTkyQzE4Ny43NjQgMi4zOTc3OCAxODguODUgMS41MjM1OSAxOTAuMjc0IDAuOTExNjU2QzE5MS42OTggMC4zMTIyMTEgMTkzLjQwOSAwIDE5NS40MDcgMEMxOTguNjc5IDAgMjAxLjE1MSAwLjcyNDMyOSAyMDIuOCAyLjE0ODAxQzIwNC40NjEgMy41ODQxOCAyMDUuMzIyIDUuNTA3NCAyMDUuNDEgNy44OTI2OUwyMDAuMTQgOC4xMjk5N0MxOTkuOTE1IDYuNzkzNzEgMTk5LjQyOCA1LjgxOTYxIDE5OC42OTEgNS4yMzI2NkMxOTcuOTU0IDQuNjQ1NyAxOTYuODQzIDQuMzU4NDYgMTk1LjM1NyA0LjM1ODQ2QzE5My44NzEgNC4zNTg0NiAxOTIuNjM0IDQuNjcwNjggMTkxLjc2IDUuMzA3NTlDMTkxLjE5OCA1LjcwNzIyIDE5MC45MjMgNi4yNTY3MSAxOTAuOTIzIDYuOTMxMDhDMTkwLjkyMyA3LjU0MzAyIDE5MS4xODYgOC4wODAwMiAxOTEuNzEgOC41MTcxMUMxOTIuMzcyIDkuMDc5MDkgMTkzLjk4MyA5LjY1MzU2IDE5Ni41NTYgMTAuMjY1NUMxOTkuMTE2IDEwLjg2NDkgMjAxLjAxNCAxMS41MDE5IDIwMi4yMzggMTIuMTM4OEMyMDMuNDYyIDEyLjc4ODIgMjA0LjQyMyAxMy42NzQ4IDIwNS4xMjMgMTQuNzg2M0MyMDUuODIyIDE1Ljg5NzggMjA2LjE1OSAxNy4yOTY1IDIwNi4xNTkgMTguOTQ1QzIwNi4xNTkgMjAuNDQzNiAyMDUuNzQ3IDIxLjg0MjMgMjA0LjkxIDIzLjE0MTFDMjA0LjA4NiAyNC40Mzk5IDIwMi45IDI1LjQxNCAyMDEuMzg5IDI2LjA1MDlDMTk5Ljg2NSAyNi42ODc4IDE5Ny45NzkgMjcgMTk1LjcwNiAyN0MxOTIuNDA5IDI3IDE4OS44NzQgMjYuMjM4MiAxODguMTAxIDI0LjcxNDZDMTg2LjMyOCAyMy4xOTEgMTg1LjI3OSAyMC45NjgxIDE4NC45MjkgMTguMDQ1OCIgZmlsbD0iIzI0MjQyNCIvPgogIDxwYXRoIGQ9Ik0yMTAuNjA1IDI2LjUzNzZWMC40NDkyMTlIMjI5Ljk1VjQuODU3NjRIMjE1Ljg3NVYxMC42Mzk4SDIyOC45NzZWMTUuMDM1N0gyMTUuODc1VjIyLjE0MTZIMjMwLjQ0OVYyNi41Mzc2SDIxMC42MDVaIiBmaWxsPSIjMjQyNDI0Ii8+Cjwvc3ZnPgo=" alt="Body House">
+  <h1>Rapport Performance Skeepers</h1>
+  <h2>Analyse des contenus influenceuses sponsorisés</h2>
+  <div class="subtitle">Contenus période fêtes de fin d'année — Campagne Meta Ads</div>
+  <div class="period">Octobre — Décembre 2025</div>
+  <div class="footer">Préparé par Meta-Advertising</div>
+</div>
+
+<div id="app"></div>
+
+<script>
+const BOUTIQUES = [
+  {
+    name:'National',label:'Campagne Nationale',isNational:true,
+    ads:[
+      {i:'Sandra',imp:156335,reach:104350,ctr:6.70,eng:81806,react:487,clicks:10521,w100:18010,w50:43373},
+      {i:'Mommy Lilly Off',imp:60100,reach:33036,ctr:6.98,eng:26712,react:487,clicks:4928,w100:224,w50:2698},
+      {i:'Coralie Diary',imp:9143,reach:8297,ctr:8.18,eng:5136,react:60,clicks:729,w100:65,w50:797},
+      {i:'Kakarine du 30',imp:7310,reach:5651,ctr:3.05,eng:2351,react:32,clicks:246,w100:460,w50:612},
+      {i:'Lauranne',imp:4508,reach:3798,ctr:7.41,eng:1994,react:18,clicks:331,w100:98,w50:434},
+      {i:'Jodie Chpln',imp:221,reach:209,ctr:7.69,eng:103,react:1,clicks:16,w100:15,w50:29},
+      {i:'Johanna Todisco',imp:58,reach:56,ctr:5.17,eng:23,react:1,clicks:3,w100:1,w50:3},
+      {i:'Elisa B',imp:31,reach:30,ctr:3.23,eng:12,react:1,clicks:1,w100:0,w50:4},
+      {i:'La Vie de la Meute',imp:29,reach:28,ctr:17.24,eng:16,react:0,clicks:5,w100:1,w50:4},
+      {i:'Miamore',imp:21,reach:20,ctr:0,eng:3,react:0,clicks:0,w100:0,w50:0}
+    ],
+    analysis:"Les vidéos de <strong>Sandra</strong> cumulent 156K impressions avec un CTR moyen de 6,7%, ce qui en fait les contenus les plus diffusés de la campagne nationale. La vidéo de <strong>Mommy Lilly Off</strong> atteint 60K impressions pour 27K engagements. Coralie Diary se distingue par le meilleur CTR de la campagne à 8,2%. Les autres contenus ont bénéficié d'une diffusion plus limitée."
+  },
+  {name:'Valence',ads:[
+    {i:'Jodie Chpln',imp:45143,reach:24793,ctr:2.23,eng:11214,react:153,clicks:1008,w100:1658,w50:2906},
+    {i:'Coralie Diary',imp:2550,reach:2144,ctr:4.34,eng:970,react:7,clicks:114,w100:11,w50:151},
+    {i:'Johanna Todisco',imp:611,reach:522,ctr:3.44,eng:173,react:4,clicks:23,w100:8,w50:19},
+    {i:'Mommy Lilly Off',imp:240,reach:217,ctr:2.50,eng:74,react:1,clicks:9,w100:1,w50:10},
+    {i:'Elisa B',imp:239,reach:219,ctr:3.13,eng:66,react:2,clicks:7,w100:5,w50:13}
+  ],analysis:"La vidéo de <strong>Jodie Chpln</strong> concentre 93% des impressions de la boutique (45K) avec 11K engagements. Les vidéos de Coralie Diary et Johanna Todisco affichent des volumes plus modestes mais des CTR corrects (autour de 3 à 4%). La diffusion reste inégale entre les contenus."},
+  {name:'Montélimar',ads:[
+    {i:'Coralie Diary',imp:105978,reach:48118,ctr:0.17,eng:48118,react:197,clicks:1762,w100:612,w50:4456},
+    {i:'Mommy Lilly Off',imp:40693,reach:17243,ctr:0.27,eng:17247,react:139,clicks:2721,w100:630,w50:4612},
+    {i:'Jodie Chpln',imp:31609,reach:15586,ctr:0.17,eng:11329,react:50,clicks:544,w100:1417,w50:2463},
+    {i:'Elisa B',imp:25342,reach:15455,ctr:0.14,eng:10782,react:42,clicks:431,w100:621,w50:1454},
+    {i:'Johanna Todisco',imp:10492,reach:5472,ctr:0.29,eng:4227,react:24,clicks:260,w100:181,w50:373}
+  ],analysis:"La vidéo de <strong>Coralie Diary</strong> totalise 106K impressions et 48K engagements, représentant près de la moitié de la visibilité de la boutique. La vidéo de <strong>Mommy Lilly Off</strong> complète avec 41K impressions et le plus grand nombre de clics (2 721). Les 5 contenus couvrent un spectre d'audience cohérent avec un taux d'engagement global de 43%."},
+  {name:'Lyon',ads:[
+    {i:'Elisa B',imp:15904,reach:11882,ctr:0.18,eng:7383,react:44,clicks:211,w100:555,w50:1230},
+    {i:'Stephya',imp:7276,reach:6261,ctr:0.14,eng:3563,react:75,clicks:161,w100:491,w50:893}
+  ],analysis:"La vidéo d'<strong>Elisa B</strong> porte 69% des impressions de la boutique avec 16K impressions et 7,4K engagements. Les vidéos de <strong>Stephya</strong> apportent un complément avec 7,3K impressions cumulées. Le taux d'engagement global atteint 47%."},
+  {name:'Grenoble',ads:[
+    {i:'Coralie Diary',imp:112852,reach:58104,ctr:0.16,eng:58979,react:292,clicks:1535,w100:868,w50:9137},
+    {i:'Mommy Lilly Off',imp:52554,reach:28340,ctr:0.23,eng:26321,react:225,clicks:1001,w100:328,w50:3444},
+    {i:'Jodie Chpln',imp:6605,reach:4199,ctr:0.11,eng:2839,react:13,clicks:81,w100:358,w50:655},
+    {i:'Johanna Todisco',imp:4631,reach:3114,ctr:0.17,eng:1927,react:18,clicks:100,w100:88,w50:193},
+    {i:'Elisa B',imp:1662,reach:1251,ctr:0.06,eng:807,react:9,clicks:22,w100:45,w50:124}
+  ],analysis:"La vidéo de <strong>Coralie Diary</strong> génère 113K impressions et 59K engagements. La vidéo de <strong>Mommy Lilly Off</strong> suit avec 53K impressions. Ces deux contenus représentent 93% de la visibilité sur Grenoble. Les autres contenus restent en retrait en termes de diffusion."},
+  {name:'Avignon Nord',ads:[
+    {i:'La Vie de la Meute',imp:340668,reach:null,ctr:0.22,eng:135316,react:890,clicks:6235,w100:7140,w50:23402},
+    {i:'Coralie Diary',imp:34156,reach:24059,ctr:0.16,eng:16086,react:102,clicks:506,w100:297,w50:2478},
+    {i:'Mommy Lilly Off',imp:31278,reach:19843,ctr:0.25,eng:15695,react:143,clicks:699,w100:277,w50:2408},
+    {i:'Elisa B',imp:12518,reach:10763,ctr:0.07,eng:2831,react:14,clicks:74,w100:108,w50:285},
+    {i:'Jodie Chpln',imp:8001,reach:6104,ctr:0.10,eng:3392,react:23,clicks:117,w100:478,w50:757},
+    {i:'Johanna Todisco',imp:5104,reach:4113,ctr:0.22,eng:2023,react:26,clicks:163,w100:100,w50:224}
+  ],analysis:"La vidéo de <strong>La Vie de la Meute</strong> génère 341K impressions et 135K engagements, portant l'essentiel de la visibilité de la boutique. Les vidéos de <strong>Coralie Diary</strong> (34K) et <strong>Mommy Lilly Off</strong> (31K) complètent le dispositif. Avignon Nord est la boutique la plus visible de l'ensemble de la campagne avec 432K impressions cumulées."},
+  {name:'Avignon Sud',ads:[
+    {i:'Coralie Diary',imp:216699,reach:101272,ctr:0.15,eng:101933,react:453,clicks:2828,w100:1715,w50:14947},
+    {i:'La Vie de la Meute',imp:38583,reach:25055,ctr:0.23,eng:16641,react:110,clicks:578,w100:554,w50:2411},
+    {i:'Jodie Chpln',imp:37660,reach:21690,ctr:0.21,eng:15104,react:66,clicks:525,w100:1852,w50:2983},
+    {i:'Johanna Todisco',imp:19597,reach:12032,ctr:0.18,eng:7625,react:54,clicks:414,w100:315,w50:766},
+    {i:'Mommy Lilly Off',imp:17882,reach:12791,ctr:0.18,eng:8321,react:98,clicks:356,w100:127,w50:919},
+    {i:'Elisa B',imp:6477,reach:4527,ctr:0.12,eng:2977,react:31,clicks:82,w100:173,w50:388}
+  ],analysis:"La vidéo de <strong>Coralie Diary</strong> cumule 217K impressions et 102K engagements, représentant 64% de la visibilité de la boutique. Les vidéos de <strong>La Vie de la Meute</strong> (39K) et <strong>Jodie Chpln</strong> (38K) apportent un complément significatif. Deuxième boutique en volume d'impressions après Avignon Nord."},
+  {name:'Nîmes',ads:[
+    {i:'Alice Vinct',imp:38805,reach:31085,ctr:0.44,eng:18640,react:527,clicks:684,w100:1800,w50:4575}
+  ],analysis:"La vidéo d'<strong>Alice Vinct</strong> est le seul contenu activé sur cette boutique. Elle atteint 39K impressions avec un taux d'engagement de 48% et une rétention vidéo à 50% de 11,8%, indiquant un bon niveau d'attention de l'audience locale."},
+  {name:'Salaise',noData:true,ads:[],analysis:""},
+  {name:'Aubière',ads:[
+    {i:'Jenn Qre',imp:98653,reach:60726,ctr:0.26,eng:49763,react:474,clicks:740,w100:1791,w50:8558},
+    {i:'Loulouchana',imp:58740,reach:41350,ctr:0.59,eng:24265,react:227,clicks:1002,w100:2320,w50:4038},
+    {i:'Alice',imp:6645,reach:4788,ctr:0.62,eng:2627,react:39,clicks:157,w100:170,w50:344}
+  ],analysis:"Les vidéos de <strong>Jenn Qre</strong> cumulent 99K impressions et 50K engagements sur deux contenus. La vidéo de <strong>Loulouchana</strong> affiche un CTR de 0,59% et une bonne rétention vidéo. La vidéo d'<strong>Alice</strong> obtient le CTR le plus élevé de la boutique à 0,62%."},
+  {name:'Biganos',noData:true,ads:[],analysis:""},
+  {name:'Villefranche',ads:[
+    {i:'Coralie Diary',imp:11442,reach:9504,ctr:0.42,eng:5964,react:51,clicks:92,w100:100,w50:1079},
+    {i:'Elisa B',imp:7404,reach:4923,ctr:2.54,eng:2020,react:27,clicks:215,w100:147,w50:391},
+    {i:'Mommy Lilly Off',imp:5127,reach:3997,ctr:3.10,eng:1508,react:20,clicks:204,w100:25,w50:246},
+    {i:'Lauranne',imp:3295,reach:2648,ctr:0.42,eng:1349,react:19,clicks:20,w100:59,w50:225},
+    {i:'Miamore',imp:1454,reach:1454,ctr:0.07,eng:164,react:2,clicks:5,w100:11,w50:32},
+    {i:'La Vie de la Meute',imp:854,reach:843,ctr:0,eng:146,react:1,clicks:6,w100:2,w50:21}
+  ],analysis:"La vidéo de <strong>Coralie Diary</strong> mène avec 11K impressions et le taux d'engagement le plus élevé. La vidéo de <strong>Mommy Lilly Off</strong> obtient un CTR de 3,1%. Le dispositif couvre 6 influenceuses sur différents objectifs (Engagement, Notoriété, Trafic)."},
+  {name:'Chambéry',ads:[
+    {i:'Non identifiée',imp:6095,reach:4635,ctr:0.18,eng:1824,react:14,clicks:21,w100:268,w50:456}
+  ],analysis:"Un seul contenu a été activé, dont le nom d'influenceuse n'est pas identifié dans les données. La performance atteint 6K impressions avec un taux d'engagement de 30% et une rétention vidéo à 50% de 7,5%."},
+  {name:'Sainte-Eulalie',ads:[
+    {i:'Melissedlisse',imp:9092,reach:7230,ctr:0.22,eng:3832,react:31,clicks:75,w100:70,w50:510}
+  ],analysis:"La vidéo de <strong>Melissedlisse</strong> est le seul contenu activé sur cette boutique avec 9K impressions et un taux d'engagement de 42%. La rétention à 50% se situe à 5,6%."}
+];
+
+function fmt(n){if(n==null)return'—';return n.toLocaleString('fr-FR')}
+function pct(n,d){if(!d||n==null)return'—';return(n/d*100).toFixed(1).replace('.',',')+' %'}
+function sumF(a,f){return a.reduce((s,x)=>{const v=x[f];return v!=null?s+v:s},0)}
+function sn(n){if(n==null)return'—';if(n>=1e6)return(n/1e6).toFixed(1).replace('.',',')+' M';if(n>=1e3)return(n/1e3).toFixed(1).replace('.',',')+' K';return n.toString()}
+
+function render(){
+  const app=document.getElementById('app');
+  let h='';
+
+  // --- EXEC SUMMARY ---
+  let tI=0,tR=0,tE=0,tA=0,iS=new Set();
+  BOUTIQUES.forEach(b=>{b.ads.forEach(a=>{if(a.imp!=null)tI+=a.imp;if(a.reach!=null)tR+=a.reach;tE+=a.eng;tA++;iS.add(a.i)})});
+
+  h+='<div class="pg">';
+  h+='<div class="exec-title">Vue d\'ensemble</div>';
+  h+='<div class="exec-sub">Synthèse de la campagne Skeepers — Contenus influenceuses sponsorisés via Meta Ads</div>';
+  h+='<div class="kpis">';
+  h+=kpi('Impressions totales',sn(tI),'Tous contenus confondus');
+  h+=kpi('Audience unique totale',sn(tR),'Nombre de personnes atteintes');
+  h+=kpi('Contenus sponsorisés',tA.toString(),iS.size+' influenceuses mobilisées');
+  h+=kpi('Engagements totaux',sn(tE),'Interactions sur les contenus');
+  h+='</div>';
+
+  // ALL influencers — 2 columns
+  const iT={};
+  BOUTIQUES.forEach(b=>{b.ads.forEach(a=>{if(!iT[a.i])iT[a.i]={imp:0};if(a.imp!=null)iT[a.i].imp+=a.imp})});
+  const all=Object.entries(iT).sort((a,b)=>b[1].imp-a[1].imp);
+  const mx=all[0][1].imp;
+  const mid=Math.ceil(all.length/2);
+
+  h+='<div class="ranking"><h3>Classement des influenceuses — par impressions totales</h3>';
+  h+='<div class="rank-cols"><div class="rank-col">';
+  all.slice(0,mid).forEach(([n,d],i)=>{
+    const c=i===0?'g':i===1?'s':i===2?'b':'n';
+    h+=`<div class="rank-item"><div class="rank-pos ${c}">${i+1}</div><div class="rank-name">${n}</div><div class="rank-bar-bg"><div class="rank-bar" style="width:${(d.imp/mx*100).toFixed(0)}%"></div></div><div class="rank-val">${sn(d.imp)}</div></div>`;
+  });
+  h+='</div><div class="rank-col">';
+  all.slice(mid).forEach(([n,d],i)=>{
+    const idx=mid+i;
+    h+=`<div class="rank-item"><div class="rank-pos n">${idx+1}</div><div class="rank-name">${n}</div><div class="rank-bar-bg"><div class="rank-bar" style="width:${(d.imp/mx*100).toFixed(0)}%"></div></div><div class="rank-val">${sn(d.imp)}</div></div>`;
+  });
+  h+='</div></div></div>';
+
+  // Boutique bars — 2 columns
+  const bd=BOUTIQUES.filter(b=>!b.isNational).map(b=>({name:b.name,imp:b.noData?0:sumF(b.ads,'imp'),noData:!!b.noData})).sort((a,b)=>b.imp-a.imp);
+  const mb=bd[0].imp;
+  const bmid=Math.ceil(bd.length/2);
+
+  h+='<div class="bout-bars"><h3>Impressions par boutique</h3>';
+  h+='<div class="bb-cols"><div class="bb-col">';
+  bd.slice(0,bmid).forEach(b=>{
+    h+=`<div class="bb-item"><div class="bb-name">${b.name}</div><div class="bb-bar-bg"><div class="bb-bar" style="width:${mb?(b.imp/mb*100).toFixed(0):0}%"></div></div><div class="bb-val">${b.noData?'<span class="bb-note">Pas de Skeepers</span>':sn(b.imp)}</div></div>`;
+  });
+  h+='</div><div class="bb-col">';
+  bd.slice(bmid).forEach(b=>{
+    h+=`<div class="bb-item"><div class="bb-name">${b.name}</div><div class="bb-bar-bg"><div class="bb-bar" style="width:${mb?(b.imp/mb*100).toFixed(0):0}%"></div></div><div class="bb-val">${b.noData?'<span class="bb-note">Pas de Skeepers</span>':sn(b.imp)}</div></div>`;
+  });
+  h+='</div></div></div>';
+  h+='</div>';
+
+  // --- PER BOUTIQUE ---
+  let num=0;
+  BOUTIQUES.forEach(b=>{
+    num++;
+    h+='<div class="pg">';
+    const tag=b.isNational?'National':b.noData?'Pas de données':b.ads.length+' contenu'+(b.ads.length>1?'s':'');
+    h+=`<div class="sh"><div class="num">${num}</div><h2>${b.label||b.name}</h2><span class="tag">${tag}</span></div>`;
+
+    if(b.noData){
+      h+='<div class="no-data">Pas de contenu Skeepers activé sur cette boutique durant la période.<br>Les campagnes utilisaient uniquement des visuels et vidéos internes Body House.</div></div>';
+      return;
+    }
+
+    const tImp=sumF(b.ads,'imp'),tRe=sumF(b.ads,'reach'),tEn=sumF(b.ads,'eng'),tW5=sumF(b.ads,'w50'),tW1=sumF(b.ads,'w100');
+
+    h+='<div class="kpis">';
+    h+=kpi('Impressions',sn(tImp),'');
+    h+=kpi('Audience unique',sn(tRe),tRe?'':'Donnée partielle');
+    h+=kpi('Engagements',sn(tEn),tImp?'Taux : '+pct(tEn,tImp):'');
+    h+=kpi('Rétention 50%',tImp?pct(tW5,tImp):'—',tW5?'Complétion : '+pct(tW1,tW5):'');
+    h+='</div>';
+
+    h+='<div class="tbl-wrap"><table>';
+    h+='<tr><th>Influenceuse</th><th>Impressions</th><th>Audience unique</th><th>Engagements</th><th>Réactions</th><th>Clics</th><th>CTR</th><th>Vues 50%</th><th>Vues 100%</th></tr>';
+    b.ads.forEach(a=>{
+      h+=`<tr><td>${a.i}</td><td>${fmt(a.imp)}</td><td>${fmt(a.reach)}</td><td>${fmt(a.eng)}</td><td>${fmt(a.react)}</td><td>${fmt(a.clicks)}</td><td>${a.ctr?a.ctr.toFixed(2).replace('.',',')+'%':'—'}</td><td>${fmt(a.w50)}</td><td>${fmt(a.w100)}</td></tr>`;
+    });
+    if(b.ads.length>1){
+      h+=`<tr class="total-row"><td>TOTAL</td><td>${fmt(tImp)}</td><td>${fmt(tRe)}</td><td>${fmt(tEn)}</td><td>${fmt(sumF(b.ads,'react'))}</td><td>${fmt(sumF(b.ads,'clicks'))}</td><td>—</td><td>${fmt(tW5)}</td><td>${fmt(tW1)}</td></tr>`;
+    }
+    h+='</table></div>';
+
+    if(b.analysis) h+=`<div class="analysis">${b.analysis}</div>`;
+    h+='</div>';
+  });
+
+  app.innerHTML=h;
+}
+
+function kpi(l,v,s){
+  return`<div class="kpi"><div class="kl">${l}</div><div class="kv">${v}</div>${s?'<div class="ks">'+s+'</div>':''}</div>`;
+}
+
+render();
+</script>
+</body>
+</html>

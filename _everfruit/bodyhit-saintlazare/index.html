@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rapport de Performance — Bodyhit Saint-Lazare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#08090f;--surface:rgba(15,18,35,0.6);--border:rgba(100,160,255,0.08);--blue:#4a90d9;--blue-soft:rgba(74,144,217,0.12);--green:#34c759;--green-soft:rgba(52,199,89,0.10);--orange:#f5a623;--orange-soft:rgba(245,166,35,0.10);--purple:#8b5cf6;--purple-soft:rgba(139,92,246,0.10);--red:#ef4444;--cyan:#06b6d4;--cyan-soft:rgba(6,182,212,0.10);--text:#e2e8f0;--text-muted:rgba(226,232,240,0.35);--text-dim:rgba(226,232,240,0.12)}
+body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 30% 20%,rgba(74,144,217,0.04) 0%,transparent 50%),radial-gradient(ellipse 60% 50% at 70% 80%,rgba(52,199,89,0.03) 0%,transparent 50%)}
+.container{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:40px 32px 60px}
+
+/* Header */
+.header{display:flex;align-items:center;gap:16px;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.header-badge{padding:6px 14px;border-radius:10px;background:linear-gradient(135deg,rgba(52,199,89,0.12),rgba(74,144,217,0.08));border:1px solid rgba(52,199,89,0.15);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green)}
+.header-info{flex:1}
+.header-title{font-size:20px;font-weight:800;letter-spacing:-0.3px}
+.header-title span{background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.header-sub{font-size:10px;font-weight:300;color:var(--text-muted);margin-top:3px;letter-spacing:.5px}
+.header-right{text-align:right}
+.header-period{font-size:10px;font-weight:600;color:var(--text-muted);letter-spacing:1px}
+.header-status{display:inline-flex;align-items:center;gap:5px;margin-top:4px;font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--green)}
+.header-status .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(52,199,89,0.4)}
+
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:36px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 16px;text-align:center;backdrop-filter:blur(16px);transition:all .3s}
+.kpi:hover{transform:translateY(-3px);border-color:rgba(100,160,255,0.18);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.kpi-val{font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:2px}
+.kpi-label{font-size:8px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)}
+.kpi-sub{font-size:9px;font-weight:600;margin-top:5px;padding:2px 8px;border-radius:20px;display:inline-block}
+.kpi.hero{background:linear-gradient(135deg,rgba(52,199,89,0.06),rgba(74,144,217,0.04));border-color:rgba(52,199,89,0.15)}
+
+/* Sections */
+.section{margin-bottom:8px;border:1px solid var(--border);border-radius:14px;background:var(--surface);backdrop-filter:blur(16px);overflow:hidden}
+.sec-header{display:flex;align-items:center;gap:10px;padding:16px 22px;cursor:pointer;user-select:none;transition:background .2s}
+.sec-header:hover{background:rgba(74,144,217,0.02)}
+.sec-header .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sec-header h2{font-size:13px;font-weight:700;flex:1}
+.sec-header .tag{margin-left:auto;margin-right:8px}
+.sec-header .chv{width:18px;height:18px;display:flex;align-items:center;justify-content:center;transition:transform .3s;flex-shrink:0}
+.sec-header .chv svg{width:11px;height:11px;stroke:var(--text-muted)}
+.section.open .sec-header .chv{transform:rotate(180deg)}
+.sec-body{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.16,1,.3,1),padding .3s}
+.section.open .sec-body{max-height:5000px;padding:0 22px 22px}
+
+/* Tables */
+.tbl{overflow-x:auto;border-radius:10px;border:1px solid rgba(255,255,255,0.03);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:11px}
+thead{background:rgba(74,144,217,0.04)}
+th{padding:10px 12px;text-align:left;font-weight:600;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.03);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,0.015);white-space:nowrap;font-variant-numeric:tabular-nums}
+tr:hover td{background:rgba(74,144,217,0.02)}
+tr.best td{background:rgba(52,199,89,0.04)}
+.tag{padding:2px 7px;border-radius:8px;font-size:8px;font-weight:600;letter-spacing:.5px}
+.tag-green{background:var(--green-soft);color:var(--green)}
+.tag-blue{background:var(--blue-soft);color:var(--blue)}
+.tag-orange{background:var(--orange-soft);color:var(--orange)}
+.tag-purple{background:var(--purple-soft);color:var(--purple)}
+.tag-cyan{background:var(--cyan-soft);color:var(--cyan)}
+.bar{height:4px;border-radius:2px;background:rgba(255,255,255,0.04);overflow:hidden;min-width:80px}
+.bar-fill{height:100%;border-radius:2px}
+
+/* Charts */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.chart-card{border-radius:10px;border:1px solid rgba(255,255,255,0.03);padding:18px}
+.chart-title{font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px}
+
+/* Comparison */
+.vs-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center}
+.vs-card{border:1px solid rgba(255,255,255,0.04);border-radius:12px;padding:20px;text-align:center}
+.vs-card.winner{border-color:rgba(52,199,89,0.2);background:rgba(52,199,89,0.03)}
+.vs-label{font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px}
+.vs-val{font-size:22px;font-weight:800;letter-spacing:-0.5px;margin-bottom:2px}
+.vs-desc{font-size:9px;color:var(--text-muted)}
+.vs-sep{font-size:14px;font-weight:200;color:var(--text-dim)}
+
+/* Note */
+.note{font-size:9px;color:var(--text-dim);margin-top:8px}
+
+/* Footer */
+.footer{text-align:center;padding:36px 0 0;margin-top:24px;border-top:1px solid var(--border)}
+.footer-logos{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:10px;opacity:.2}
+.footer-logos img{height:16px;filter:brightness(0) invert(1)}
+.footer-txt{font-size:7px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--text-dim)}
+
+@media(max-width:960px){.kpis{grid-template-columns:repeat(2,1fr)}.charts-grid,.vs-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.kpis{grid-template-columns:1fr}.container{padding:20px 16px 40px}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="header">
+    <img src="https://bodyhit.fr/wp-content/uploads/2021/08/logo-bodyhit-white.png" alt="Bodyhit" style="height:32px;opacity:.9">
+    <span style="font-size:10px;font-weight:300;color:var(--text-muted);margin:0 2px">—</span>
+    <span style="font-size:11px;font-weight:600;color:var(--text);letter-spacing:1px">Saint-Lazare</span>
+    <span style="font-size:10px;font-weight:200;background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin:0 10px;letter-spacing:2px">&#10005;</span>
+    <img src="https://cdn.prod.website-files.com/65085826aaad7f0bca3ab725/650c452a082279973e7355aa_EverFruit%20logo.svg" alt="Everfruit Digital" style="height:22px;opacity:.85">
+    <div style="width:1px;height:28px;background:linear-gradient(180deg,transparent,var(--border),transparent);margin:0 14px"></div>
+    <div class="header-info">
+      <h1 class="header-title">Rapport de <span>performance</span></h1>
+      <p class="header-sub">Campagne Lead Gen B2C — BODYHIT SAINT LAZARE_LeadAds_META_EVF_2026</p>
+    </div>
+    <div class="header-right">
+      <div class="header-period">11 mai — 5 juin 2026 (25 jours)</div>
+      <div class="header-status"><span class="dot"></span>Campagne terminee</div>
+    </div>
+  </header>
+
+  <!-- KPIs -->
+  <div class="kpis">
+    <div class="kpi hero">
+      <div class="kpi-val" style="color:var(--green)">184</div>
+      <div class="kpi-label">Leads generes</div>
+      <div class="kpi-sub" style="background:var(--green-soft);color:var(--green)">7,4 leads / jour</div>
+    </div>
+    <div class="kpi hero">
+      <div class="kpi-val" style="color:var(--green)">8,15 &euro;</div>
+      <div class="kpi-label">Cout par lead</div>
+      <div class="kpi-sub" style="background:var(--green-soft);color:var(--green)">Benchmark secteur : 15-25 &euro;</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" style="color:var(--blue)">1 500 &euro;</div>
+      <div class="kpi-label">Budget depense</div>
+      <div class="kpi-sub" style="background:var(--blue-soft);color:var(--blue)">99,99% consomme</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" style="color:var(--purple)">134 882</div>
+      <div class="kpi-label">Impressions</div>
+      <div class="kpi-sub" style="background:var(--purple-soft);color:var(--purple)">71 704 personnes touchees</div>
+    </div>
+  </div>
+
+  <!-- AUDIENCES -->
+  <div class="section open" id="sec-aud">
+    <div class="sec-header" onclick="toggle(this)"><span class="dot" style="background:var(--blue)"></span><h2>Audiences les plus performantes</h2><span class="tag tag-blue">3 ensembles</span><span class="chv"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></span></div>
+    <div class="sec-body">
+      <div class="tbl"><table>
+        <thead><tr><th>Audience</th><th>Leads</th><th>CPL</th><th>Depense</th><th>Part budget</th><th>Impr.</th><th>CTR</th><th>Perf.</th></tr></thead>
+        <tbody>
+          <tr class="best"><td><strong>Advantage+ Women suggest</strong><br><span style="font-size:9px;color:var(--text-dim)">All placement</span></td><td><strong>128</strong></td><td style="color:var(--green);font-weight:700">7,85 &euro;</td><td>1 005 &euro;</td><td><div class="bar"><div class="bar-fill" style="width:67%;background:var(--green)"></div></div><span style="font-size:9px;color:var(--text-muted)">67%</span></td><td>96 696</td><td>0,96%</td><td><span class="tag tag-green">Top performer</span></td></tr>
+          <tr><td><strong>Sport & Health</strong><br><span style="font-size:9px;color:var(--text-dim)">Best historic placement</span></td><td><strong>51</strong></td><td style="color:var(--blue);font-weight:600">8,86 &euro;</td><td>452 &euro;</td><td><div class="bar"><div class="bar-fill" style="width:30%;background:var(--blue)"></div></div><span style="font-size:9px;color:var(--text-muted)">30%</span></td><td>35 376</td><td>1,22%</td><td><span class="tag tag-blue">Solide</span></td></tr>
+          <tr><td><strong>Lookalike</strong></td><td><strong>5</strong></td><td style="font-weight:600">8,53 &euro;</td><td>43 &euro;</td><td><div class="bar"><div class="bar-fill" style="width:3%;background:var(--purple)"></div></div><span style="font-size:9px;color:var(--text-muted)">3%</span></td><td>2 810</td><td>1,14%</td><td><span class="tag tag-purple">Volume faible</span></td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">L'audience Advantage+ Women concentre 70% des leads avec le meilleur CPL. La strategie d'optimisation Meta AI sur audience feminine est tres efficace.</p>
+    </div>
+  </div>
+
+  <!-- DEMOGRAPHICS -->
+  <div class="section open" id="sec-demo">
+    <div class="sec-header" onclick="toggle(this)"><span class="dot" style="background:var(--cyan)"></span><h2>Demographie : Age et Genre</h2><span class="chv"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></span></div>
+    <div class="sec-body">
+      <div class="charts-grid">
+        <div class="chart-card"><div class="chart-title">Leads par tranche d'age</div><canvas id="chartAge" height="130"></canvas></div>
+        <div class="chart-card"><div class="chart-title">Repartition Femmes / Hommes</div><canvas id="chartGender" height="130"></canvas></div>
+      </div>
+      <div class="tbl"><table>
+        <thead><tr><th>Age</th><th>Genre</th><th>Leads</th><th>CPL</th><th>Depense</th><th>CTR</th><th>Signal</th></tr></thead>
+        <tbody>
+          <tr class="best"><td>45-54</td><td>Femmes</td><td><strong>40</strong></td><td style="color:var(--green);font-weight:700">7,34 &euro;</td><td>293 &euro;</td><td>1,04%</td><td><span class="tag tag-green">Meilleur combo volume + CPL</span></td></tr>
+          <tr class="best"><td>45-54</td><td>Hommes</td><td><strong>9</strong></td><td style="color:var(--green);font-weight:700">5,21 &euro;</td><td>47 &euro;</td><td>1,37%</td><td><span class="tag tag-green">CPL le plus bas</span></td></tr>
+          <tr><td>35-44</td><td>Femmes</td><td><strong>36</strong></td><td style="font-weight:600">9,37 &euro;</td><td>337 &euro;</td><td>0,85%</td><td></td></tr>
+          <tr><td>25-34</td><td>Femmes</td><td><strong>29</strong></td><td style="font-weight:600">7,99 &euro;</td><td>232 &euro;</td><td>0,81%</td><td></td></tr>
+          <tr><td>55-64</td><td>Femmes</td><td><strong>24</strong></td><td style="font-weight:600">7,65 &euro;</td><td>184 &euro;</td><td>1,29%</td><td></td></tr>
+          <tr class="best"><td>55-64</td><td>Hommes</td><td><strong>6</strong></td><td style="color:var(--green);font-weight:700">5,74 &euro;</td><td>34 &euro;</td><td>1,72%</td><td><span class="tag tag-green">Excellent CPL</span></td></tr>
+          <tr><td>65+</td><td>Femmes</td><td><strong>16</strong></td><td style="font-weight:600">8,70 &euro;</td><td>139 &euro;</td><td>2,01%</td><td></td></tr>
+          <tr><td>18-24</td><td>Femmes</td><td><strong>7</strong></td><td style="font-weight:600">9,30 &euro;</td><td>65 &euro;</td><td>0,70%</td><td></td></tr>
+        </tbody>
+      </table></div>
+      <p class="note"><strong>Insight cle :</strong> 82% des leads sont des femmes (152/184). La tranche 45-54 ans est la plus rentable tous genres confondus. Les hommes 45-64 ont les CPL les plus bas mais representent un faible volume.</p>
+    </div>
+  </div>
+
+  <!-- CREATIVES -->
+  <div class="section open" id="sec-crea">
+    <div class="sec-header" onclick="toggle(this)"><span class="dot" style="background:var(--orange)"></span><h2>Cr&eacute;atives les plus performantes</h2><span class="chv"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></span></div>
+    <div class="sec-body">
+
+      <!-- Previews -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px">
+
+        <!-- Video #2 — Top performer -->
+        <div style="display:flex;gap:18px;align-items:flex-start">
+          <div style="flex-shrink:0;width:140px">
+            <div style="position:relative;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.5),0 0 0 1px rgba(52,199,89,0.15);aspect-ratio:1/1">
+              <img src="video2.png" alt="Video #2" style="width:100%;height:100%;object-fit:cover;display:block">
+              <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,0.7))">
+                <div style="font-size:7px;font-weight:600;letter-spacing:1px;color:rgba(255,255,255,0.6)">0:14</div>
+              </div>
+            </div>
+          </div>
+          <div style="flex:1;padding-top:4px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+              <span style="font-size:14px;font-weight:800">Video #2</span>
+              <span class="tag tag-green" style="font-size:8px;padding:3px 8px">Top performer</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+              <div style="padding:10px 6px;border-radius:8px;background:rgba(52,199,89,0.04);border:1px solid rgba(52,199,89,0.10);text-align:center"><div style="font-size:20px;font-weight:800;color:var(--green)">179</div><div style="font-size:6.5px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-top:2px">Leads</div></div>
+              <div style="padding:10px 6px;border-radius:8px;background:rgba(52,199,89,0.04);border:1px solid rgba(52,199,89,0.10);text-align:center"><div style="font-size:20px;font-weight:800;color:var(--green)">8,17&euro;</div><div style="font-size:6.5px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-top:2px">CPL moy.</div></div>
+              <div style="padding:10px 6px;border-radius:8px;background:rgba(52,199,89,0.04);border:1px solid rgba(52,199,89,0.10);text-align:center"><div style="font-size:20px;font-weight:800;color:var(--green)">97%</div><div style="font-size:6.5px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-top:2px">Part leads</div></div>
+            </div>
+            <div style="font-size:9px;color:var(--text-dim);line-height:1.6">Vid&eacute;o portrait femme &bull; Diffus&eacute;e sur toutes les audiences &bull; 1 463 &euro; d&eacute;pens&eacute;s</div>
+          </div>
+        </div>
+
+        <!-- Video #1 — Sous-diffusée -->
+        <div style="display:flex;gap:18px;align-items:flex-start">
+          <div style="flex-shrink:0;width:140px">
+            <div style="position:relative;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.06);aspect-ratio:1/1">
+              <img src="video1.png" alt="Video #1" style="width:100%;height:100%;object-fit:cover;display:block">
+              <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,0.7))">
+                <div style="font-size:7px;font-weight:600;letter-spacing:1px;color:rgba(255,255,255,0.6)">0:38</div>
+              </div>
+            </div>
+          </div>
+          <div style="flex:1;padding-top:4px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+              <span style="font-size:14px;font-weight:800">Video #1</span>
+              <span class="tag tag-orange" style="font-size:8px;padding:3px 8px">Sous-diffus&eacute;e</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+              <div style="padding:10px 6px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);text-align:center"><div style="font-size:20px;font-weight:800;color:var(--text-muted)">5</div><div style="font-size:6.5px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-top:2px">Leads</div></div>
+              <div style="padding:10px 6px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);text-align:center"><div style="font-size:20px;font-weight:800;color:var(--text-muted)">7,96&euro;</div><div style="font-size:6.5px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-top:2px">CPL moy.</div></div>
+              <div style="padding:10px 6px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);text-align:center"><div style="font-size:20px;font-weight:800;color:var(--text-muted)">3%</div><div style="font-size:6.5px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-top:2px">Part leads</div></div>
+            </div>
+            <div style="font-size:9px;color:var(--text-dim);line-height:1.6">Vid&eacute;o homme en salle &bull; Peu de budget allou&eacute; par l&rsquo;algo &bull; 37 &euro; d&eacute;pens&eacute;s</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Table detail -->
+      <div class="tbl"><table>
+        <thead><tr><th>Creative</th><th>Audience</th><th>Leads</th><th>CPL</th><th>D&eacute;pense</th><th>Impr.</th><th>CTR</th><th>Perf.</th></tr></thead>
+        <tbody>
+          <tr class="best"><td><strong>Video #2</strong></td><td>Advantage+ Women</td><td><strong>125</strong></td><td style="color:var(--green);font-weight:700">7,85 &euro;</td><td>982 &euro;</td><td>95 092</td><td>0,95%</td><td><span class="tag tag-green">Top performer</span></td></tr>
+          <tr><td><strong>Video #2</strong></td><td>Sport & Health</td><td><strong>50</strong></td><td style="font-weight:600">8,82 &euro;</td><td>441 &euro;</td><td>34 633</td><td>1,20%</td><td><span class="tag tag-blue">Solide</span></td></tr>
+          <tr><td><strong>Video #2</strong></td><td>Lookalike</td><td><strong>4</strong></td><td style="font-weight:600">10,05 &euro;</td><td>40 &euro;</td><td>2 622</td><td>1,11%</td><td></td></tr>
+          <tr><td>Video #1</td><td>Advantage+ Women</td><td>3</td><td>7,90 &euro;</td><td>24 &euro;</td><td>1 604</td><td>1,06%</td><td><span class="tag tag-orange">Low volume</span></td></tr>
+          <tr><td>Video #1</td><td>Sport & Health</td><td>1</td><td>10,66 &euro;</td><td>11 &euro;</td><td>743</td><td>2,15%</td><td><span class="tag tag-orange">Low volume</span></td></tr>
+          <tr><td>Video #1</td><td>Lookalike</td><td>1</td><td>2,43 &euro;</td><td>2 &euro;</td><td>188</td><td>1,60%</td><td><span class="tag tag-orange">Low volume</span></td></tr>
+        </tbody>
+      </table></div>
+      <p class="note"><strong>Verdict :</strong> La Video #2 concentre 97% des leads (179/184). Meta a massivement favoris&eacute; cette cr&eacute;ative dans l&rsquo;optimisation. La Video #1 a &eacute;t&eacute; sous-diffus&eacute;e &mdash; bon CTR mais trop peu de budget allou&eacute; pour conclure.</p>
+    </div>
+  </div>
+
+  <!-- EVOLUTION CPL -->
+  <div class="section open" id="sec-evol">
+    <div class="sec-header" onclick="toggle(this)"><span class="dot" style="background:var(--green)"></span><h2>Evolution du CPL par semaine</h2><span class="chv"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></span></div>
+    <div class="sec-body">
+      <div class="charts-grid">
+        <div class="chart-card"><div class="chart-title">CPL par semaine et par audience</div><canvas id="chartWeekCPL" height="130"></canvas></div>
+        <div class="chart-card"><div class="chart-title">Leads par semaine</div><canvas id="chartWeekLeads" height="130"></canvas></div>
+      </div>
+      <div class="tbl"><table>
+        <thead><tr><th>Semaine</th><th>Leads</th><th>Depense</th><th>CPL</th><th>Tendance</th></tr></thead>
+        <tbody>
+          <tr><td>S1 (11-17 mai)</td><td>42</td><td>289 &euro;</td><td>6,87 &euro;</td><td><span class="tag tag-green">Lancement fort</span></td></tr>
+          <tr><td>S2 (18-24 mai)</td><td>51</td><td>483 &euro;</td><td>9,48 &euro;</td><td><span class="tag tag-orange">Hausse</span></td></tr>
+          <tr><td>S3 (25-31 mai)</td><td>53</td><td>480 &euro;</td><td>9,05 &euro;</td><td><span class="tag tag-blue">Stable</span></td></tr>
+          <tr><td>S4 (1-5 juin)</td><td>38</td><td>248 &euro;</td><td>6,53 &euro;</td><td><span class="tag tag-green">Meilleur CPL</span></td></tr>
+        </tbody>
+      </table></div>
+      <p class="note"><strong>Tendance :</strong> Le CPL s'ameliore en fin de campagne (6,53 &euro; en S4). L'algorithme Meta a optimise la diffusion au fil des semaines. Le pic S2 correspond a la phase d'apprentissage elargie.</p>
+    </div>
+  </div>
+
+  <!-- KPIs SECONDAIRES -->
+  <div class="section" id="sec-kpi2">
+    <div class="sec-header" onclick="toggle(this)"><span class="dot" style="background:var(--purple)"></span><h2>KPIs detailles</h2><span class="chv"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></span></div>
+    <div class="sec-body">
+      <div class="kpis" style="grid-template-columns:repeat(5,1fr);margin-bottom:0">
+        <div class="kpi"><div class="kpi-val" style="color:var(--blue);font-size:20px">11,12 &euro;</div><div class="kpi-label">CPM</div></div>
+        <div class="kpi"><div class="kpi-val" style="color:var(--cyan);font-size:20px">1,03%</div><div class="kpi-label">CTR (lien)</div></div>
+        <div class="kpi"><div class="kpi-val" style="color:var(--orange);font-size:20px">1,08 &euro;</div><div class="kpi-label">CPC (lien)</div></div>
+        <div class="kpi"><div class="kpi-val" style="color:var(--purple);font-size:20px">1,88</div><div class="kpi-label">Frequence</div></div>
+        <div class="kpi"><div class="kpi-val" style="color:var(--green);font-size:20px">1,95%</div><div class="kpi-label">CTR (tous)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARAISON CLIENTE -->
+  <div class="section" id="sec-vs">
+    <div class="sec-header" onclick="toggle(this)"><span class="dot" style="background:var(--orange)"></span><h2>Comparaison avec la campagne de la cliente</h2><span class="chv"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></span></div>
+    <div class="sec-body">
+      <div class="vs-grid">
+        <div class="vs-card winner">
+          <div class="vs-label"><span class="tag tag-green">Notre campagne</span></div>
+          <div class="vs-val" style="color:var(--green)">8,15 &euro;</div>
+          <div class="vs-desc">CPL — 184 leads en 25 jours</div>
+          <div style="margin-top:12px;font-size:10px;color:var(--text-muted);line-height:1.8">Budget : 1 500 &euro;<br>CTR : 1,03% | CPC : 1,08 &euro;<br>CPM : 11,12 &euro; | Freq : 1,88</div>
+        </div>
+        <div class="vs-sep">VS</div>
+        <div class="vs-card">
+          <div class="vs-label">Campagne cliente</div>
+          <div class="vs-val" style="color:var(--orange)">12,82 &euro;</div>
+          <div class="vs-desc">CPL — 39 leads en 31 jours</div>
+          <div style="margin-top:12px;font-size:10px;color:var(--text-muted);line-height:1.8">Budget : 500 &euro;<br>CTR : 0,89% | CPC : 1,83 &euro;<br>CPM : 16,27 &euro; | Freq : 2,21</div>
+        </div>
+      </div>
+      <div class="tbl" style="margin-top:16px"><table>
+        <thead><tr><th>KPI</th><th>Notre campagne</th><th>Campagne cliente</th><th>Ecart</th></tr></thead>
+        <tbody>
+          <tr><td>Leads</td><td style="color:var(--green);font-weight:700">184</td><td>39</td><td style="color:var(--green)">x4,7</td></tr>
+          <tr><td>CPL</td><td style="color:var(--green);font-weight:700">8,15 &euro;</td><td>12,82 &euro;</td><td style="color:var(--green)">-36%</td></tr>
+          <tr><td>CTR (lien)</td><td style="color:var(--green);font-weight:700">1,03%</td><td>0,89%</td><td style="color:var(--green)">+16%</td></tr>
+          <tr><td>CPC</td><td style="color:var(--green);font-weight:700">1,08 &euro;</td><td>1,83 &euro;</td><td style="color:var(--green)">-41%</td></tr>
+          <tr><td>CPM</td><td style="color:var(--green);font-weight:700">11,12 &euro;</td><td>16,27 &euro;</td><td style="color:var(--green)">-32%</td></tr>
+          <tr><td>Frequence</td><td style="color:var(--green);font-weight:700">1,88</td><td>2,21</td><td style="color:var(--green)">-15%</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Campagne cliente : TEST_PUB_STLAZ_LAL_MARS26 (30 mars — 30 avril 2026, 500 &euro;).</p>
+    </div>
+  </div>
+
+  <!-- SYNTHESE -->
+  <div style="margin:24px 0;padding:28px 28px;border-radius:14px;background:linear-gradient(135deg,rgba(52,199,89,0.04),rgba(74,144,217,0.03));border:1px solid rgba(52,199,89,0.12);backdrop-filter:blur(16px)">
+    <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:12px">Synth&egrave;se</div>
+    <p style="font-size:12px;font-weight:300;line-height:2;color:var(--text-muted)">Notre campagne Bodyhit Saint-Lazare a g&eacute;n&eacute;r&eacute; 184 leads en 25 jours pour un budget de 1 500 &euro;, soit un co&ucirc;t par lead de 8,15 &euro;. L&rsquo;audience Advantage+ ciblant les femmes concentre 70% des r&eacute;sultats avec le CPL le plus bas (7,85 &euro;). La tranche 45-54 ans est la plus r&eacute;active, avec 49 leads g&eacute;n&eacute;r&eacute;s. La Video #2 a capt&eacute; 97% de la diffusion et des conversions. Le CPL s&rsquo;est am&eacute;lior&eacute; au fil des semaines, passant de 9,48 &euro; en phase d&rsquo;apprentissage &agrave; 6,53 &euro; en derni&egrave;re semaine, ce qui indique une marge d&rsquo;optimisation suppl&eacute;mentaire en cas de reconduction. Le passage d&rsquo;un budget de 500 &euro; &agrave; 1 500 &euro; n&rsquo;a pas d&eacute;grad&eacute; les performances &mdash; le CPL a au contraire baiss&eacute;, ce qui confirme la capacit&eacute; de la campagne &agrave; scaler. &Agrave; titre de comparaison, la campagne r&eacute;alis&eacute;e en interne par la cliente sur une p&eacute;riode similaire affiche un CPL de 12,82 &euro; pour 39 leads, soit un co&ucirc;t par lead 57% plus &eacute;lev&eacute; pour un volume 4,7 fois inf&eacute;rieur.</p>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-logos">
+      <img src="https://cdn.prod.website-files.com/65085826aaad7f0bca3ab725/650c452a082279973e7355aa_EverFruit%20logo.svg" alt="Everfruit">
+    </div>
+    <div class="footer-txt">Rapport confidentiel — Bodyhit Saint-Lazare x Everfruit Digital &copy; 2026</div>
+  </footer>
+
+</div>
+
+<script>
+function toggle(el){el.closest('.section').classList.toggle('open')}
+Chart.defaults.color='rgba(226,232,240,0.35)';Chart.defaults.borderColor='rgba(255,255,255,0.03)';Chart.defaults.font.family='Inter';Chart.defaults.font.size=10;
+
+// Age chart
+new Chart(document.getElementById('chartAge'),{type:'bar',data:{labels:['18-24','25-34','35-44','45-54','55-64','65+'],datasets:[{label:'Femmes',data:[7,29,36,40,24,16],backgroundColor:'rgba(6,182,212,0.7)',borderRadius:3},{label:'Hommes',data:[1,5,6,9,6,4],backgroundColor:'rgba(139,92,246,0.6)',borderRadius:3}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:12}}},scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,grid:{color:'rgba(255,255,255,0.02)'}}}}});
+
+// Gender chart
+new Chart(document.getElementById('chartGender'),{type:'doughnut',data:{labels:['Femmes (152)','Hommes (31)','Unknown (1)'],datasets:[{data:[152,31,1],backgroundColor:['rgba(6,182,212,0.8)','rgba(139,92,246,0.7)','rgba(100,100,120,0.4)'],borderWidth:0}]},options:{responsive:true,cutout:'65%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:10,font:{size:9}}}}}});
+
+// Weekly CPL
+new Chart(document.getElementById('chartWeekCPL'),{type:'line',data:{labels:['S1 (11-17)','S2 (18-24)','S3 (25-31)','S4 (1-5)'],datasets:[{label:'Advantage+ Women V2',data:[5.61,9.22,9.64,5.73],borderColor:'rgba(52,199,89,0.9)',backgroundColor:'rgba(52,199,89,0.1)',fill:true,tension:.3,pointRadius:5,pointBackgroundColor:'rgba(52,199,89,1)'},{label:'Sport & Health V2',data:[13.22,10.43,8.31,6.92],borderColor:'rgba(74,144,217,0.8)',fill:false,tension:.3,pointRadius:5,pointBackgroundColor:'rgba(74,144,217,1)'}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:10,font:{size:9}}},tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+c.raw+' €'}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.02)'},ticks:{callback:function(v){return v+' €'}}}}}});
+
+// Weekly leads
+new Chart(document.getElementById('chartWeekLeads'),{type:'bar',data:{labels:['S1','S2','S3','S4'],datasets:[{label:'Advantage+ Women',data:[34,40,34,20],backgroundColor:'rgba(52,199,89,0.7)',borderRadius:3},{label:'Sport & Health',data:[7,10,16,18],backgroundColor:'rgba(74,144,217,0.6)',borderRadius:3},{label:'Lookalike',data:[1,1,3,0],backgroundColor:'rgba(139,92,246,0.5)',borderRadius:3}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:10,font:{size:9}}}},scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,grid:{color:'rgba(255,255,255,0.02)'}}}}});
+</script>
+</body>
+</html>

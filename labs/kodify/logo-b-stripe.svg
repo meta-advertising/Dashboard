@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 140" width="480" height="140">
+  <!-- Style Stripe : wordmark pur, une couleur signature, pas d'icône -->
+
+  <!-- Fond -->
+  <rect width="480" height="140" rx="16" fill="#635BFF"/>
+
+  <!-- Wordmark blanc centré -->
+  <text x="240" y="82" font-family="Georgia, 'Times New Roman', serif" font-size="54" font-weight="700" fill="white" text-anchor="middle" letter-spacing="1">Kodify</text>
+
+  <!-- Tagline -->
+  <text x="240" y="110" font-family="-apple-system, 'SF Pro Display', 'Inter', sans-serif" font-size="13" fill="rgba(255,255,255,0.6)" text-anchor="middle" letter-spacing="2" font-weight="400">Digital Studio</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <!-- Fond blanc pur -->
+  <rect width="400" height="120" fill="white"/>
+  <!-- Ligne fine supérieure -->
+  <line x1="20" y1="20" x2="100" y2="20" stroke="#1e293b" stroke-width="1.5"/>
+  <!-- Texte principal ultra-fin -->
+  <text x="200" y="68" font-family="Georgia, 'Times New Roman', serif" font-size="48" font-weight="400" fill="#1e293b" text-anchor="middle" letter-spacing="8">kōdify</text>
+  <!-- Point décoratif -->
+  <circle cx="200" cy="85" r="3" fill="#1e293b"/>
+  <!-- Tagline en bas -->
+  <text x="200" y="105" font-family="'Segoe UI', system-ui, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle" letter-spacing="6">CRÉATION WEB &amp; MOBILE</text>
+  <!-- Ligne fine inférieure -->
+  <line x1="300" y1="100" x2="380" y2="100" stroke="#1e293b" stroke-width="1.5"/>
+</svg>

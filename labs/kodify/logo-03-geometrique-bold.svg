@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <defs>
+    <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f97316"/>
+      <stop offset="100%" style="stop-color:#ef4444"/>
+    </linearGradient>
+  </defs>
+  <!-- Hexagone -->
+  <polygon points="55,12 92,32 92,72 55,92 18,72 18,32" fill="url(#g3)" stroke="none"/>
+  <!-- K dans l'hexagone -->
+  <text x="55" y="66" font-family="'Arial Black', 'Segoe UI', sans-serif" font-size="42" font-weight="900" fill="white" text-anchor="middle">K</text>
+  <!-- Texte -->
+  <text x="112" y="62" font-family="'Arial Black', 'Segoe UI', sans-serif" font-size="48" font-weight="900" fill="#1e293b" letter-spacing="-2">KŌDIFY</text>
+  <!-- Barre de séparation -->
+  <rect x="112" y="72" width="60" height="4" rx="2" fill="url(#g3)"/>
+  <!-- Tagline -->
+  <text x="112" y="92" font-family="'Segoe UI', system-ui, sans-serif" font-size="13" fill="#64748b" letter-spacing="2" font-weight="600">STUDIO DIGITAL</text>
+</svg>
