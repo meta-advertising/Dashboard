@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>YUJO Ramen — Dashboard Marketing</title>
 <link rel="icon" href="https://www.yujoramen.com/media/images/logo-tete-w.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +45,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 
 /* Grain */
 .grain{position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
@@ -176,6 +176,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .kpi:hover::before{opacity:1}
 .kpi-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
 .kpi-value{font-family:var(--font-display);font-size:clamp(1.3rem,2.5vw,1.8rem);letter-spacing:.02em;line-height:1;font-weight:900}
+.count-up{transition:text-shadow .6s ease-out}
+.count-up-done{text-shadow:0 0 16px var(--accent),0 0 32px rgba(232,83,46,.2);transition:text-shadow .8s ease-out}
+.count-up-settle{text-shadow:none}
 .kpi-label{font-size:10px;color:var(--text2);margin-top:6px;text-transform:uppercase;letter-spacing:.06em;font-family:var(--font-mono)}
 
 /* Charts */
@@ -228,43 +231,95 @@ tbody tr:hover{background:rgba(232,83,46,.03)}
 .page.active{display:block}
 
 /* Responsive */
-@media(max-width:1024px){.chart-row{grid-template-columns:1fr}}
+@media(max-width:1024px){
+  .chart-row{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:repeat(3,1fr)}
+}
 @media(max-width:768px){
   .sidebar{transform:translateX(-100%);z-index:100;width:280px}
   .sidebar.open{transform:translateX(0)}
   .sidebar.open~.sidebar-overlay{display:block}
-  .sidebar-overlay{display:none;position:fixed;inset:0;z-index:99;background:rgba(0,0,0,.5)}
+  .sidebar-overlay{display:none;position:fixed;inset:0;z-index:99;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
   .hamburger{display:flex}
-  .main{margin-left:0;padding:20px 14px;padding-top:64px}
+  .main{margin-left:0;padding:20px 16px;padding-top:64px}
   .kpi-grid{grid-template-columns:repeat(2,1fr);gap:10px}
-  .kpi{padding:16px 14px}
+  .kpi{padding:18px 14px}
+  .kpi-icon{width:30px;height:30px;border-radius:8px;margin-bottom:10px}
   .kpi-value{font-size:1.2rem}
+  .kpi-label{font-size:9px}
   .funnel{flex-wrap:wrap;gap:8px}
   .funnel-step{min-width:calc(50% - 4px);border-radius:var(--radius-sm)!important;padding:14px 10px}
   .funnel-arrow{display:none}
   .funnel-val{font-size:1.1rem}
-  .chart-card{padding:16px}
-  .table-card{padding:16px}
+  .chart-card{padding:16px;border-radius:var(--radius-sm)}
+  .chart-card h3{font-size:.85rem;margin-bottom:14px}
+  .table-card{padding:14px;border-radius:var(--radius-sm)}
+  .table-card table{font-size:11px}
+  .page-header{margin-bottom:20px}
   .page-header h2{font-size:1.2rem}
+  .page-header p{font-size:12px}
   .eng-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .eng-val{font-size:1.1rem}
   .franchise-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .franchise-val{font-size:1.2rem}
 
-  .portal-logo{width:clamp(160px,60vw,280px)!important}
-  .portal-tagline{font-size:clamp(.8rem,2vw,1.1rem);letter-spacing:.06em}
-  .portal-kpis{gap:16px}
-  .portal-kpi-val{font-size:clamp(1.4rem,5vw,1.8rem)}
-  .portal-nav{grid-template-columns:1fr 1fr!important;gap:10px}
-  .portal-enter-btn{padding:14px 28px;font-size:.9rem}
-  .food-strip{flex-direction:column}
-  .food-card{border-right:none;border-bottom:1px solid var(--card-border);padding:18px 14px}
+  .portal{padding-bottom:40px}
+  .portal-content{padding:0 16px}
+  .portal-logo-wrap{margin-top:clamp(32px,6vh,60px)}
+  .portal-logo{width:clamp(100px,40vw,180px)!important}
+  .portal-tagline{font-size:clamp(.75rem,3.5vw,1.1rem);letter-spacing:.06em;margin-top:16px}
+  .portal-sub{font-size:12px}
+  .portal-jp{font-size:11px}
+  .portal-kpis{gap:20px;margin-top:24px}
+  .portal-kpi-val{font-size:clamp(1.4rem,6vw,2rem)}
+  .portal-kpi-lbl{font-size:9px}
+  .portal-nav{grid-template-columns:1fr 1fr!important;gap:10px;margin-top:24px}
+  .portal-nav-card{padding:18px 14px}
+  .portal-nav-title{font-size:.85rem}
+  .portal-enter{margin-top:28px;margin-bottom:40px}
+  .portal-enter-btn{padding:14px 32px;font-size:.85rem;letter-spacing:.08em}
+  .food-strip{flex-direction:column;border-radius:var(--radius-sm)}
+  .food-card{border-right:none;border-bottom:1px solid var(--card-border);padding:16px 14px}
   .food-card:last-child{border-bottom:none}
   .food-card:hover{flex:1}
+  .food-icon{font-size:28px;margin-bottom:6px}
+  .food-name{font-size:.8rem}
+  .marquee{padding:10px 0;margin-top:20px}
+  .marquee-item{font-size:.7rem}
+
+  .portal-bg .orb{filter:blur(80px)}
+  .portal-bg .orb-1{width:300px;height:300px}
+  .portal-bg .orb-2{width:250px;height:250px}
+  .portal-bg .orb-3{width:200px;height:200px}
+  .portal-bg .orb-4{display:none}
+  .kanji-bg{font-size:60px;gap:50px}
+  .float-icon{font-size:20px}
 }
 @media(max-width:480px){
+  .main{padding:16px 12px;padding-top:58px}
+  .kpi-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .kpi{padding:14px 12px}
+  .kpi-value{font-size:1.1rem}
+  .funnel-step{min-width:calc(50% - 4px)}
+  .funnel-val{font-size:1rem}
+  .portal-logo{width:clamp(90px,35vw,150px)!important}
+  .portal-nav{grid-template-columns:1fr!important;gap:8px}
+  .portal-kpis{flex-direction:row;flex-wrap:wrap;gap:16px;justify-content:center}
+  .portal-kpi{min-width:40%}
+  .portal-kpi-val{font-size:clamp(1.2rem,5vw,1.6rem)}
+  .eng-grid{grid-template-columns:1fr 1fr;gap:6px}
+  .eng-val{font-size:1rem}
+  .franchise-grid{grid-template-columns:1fr 1fr;gap:6px}
+  .franchise-val{font-size:1.1rem}
+  .chart-card{padding:12px}
+  .table-card{padding:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .table-card table{min-width:500px}
+  .page-header h2{font-size:1.1rem}
+}
+@media(max-width:360px){
   .kpi-grid{grid-template-columns:1fr}
-  .portal-nav{grid-template-columns:1fr!important}
-  .portal-kpis{flex-direction:column;gap:12px}
-  .funnel-step{min-width:100%}
+  .portal-kpis{flex-direction:column;gap:12px;align-items:center}
+  .portal-kpi{min-width:unset}
   .eng-grid{grid-template-columns:1fr}
   .franchise-grid{grid-template-columns:1fr}
 }
@@ -543,6 +598,7 @@ document.querySelectorAll('.sidebar-nav a').forEach(function(a){
     document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
     document.getElementById('page-'+this.dataset.page).classList.add('active');
     document.querySelector('.sidebar').classList.remove('open');
+    triggerCountUp();
   });
 });
 document.getElementById('date-range').addEventListener('change',function(){
@@ -567,6 +623,55 @@ Chart.defaults.plugins.legend.labels.usePointStyle=true;
 Chart.defaults.plugins.legend.labels.pointStyleWidth=8;
 
 function makeChart(id,cfg){if(charts[id])charts[id].destroy();var ctx=document.getElementById(id);if(!ctx)return;charts[id]=new Chart(ctx,cfg)}
+
+/* ═══ COUNT-UP ANIMATION ═══ */
+function parseNumeric(txt){
+  var clean=txt.replace(/[^0-9.,%-]/g,'').replace(',','.');
+  return parseFloat(clean)||0;
+}
+function formatLike(n,template){
+  var hasE=template.indexOf('€')!==-1;
+  var hasP=template.indexOf('%')!==-1;
+  var hasK=template.indexOf('K')!==-1||template.indexOf('k')!==-1;
+  var hasM=template.indexOf('M')!==-1;
+  var decimals=0;
+  var dotPos=template.replace(/[^0-9.,]/g,'').indexOf(',');
+  if(dotPos===-1)dotPos=template.replace(/[^0-9.,]/g,'').indexOf('.');
+  if(dotPos!==-1){var after=template.replace(/[^0-9.,]/g,'').substring(dotPos+1);decimals=after.length}
+  if(hasP)decimals=Math.max(decimals,2);
+  var formatted;
+  if(decimals>0){formatted=n.toFixed(decimals).replace('.',',')}
+  else{formatted=Math.round(n).toLocaleString('fr-FR')}
+  if(hasE)formatted=formatted+' €';
+  if(hasP)formatted=formatted+' %';
+  return formatted;
+}
+function countUp(el,finalText,duration,delay){
+  if(!el)return;
+  delay=delay||0;
+  duration=duration||1400;
+  var target=parseNumeric(finalText);
+  if(target===0){el.textContent=finalText;return}
+  el.textContent='0';
+  el.classList.add('count-up');
+  setTimeout(function(){
+    var startTime=null;
+    function frame(ts){
+      if(!startTime)startTime=ts;
+      var progress=Math.min((ts-startTime)/duration,1);
+      var eased=1-Math.pow(1-progress,4);
+      var current=eased*target;
+      el.textContent=formatLike(current,finalText);
+      if(progress<1){requestAnimationFrame(frame)}
+      else{
+        el.textContent=finalText;
+        el.classList.add('count-up-done');
+        setTimeout(function(){el.classList.remove('count-up-done');el.classList.add('count-up-settle')},800);
+      }
+    }
+    requestAnimationFrame(frame);
+  },delay);
+}
 
 /* ═══ KPI HTML ═══ */
 function kpiHTML(icon,value,label,color,delay){
@@ -602,7 +707,23 @@ function processGA4(rows){
 }
 
 /* ═══ RENDER ALL ═══ */
-function renderAll(){renderOverview();renderMeta();renderGA4()}
+function renderAll(){renderOverview();renderMeta();renderGA4();triggerCountUp()}
+function triggerCountUp(){
+  var page=document.querySelector('.page.active');
+  if(!page)return;
+  page.querySelectorAll('.kpi-value').forEach(function(el,i){
+    var txt=el.textContent;
+    if(txt&&txt.trim()&&txt!=='—')countUp(el,txt.trim(),1400,i*120);
+  });
+  page.querySelectorAll('.funnel-val').forEach(function(el,i){
+    var txt=el.textContent;
+    if(txt&&txt.trim()&&txt!=='—')countUp(el,txt.trim(),1200,200+i*100);
+  });
+  page.querySelectorAll('.eng-val').forEach(function(el,i){
+    var txt=el.textContent;
+    if(txt&&txt.trim()&&txt!=='—')countUp(el,txt.trim(),1000,400+i*80);
+  });
+}
 
 function renderOverview(){
   var meta=filterByDate(DATA.meta,'Date');
@@ -613,22 +734,24 @@ function renderOverview(){
   var reach=meta.reduce(function(s,r){return s+pN(r['Portée'])},0);
   var ctr=imp>0?(clicks/imp*100):0,cpl=leads>0?spend/leads:0;
 
-  document.getElementById('pk-spend').textContent=fmtE(spend);
-  document.getElementById('pk-imp').textContent=fmt(imp);
-  document.getElementById('pk-leads').textContent=fmt(leads);
-  document.getElementById('pk-cpl').textContent=fmtE(cpl);
+  countUp(document.getElementById('pk-spend'),fmtE(spend),1400,0);
+  countUp(document.getElementById('pk-imp'),fmt(imp),1400,150);
+  countUp(document.getElementById('pk-leads'),fmt(leads),1400,300);
+  countUp(document.getElementById('pk-cpl'),fmtE(cpl),1400,450);
 
   var ga4=processGA4(filterByDate(DATA.ga4,'Date'));
-  document.getElementById('pk-sessions').textContent=fmt(ga4.totals.sessions);
-  document.getElementById('pk-conv').textContent=fmt(ga4.totals.conv);
+  countUp(document.getElementById('pk-sessions'),fmt(ga4.totals.sessions),1400,600);
+  countUp(document.getElementById('pk-conv'),fmt(ga4.totals.conv),1400,750);
 
+  var cpm=imp>0?(spend/imp*1000):0;
+  var convRate=ga4.totals.sessions>0?(ga4.totals.conv/ga4.totals.sessions*100):0;
   document.getElementById('overview-kpis').innerHTML=[
     kpiHTML(IC.spend,fmtE(spend),'Budget dépensé','var(--accent-glow)',0),
-    kpiHTML(IC.lead,fmt(leads),'Leads Facebook','var(--accent-glow)',60),
-    kpiHTML(IC.cpl,fmtE(cpl),'Coût par lead','var(--green-glow)',120),
-    kpiHTML(IC.imp,fmt(imp),'Impressions','var(--accent-glow)',180),
+    kpiHTML(IC.reach,fmt(reach),'Portée','var(--accent-glow)',60),
+    kpiHTML(IC.ctr,fmtP(ctr),'CTR','var(--accent-glow)',120),
+    kpiHTML(IC.spend,fmtE(cpm),'CPM','var(--accent-glow)',180),
     kpiHTML(IC.session,fmt(ga4.totals.sessions),'Sessions franchise GA4','var(--green-glow)',240),
-    kpiHTML(IC.conv,fmt(ga4.totals.conv),'Conversions GA4','var(--green-glow)',300)
+    kpiHTML(IC.conv,fmtP(convRate),'Taux conversion GA4','var(--green-glow)',300)
   ].join('');
 
   document.getElementById('overview-funnel').innerHTML=
