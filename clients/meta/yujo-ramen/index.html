@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>YUJO Ramen — Dashboard Marketing</title>
+<link rel="icon" href="https://www.yujoramen.com/media/images/logo-tete-w.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════
+   YUJO RAMEN — Dashboard Marketing Franchise
+   Palette: Void #080810 · Orange #E8532E · Gold #F7A325
+   ═══════════════════════════════════════════════════ */
+:root {
+  --bg: #080810;
+  --bg2: #0B0B16;
+  --bg3: #101020;
+  --card: rgba(232,83,46,.03);
+  --card-border: rgba(232,83,46,.08);
+  --card-hover: rgba(232,83,46,.06);
+  --text: #F0F0F5;
+  --text2: rgba(240,240,245,.55);
+  --text3: rgba(240,240,245,.25);
+  --accent: #E8532E;
+  --accent2: #FF6B3D;
+  --accent-glow: rgba(232,83,46,.12);
+  --gold: #F7A325;
+  --gold2: #FFB84D;
+  --gold-glow: rgba(247,163,37,.10);
+  --green: #34D399;
+  --green2: #4ADE80;
+  --green-glow: rgba(52,211,153,.12);
+  --purple: #8B5CF6;
+  --purple-glow: rgba(139,92,246,.10);
+  --meta: #0084FF;
+  --meta-glow: rgba(0,132,255,.10);
+  --up: #34D399;
+  --down: #E8532E;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font-display: 'Noto Sans JP', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* Grain */
+.grain{position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ═══ PORTAL ═══ */
+.portal{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow:hidden}
+.portal.hidden{display:none}
+
+.portal-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.portal-bg .orb{position:absolute;border-radius:50%;filter:blur(100px);animation:orbFloat 20s ease-in-out infinite}
+.portal-bg .orb-1{width:500px;height:500px;top:-100px;left:-100px;background:rgba(232,83,46,.10);animation-delay:0s}
+.portal-bg .orb-2{width:400px;height:400px;bottom:-100px;right:-100px;background:rgba(247,163,37,.07);animation-delay:-5s}
+.portal-bg .orb-3{width:350px;height:350px;top:40%;left:50%;background:rgba(139,92,246,.05);animation-delay:-10s}
+.portal-bg .orb-4{width:300px;height:300px;top:20%;right:20%;background:rgba(232,83,46,.05);animation-delay:-15s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(30px,-40px) scale(1.1)}50%{transform:translate(-20px,30px) scale(.95)}75%{transform:translate(40px,20px) scale(1.05)}}
+
+.float-icons{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.float-icon{position:absolute;opacity:.04;animation:floatUp linear infinite}
+@keyframes floatUp{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:.04}90%{opacity:.04}100%{transform:translateY(-100px) rotate(360deg);opacity:0}}
+
+.grid-lines{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:linear-gradient(rgba(232,83,46,.01) 1px,transparent 1px),linear-gradient(90deg,rgba(232,83,46,.01) 1px,transparent 1px);
+  background-size:60px 60px}
+
+/* Kanji bg */
+.kanji-bg{position:absolute;inset:0;z-index:0;pointer-events:none;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:100px;opacity:.012;font-family:var(--font-display);font-size:100px;font-weight:900;overflow:hidden;transform:rotate(-10deg);color:var(--accent)}
+
+.portal-content{position:relative;z-index:2;text-align:center;padding:0 24px;width:100%;max-width:1200px}
+
+.portal-logo-wrap{margin-top:clamp(40px,8vh,80px);animation:logoEnter 1.2s cubic-bezier(.22,1,.36,1)}
+.portal-logo{width:clamp(120px,22vw,220px);height:auto;filter:drop-shadow(0 0 30px rgba(232,83,46,.2));animation:logoPulse 4s ease-in-out infinite}
+@keyframes logoEnter{from{opacity:0;transform:scale(.8) translateY(30px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 40px rgba(232,83,46,.2))}50%{filter:drop-shadow(0 0 60px rgba(232,83,46,.35))}}
+
+.portal-tagline{margin-top:24px;font-family:var(--font-display);font-size:clamp(1rem,2.5vw,1.6rem);letter-spacing:.12em;color:var(--accent);font-weight:700;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) .3s backwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.portal-sub{margin-top:8px;font-size:14px;color:var(--text2);animation:fadeUp .8s cubic-bezier(.22,1,.36,1) .5s backwards}
+.portal-jp{margin-top:6px;font-family:var(--font-display);font-size:13px;color:var(--text3);letter-spacing:.15em;font-weight:300;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) .55s backwards}
+
+/* Food strip */
+.food-strip{display:flex;gap:0;margin-top:clamp(28px,5vh,48px);width:100%;max-width:800px;margin-left:auto;margin-right:auto;overflow:hidden;border-radius:var(--radius);border:1px solid var(--card-border);animation:fadeUp .8s cubic-bezier(.22,1,.36,1) .6s backwards}
+.food-card{flex:1;padding:clamp(20px,3.5vw,36px) 16px;text-align:center;position:relative;overflow:hidden;border-right:1px solid var(--card-border);transition:all .5s cubic-bezier(.22,1,.36,1);cursor:default;background:var(--card)}
+.food-card:last-child{border-right:none}
+.food-card:hover{background:var(--card-hover);flex:1.3}
+.food-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .5s;background:linear-gradient(180deg,rgba(232,83,46,.06),transparent)}
+.food-card:hover::before{opacity:1}
+.food-icon{font-size:36px;margin-bottom:10px;display:block;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.food-card:hover .food-icon{transform:scale(1.15) translateY(-4px)}
+.food-name{font-family:var(--font-display);font-size:clamp(.85rem,1.5vw,1.15rem);letter-spacing:.08em;font-weight:700;color:var(--text)}
+.food-desc{font-size:10px;color:var(--text3);margin-top:4px;font-family:var(--font-mono);letter-spacing:.04em}
+
+/* Marquee */
+.marquee{width:100%;overflow:hidden;border-top:1px solid var(--card-border);border-bottom:1px solid var(--card-border);padding:14px 0;margin-top:clamp(24px,4vh,40px);animation:fadeUp .8s cubic-bezier(.22,1,.36,1) .7s backwards}
+.marquee-inner{display:flex;gap:48px;animation:marqueeScroll 25s linear infinite;white-space:nowrap}
+.marquee-item{font-family:var(--font-display);font-size:clamp(.8rem,1.3vw,1rem);letter-spacing:.12em;color:var(--text3);font-weight:700}
+.marquee-item span{color:var(--accent)}
+@keyframes marqueeScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* Portal KPIs */
+.portal-kpis{display:flex;gap:clamp(20px,4vw,48px);justify-content:center;margin-top:clamp(24px,4vh,40px);flex-wrap:wrap;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) .8s backwards}
+.portal-kpi{text-align:center}
+.portal-kpi-val{font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--text);line-height:1;font-weight:900}
+.portal-kpi-lbl{font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:.08em;margin-top:4px;text-transform:uppercase}
+
+/* Portal nav */
+.portal-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:clamp(28px,4vh,40px);width:100%;max-width:800px;margin-left:auto;margin-right:auto;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) 1s backwards}
+.portal-nav-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px 20px;text-decoration:none;color:inherit;cursor:pointer;transition:all .4s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;text-align:center}
+.portal-nav-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .4s}
+.portal-nav-card:hover{transform:translateY(-4px);border-color:rgba(232,83,46,.2);box-shadow:0 12px 40px rgba(232,83,46,.08)}
+.portal-nav-card:hover::after{opacity:1}
+.portal-nav-dot{width:10px;height:10px;border-radius:50%;margin:0 auto 12px;box-shadow:0 0 12px currentColor}
+.portal-nav-title{font-family:var(--font-display);font-size:1rem;letter-spacing:.06em;font-weight:700}
+.portal-nav-sub{font-size:11px;color:var(--text3);margin-top:4px}
+
+/* Enter button */
+.portal-enter{margin-top:clamp(28px,5vh,48px);margin-bottom:60px;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) 1.2s backwards}
+.portal-enter-btn{display:inline-flex;align-items:center;gap:10px;padding:16px 40px;border-radius:999px;background:linear-gradient(135deg,var(--accent),#C43D1A);color:#fff;font-family:var(--font-display);font-size:1rem;letter-spacing:.1em;font-weight:700;text-decoration:none;cursor:pointer;border:none;transition:all .4s cubic-bezier(.22,1,.36,1);box-shadow:0 0 30px rgba(232,83,46,.2)}
+.portal-enter-btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 0 50px rgba(232,83,46,.35)}
+.portal-enter-btn svg{transition:transform .3s}
+.portal-enter-btn:hover svg{transform:translateX(4px)}
+
+/* ═══ DASHBOARD ═══ */
+.dashboard{display:none;min-height:100vh}
+.dashboard.active{display:flex}
+
+.ambient{position:fixed;inset:0;z-index:0;overflow:hidden}
+.ambient .a-orb{position:absolute;border-radius:50%;filter:blur(120px)}
+.ambient .a-orb-1{width:500px;height:500px;top:-200px;left:-100px;background:rgba(232,83,46,.05);animation:orbFloat 25s ease-in-out infinite}
+.ambient .a-orb-2{width:400px;height:400px;bottom:-200px;right:-100px;background:rgba(247,163,37,.04);animation:orbFloat 20s ease-in-out infinite reverse}
+
+/* Sidebar */
+.sidebar{width:260px;min-height:100vh;position:fixed;top:0;left:0;z-index:50;background:var(--bg2);border-right:1px solid var(--card-border);display:flex;flex-direction:column;padding:28px 0;transition:transform .35s cubic-bezier(.22,1,.36,1)}
+.sidebar-logo{padding:0 24px 24px;border-bottom:1px solid var(--card-border);margin-bottom:8px}
+.sidebar-logo img{width:140px;height:auto;filter:drop-shadow(0 0 8px rgba(232,83,46,.15))}
+.sidebar-logo span{font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:.08em;display:block;margin-top:6px}
+.sidebar-section{padding:16px 16px 4px;font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+.sidebar-nav{list-style:none;padding:4px 8px}
+.sidebar-nav li{margin:2px 0}
+.sidebar-nav a{display:flex;align-items:center;gap:12px;padding:11px 16px;border-radius:var(--radius-sm);color:var(--text2);text-decoration:none;font-size:13px;font-weight:500;transition:all .2s}
+.sidebar-nav a:hover{background:var(--card);color:var(--text)}
+.sidebar-nav a.active{background:var(--accent-glow);color:var(--text);border:1px solid rgba(232,83,46,.12)}
+.sidebar-nav .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sidebar-back{padding:16px;border-top:1px solid var(--card-border);margin-top:auto}
+.sidebar-back a{display:flex;align-items:center;gap:8px;color:var(--text3);text-decoration:none;font-size:12px;transition:color .2s}
+.sidebar-back a:hover{color:var(--accent)}
+
+.sidebar-dates{padding:16px;border-top:1px solid var(--card-border)}
+.sidebar-dates label{display:block;font-size:11px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;font-family:var(--font-mono)}
+.sidebar-dates select,.sidebar-dates input[type="date"]{width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--card-border);background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:12px;margin-bottom:10px;outline:none;transition:border-color .2s}
+.sidebar-dates select:focus,.sidebar-dates input:focus{border-color:var(--accent)}
+.sidebar-dates .update-info{font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-top:8px}
+
+.main{margin-left:260px;flex:1;padding:32px;min-height:100vh;position:relative;z-index:1}
+
+.hamburger{display:none;position:fixed;top:16px;left:16px;z-index:100;width:40px;height:40px;border-radius:10px;background:var(--bg2);border:1px solid var(--card-border);cursor:pointer;align-items:center;justify-content:center}
+.hamburger svg{color:var(--text)}
+
+/* Page header */
+.page-header{margin-bottom:32px;animation:fadeUp .6s cubic-bezier(.22,1,.36,1)}
+.page-header h2{font-family:var(--font-display);font-size:clamp(1.3rem,2.5vw,1.8rem);letter-spacing:.04em;font-weight:900}
+.page-header p{color:var(--text2);font-size:14px;margin-top:4px}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px}
+.kpi{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:22px 20px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:all .35s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;animation:fadeUp .5s cubic-bezier(.22,1,.36,1) backwards}
+.kpi:hover{transform:translateY(-2px);border-color:rgba(232,83,46,.15);box-shadow:0 8px 32px rgba(232,83,46,.06)}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .35s}
+.kpi:hover::before{opacity:1}
+.kpi-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.kpi-value{font-family:var(--font-display);font-size:clamp(1.3rem,2.5vw,1.8rem);letter-spacing:.02em;line-height:1;font-weight:900}
+.kpi-label{font-size:10px;color:var(--text2);margin-top:6px;text-transform:uppercase;letter-spacing:.06em;font-family:var(--font-mono)}
+
+/* Charts */
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px}
+.chart-row.full{grid-template-columns:1fr}
+.chart-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;backdrop-filter:blur(20px);animation:fadeUp .5s cubic-bezier(.22,1,.36,1) backwards}
+.chart-card h3{font-family:var(--font-display);font-size:1rem;letter-spacing:.04em;font-weight:700;margin-bottom:20px;color:var(--text)}
+.chart-card canvas{width:100%!important}
+
+/* Tables */
+.table-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:24px;backdrop-filter:blur(20px);margin-bottom:28px;overflow-x:auto;animation:fadeUp .5s cubic-bezier(.22,1,.36,1) backwards}
+.table-card h3{font-family:var(--font-display);font-size:1rem;letter-spacing:.04em;font-weight:700;margin-bottom:16px;color:var(--text)}
+table{width:100%;border-collapse:collapse}
+thead th{text-align:left;padding:10px 14px;font-family:var(--font-mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--card-border);white-space:nowrap}
+tbody td{padding:12px 14px;font-size:13px;color:var(--text2);border-bottom:1px solid rgba(232,83,46,.02);white-space:nowrap}
+tbody tr{transition:background .2s}
+tbody tr:hover{background:rgba(232,83,46,.03)}
+
+/* Badge */
+.badge{display:inline-block;padding:3px 10px;border-radius:6px;font-family:var(--font-mono);font-size:10px;letter-spacing:.03em;font-weight:500}
+.badge-meta{background:var(--meta-glow);color:var(--meta)}
+.badge-ga4{background:var(--green-glow);color:var(--green)}
+
+/* Funnel */
+.funnel{display:flex;align-items:center;gap:0;margin:28px 0}
+.funnel-step{flex:1;text-align:center;padding:20px 12px;background:var(--card);border:1px solid var(--card-border);position:relative;transition:background .3s}
+.funnel-step:hover{background:var(--card-hover)}
+.funnel-step:first-child{border-radius:var(--radius) 0 0 var(--radius)}
+.funnel-step:last-child{border-radius:0 var(--radius) var(--radius) 0}
+.funnel-val{font-family:var(--font-display);font-size:1.4rem;letter-spacing:.02em;font-weight:900}
+.funnel-lbl{font-size:10px;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:.06em;font-family:var(--font-mono)}
+.funnel-arrow{width:24px;text-align:center;color:var(--text3);font-size:18px;flex-shrink:0}
+
+/* Engagement cards */
+.eng-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.eng-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius-sm);padding:18px;text-align:center;transition:all .3s}
+.eng-card:hover{border-color:rgba(232,83,46,.15);transform:translateY(-2px)}
+.eng-val{font-family:var(--font-display);font-size:1.3rem;letter-spacing:.02em;font-weight:900;margin-bottom:4px}
+.eng-lbl{font-family:var(--font-mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
+
+/* Franchise info */
+.franchise-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:28px}
+.franchise-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:20px;text-align:center;transition:all .3s}
+.franchise-card:hover{border-color:rgba(247,163,37,.15);transform:translateY(-2px)}
+.franchise-val{font-family:var(--font-display);font-size:1.5rem;font-weight:900;color:var(--gold2);margin-bottom:4px}
+.franchise-lbl{font-family:var(--font-mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
+
+/* Pages */
+.page{display:none}
+.page.active{display:block}
+
+/* Responsive */
+@media(max-width:1024px){.chart-row{grid-template-columns:1fr}}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);z-index:100;width:280px}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar.open~.sidebar-overlay{display:block}
+  .sidebar-overlay{display:none;position:fixed;inset:0;z-index:99;background:rgba(0,0,0,.5)}
+  .hamburger{display:flex}
+  .main{margin-left:0;padding:20px 14px;padding-top:64px}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .kpi{padding:16px 14px}
+  .kpi-value{font-size:1.2rem}
+  .funnel{flex-wrap:wrap;gap:8px}
+  .funnel-step{min-width:calc(50% - 4px);border-radius:var(--radius-sm)!important;padding:14px 10px}
+  .funnel-arrow{display:none}
+  .funnel-val{font-size:1.1rem}
+  .chart-card{padding:16px}
+  .table-card{padding:16px}
+  .page-header h2{font-size:1.2rem}
+  .eng-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .franchise-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+
+  .portal-logo{width:clamp(160px,60vw,280px)!important}
+  .portal-tagline{font-size:clamp(.8rem,2vw,1.1rem);letter-spacing:.06em}
+  .portal-kpis{gap:16px}
+  .portal-kpi-val{font-size:clamp(1.4rem,5vw,1.8rem)}
+  .portal-nav{grid-template-columns:1fr 1fr!important;gap:10px}
+  .portal-enter-btn{padding:14px 28px;font-size:.9rem}
+  .food-strip{flex-direction:column}
+  .food-card{border-right:none;border-bottom:1px solid var(--card-border);padding:18px 14px}
+  .food-card:last-child{border-bottom:none}
+  .food-card:hover{flex:1}
+}
+@media(max-width:480px){
+  .kpi-grid{grid-template-columns:1fr}
+  .portal-nav{grid-template-columns:1fr!important}
+  .portal-kpis{flex-direction:column;gap:12px}
+  .funnel-step{min-width:100%}
+  .eng-grid{grid-template-columns:1fr}
+  .franchise-grid{grid-template-columns:1fr}
+}
+
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(232,83,46,.08);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(232,83,46,.15)}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ═══ PORTAL ═══ -->
+<div class="portal" id="portal">
+  <div class="portal-bg">
+    <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div><div class="orb orb-4"></div>
+  </div>
+  <div class="grid-lines"></div>
+  <div class="kanji-bg" aria-hidden="true">友 情 麺 旨 味 絆 力 夢 友 情 麺 旨 味 絆 力 夢 友 情 麺 旨 味 絆 力 夢</div>
+  <div class="float-icons" id="floatIcons"></div>
+
+  <div class="portal-content">
+    <div class="portal-logo-wrap">
+      <img src="https://www.yujoramen.com/media/images/logo.svg" alt="YUJO Ramen" class="portal-logo">
+    </div>
+
+    <div class="portal-tagline">JAPANESE STREET FOOD · NO PASSPORT NEEDED</div>
+    <div class="portal-sub">Dashboard Marketing — Franchise LeadGen</div>
+    <div class="portal-jp">フランチャイズ · リードジェネレーション · パフォーマンス</div>
+
+    <div class="food-strip">
+      <div class="food-card">
+        <span class="food-icon">🍜</span>
+        <div class="food-name">RAMEN</div>
+        <div class="food-desc">Tonkotsu · Miso · Shoyu</div>
+      </div>
+      <div class="food-card">
+        <span class="food-icon">🥟</span>
+        <div class="food-name">KOROKKE</div>
+        <div class="food-desc">Fait maison · Kanazawa</div>
+      </div>
+      <div class="food-card">
+        <span class="food-icon">🍵</span>
+        <div class="food-name">UMAMI</div>
+        <div class="food-desc">Savoir-faire japonais</div>
+      </div>
+    </div>
+
+    <div class="marquee">
+      <div class="marquee-inner">
+        <span class="marquee-item"><span>●</span> META ADS</span>
+        <span class="marquee-item"><span>●</span> LEADGEN</span>
+        <span class="marquee-item"><span>●</span> FRANCHISE</span>
+        <span class="marquee-item"><span>●</span> TOULOUSE</span>
+        <span class="marquee-item"><span>●</span> +1,44M€ CA</span>
+        <span class="marquee-item"><span>●</span> 4.6★ GOOGLE</span>
+        <span class="marquee-item"><span>●</span> 75% MARGE</span>
+        <span class="marquee-item"><span>●</span> 友情</span>
+        <span class="marquee-item"><span>●</span> META ADS</span>
+        <span class="marquee-item"><span>●</span> LEADGEN</span>
+        <span class="marquee-item"><span>●</span> FRANCHISE</span>
+        <span class="marquee-item"><span>●</span> TOULOUSE</span>
+        <span class="marquee-item"><span>●</span> +1,44M€ CA</span>
+        <span class="marquee-item"><span>●</span> 4.6★ GOOGLE</span>
+        <span class="marquee-item"><span>●</span> 75% MARGE</span>
+        <span class="marquee-item"><span>●</span> 友情</span>
+      </div>
+    </div>
+
+    <div class="portal-kpis" id="portal-kpis">
+      <div class="portal-kpi"><div class="portal-kpi-val" id="pk-spend">—</div><div class="portal-kpi-lbl">Budget total</div></div>
+      <div class="portal-kpi"><div class="portal-kpi-val" id="pk-imp">—</div><div class="portal-kpi-lbl">Impressions</div></div>
+      <div class="portal-kpi"><div class="portal-kpi-val" id="pk-leads">—</div><div class="portal-kpi-lbl">Leads</div></div>
+      <div class="portal-kpi"><div class="portal-kpi-val" id="pk-cpl">—</div><div class="portal-kpi-lbl">CPL moyen</div></div>
+    </div>
+
+    <div class="portal-nav" style="grid-template-columns:repeat(2,1fr)">
+      <div class="portal-nav-card" onclick="enterDashboard('overview')">
+        <div class="portal-nav-dot" style="color:var(--accent)"></div>
+        <div class="portal-nav-title">VUE D'ENSEMBLE</div>
+        <div class="portal-nav-sub">Performance globale</div>
+      </div>
+      <div class="portal-nav-card" onclick="enterDashboard('meta')">
+        <div class="portal-nav-dot" style="color:var(--meta)"></div>
+        <div class="portal-nav-title">META ADS</div>
+        <div class="portal-nav-sub">Campagne LeadGen</div>
+      </div>
+    </div>
+    <div class="portal-nav" style="grid-template-columns:1fr;max-width:800px;margin-top:14px;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) 1.1s backwards">
+      <div class="portal-nav-card" onclick="enterDashboard('ga4')" style="display:flex;align-items:center;gap:20px;text-align:left;padding:20px 28px;border-color:rgba(52,211,153,.12)">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--green-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--green2)" stroke-width="1.5"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+        </div>
+        <div style="flex:1">
+          <div class="portal-nav-title" style="font-size:.95rem">GOOGLE ANALYTICS — FRANCHISE</div>
+          <div class="portal-nav-sub">Trafic · Sources · Conversions — yujoramen.com/fr/franchise/</div>
+        </div>
+        <div style="display:flex;gap:16px;flex-shrink:0" id="portal-ga4-preview">
+          <div style="text-align:center"><div style="font-family:var(--font-display);font-size:1.1rem;font-weight:900" id="pk-sessions">—</div><div style="font-size:9px;color:var(--text3);font-family:var(--font-mono)">SESSIONS</div></div>
+          <div style="text-align:center"><div style="font-family:var(--font-display);font-size:1.1rem;font-weight:900" id="pk-conv">—</div><div style="font-size:9px;color:var(--text3);font-family:var(--font-mono)">CONVERSIONS</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="portal-enter">
+      <button class="portal-enter-btn" onclick="enterDashboard('overview')">
+        ACCÉDER AU DASHBOARD
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div class="dashboard" id="dashboard">
+  <div class="ambient"><div class="a-orb a-orb-1"></div><div class="a-orb a-orb-2"></div></div>
+
+  <button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('open')">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+
+  <div class="sidebar-overlay" onclick="document.querySelector('.sidebar').classList.remove('open')"></div>
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="https://www.yujoramen.com/media/images/logo.svg" alt="YUJO Ramen">
+      <span>Toulouse · Franchise</span>
+    </div>
+    <div class="sidebar-section">Navigation</div>
+    <ul class="sidebar-nav">
+      <li><a href="#" class="active" data-page="overview"><div class="dot" style="background:var(--accent)"></div>Vue d'ensemble</a></li>
+      <li><a href="#" data-page="meta"><div class="dot" style="background:var(--meta)"></div>Meta Ads</a></li>
+      <li><a href="#" data-page="ga4"><div class="dot" style="background:var(--green)"></div>GA4 Franchise</a></li>
+    </ul>
+    <div class="sidebar-dates">
+      <label>Période</label>
+      <select id="date-range">
+        <option value="all">Toute la période</option>
+        <option value="7">7 derniers jours</option>
+        <option value="14">14 derniers jours</option>
+        <option value="30">30 derniers jours</option>
+        <option value="90">90 derniers jours</option>
+        <option value="custom">Personnalisé</option>
+      </select>
+      <div id="custom-dates" style="display:none">
+        <label>Du</label><input type="date" id="date-start">
+        <label>Au</label><input type="date" id="date-end">
+      </div>
+      <div class="update-info">Dernière MAJ<br><span id="last-update" style="color:var(--text2)">—</span></div>
+    </div>
+    <div class="sidebar-back"><a href="#" onclick="exitDashboard();return false">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Retour au portail
+    </a></div>
+  </aside>
+
+  <div class="main">
+    <!-- OVERVIEW -->
+    <div class="page active" id="page-overview">
+      <div class="page-header"><h2>VUE D'ENSEMBLE</h2><p>Performance campagne Meta Ads + Trafic franchise GA4</p></div>
+      <div class="kpi-grid" id="overview-kpis"></div>
+      <div class="funnel" id="overview-funnel"></div>
+      <div class="page-header" style="margin-top:12px"><h2 style="font-size:1.1rem">FRANCHISE YUJO RAMEN</h2><p>Indicateurs clés du réseau</p></div>
+      <div class="franchise-grid">
+        <div class="franchise-card"><div class="franchise-val">1,44M€</div><div class="franchise-lbl">CA annuel pilote</div></div>
+        <div class="franchise-card"><div class="franchise-val">75%</div><div class="franchise-lbl">Marge brute</div></div>
+        <div class="franchise-card"><div class="franchise-val">19€ HT</div><div class="franchise-lbl">Panier moyen</div></div>
+        <div class="franchise-card"><div class="franchise-val">4.6/5</div><div class="franchise-lbl">Google · 2 250+ avis</div></div>
+        <div class="franchise-card"><div class="franchise-val">300+</div><div class="franchise-lbl">Demandes franchise</div></div>
+        <div class="franchise-card"><div class="franchise-val">80K€</div><div class="franchise-lbl">Apport minimum</div></div>
+      </div>
+      <div class="chart-row full"><div class="chart-card"><h3>DÉPENSES & LEADS PAR JOUR</h3><canvas id="overview-chart"></canvas></div></div>
+      <div class="chart-row">
+        <div class="chart-card"><h3>CPL QUOTIDIEN (€)</h3><canvas id="overview-cpl-chart"></canvas></div>
+        <div class="chart-card"><h3>SESSIONS FRANCHISE GA4 — MENSUEL</h3><canvas id="overview-ga4-chart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- META ADS -->
+    <div class="page" id="page-meta">
+      <div class="page-header"><h2>META ADS <span class="badge badge-meta">Facebook · Instagram</span></h2><p>Campagne YUJO_LeadGen_META_2026</p></div>
+      <div class="kpi-grid" id="meta-kpis"></div>
+      <div class="chart-row full"><div class="chart-card"><h3>ÉVOLUTION QUOTIDIENNE</h3><canvas id="meta-daily-chart"></canvas></div></div>
+      <div class="chart-row">
+        <div class="chart-card"><h3>CPL & CTR QUOTIDIEN</h3><canvas id="meta-cpl-chart"></canvas></div>
+        <div class="chart-card"><h3>PORTÉE & FRÉQUENCE</h3><canvas id="meta-reach-chart"></canvas></div>
+      </div>
+      <div class="page-header" style="margin-top:12px"><h2 style="font-size:1.1rem">ENGAGEMENT SOCIAL</h2><p>Interactions générées par les publicités</p></div>
+      <div class="eng-grid" id="meta-eng-grid"></div>
+      <div class="table-card" style="margin-top:28px"><h3>DONNÉES JOURNALIÈRES</h3>
+        <table id="meta-table"><thead><tr><th>Date</th><th>Coût (€)</th><th>Portée</th><th>Impr.</th><th>CPM</th><th>Clics</th><th>CTR</th><th>Fréq.</th><th>Leads</th><th>CPL (€)</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+
+    <!-- GA4 FRANCHISE -->
+    <div class="page" id="page-ga4">
+      <div class="page-header"><h2>GA4 FRANCHISE <span class="badge badge-ga4">Google Analytics</span></h2><p>Trafic et conversions — yujoramen.com/fr/franchise/</p></div>
+      <div class="kpi-grid" id="ga4-kpis"></div>
+      <div class="chart-row full"><div class="chart-card"><h3>SESSIONS & CONVERSIONS — MENSUEL</h3><canvas id="ga4-monthly-chart"></canvas></div></div>
+      <div class="chart-row">
+        <div class="chart-card"><h3>SOURCES DE TRAFIC</h3><canvas id="ga4-sources-chart"></canvas></div>
+        <div class="chart-card"><h3>TAUX DE CONVERSION MENSUEL</h3><canvas id="ga4-conv-chart"></canvas></div>
+      </div>
+      <div class="table-card"><h3>TOP SOURCES DE TRAFIC</h3>
+        <table id="ga4-sources-table"><thead><tr><th>Source</th><th>Sessions</th><th>Conversions</th><th>Taux conv.</th><th>Part (%)</th></tr></thead><tbody></tbody></table>
+      </div>
+      <div class="table-card"><h3>DÉTAIL MENSUEL</h3>
+        <table id="ga4-monthly-table"><thead><tr><th>Mois</th><th>Sessions</th><th>Utilisateurs</th><th>Nvx util.</th><th>Pages vues</th><th>Conversions</th><th>Taux conv.</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5/papaparse.min.js"></script>
+<script>
+/* ═══ FLOATING ICONS ═══ */
+(function(){
+  var icons=['🍜','🥟','🍵','⛩️','🏮','🍶','🍙','🍣','🎌','🌸','🎎','🍱'];
+  var c=document.getElementById('floatIcons');
+  for(var i=0;i<18;i++){
+    var el=document.createElement('div');el.className='float-icon';
+    el.textContent=icons[i%icons.length];
+    el.style.left=Math.random()*100+'%';
+    el.style.fontSize=(18+Math.random()*28)+'px';
+    el.style.animationDuration=(15+Math.random()*20)+'s';
+    el.style.animationDelay=(-Math.random()*30)+'s';
+    c.appendChild(el);
+  }
+})();
+
+/* ═══ PORTAL / DASHBOARD ═══ */
+function enterDashboard(page){
+  document.getElementById('portal').style.opacity='0';
+  document.getElementById('portal').style.transform='scale(.98)';
+  document.getElementById('portal').style.transition='all .5s cubic-bezier(.22,1,.36,1)';
+  setTimeout(function(){
+    document.getElementById('portal').classList.add('hidden');
+    document.getElementById('dashboard').classList.add('active');
+    if(page){
+      document.querySelectorAll('.sidebar-nav a').forEach(function(a){a.classList.remove('active');if(a.dataset.page===page)a.classList.add('active')});
+      document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+      document.getElementById('page-'+page).classList.add('active');
+    }
+  },400);
+}
+function exitDashboard(){
+  document.getElementById('dashboard').classList.remove('active');
+  var p=document.getElementById('portal');p.classList.remove('hidden');p.style.opacity='1';p.style.transform='scale(1)';
+}
+
+/* ═══ DATA ═══ */
+var BASE='https://docs.google.com/spreadsheets/d/e/2PACX-1vR-oximcJ18BHNbcRb9FZSP7fWWArSLvwMlqvkVksSV5SY7iWSzrJAn9dv2S1sGha1g83xRXoZUYk8v';
+var SHEETS={meta:{gid:'1667708153'},ga4:{gid:'376592647'}};
+var DATA={meta:[],ga4:[]};
+var charts={};
+
+function pN(v){if(v==null||v==='')return 0;return parseFloat(String(v).replace(/\s/g,'').replace(',','.'))||0}
+function fmt(n){return n==null?'—':n.toLocaleString('fr-FR',{maximumFractionDigits:0})}
+function fmtD(n){return n==null?'—':n.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function fmtE(n){return fmtD(n)+' €'}
+function fmtP(n){return fmtD(n)+' %'}
+function shortDate(d){var p=d.split('-');return p[2]+'/'+p[1]}
+function monthLabel(m){var ms=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];var p=m.split('-');return ms[parseInt(p[1])-1]+' '+p[0].slice(2)}
+
+function fetchSheet(key,cb){
+  Papa.parse(BASE+'/pub?gid='+SHEETS[key].gid+'&single=true&output=csv',{download:true,header:true,skipEmptyLines:true,complete:function(r){DATA[key]=r.data;cb()},error:cb});
+}
+
+/* ═══ NAV ═══ */
+document.querySelectorAll('.sidebar-nav a').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    document.querySelectorAll('.sidebar-nav a').forEach(function(x){x.classList.remove('active')});
+    this.classList.add('active');
+    document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+    document.getElementById('page-'+this.dataset.page).classList.add('active');
+    document.querySelector('.sidebar').classList.remove('open');
+  });
+});
+document.getElementById('date-range').addEventListener('change',function(){
+  document.getElementById('custom-dates').style.display=this.value==='custom'?'block':'none';renderAll()});
+document.getElementById('date-start').addEventListener('change',renderAll);
+document.getElementById('date-end').addEventListener('change',renderAll);
+
+function filterByDate(rows,col){
+  var sel=document.getElementById('date-range').value;
+  if(sel==='all')return rows;
+  if(sel==='custom'){var s=document.getElementById('date-start').value,e=document.getElementById('date-end').value;return rows.filter(function(r){var d=r[col];return(!s||d>=s)&&(!e||d<=e)})}
+  var n=parseInt(sel),c=new Date();c.setDate(c.getDate()-n);var cs=c.toISOString().slice(0,10);
+  return rows.filter(function(r){return r[col]>=cs});
+}
+
+/* ═══ CHART CONFIG ═══ */
+Chart.defaults.color='rgba(240,240,245,.4)';
+Chart.defaults.borderColor='rgba(232,83,46,.04)';
+Chart.defaults.font.family="'Inter','Noto Sans JP',sans-serif";
+Chart.defaults.font.size=11;
+Chart.defaults.plugins.legend.labels.usePointStyle=true;
+Chart.defaults.plugins.legend.labels.pointStyleWidth=8;
+
+function makeChart(id,cfg){if(charts[id])charts[id].destroy();var ctx=document.getElementById(id);if(!ctx)return;charts[id]=new Chart(ctx,cfg)}
+
+/* ═══ KPI HTML ═══ */
+function kpiHTML(icon,value,label,color,delay){
+  return '<div class="kpi" style="animation-delay:'+delay+'ms"><div class="kpi-icon" style="background:'+color+'">'+icon+'</div><div class="kpi-value">'+value+'</div><div class="kpi-label">'+label+'</div></div>'}
+var IC={
+  spend:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--text)" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
+  imp:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--text)" stroke-width="1.5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+  click:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--text)" stroke-width="1.5"><path d="M15 15l-2 5L9 9l11 4-5 2z"/><path d="M22 22l-5-5"/></svg>',
+  ctr:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--text)" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+  lead:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--text)" stroke-width="1.5"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>',
+  cpl:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--text)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>',
+  reach:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--text)" stroke-width="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>',
+  session:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--text)" stroke-width="1.5"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>',
+  conv:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--text)" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>',
+  user:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--text)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+};
+
+/* ═══ GA4 PROCESSOR ═══ */
+function processGA4(rows){
+  var franchise=rows.filter(function(r){return r['Page title']&&r['Page title'].indexOf('Franchise')!==-1});
+  var monthly={},sources={},totalS=0,totalU=0,totalNU=0,totalV=0,totalC=0;
+  franchise.forEach(function(r){
+    var s=pN(r['Sessions']),u=pN(r['Total users']),nu=pN(r['New users']),v=pN(r['Views']),c=pN(r['Conversions']);
+    totalS+=s;totalU+=u;totalNU+=nu;totalV+=v;totalC+=c;
+    var m=r['Date'].substring(0,7);
+    if(!monthly[m])monthly[m]={sessions:0,users:0,newUsers:0,views:0,conv:0};
+    monthly[m].sessions+=s;monthly[m].users+=u;monthly[m].newUsers+=nu;monthly[m].views+=v;monthly[m].conv+=c;
+    var src=r['Session source']||'(inconnu)';
+    if(!sources[src])sources[src]={sessions:0,conv:0};
+    sources[src].sessions+=s;sources[src].conv+=c;
+  });
+  return {monthly:monthly,sources:sources,totals:{sessions:totalS,users:totalU,newUsers:totalNU,views:totalV,conv:totalC}};
+}
+
+/* ═══ RENDER ALL ═══ */
+function renderAll(){renderOverview();renderMeta();renderGA4()}
+
+function renderOverview(){
+  var meta=filterByDate(DATA.meta,'Date');
+  var spend=meta.reduce(function(s,r){return s+pN(r['Coût (EUR)'])},0);
+  var imp=meta.reduce(function(s,r){return s+pN(r['Impressions'])},0);
+  var clicks=meta.reduce(function(s,r){return s+pN(r['Clics (tous)'])},0);
+  var leads=meta.reduce(function(s,r){return s+pN(r['Prospects sur Facebook'])},0);
+  var reach=meta.reduce(function(s,r){return s+pN(r['Portée'])},0);
+  var ctr=imp>0?(clicks/imp*100):0,cpl=leads>0?spend/leads:0;
+
+  document.getElementById('pk-spend').textContent=fmtE(spend);
+  document.getElementById('pk-imp').textContent=fmt(imp);
+  document.getElementById('pk-leads').textContent=fmt(leads);
+  document.getElementById('pk-cpl').textContent=fmtE(cpl);
+
+  var ga4=processGA4(filterByDate(DATA.ga4,'Date'));
+  document.getElementById('pk-sessions').textContent=fmt(ga4.totals.sessions);
+  document.getElementById('pk-conv').textContent=fmt(ga4.totals.conv);
+
+  document.getElementById('overview-kpis').innerHTML=[
+    kpiHTML(IC.spend,fmtE(spend),'Budget dépensé','var(--accent-glow)',0),
+    kpiHTML(IC.lead,fmt(leads),'Leads Facebook','var(--accent-glow)',60),
+    kpiHTML(IC.cpl,fmtE(cpl),'Coût par lead','var(--green-glow)',120),
+    kpiHTML(IC.imp,fmt(imp),'Impressions','var(--accent-glow)',180),
+    kpiHTML(IC.session,fmt(ga4.totals.sessions),'Sessions franchise GA4','var(--green-glow)',240),
+    kpiHTML(IC.conv,fmt(ga4.totals.conv),'Conversions GA4','var(--green-glow)',300)
+  ].join('');
+
+  document.getElementById('overview-funnel').innerHTML=
+    '<div class="funnel-step"><div class="funnel-val">'+fmt(imp)+'</div><div class="funnel-lbl">Impressions</div></div><div class="funnel-arrow">→</div>'
+    +'<div class="funnel-step"><div class="funnel-val">'+fmt(clicks)+'</div><div class="funnel-lbl">Clics</div></div><div class="funnel-arrow">→</div>'
+    +'<div class="funnel-step"><div class="funnel-val">'+fmt(leads)+'</div><div class="funnel-lbl">Leads</div></div><div class="funnel-arrow">→</div>'
+    +'<div class="funnel-step"><div class="funnel-val">'+fmtE(cpl)+'</div><div class="funnel-lbl">CPL</div></div>';
+
+  var rows=meta.sort(function(a,b){return a['Date']<b['Date']?-1:1});
+  var dates=rows.map(function(r){return r['Date']});
+  makeChart('overview-chart',{type:'line',data:{labels:dates.map(shortDate),datasets:[
+    {label:'Dépenses (€)',data:rows.map(function(r){return pN(r['Coût (EUR)'])}),borderColor:'#E8532E',backgroundColor:'rgba(232,83,46,.08)',fill:true,tension:.3,pointRadius:3,pointBackgroundColor:'#E8532E',yAxisID:'y'},
+    {label:'Leads',data:rows.map(function(r){return pN(r['Prospects sur Facebook'])}),borderColor:'#34D399',backgroundColor:'rgba(52,211,153,.08)',fill:true,tension:.3,pointRadius:3,pointBackgroundColor:'#34D399',yAxisID:'y1'}
+  ]},options:{responsive:true,interaction:{mode:'index',intersect:false},scales:{y:{position:'left',ticks:{callback:function(v){return v+'€'}}},y1:{position:'right',grid:{display:false},beginAtZero:true,ticks:{stepSize:1}}}}});
+
+  makeChart('overview-cpl-chart',{type:'line',data:{labels:dates.map(shortDate),datasets:[{
+    label:'CPL (€)',data:rows.map(function(r){var l=pN(r['Prospects sur Facebook']);return l>0?pN(r['Coût (EUR)'])/l:null}),
+    borderColor:'#F7A325',backgroundColor:'rgba(247,163,37,.06)',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#F7A325',spanGaps:false
+  }]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return v+'€'}},beginAtZero:true},x:{grid:{display:false}}}}});
+
+  var months=Object.keys(ga4.monthly).sort();
+  makeChart('overview-ga4-chart',{data:{labels:months.map(monthLabel),datasets:[
+    {type:'bar',label:'Sessions',data:months.map(function(m){return ga4.monthly[m].sessions}),backgroundColor:'rgba(232,83,46,.4)',hoverBackgroundColor:'rgba(232,83,46,.7)',borderRadius:5,yAxisID:'y',order:2},
+    {type:'line',label:'Conversions',data:months.map(function(m){return ga4.monthly[m].conv}),borderColor:'#34D399',pointBackgroundColor:'#34D399',tension:.3,pointRadius:3,yAxisID:'y1',order:1}
+  ]},options:{responsive:true,interaction:{mode:'index',intersect:false},scales:{y:{position:'left'},y1:{position:'right',grid:{display:false},beginAtZero:true},x:{ticks:{maxRotation:45}}}}});
+}
+
+function renderMeta(){
+  var rows=filterByDate(DATA.meta,'Date').sort(function(a,b){return a['Date']<b['Date']?-1:1});
+  var spend=rows.reduce(function(s,r){return s+pN(r['Coût (EUR)'])},0);
+  var reach=rows.reduce(function(s,r){return s+pN(r['Portée'])},0);
+  var imp=rows.reduce(function(s,r){return s+pN(r['Impressions'])},0);
+  var clicks=rows.reduce(function(s,r){return s+pN(r['Clics (tous)'])},0);
+  var leads=rows.reduce(function(s,r){return s+pN(r['Prospects sur Facebook'])},0);
+  var reactions=rows.reduce(function(s,r){return s+pN(r['Réactions aux publications'])},0);
+  var comments=rows.reduce(function(s,r){return s+pN(r['Commentaires sur les publications'])},0);
+  var shares=rows.reduce(function(s,r){return s+pN(r['Partages de publications'])},0);
+  var saves=rows.reduce(function(s,r){return s+pN(r['Enregistrements de publications'])},0);
+  var ctr=imp>0?(clicks/imp*100):0,cpl=leads>0?spend/leads:0,cpm=imp>0?(spend/imp*1000):0;
+
+  document.getElementById('meta-kpis').innerHTML=[
+    kpiHTML(IC.spend,fmtE(spend),'Dépenses','var(--meta-glow)',0),
+    kpiHTML(IC.reach,fmt(reach),'Portée','var(--meta-glow)',60),
+    kpiHTML(IC.imp,fmt(imp),'Impressions','var(--meta-glow)',120),
+    kpiHTML(IC.click,fmt(clicks),'Clics','var(--meta-glow)',180),
+    kpiHTML(IC.ctr,fmtP(ctr),'CTR','var(--meta-glow)',240),
+    kpiHTML(IC.lead,fmt(leads),'Leads Facebook','var(--green-glow)',300),
+    kpiHTML(IC.cpl,fmtE(cpl),'CPL','var(--green-glow)',360),
+    kpiHTML(IC.spend,fmtE(cpm),'CPM','var(--accent-glow)',420)
+  ].join('');
+
+  var dates=rows.map(function(r){return r['Date']});
+
+  makeChart('meta-daily-chart',{type:'line',data:{labels:dates.map(shortDate),datasets:[
+    {label:'Dépenses (€)',data:rows.map(function(r){return pN(r['Coût (EUR)'])}),borderColor:'#0084FF',backgroundColor:'rgba(0,132,255,.06)',fill:true,tension:.3,pointRadius:3,yAxisID:'y'},
+    {label:'Leads',data:rows.map(function(r){return pN(r['Prospects sur Facebook'])}),borderColor:'#34D399',tension:.3,pointRadius:4,pointBackgroundColor:'#34D399',yAxisID:'y1'},
+    {label:'Clics',data:rows.map(function(r){return pN(r['Clics (tous)'])}),borderColor:'#F7A325',tension:.3,pointRadius:3,borderDash:[4,4],yAxisID:'y1'}
+  ]},options:{responsive:true,interaction:{mode:'index',intersect:false},scales:{y:{position:'left',ticks:{callback:function(v){return v+'€'}}},y1:{position:'right',grid:{display:false},beginAtZero:true}}}});
+
+  makeChart('meta-cpl-chart',{data:{labels:dates.map(shortDate),datasets:[
+    {type:'line',label:'CPL (€)',data:rows.map(function(r){var l=pN(r['Prospects sur Facebook']);return l>0?pN(r['Coût (EUR)'])/l:null}),borderColor:'#E8532E',backgroundColor:'rgba(232,83,46,.06)',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#E8532E',spanGaps:false,yAxisID:'y'},
+    {type:'line',label:'CTR (%)',data:rows.map(function(r){return pN(r['CTR (tous)'])}),borderColor:'#8B5CF6',tension:.3,pointRadius:3,yAxisID:'y1'}
+  ]},options:{responsive:true,interaction:{mode:'index',intersect:false},scales:{y:{position:'left',ticks:{callback:function(v){return v+'€'}},beginAtZero:true},y1:{position:'right',grid:{display:false},ticks:{callback:function(v){return v+'%'}}}}}});
+
+  makeChart('meta-reach-chart',{data:{labels:dates.map(shortDate),datasets:[
+    {type:'bar',label:'Portée',data:rows.map(function(r){return pN(r['Portée'])}),backgroundColor:'rgba(59,130,246,.5)',hoverBackgroundColor:'rgba(59,130,246,.7)',borderRadius:5,yAxisID:'y',order:2},
+    {type:'line',label:'Fréquence',data:rows.map(function(r){return pN(r['Fréquence'])}),borderColor:'#FBBF24',tension:.3,pointRadius:3,yAxisID:'y1',order:1}
+  ]},options:{responsive:true,interaction:{mode:'index',intersect:false},scales:{y:{position:'left'},y1:{position:'right',grid:{display:false},min:1,max:2}}}});
+
+  document.getElementById('meta-eng-grid').innerHTML=
+    '<div class="eng-card"><div class="eng-val" style="color:var(--accent2)">'+fmt(reactions)+'</div><div class="eng-lbl">Réactions</div></div>'
+    +'<div class="eng-card"><div class="eng-val" style="color:var(--purple)">'+fmt(comments)+'</div><div class="eng-lbl">Commentaires</div></div>'
+    +'<div class="eng-card"><div class="eng-val" style="color:var(--meta)">'+fmt(shares)+'</div><div class="eng-lbl">Partages</div></div>'
+    +'<div class="eng-card"><div class="eng-val" style="color:var(--gold)">'+fmt(saves)+'</div><div class="eng-lbl">Enregistrements</div></div>';
+
+  document.querySelector('#meta-table tbody').innerHTML=rows.map(function(r){
+    var l=pN(r['Prospects sur Facebook']),c=pN(r['Coût (EUR)']);
+    return '<tr><td>'+shortDate(r['Date'])+'</td><td>'+fmtD(c)+'</td><td>'+fmt(pN(r['Portée']))+'</td><td>'+fmt(pN(r['Impressions']))+'</td><td>'+fmtD(pN(r['CPM (coût pour 1000 impressions)']))+'</td><td>'+fmt(pN(r['Clics (tous)']))+'</td><td>'+r['CTR (tous)'].replace('.',',')+'%</td><td>'+r['Fréquence'].replace('.',',')+'</td><td style="color:var(--accent2);font-weight:600">'+fmt(l)+'</td><td style="color:var(--gold2);font-weight:600">'+(l>0?fmtD(c/l):'—')+'</td></tr>'}).join('');
+}
+
+function renderGA4(){
+  var ga4=processGA4(filterByDate(DATA.ga4,'Date'));
+  var t=ga4.totals,convRate=t.sessions>0?(t.conv/t.sessions*100):0;
+
+  document.getElementById('ga4-kpis').innerHTML=[
+    kpiHTML(IC.session,fmt(t.sessions),'Sessions totales','var(--green-glow)',0),
+    kpiHTML(IC.user,fmt(t.users),'Utilisateurs','var(--green-glow)',60),
+    kpiHTML(IC.conv,fmt(t.conv),'Conversions','var(--accent-glow)',120),
+    kpiHTML(IC.ctr,fmtP(convRate),'Taux de conversion','var(--gold-glow)',180)
+  ].join('');
+
+  var months=Object.keys(ga4.monthly).sort();
+  makeChart('ga4-monthly-chart',{data:{labels:months.map(monthLabel),datasets:[
+    {type:'bar',label:'Sessions',data:months.map(function(m){return ga4.monthly[m].sessions}),backgroundColor:'rgba(232,83,46,.45)',hoverBackgroundColor:'rgba(232,83,46,.75)',borderRadius:5,yAxisID:'y',order:2},
+    {type:'line',label:'Conversions',data:months.map(function(m){return ga4.monthly[m].conv}),borderColor:'#34D399',backgroundColor:'rgba(52,211,153,.06)',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#34D399',yAxisID:'y1',order:1}
+  ]},options:{responsive:true,interaction:{mode:'index',intersect:false},scales:{y:{position:'left'},y1:{position:'right',grid:{display:false},beginAtZero:true},x:{ticks:{maxRotation:45}}}}});
+
+  makeChart('ga4-conv-chart',{type:'line',data:{labels:months.map(monthLabel),datasets:[{
+    label:'Taux conv. (%)',data:months.map(function(m){var d=ga4.monthly[m];return d.sessions>0?(d.conv/d.sessions*100):0}),
+    borderColor:'#F7A325',backgroundColor:'rgba(247,163,37,.06)',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#F7A325'
+  }]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return v.toFixed(1)+'%'}},beginAtZero:true},x:{ticks:{maxRotation:45}}}}});
+
+  var srcArr=Object.keys(ga4.sources).map(function(k){return {name:k,sessions:ga4.sources[k].sessions,conv:ga4.sources[k].conv}}).sort(function(a,b){return b.sessions-a.sessions});
+  var top6=srcArr.slice(0,6);
+  var otherS=srcArr.slice(6).reduce(function(s,r){return s+r.sessions},0);
+  var otherC=srcArr.slice(6).reduce(function(s,r){return s+r.conv},0);
+  if(otherS>0)top6.push({name:'Autres',sessions:otherS,conv:otherC});
+  var srcColors=['#E8532E','#F7A325','#8B5CF6','#3B82F6','#34D399','#EC4899','#6B7280'];
+
+  makeChart('ga4-sources-chart',{type:'doughnut',data:{
+    labels:top6.map(function(s){return s.name}),
+    datasets:[{data:top6.map(function(s){return s.sessions}),backgroundColor:srcColors.slice(0,top6.length),borderWidth:0,borderRadius:4}]
+  },options:{responsive:true,cutout:'65%',plugins:{legend:{position:'bottom',labels:{padding:12}}}}});
+
+  var totalSrc=srcArr.reduce(function(s,r){return s+r.sessions},0);
+  document.querySelector('#ga4-sources-table tbody').innerHTML=srcArr.slice(0,12).map(function(r){
+    var cr=r.sessions>0?(r.conv/r.sessions*100):0;
+    var pct=totalSrc>0?(r.sessions/totalSrc*100):0;
+    return '<tr><td style="font-weight:600">'+r.name+'</td><td>'+fmt(r.sessions)+'</td><td style="color:var(--green)">'+fmt(r.conv)+'</td><td>'+fmtP(cr)+'</td><td>'+fmtP(pct)+'</td></tr>'}).join('');
+
+  document.querySelector('#ga4-monthly-table tbody').innerHTML=months.map(function(m){
+    var d=ga4.monthly[m],cr=d.sessions>0?(d.conv/d.sessions*100):0;
+    return '<tr><td style="font-weight:600">'+monthLabel(m)+'</td><td>'+fmt(d.sessions)+'</td><td>'+fmt(d.users)+'</td><td>'+fmt(d.newUsers)+'</td><td>'+fmt(d.views)+'</td><td style="color:var(--green);font-weight:600">'+fmt(d.conv)+'</td><td>'+fmtP(cr)+'</td></tr>'}).join('');
+}
+
+/* ═══ INIT ═══ */
+var loaded=0;
+function onLoad(){loaded++;if(loaded>=2){
+  var allDates=DATA.meta.map(function(r){return r['Date']}).concat(DATA.ga4.map(function(r){return r['Date']})).filter(Boolean).sort();
+  if(allDates.length)document.getElementById('last-update').textContent=shortDate(allDates[allDates.length-1]);
+  renderAll();
+}}
+fetchSheet('meta',onLoad);
+fetchSheet('ga4',onLoad);
+</script>
+</body>
+</html>
