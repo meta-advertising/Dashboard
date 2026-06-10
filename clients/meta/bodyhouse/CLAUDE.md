@@ -8,6 +8,7 @@ Actif
 
 ## Dashboards
 - [Portail Marketing Body House](https://bodyhouse-france.github.io/dashboard/gateway.html)
+- [Villefranche — Dashboard Boutique](https://bodyhouse-villefranche.vercel.app)
 
 ## Rapports
 - [Aubière](../Bodyhouse/synthese-bodyhouse-aubiere-2025.pdf)
