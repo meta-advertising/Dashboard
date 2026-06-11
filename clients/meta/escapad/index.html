@@ -513,15 +513,18 @@ tbody tr:hover{background:rgba(244,152,121,.03)}
 
     <!-- META -->
     <div class="page" id="page-meta">
-      <div class="page-header"><h2>META ADS <span class="badge badge-meta">Facebook · Instagram</span></h2><p>Campagne LeadGen — Waitlist Escapad Paris-Est</p></div>
+      <div class="page-header"><h2>META ADS <span class="badge badge-meta">Facebook · Instagram</span></h2><p>Campagnes LeadGen — Waitlist Escapad Paris-Est</p></div>
       <div class="kpi-grid" id="meta-kpis"></div>
+      <div class="table-card" id="meta-campaign-breakdown" style="display:none"><h3>PERFORMANCE PAR CAMPAGNE</h3>
+        <table id="meta-campaign-table"><thead><tr><th>Campagne</th><th>Jours</th><th>Dépenses</th><th>Impressions</th><th>Clics</th><th>CTR</th><th>Conv. Site</th><th>Leads FB</th><th>Total Leads</th><th>CPL</th></tr></thead><tbody></tbody></table>
+      </div>
       <div class="chart-row full"><div class="chart-card"><h3>ÉVOLUTION QUOTIDIENNE</h3><canvas id="meta-daily-chart"></canvas></div></div>
       <div class="chart-row">
         <div class="chart-card"><h3>CPL & CPA QUOTIDIEN</h3><canvas id="meta-cpl-chart"></canvas></div>
         <div class="chart-card"><h3>ENGAGEMENT PAR JOUR</h3><canvas id="meta-eng-chart"></canvas></div>
       </div>
       <div class="table-card"><h3>DONNÉES JOURNALIÈRES</h3>
-        <table id="meta-table"><thead><tr><th>Date</th><th>Dépenses</th><th>Impressions</th><th>Clics</th><th>CTR</th><th>Conv. Site</th><th>CPA Site</th><th>Leads FB Form</th><th>CPL FB</th><th>Total Leads</th></tr></thead><tbody></tbody></table>
+        <table id="meta-table"><thead><tr><th>Date</th><th>Campagne</th><th>Dépenses</th><th>Impressions</th><th>Clics</th><th>CTR</th><th>Conv. Site</th><th>CPA Site</th><th>Leads FB Form</th><th>CPL FB</th><th>Total Leads</th></tr></thead><tbody></tbody></table>
       </div>
     </div>
 
@@ -575,10 +578,10 @@ tbody tr:hover{background:rgba(244,152,121,.03)}
         <div class="chart-card"><h3>DURÉE D'ENGAGEMENT PAR JOUR</h3><canvas id="ga4-duration-chart"></canvas></div>
       </div>
       <div class="table-card"><h3>TOP SOURCES DE TRAFIC</h3>
-        <table id="ga4-sources-table"><thead><tr><th>Source</th><th>Sessions</th><th>Utilisateurs</th><th>Nouveaux</th><th>Taux engagement</th><th>Taux rebond</th><th>Durée moy.</th><th>Pages vues</th><th>Conversions</th></tr></thead><tbody></tbody></table>
+        <table id="ga4-sources-table"><thead><tr><th>Source</th><th>Sessions</th><th>Utilisateurs</th><th>Nouveaux</th><th>Taux engagement</th><th>Taux rebond</th><th>Durée moy.</th><th>Pages vues</th><th>Events</th><th>Key Events (gen_lead)</th></tr></thead><tbody></tbody></table>
       </div>
       <div class="table-card"><h3>DONNÉES JOURNALIÈRES</h3>
-        <table id="ga4-table"><thead><tr><th>Date</th><th>Sessions</th><th>Utilisateurs</th><th>Nouveaux</th><th>Bounce Rate</th><th>Engagement</th><th>Durée moy.</th><th>Pages vues</th><th>Conversions</th><th>Taux conv.</th></tr></thead><tbody></tbody></table>
+        <table id="ga4-table"><thead><tr><th>Date</th><th>Sessions</th><th>Utilisateurs</th><th>Nouveaux</th><th>Bounce Rate</th><th>Engagement</th><th>Durée moy.</th><th>Pages vues</th><th>Events</th><th>Key Events (gen_lead)</th><th>Taux gen_lead</th></tr></thead><tbody></tbody></table>
       </div>
     </div>
 
@@ -795,7 +798,35 @@ function renderMeta(){
 
   document.querySelector('#meta-table tbody').innerHTML=rows.map(function(r){
     var s=pN(r['Coût (EUR)']),cs=pN(r['Conversions de site web']),lf=pN(r['Prospects sur Facebook']),total=cs+lf;
-    return '<tr><td>'+shortDate(r['Date'])+'</td><td>'+fmtE(s)+'</td><td>'+fmt(pN(r['Impressions']))+'</td><td>'+fmt(pN(r['Clics (tous)']))+'</td><td>'+pN(r['CTR (tous)']).toFixed(2)+'%</td><td style="font-weight:600;color:var(--coral)">'+fmt(cs)+'</td><td>'+(cs>0?fmtE(s/cs):'—')+'</td><td style="font-weight:600;color:var(--meta)">'+fmt(lf)+'</td><td>'+(lf>0?fmtE(s/lf):'—')+'</td><td style="font-weight:700">'+fmt(total)+'</td></tr>'}).join('');
+    var cName=r['Nom de la campagne']||'';
+    var shortCamp=cName.length>40?cName.replace(/Escapad Paris-Est_/g,'').replace(/_/g,' ').substring(0,40)+'…':cName.replace(/Escapad Paris-Est_/g,'').replace(/_/g,' ');
+    return '<tr><td>'+shortDate(r['Date'])+'</td><td><span style="font-size:11px;color:var(--text2)">'+shortCamp+'</span></td><td>'+fmtE(s)+'</td><td>'+fmt(pN(r['Impressions']))+'</td><td>'+fmt(pN(r['Clics (tous)']))+'</td><td>'+pN(r['CTR (tous)']).toFixed(2)+'%</td><td style="font-weight:600;color:var(--coral)">'+fmt(cs)+'</td><td>'+(cs>0?fmtE(s/cs):'—')+'</td><td style="font-weight:600;color:var(--meta)">'+fmt(lf)+'</td><td>'+(lf>0?fmtE(s/lf):'—')+'</td><td style="font-weight:700">'+fmt(total)+'</td></tr>'}).join('');
+
+  // Campaign breakdown
+  var campMap={};
+  rows.forEach(function(r){
+    var c=r['Nom de la campagne']||'Inconnu';
+    if(!campMap[c])campMap[c]={days:0,spend:0,imp:0,clicks:0,convSite:0,leadsFB:0};
+    campMap[c].days++;
+    campMap[c].spend+=pN(r['Coût (EUR)']);
+    campMap[c].imp+=pN(r['Impressions']);
+    campMap[c].clicks+=pN(r['Clics (tous)']);
+    campMap[c].convSite+=pN(r['Conversions de site web']);
+    campMap[c].leadsFB+=pN(r['Prospects sur Facebook']);
+  });
+  var camps=Object.keys(campMap);
+  var breakdownEl=document.getElementById('meta-campaign-breakdown');
+  if(camps.length>1){
+    breakdownEl.style.display='block';
+    document.querySelector('#meta-campaign-table tbody').innerHTML=camps.map(function(c){
+      var d=campMap[c],total=d.convSite+d.leadsFB,ctr=d.imp>0?(d.clicks/d.imp*100):0,cpl=total>0?d.spend/total:0;
+      var shortName=c.replace(/Escapad Paris-Est_/g,'').replace(/_/g,' ');
+      if(shortName.length>50)shortName=shortName.substring(0,50)+'…';
+      return '<tr><td style="font-weight:600;font-size:12px">'+shortName+'</td><td>'+d.days+'</td><td>'+fmtE(d.spend)+'</td><td>'+fmt(d.imp)+'</td><td>'+fmt(d.clicks)+'</td><td>'+fmtP(ctr)+'</td><td style="color:var(--coral);font-weight:600">'+fmt(d.convSite)+'</td><td style="color:var(--meta);font-weight:600">'+fmt(d.leadsFB)+'</td><td style="font-weight:700">'+fmt(total)+'</td><td style="color:var(--green2);font-weight:600">'+(cpl>0?fmtE(cpl):'—')+'</td></tr>'
+    }).join('');
+  } else {
+    breakdownEl.style.display='none';
+  }
 }
 
 function renderGoogle(){
@@ -886,7 +917,7 @@ function renderGA4(){
   var dailyMap={};
   rows.forEach(function(r){
     var d=r['Date'];if(!d)return;
-    if(!dailyMap[d])dailyMap[d]={sessions:0,users:0,newUsers:0,bounceRate:[],engRate:[],duration:0,views:0,conversions:0,convRate:[]};
+    if(!dailyMap[d])dailyMap[d]={sessions:0,users:0,newUsers:0,bounceRate:[],engRate:[],duration:0,views:0,conversions:0,convRate:[],eventCount:0,keyEvents:0};
     dailyMap[d].sessions+=pN(r['Sessions']);
     dailyMap[d].users+=pN(r['Total users']);
     dailyMap[d].newUsers+=pN(r['New users']);
@@ -896,15 +927,18 @@ function renderGA4(){
     dailyMap[d].views+=pN(r['Views']);
     dailyMap[d].conversions+=pN(r['Conversions']);
     dailyMap[d].convRate.push(pN(r['User conversion rate']));
+    dailyMap[d].eventCount+=pN(r['Event count']);
+    dailyMap[d].keyEvents+=pN(r['Key event count for generate_lead']);
   });
   var dates=Object.keys(dailyMap).sort();
 
-  var totalSessions=0,totalUsers=0,totalNew=0,totalDuration=0,totalViews=0,totalConv=0;
+  var totalSessions=0,totalUsers=0,totalNew=0,totalDuration=0,totalViews=0,totalConv=0,totalEventCount=0,totalKeyEvents=0;
   var allBounce=[],allEng=[];
   dates.forEach(function(d){
     var dd=dailyMap[d];
     totalSessions+=dd.sessions;totalUsers+=dd.users;totalNew+=dd.newUsers;
     totalDuration+=dd.duration;totalViews+=dd.views;totalConv+=dd.conversions;
+    totalEventCount+=dd.eventCount;totalKeyEvents+=dd.keyEvents;
     allBounce=allBounce.concat(dd.bounceRate);allEng=allEng.concat(dd.engRate);
   });
   var avgBounce=allBounce.length>0?(allBounce.reduce(function(a,b){return a+b},0)/allBounce.length*100):0;
@@ -912,6 +946,7 @@ function renderGA4(){
   var avgDuration=totalSessions>0?totalDuration/totalSessions:0;
   var convRate=totalUsers>0?(totalConv/totalUsers*100):0;
 
+  var keyEventRate=totalUsers>0?(totalKeyEvents/totalUsers*100):0;
   document.getElementById('ga4-kpis').innerHTML=[
     kpiHTML(IC.imp,fmt(totalSessions),'Sessions','var(--green-glow)',0),
     kpiHTML(IC.lead,fmt(totalUsers),'Utilisateurs','var(--green-glow)',60),
@@ -920,7 +955,9 @@ function renderGA4(){
     kpiHTML(IC.bar,fmtP(avgBounce),'Bounce Rate','var(--coral-glow)',240),
     kpiHTML(IC.video,Math.round(avgDuration)+'s','Durée moy.','var(--green-glow)',300),
     kpiHTML(IC.click,fmt(totalViews),'Pages vues','var(--green-glow)',360),
-    kpiHTML(IC.conv,fmt(totalConv),'Conversions','var(--green-glow)',420)
+    kpiHTML(IC.conv,fmt(totalKeyEvents),'Key Events (generate_lead)','var(--green-glow)',420),
+    kpiHTML(IC.reach,fmt(totalEventCount),'Event count','var(--purple-glow)',480),
+    kpiHTML(IC.cpl,fmtP(keyEventRate),'Taux generate_lead','var(--green-glow)',540)
   ].join('');
 
   // Daily chart
@@ -932,10 +969,11 @@ function renderGA4(){
 
   // Sources chart (doughnut)
   var sourceMap={};
-  rows.forEach(function(r){var src=r['Session source']||'(direct)';if(!sourceMap[src])sourceMap[src]={sessions:0,users:0,newUsers:0,engRate:[],bounceRate:[],duration:0,views:0,conv:0};
+  rows.forEach(function(r){var src=r['Session source']||'(direct)';if(!sourceMap[src])sourceMap[src]={sessions:0,users:0,newUsers:0,engRate:[],bounceRate:[],duration:0,views:0,conv:0,eventCount:0,keyEvents:0};
     sourceMap[src].sessions+=pN(r['Sessions']);sourceMap[src].users+=pN(r['Total users']);sourceMap[src].newUsers+=pN(r['New users']);
     sourceMap[src].engRate.push(pN(r['Engagement rate']));sourceMap[src].bounceRate.push(pN(r['Bounce rate']));
-    sourceMap[src].duration+=pN(r['Total user engagement duration (sec)']);sourceMap[src].views+=pN(r['Views']);sourceMap[src].conv+=pN(r['Conversions'])});
+    sourceMap[src].duration+=pN(r['Total user engagement duration (sec)']);sourceMap[src].views+=pN(r['Views']);sourceMap[src].conv+=pN(r['Conversions']);
+    sourceMap[src].eventCount+=pN(r['Event count']);sourceMap[src].keyEvents+=pN(r['Key event count for generate_lead'])});
   var sources=Object.keys(sourceMap).sort(function(a,b){return sourceMap[b].sessions-sourceMap[a].sessions});
   var topSources=sources.slice(0,6);
   var srcColors=['rgba(74,155,110,.7)','rgba(244,152,121,.7)','rgba(0,132,255,.7)','rgba(124,107,181,.7)','rgba(255,0,79,.7)','rgba(245,158,11,.7)'];
@@ -979,7 +1017,8 @@ function renderGA4(){
       +'<td style="font-weight:600;'+bounceColor+'">'+fmtP(avgB)+'</td>'
       +'<td>'+avgD+'s</td>'
       +'<td style="color:var(--text)">'+fmt(d.views)+'</td>'
-      +'<td style="font-weight:600;color:var(--green2)">'+fmt(d.conv)+'</td></tr>'
+      +'<td>'+fmt(d.eventCount)+'</td>'
+      +'<td style="font-weight:600;color:var(--green2)">'+fmt(d.keyEvents)+'</td></tr>'
   }).join('');
 
   // Daily table — colorized
@@ -999,8 +1038,9 @@ function renderGA4(){
       +'<td style="font-weight:600;'+engColor+'">'+fmtP(avgE)+'</td>'
       +'<td style="'+durColor+'">'+avgD+'s</td>'
       +'<td>'+fmt(dd.views)+'</td>'
-      +'<td style="font-weight:600;color:var(--green2)">'+fmt(dd.conversions)+'</td>'
-      +'<td style="font-weight:500;color:var(--purple2)">'+fmtP(cr)+'</td></tr>'
+      +'<td>'+fmt(dd.eventCount)+'</td>'
+      +'<td style="font-weight:600;color:var(--green2)">'+fmt(dd.keyEvents)+'</td>'
+      +'<td style="font-weight:500;color:var(--purple2)">'+fmtP(dd.users>0?(dd.keyEvents/dd.users*100):0)+'</td></tr>'
   }).join('');
 }
 
