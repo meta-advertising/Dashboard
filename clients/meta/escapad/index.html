@@ -578,10 +578,10 @@ tbody tr:hover{background:rgba(244,152,121,.03)}
         <div class="chart-card"><h3>DURÉE D'ENGAGEMENT PAR JOUR</h3><canvas id="ga4-duration-chart"></canvas></div>
       </div>
       <div class="table-card"><h3>TOP SOURCES DE TRAFIC</h3>
-        <table id="ga4-sources-table"><thead><tr><th>Source</th><th>Sessions</th><th>Utilisateurs</th><th>Nouveaux</th><th>Taux engagement</th><th>Taux rebond</th><th>Durée moy.</th><th>Pages vues</th><th>Events</th><th>Key Events (gen_lead)</th></tr></thead><tbody></tbody></table>
+        <table id="ga4-sources-table"><thead><tr><th>Source</th><th>Sessions</th><th>Utilisateurs</th><th>Nouveaux</th><th>Taux engagement</th><th>Taux rebond</th><th>Durée moy.</th><th>Pages vues</th><th>Conversions</th></tr></thead><tbody></tbody></table>
       </div>
       <div class="table-card"><h3>DONNÉES JOURNALIÈRES</h3>
-        <table id="ga4-table"><thead><tr><th>Date</th><th>Sessions</th><th>Utilisateurs</th><th>Nouveaux</th><th>Bounce Rate</th><th>Engagement</th><th>Durée moy.</th><th>Pages vues</th><th>Events</th><th>Key Events (gen_lead)</th><th>Taux gen_lead</th></tr></thead><tbody></tbody></table>
+        <table id="ga4-table"><thead><tr><th>Date</th><th>Sessions</th><th>Utilisateurs</th><th>Nouveaux</th><th>Bounce Rate</th><th>Engagement</th><th>Durée moy.</th><th>Pages vues</th><th>Conversions</th><th>Taux conv.</th></tr></thead><tbody></tbody></table>
       </div>
     </div>
 
@@ -917,7 +917,7 @@ function renderGA4(){
   var dailyMap={};
   rows.forEach(function(r){
     var d=r['Date'];if(!d)return;
-    if(!dailyMap[d])dailyMap[d]={sessions:0,users:0,newUsers:0,bounceRate:[],engRate:[],duration:0,views:0,conversions:0,convRate:[],eventCount:0,keyEvents:0};
+    if(!dailyMap[d])dailyMap[d]={sessions:0,users:0,newUsers:0,bounceRate:[],engRate:[],duration:0,views:0,conversions:0,convRate:[]};
     dailyMap[d].sessions+=pN(r['Sessions']);
     dailyMap[d].users+=pN(r['Total users']);
     dailyMap[d].newUsers+=pN(r['New users']);
@@ -927,18 +927,15 @@ function renderGA4(){
     dailyMap[d].views+=pN(r['Views']);
     dailyMap[d].conversions+=pN(r['Conversions']);
     dailyMap[d].convRate.push(pN(r['User conversion rate']));
-    dailyMap[d].eventCount+=pN(r['Event count']);
-    dailyMap[d].keyEvents+=pN(r['Key event count for generate_lead']);
   });
   var dates=Object.keys(dailyMap).sort();
 
-  var totalSessions=0,totalUsers=0,totalNew=0,totalDuration=0,totalViews=0,totalConv=0,totalEventCount=0,totalKeyEvents=0;
+  var totalSessions=0,totalUsers=0,totalNew=0,totalDuration=0,totalViews=0,totalConv=0;
   var allBounce=[],allEng=[];
   dates.forEach(function(d){
     var dd=dailyMap[d];
     totalSessions+=dd.sessions;totalUsers+=dd.users;totalNew+=dd.newUsers;
     totalDuration+=dd.duration;totalViews+=dd.views;totalConv+=dd.conversions;
-    totalEventCount+=dd.eventCount;totalKeyEvents+=dd.keyEvents;
     allBounce=allBounce.concat(dd.bounceRate);allEng=allEng.concat(dd.engRate);
   });
   var avgBounce=allBounce.length>0?(allBounce.reduce(function(a,b){return a+b},0)/allBounce.length*100):0;
@@ -946,7 +943,6 @@ function renderGA4(){
   var avgDuration=totalSessions>0?totalDuration/totalSessions:0;
   var convRate=totalUsers>0?(totalConv/totalUsers*100):0;
 
-  var keyEventRate=totalUsers>0?(totalKeyEvents/totalUsers*100):0;
   document.getElementById('ga4-kpis').innerHTML=[
     kpiHTML(IC.imp,fmt(totalSessions),'Sessions','var(--green-glow)',0),
     kpiHTML(IC.lead,fmt(totalUsers),'Utilisateurs','var(--green-glow)',60),
@@ -955,9 +951,7 @@ function renderGA4(){
     kpiHTML(IC.bar,fmtP(avgBounce),'Bounce Rate','var(--coral-glow)',240),
     kpiHTML(IC.video,Math.round(avgDuration)+'s','Durée moy.','var(--green-glow)',300),
     kpiHTML(IC.click,fmt(totalViews),'Pages vues','var(--green-glow)',360),
-    kpiHTML(IC.conv,fmt(totalKeyEvents),'Key Events (generate_lead)','var(--green-glow)',420),
-    kpiHTML(IC.reach,fmt(totalEventCount),'Event count','var(--purple-glow)',480),
-    kpiHTML(IC.cpl,fmtP(keyEventRate),'Taux generate_lead','var(--green-glow)',540)
+    kpiHTML(IC.conv,fmt(totalConv),'Conversions','var(--green-glow)',420)
   ].join('');
 
   // Daily chart
@@ -969,11 +963,10 @@ function renderGA4(){
 
   // Sources chart (doughnut)
   var sourceMap={};
-  rows.forEach(function(r){var src=r['Session source']||'(direct)';if(!sourceMap[src])sourceMap[src]={sessions:0,users:0,newUsers:0,engRate:[],bounceRate:[],duration:0,views:0,conv:0,eventCount:0,keyEvents:0};
+  rows.forEach(function(r){var src=r['Session source']||'(direct)';if(!sourceMap[src])sourceMap[src]={sessions:0,users:0,newUsers:0,engRate:[],bounceRate:[],duration:0,views:0,conv:0};
     sourceMap[src].sessions+=pN(r['Sessions']);sourceMap[src].users+=pN(r['Total users']);sourceMap[src].newUsers+=pN(r['New users']);
     sourceMap[src].engRate.push(pN(r['Engagement rate']));sourceMap[src].bounceRate.push(pN(r['Bounce rate']));
-    sourceMap[src].duration+=pN(r['Total user engagement duration (sec)']);sourceMap[src].views+=pN(r['Views']);sourceMap[src].conv+=pN(r['Conversions']);
-    sourceMap[src].eventCount+=pN(r['Event count']);sourceMap[src].keyEvents+=pN(r['Key event count for generate_lead'])});
+    sourceMap[src].duration+=pN(r['Total user engagement duration (sec)']);sourceMap[src].views+=pN(r['Views']);sourceMap[src].conv+=pN(r['Conversions'])});
   var sources=Object.keys(sourceMap).sort(function(a,b){return sourceMap[b].sessions-sourceMap[a].sessions});
   var topSources=sources.slice(0,6);
   var srcColors=['rgba(74,155,110,.7)','rgba(244,152,121,.7)','rgba(0,132,255,.7)','rgba(124,107,181,.7)','rgba(255,0,79,.7)','rgba(245,158,11,.7)'];
@@ -1017,8 +1010,7 @@ function renderGA4(){
       +'<td style="font-weight:600;'+bounceColor+'">'+fmtP(avgB)+'</td>'
       +'<td>'+avgD+'s</td>'
       +'<td style="color:var(--text)">'+fmt(d.views)+'</td>'
-      +'<td>'+fmt(d.eventCount)+'</td>'
-      +'<td style="font-weight:600;color:var(--green2)">'+fmt(d.keyEvents)+'</td></tr>'
+      +'<td style="font-weight:600;color:var(--green2)">'+fmt(d.conv)+'</td></tr>'
   }).join('');
 
   // Daily table — colorized
@@ -1038,9 +1030,8 @@ function renderGA4(){
       +'<td style="font-weight:600;'+engColor+'">'+fmtP(avgE)+'</td>'
       +'<td style="'+durColor+'">'+avgD+'s</td>'
       +'<td>'+fmt(dd.views)+'</td>'
-      +'<td>'+fmt(dd.eventCount)+'</td>'
-      +'<td style="font-weight:600;color:var(--green2)">'+fmt(dd.keyEvents)+'</td>'
-      +'<td style="font-weight:500;color:var(--purple2)">'+fmtP(dd.users>0?(dd.keyEvents/dd.users*100):0)+'</td></tr>'
+      +'<td style="font-weight:600;color:var(--green2)">'+fmt(dd.conversions)+'</td>'
+      +'<td style="font-weight:500;color:var(--purple2)">'+fmtP(cr)+'</td></tr>'
   }).join('');
 }
 
