@@ -1,0 +1,19 @@
+{
+  "rewrites": [
+    { "source": "/avignon-nord", "destination": "/boutique.html?b=avignon-nord" },
+    { "source": "/avignon-sud", "destination": "/boutique.html?b=avignon-sud" },
+    { "source": "/biganos", "destination": "/boutique.html?b=biganos" },
+    { "source": "/chambery", "destination": "/boutique.html?b=chambery" },
+    { "source": "/aubiere", "destination": "/boutique.html?b=aubiere" },
+    { "source": "/grenoble", "destination": "/boutique.html?b=grenoble" },
+    { "source": "/jacou", "destination": "/boutique.html?b=jacou" },
+    { "source": "/lyon", "destination": "/boutique.html?b=lyon" },
+    { "source": "/montelimar", "destination": "/boutique.html?b=montelimar" },
+    { "source": "/nimes", "destination": "/boutique.html?b=nimes" },
+    { "source": "/sainte-eulalie", "destination": "/boutique.html?b=sainte-eulalie" },
+    { "source": "/tignieu", "destination": "/boutique.html?b=tignieu" },
+    { "source": "/valence", "destination": "/boutique.html?b=valence" },
+    { "source": "/salaise", "destination": "/boutique.html?b=salaise" },
+    { "source": "/villefranche", "destination": "/boutique.html?b=villefranche" }
+  ]
+}
