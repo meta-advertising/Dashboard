@@ -509,6 +509,15 @@ tbody tr:hover{background:rgba(244,152,121,.03)}
       <div class="table-card"><h3>DÉTAIL PAR PLATEFORME</h3>
         <table id="overview-table"><thead><tr><th>Plateforme</th><th>Dépenses</th><th>Impressions</th><th>Clics</th><th>CTR</th><th>CPC</th><th>Leads</th><th>CPL</th></tr></thead><tbody></tbody></table>
       </div>
+      <div class="table-card"><h3>TABLEAU DÉTAILLÉ JOURNALIER</h3>
+        <table id="overview-daily-table"><thead><tr>
+          <th>Date</th>
+          <th style="color:var(--meta)">Meta €</th><th style="color:var(--google)">Google €</th><th style="color:var(--tiktok)">TikTok €</th><th>Total €</th>
+          <th style="color:var(--meta)">Leads Meta</th><th style="color:var(--google)">Leads Google</th><th style="color:var(--tiktok)">Leads TikTok</th><th>Total Leads</th>
+          <th style="color:var(--meta)">CPL Meta</th><th style="color:var(--google)">CPL Google</th><th style="color:var(--tiktok)">CPL TikTok</th><th>CPL Global</th>
+          <th style="color:var(--green2)">Leads cumulés</th>
+        </tr></thead><tbody></tbody></table>
+      </div>
     </div>
 
     <!-- META -->
@@ -754,6 +763,35 @@ function renderOverview(){
   document.querySelector('#overview-table tbody').innerHTML=plat.map(function(p){
     var ctr=p.i>0?(p.c/p.i*100):0,cpc=p.c>0?p.s/p.c:0,cpl=p.l>0?p.s/p.l:0;
     return '<tr><td><span class="badge '+p.b+'">'+p.n+'</span></td><td>'+fmtE(p.s)+'</td><td>'+fmt(p.i)+'</td><td>'+fmt(p.c)+'</td><td>'+fmtP(ctr)+'</td><td>'+fmtE(cpc)+'</td><td>'+fmt(p.l)+'</td><td>'+fmtE(cpl)+'</td></tr>'}).join('');
+
+  // Tableau détaillé journalier
+  var dd={};
+  meta.forEach(function(r){var d=r['Date'];if(!d)return;if(!dd[d])dd[d]={mS:0,gS:0,tS:0,mL:0,gL:0,tL:0};dd[d].mS+=pN(r['Coût (EUR)']);dd[d].mL+=pN(r['Prospects sur Facebook'])+pN(r['Conversions de site web'])});
+  google.forEach(function(r){var d=r['Date'];if(!d)return;if(!dd[d])dd[d]={mS:0,gS:0,tS:0,mL:0,gL:0,tL:0};dd[d].gS+=pN(r['Coût (EUR)']);dd[d].gL+=pN(r['Conversions'])});
+  tiktok.forEach(function(r){var d=r['Date'];if(!d)return;if(!dd[d])dd[d]={mS:0,gS:0,tS:0,mL:0,gL:0,tL:0};dd[d].tS+=pN(r['Cost (EUR)']);dd[d].tL+=pN(r['Conversions'])});
+  var allDates=Object.keys(dd).sort();
+  var cumLeads=0;
+  document.querySelector('#overview-daily-table tbody').innerHTML=allDates.map(function(d){
+    var r=dd[d],totS=r.mS+r.gS+r.tS,totL=r.mL+r.gL+r.tL;
+    cumLeads+=totL;
+    var cplM=r.mL>0?r.mS/r.mL:0,cplG=r.gL>0?r.gS/r.gL:0,cplT=r.tL>0?r.tS/r.tL:0,cplTot=totL>0?totS/totL:0;
+    return '<tr><td>'+shortDate(d)+'</td>'
+      +'<td style="color:var(--meta)">'+fmtE(r.mS)+'</td><td style="color:var(--google)">'+fmtE(r.gS)+'</td><td style="color:var(--tiktok)">'+fmtE(r.tS)+'</td><td style="font-weight:700">'+fmtE(totS)+'</td>'
+      +'<td style="color:var(--meta);font-weight:600">'+fmt(r.mL)+'</td><td style="color:var(--google);font-weight:600">'+fmt(r.gL)+'</td><td style="color:var(--tiktok);font-weight:600">'+fmt(r.tL)+'</td><td style="font-weight:700">'+fmt(totL)+'</td>'
+      +'<td style="color:var(--meta)">'+(cplM>0?fmtE(cplM):'—')+'</td><td style="color:var(--google)">'+(cplG>0?fmtE(cplG):'—')+'</td><td style="color:var(--tiktok)">'+(cplT>0?fmtE(cplT):'—')+'</td><td style="font-weight:600">'+(cplTot>0?fmtE(cplTot):'—')+'</td>'
+      +'<td style="font-weight:700;color:var(--green2)">'+fmt(cumLeads)+'</td></tr>'
+  }).join('')
+  // Ligne total
+  + (function(){
+    var tMS=0,tGS=0,tTS=0,tML=0,tGL=0,tTL=0;
+    allDates.forEach(function(d){var r=dd[d];tMS+=r.mS;tGS+=r.gS;tTS+=r.tS;tML+=r.mL;tGL+=r.gL;tTL+=r.tL});
+    var tot=tMS+tGS+tTS,totL=tML+tGL+tTL;
+    return '<tr style="border-top:2px solid var(--coral);background:rgba(244,152,121,.04)"><td style="font-weight:700;font-family:var(--font-display);letter-spacing:.05em">TOTAL</td>'
+      +'<td style="color:var(--meta);font-weight:700">'+fmtE(tMS)+'</td><td style="color:var(--google);font-weight:700">'+fmtE(tGS)+'</td><td style="color:var(--tiktok);font-weight:700">'+fmtE(tTS)+'</td><td style="font-weight:700">'+fmtE(tot)+'</td>'
+      +'<td style="color:var(--meta);font-weight:700">'+fmt(tML)+'</td><td style="color:var(--google);font-weight:700">'+fmt(tGL)+'</td><td style="color:var(--tiktok);font-weight:700">'+fmt(tTL)+'</td><td style="font-weight:700">'+fmt(totL)+'</td>'
+      +'<td style="color:var(--meta);font-weight:700">'+(tML>0?fmtE(tMS/tML):'—')+'</td><td style="color:var(--google);font-weight:700">'+(tGL>0?fmtE(tGS/tGL):'—')+'</td><td style="color:var(--tiktok);font-weight:700">'+(tTL>0?fmtE(tTS/tTL):'—')+'</td><td style="font-weight:700">'+(totL>0?fmtE(tot/totL):'—')+'</td>'
+      +'<td style="font-weight:700;color:var(--green2)">'+fmt(totL)+'</td></tr>'
+  })();
 }
 
 function renderMeta(){
