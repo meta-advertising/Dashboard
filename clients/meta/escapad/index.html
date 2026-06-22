@@ -418,6 +418,19 @@ tbody tr:hover{background:rgba(244,152,121,.03)}
       </div>
     </div>
 
+    <!-- Tableau journalier — carte full width -->
+    <div class="portal-nav" style="grid-template-columns:1fr;max-width:900px;margin-top:14px;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) 1.05s backwards">
+      <div class="portal-nav-card" onclick="enterDashboard('daily-detail')" style="display:flex;align-items:center;gap:20px;text-align:left;padding:20px 28px;border-color:rgba(255,192,158,.12)">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--coral-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--coral2)" stroke-width="1.5"><path d="M3 10h18M3 14h18M3 18h18M3 6h18"/></svg>
+        </div>
+        <div style="flex:1">
+          <div class="portal-nav-title" style="font-size:1rem">TABLEAU JOURNALIER</div>
+          <div class="portal-nav-sub">Spend · Leads · CPL par jour et par canal — Meta · Google · TikTok</div>
+        </div>
+      </div>
+    </div>
+
     <!-- Analytics — carte full width -->
     <div class="portal-nav" style="grid-template-columns:1fr;max-width:900px;margin-top:14px;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) 1.1s backwards">
       <div class="portal-nav-card" onclick="enterDashboard('ga4')" style="display:flex;align-items:center;gap:20px;text-align:left;padding:20px 28px;border-color:rgba(74,155,110,.12)">
@@ -472,6 +485,7 @@ tbody tr:hover{background:rgba(244,152,121,.03)}
     </ul>
     <div class="sidebar-section">Rapports</div>
     <ul class="sidebar-nav">
+      <li><a href="#" data-page="daily-detail"><div class="dot" style="background:var(--coral2)"></div>Tableau journalier</a></li>
       <li><a href="#" data-page="engagement"><div class="dot" style="background:var(--purple2)"></div>Engagement Social</a></li>
     </ul>
     <div class="sidebar-dates">
@@ -508,15 +522,6 @@ tbody tr:hover{background:rgba(244,152,121,.03)}
       </div>
       <div class="table-card"><h3>DÉTAIL PAR PLATEFORME</h3>
         <table id="overview-table"><thead><tr><th>Plateforme</th><th>Dépenses</th><th>Impressions</th><th>Clics</th><th>CTR</th><th>CPC</th><th>Leads</th><th>CPL</th></tr></thead><tbody></tbody></table>
-      </div>
-      <div class="table-card"><h3>TABLEAU DÉTAILLÉ JOURNALIER</h3>
-        <table id="overview-daily-table"><thead><tr>
-          <th>Date</th>
-          <th style="color:var(--meta)">Meta €</th><th style="color:var(--google)">Google €</th><th style="color:var(--tiktok)">TikTok €</th><th>Total €</th>
-          <th style="color:var(--meta)">Leads Meta</th><th style="color:var(--google)">Leads Google</th><th style="color:var(--tiktok)">Leads TikTok</th><th>Total Leads</th>
-          <th style="color:var(--meta)">CPL Meta</th><th style="color:var(--google)">CPL Google</th><th style="color:var(--tiktok)">CPL TikTok</th><th>CPL Global</th>
-          <th style="color:var(--green2)">Leads cumulés</th>
-        </tr></thead><tbody></tbody></table>
       </div>
     </div>
 
@@ -599,6 +604,23 @@ tbody tr:hover{background:rgba(244,152,121,.03)}
       <div class="page-header"><h2>ENGAGEMENT SOCIAL</h2><p>Répartition de l'engagement sur toutes les plateformes</p></div>
       <div class="eng-grid" id="engagement-grid"></div>
       <div class="chart-row full" style="margin-top:28px"><div class="chart-card"><h3>ENGAGEMENT PAR PLATEFORME</h3><canvas id="eng-platform-chart"></canvas></div></div>
+    </div>
+
+    <!-- DAILY DETAIL -->
+    <div class="page" id="page-daily-detail">
+      <div class="page-header"><h2>TABLEAU JOURNALIER <span class="badge" style="background:var(--coral-glow);color:var(--coral)">Détail par canal</span></h2><p>Dépenses · Leads · CPL — par jour et par source (Meta · Google · TikTok)</p></div>
+      <div class="kpi-grid" id="daily-detail-kpis"></div>
+      <div class="table-card" style="overflow-x:auto">
+        <table id="daily-detail-table"><thead><tr>
+          <th>Date</th>
+          <th style="color:var(--meta)">Meta €</th><th style="color:var(--google)">Google €</th><th style="color:var(--tiktok)">TikTok €</th><th>Total €</th>
+          <th style="color:var(--meta)">Leads Meta</th><th style="color:var(--google)">Leads Google</th><th style="color:var(--tiktok)">Leads TikTok</th><th>Total Leads</th>
+          <th style="color:var(--meta)">CPL Meta</th><th style="color:var(--google)">CPL Google</th><th style="color:var(--tiktok)">CPL TikTok</th><th>CPL Global</th>
+          <th style="color:var(--green2)">Leads cumulés</th>
+        </tr></thead><tbody></tbody></table>
+      </div>
+      <div class="chart-row full"><div class="chart-card"><h3>LEADS CUMULÉS PAR JOUR</h3><canvas id="daily-cumul-chart"></canvas></div></div>
+      <div class="chart-row full"><div class="chart-card"><h3>DÉPENSES PAR CANAL / JOUR</h3><canvas id="daily-spend-chart"></canvas></div></div>
     </div>
 
   </div>
@@ -715,7 +737,7 @@ var IC={
 };
 
 /* ═══ RENDER ALL ═══ */
-function renderAll(){renderOverview();renderMeta();renderGoogle();renderTikTok();renderGA4();renderEngagement()}
+function renderAll(){renderOverview();renderMeta();renderGoogle();renderTikTok();renderGA4();renderEngagement();renderDailyDetail()}
 
 function renderOverview(){
   var meta=filterByDate(DATA.meta,'Date'),google=filterByDate(DATA.google,'Date'),tiktok=filterByDate(DATA.tiktok,'Date');
@@ -764,34 +786,6 @@ function renderOverview(){
     var ctr=p.i>0?(p.c/p.i*100):0,cpc=p.c>0?p.s/p.c:0,cpl=p.l>0?p.s/p.l:0;
     return '<tr><td><span class="badge '+p.b+'">'+p.n+'</span></td><td>'+fmtE(p.s)+'</td><td>'+fmt(p.i)+'</td><td>'+fmt(p.c)+'</td><td>'+fmtP(ctr)+'</td><td>'+fmtE(cpc)+'</td><td>'+fmt(p.l)+'</td><td>'+fmtE(cpl)+'</td></tr>'}).join('');
 
-  // Tableau détaillé journalier
-  var dd={};
-  meta.forEach(function(r){var d=r['Date'];if(!d)return;if(!dd[d])dd[d]={mS:0,gS:0,tS:0,mL:0,gL:0,tL:0};dd[d].mS+=pN(r['Coût (EUR)']);dd[d].mL+=pN(r['Prospects sur Facebook'])+pN(r['Conversions de site web'])});
-  google.forEach(function(r){var d=r['Date'];if(!d)return;if(!dd[d])dd[d]={mS:0,gS:0,tS:0,mL:0,gL:0,tL:0};dd[d].gS+=pN(r['Coût (EUR)']);dd[d].gL+=pN(r['Conversions'])});
-  tiktok.forEach(function(r){var d=r['Date'];if(!d)return;if(!dd[d])dd[d]={mS:0,gS:0,tS:0,mL:0,gL:0,tL:0};dd[d].tS+=pN(r['Cost (EUR)']);dd[d].tL+=pN(r['Conversions'])});
-  var allDates=Object.keys(dd).sort();
-  var cumLeads=0;
-  document.querySelector('#overview-daily-table tbody').innerHTML=allDates.map(function(d){
-    var r=dd[d],totS=r.mS+r.gS+r.tS,totL=r.mL+r.gL+r.tL;
-    cumLeads+=totL;
-    var cplM=r.mL>0?r.mS/r.mL:0,cplG=r.gL>0?r.gS/r.gL:0,cplT=r.tL>0?r.tS/r.tL:0,cplTot=totL>0?totS/totL:0;
-    return '<tr><td>'+shortDate(d)+'</td>'
-      +'<td style="color:var(--meta)">'+fmtE(r.mS)+'</td><td style="color:var(--google)">'+fmtE(r.gS)+'</td><td style="color:var(--tiktok)">'+fmtE(r.tS)+'</td><td style="font-weight:700">'+fmtE(totS)+'</td>'
-      +'<td style="color:var(--meta);font-weight:600">'+fmt(r.mL)+'</td><td style="color:var(--google);font-weight:600">'+fmt(r.gL)+'</td><td style="color:var(--tiktok);font-weight:600">'+fmt(r.tL)+'</td><td style="font-weight:700">'+fmt(totL)+'</td>'
-      +'<td style="color:var(--meta)">'+(cplM>0?fmtE(cplM):'—')+'</td><td style="color:var(--google)">'+(cplG>0?fmtE(cplG):'—')+'</td><td style="color:var(--tiktok)">'+(cplT>0?fmtE(cplT):'—')+'</td><td style="font-weight:600">'+(cplTot>0?fmtE(cplTot):'—')+'</td>'
-      +'<td style="font-weight:700;color:var(--green2)">'+fmt(cumLeads)+'</td></tr>'
-  }).join('')
-  // Ligne total
-  + (function(){
-    var tMS=0,tGS=0,tTS=0,tML=0,tGL=0,tTL=0;
-    allDates.forEach(function(d){var r=dd[d];tMS+=r.mS;tGS+=r.gS;tTS+=r.tS;tML+=r.mL;tGL+=r.gL;tTL+=r.tL});
-    var tot=tMS+tGS+tTS,totL=tML+tGL+tTL;
-    return '<tr style="border-top:2px solid var(--coral);background:rgba(244,152,121,.04)"><td style="font-weight:700;font-family:var(--font-display);letter-spacing:.05em">TOTAL</td>'
-      +'<td style="color:var(--meta);font-weight:700">'+fmtE(tMS)+'</td><td style="color:var(--google);font-weight:700">'+fmtE(tGS)+'</td><td style="color:var(--tiktok);font-weight:700">'+fmtE(tTS)+'</td><td style="font-weight:700">'+fmtE(tot)+'</td>'
-      +'<td style="color:var(--meta);font-weight:700">'+fmt(tML)+'</td><td style="color:var(--google);font-weight:700">'+fmt(tGL)+'</td><td style="color:var(--tiktok);font-weight:700">'+fmt(tTL)+'</td><td style="font-weight:700">'+fmt(totL)+'</td>'
-      +'<td style="color:var(--meta);font-weight:700">'+(tML>0?fmtE(tMS/tML):'—')+'</td><td style="color:var(--google);font-weight:700">'+(tGL>0?fmtE(tGS/tGL):'—')+'</td><td style="color:var(--tiktok);font-weight:700">'+(tTL>0?fmtE(tTS/tTL):'—')+'</td><td style="font-weight:700">'+(totL>0?fmtE(tot/totL):'—')+'</td>'
-      +'<td style="font-weight:700;color:var(--green2)">'+fmt(totL)+'</td></tr>'
-  })();
 }
 
 function renderMeta(){
@@ -1071,6 +1065,57 @@ function renderGA4(){
       +'<td style="font-weight:600;color:var(--green2)">'+fmt(dd.conversions)+'</td>'
       +'<td style="font-weight:500;color:var(--purple2)">'+fmtP(cr)+'</td></tr>'
   }).join('');
+}
+
+function renderDailyDetail(){
+  var meta=filterByDate(DATA.meta,'Date'),google=filterByDate(DATA.google,'Date'),tiktok=filterByDate(DATA.tiktok,'Date');
+  var dd={};
+  meta.forEach(function(r){var d=r['Date'];if(!d)return;if(!dd[d])dd[d]={mS:0,gS:0,tS:0,mL:0,gL:0,tL:0};dd[d].mS+=pN(r['Coût (EUR)']);dd[d].mL+=pN(r['Prospects sur Facebook'])+pN(r['Conversions de site web'])});
+  google.forEach(function(r){var d=r['Date'];if(!d)return;if(!dd[d])dd[d]={mS:0,gS:0,tS:0,mL:0,gL:0,tL:0};dd[d].gS+=pN(r['Coût (EUR)']);dd[d].gL+=pN(r['Conversions'])});
+  tiktok.forEach(function(r){var d=r['Date'];if(!d)return;if(!dd[d])dd[d]={mS:0,gS:0,tS:0,mL:0,gL:0,tL:0};dd[d].tS+=pN(r['Cost (EUR)']);dd[d].tL+=pN(r['Conversions'])});
+  var allDates=Object.keys(dd).sort();
+
+  // KPIs résumé
+  var tMS=0,tGS=0,tTS=0,tML=0,tGL=0,tTL=0;
+  allDates.forEach(function(d){var r=dd[d];tMS+=r.mS;tGS+=r.gS;tTS+=r.tS;tML+=r.mL;tGL+=r.gL;tTL+=r.tL});
+  var totSpend=tMS+tGS+tTS,totLeads=tML+tGL+tTL,avgCPL=totLeads>0?totSpend/totLeads:0;
+  document.getElementById('daily-detail-kpis').innerHTML=[
+    kpiHTML(IC.spend,fmtE(totSpend),'Dépenses totales','var(--coral-glow)',0),
+    kpiHTML(IC.lead,fmt(totLeads),'Leads totaux','var(--green-glow)',60),
+    kpiHTML(IC.cpl,fmtE(avgCPL),'CPL global','var(--green-glow)',120),
+    kpiHTML(IC.bar,allDates.length+'j','Jours actifs','var(--purple-glow)',180)
+  ].join('');
+
+  // Tableau
+  var cumLeads=0;
+  document.querySelector('#daily-detail-table tbody').innerHTML=allDates.map(function(d){
+    var r=dd[d],totS=r.mS+r.gS+r.tS,totL=r.mL+r.gL+r.tL;
+    cumLeads+=totL;
+    var cplM=r.mL>0?r.mS/r.mL:0,cplG=r.gL>0?r.gS/r.gL:0,cplT=r.tL>0?r.tS/r.tL:0,cplTot=totL>0?totS/totL:0;
+    return '<tr><td>'+shortDate(d)+'</td>'
+      +'<td style="color:var(--meta)">'+fmtE(r.mS)+'</td><td style="color:var(--google)">'+fmtE(r.gS)+'</td><td style="color:var(--tiktok)">'+fmtE(r.tS)+'</td><td style="font-weight:700">'+fmtE(totS)+'</td>'
+      +'<td style="color:var(--meta);font-weight:600">'+fmt(r.mL)+'</td><td style="color:var(--google);font-weight:600">'+fmt(r.gL)+'</td><td style="color:var(--tiktok);font-weight:600">'+fmt(r.tL)+'</td><td style="font-weight:700">'+fmt(totL)+'</td>'
+      +'<td style="color:var(--meta)">'+(cplM>0?fmtE(cplM):'—')+'</td><td style="color:var(--google)">'+(cplG>0?fmtE(cplG):'—')+'</td><td style="color:var(--tiktok)">'+(cplT>0?fmtE(cplT):'—')+'</td><td style="font-weight:600">'+(cplTot>0?fmtE(cplTot):'—')+'</td>'
+      +'<td style="font-weight:700;color:var(--green2)">'+fmt(cumLeads)+'</td></tr>'
+  }).join('')
+  +'<tr style="border-top:2px solid var(--coral);background:rgba(244,152,121,.04)"><td style="font-weight:700;font-family:var(--font-display);letter-spacing:.05em">TOTAL</td>'
+    +'<td style="color:var(--meta);font-weight:700">'+fmtE(tMS)+'</td><td style="color:var(--google);font-weight:700">'+fmtE(tGS)+'</td><td style="color:var(--tiktok);font-weight:700">'+fmtE(tTS)+'</td><td style="font-weight:700">'+fmtE(totSpend)+'</td>'
+    +'<td style="color:var(--meta);font-weight:700">'+fmt(tML)+'</td><td style="color:var(--google);font-weight:700">'+fmt(tGL)+'</td><td style="color:var(--tiktok);font-weight:700">'+fmt(tTL)+'</td><td style="font-weight:700">'+fmt(totLeads)+'</td>'
+    +'<td style="color:var(--meta);font-weight:700">'+(tML>0?fmtE(tMS/tML):'—')+'</td><td style="color:var(--google);font-weight:700">'+(tGL>0?fmtE(tGS/tGL):'—')+'</td><td style="color:var(--tiktok);font-weight:700">'+(tTL>0?fmtE(tTS/tTL):'—')+'</td><td style="font-weight:700">'+(totLeads>0?fmtE(totSpend/totLeads):'—')+'</td>'
+    +'<td style="font-weight:700;color:var(--green2)">'+fmt(totLeads)+'</td></tr>';
+
+  // Chart leads cumulés
+  var cum=0;
+  makeChart('daily-cumul-chart',{type:'line',data:{labels:allDates.map(shortDate),datasets:[
+    {label:'Leads cumulés',data:allDates.map(function(d){cum+=dd[d].mL+dd[d].gL+dd[d].tL;return cum}),borderColor:'#4a9b6e',backgroundColor:'rgba(74,155,110,.12)',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#4a9b6e',borderWidth:2.5}
+  ]},options:{responsive:true,plugins:{legend:{display:false}}}});
+
+  // Chart dépenses stacked par canal
+  makeChart('daily-spend-chart',{type:'bar',data:{labels:allDates.map(shortDate),datasets:[
+    {label:'Meta',data:allDates.map(function(d){return dd[d].mS}),backgroundColor:'rgba(0,132,255,.6)',borderRadius:4},
+    {label:'Google',data:allDates.map(function(d){return dd[d].gS}),backgroundColor:'rgba(52,168,83,.6)',borderRadius:4},
+    {label:'TikTok',data:allDates.map(function(d){return dd[d].tS}),backgroundColor:'rgba(255,0,79,.6)',borderRadius:4}
+  ]},options:{responsive:true,scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:function(v){return v+'€'}}}},plugins:{legend:{position:'bottom'}}}});
 }
 
 function renderEngagement(){
