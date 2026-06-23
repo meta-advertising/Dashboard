@@ -538,7 +538,7 @@ tbody tr:hover{background:rgba(244,152,121,.03)}
         <div class="chart-card"><h3>ENGAGEMENT PAR JOUR</h3><canvas id="meta-eng-chart"></canvas></div>
       </div>
       <div class="table-card"><h3>DONNÉES JOURNALIÈRES</h3>
-        <table id="meta-table"><thead><tr><th>Date</th><th>Campagne</th><th>Dépenses</th><th>Impressions</th><th>Clics</th><th>CTR</th><th>Conv. Site</th><th>CPA Site</th><th>Leads FB Form</th><th>CPL FB</th><th>Total Leads</th></tr></thead><tbody></tbody></table>
+        <table id="meta-table"><thead><tr><th>Date</th><th>Dépenses</th><th>Impressions</th><th>Clics</th><th>CTR</th><th>Conv. Site</th><th>CPA Site</th><th>Leads FB Form</th><th>CPL FB</th><th>Total Leads</th></tr></thead><tbody></tbody></table>
       </div>
     </div>
 
@@ -820,30 +820,39 @@ function renderMeta(){
     kpiHTML(IC.cpl,fmtE(cpl),'CPL moyen','var(--green-glow)',420)
   ].join('');
 
-  var dates=rows.map(function(r){return r['Date']});
+  // Agrégation par date (fusion des campagnes)
+  var dayMap={};
+  rows.forEach(function(r){
+    var d=r['Date'];if(!d)return;
+    if(!dayMap[d])dayMap[d]={spend:0,imp:0,clicks:0,convSite:0,leadsFB:0,reac:0,comm:0,share:0,save:0};
+    dayMap[d].spend+=pN(r['Coût (EUR)']);dayMap[d].imp+=pN(r['Impressions']);dayMap[d].clicks+=pN(r['Clics (tous)']);
+    dayMap[d].convSite+=pN(r['Conversions de site web']);dayMap[d].leadsFB+=pN(r['Prospects sur Facebook']);
+    dayMap[d].reac+=pN(r['Réactions aux publications']);dayMap[d].comm+=pN(r['Commentaires sur les publications']);
+    dayMap[d].share+=pN(r['Partages de publications']);dayMap[d].save+=pN(r['Enregistrements de publications']);
+  });
+  var dates=Object.keys(dayMap).sort();
+
   makeChart('meta-daily-chart',{type:'line',data:{labels:dates.map(shortDate),datasets:[
-    {label:'Dépenses (€)',data:rows.map(function(r){return pN(r['Coût (EUR)'])}),borderColor:'#0084FF',backgroundColor:'rgba(0,132,255,.08)',fill:true,tension:.3,pointRadius:3,yAxisID:'y'},
-    {label:'Leads FB',data:rows.map(function(r){return pN(r['Prospects sur Facebook'])}),borderColor:'#4a9b6e',tension:.3,pointRadius:3,yAxisID:'y1'},
-    {label:'Conv. Site',data:rows.map(function(r){return pN(r['Conversions de site web'])}),borderColor:'#f59e0b',tension:.3,pointRadius:3,yAxisID:'y1'}
+    {label:'Dépenses (€)',data:dates.map(function(d){return dayMap[d].spend}),borderColor:'#0084FF',backgroundColor:'rgba(0,132,255,.08)',fill:true,tension:.3,pointRadius:3,yAxisID:'y'},
+    {label:'Leads FB',data:dates.map(function(d){return dayMap[d].leadsFB}),borderColor:'#4a9b6e',tension:.3,pointRadius:3,yAxisID:'y1'},
+    {label:'Conv. Site',data:dates.map(function(d){return dayMap[d].convSite}),borderColor:'#f59e0b',tension:.3,pointRadius:3,yAxisID:'y1'}
   ]},options:{responsive:true,interaction:{mode:'index',intersect:false},scales:{y:{position:'left',ticks:{callback:function(v){return v+'€'}}},y1:{position:'right',grid:{display:false}}}}});
 
   makeChart('meta-cpl-chart',{type:'bar',data:{labels:dates.map(shortDate),datasets:[
-    {label:'CPL FB',data:rows.map(function(r){var l=pN(r['Prospects sur Facebook']);return l>0?pN(r['Coût (EUR)'])/l:0}),backgroundColor:'rgba(0,132,255,.5)',borderRadius:6},
-    {label:'CPA Site',data:rows.map(function(r){var c=pN(r['Conversions de site web']);return c>0?pN(r['Coût (EUR)'])/c:0}),backgroundColor:'rgba(245,158,11,.5)',borderRadius:6}
+    {label:'CPL FB',data:dates.map(function(d){var r=dayMap[d];return r.leadsFB>0?r.spend/r.leadsFB:0}),backgroundColor:'rgba(0,132,255,.5)',borderRadius:6},
+    {label:'CPA Site',data:dates.map(function(d){var r=dayMap[d];return r.convSite>0?r.spend/r.convSite:0}),backgroundColor:'rgba(245,158,11,.5)',borderRadius:6}
   ]},options:{responsive:true,scales:{y:{ticks:{callback:function(v){return v+'€'}}}}}});
 
   makeChart('meta-eng-chart',{type:'bar',data:{labels:dates.map(shortDate),datasets:[
-    {label:'Réactions',data:rows.map(function(r){return pN(r['Réactions aux publications'])}),backgroundColor:'rgba(244,152,121,.5)',borderRadius:4},
-    {label:'Commentaires',data:rows.map(function(r){return pN(r['Commentaires sur les publications'])}),backgroundColor:'rgba(0,132,255,.5)',borderRadius:4},
-    {label:'Partages',data:rows.map(function(r){return pN(r['Partages de publications'])}),backgroundColor:'rgba(74,155,110,.5)',borderRadius:4},
-    {label:'Saves',data:rows.map(function(r){return pN(r['Enregistrements de publications'])}),backgroundColor:'rgba(124,107,181,.5)',borderRadius:4}
+    {label:'Réactions',data:dates.map(function(d){return dayMap[d].reac}),backgroundColor:'rgba(244,152,121,.5)',borderRadius:4},
+    {label:'Commentaires',data:dates.map(function(d){return dayMap[d].comm}),backgroundColor:'rgba(0,132,255,.5)',borderRadius:4},
+    {label:'Partages',data:dates.map(function(d){return dayMap[d].share}),backgroundColor:'rgba(74,155,110,.5)',borderRadius:4},
+    {label:'Saves',data:dates.map(function(d){return dayMap[d].save}),backgroundColor:'rgba(124,107,181,.5)',borderRadius:4}
   ]},options:{responsive:true,scales:{y:{stacked:true},x:{stacked:true}}}});
 
-  document.querySelector('#meta-table tbody').innerHTML=rows.map(function(r){
-    var s=pN(r['Coût (EUR)']),cs=pN(r['Conversions de site web']),lf=pN(r['Prospects sur Facebook']),total=cs+lf;
-    var cName=r['Nom de la campagne']||'';
-    var shortCamp=cName.length>40?cName.replace(/Escapad Paris-Est_/g,'').replace(/_/g,' ').substring(0,40)+'…':cName.replace(/Escapad Paris-Est_/g,'').replace(/_/g,' ');
-    return '<tr><td>'+shortDate(r['Date'])+'</td><td><span style="font-size:11px;color:var(--text2)">'+shortCamp+'</span></td><td>'+fmtE(s)+'</td><td>'+fmt(pN(r['Impressions']))+'</td><td>'+fmt(pN(r['Clics (tous)']))+'</td><td>'+pN(r['CTR (tous)']).toFixed(2)+'%</td><td style="font-weight:600;color:var(--coral)">'+fmt(cs)+'</td><td>'+(cs>0?fmtE(s/cs):'—')+'</td><td style="font-weight:600;color:var(--meta)">'+fmt(lf)+'</td><td>'+(lf>0?fmtE(s/lf):'—')+'</td><td style="font-weight:700">'+fmt(total)+'</td></tr>'}).join('');
+  document.querySelector('#meta-table tbody').innerHTML=dates.map(function(d){
+    var r=dayMap[d],total=r.convSite+r.leadsFB,ctrD=r.imp>0?(r.clicks/r.imp*100):0;
+    return '<tr><td>'+shortDate(d)+'</td><td>'+fmtE(r.spend)+'</td><td>'+fmt(r.imp)+'</td><td>'+fmt(r.clicks)+'</td><td>'+fmtP(ctrD)+'</td><td style="font-weight:600;color:var(--coral)">'+fmt(r.convSite)+'</td><td>'+(r.convSite>0?fmtE(r.spend/r.convSite):'—')+'</td><td style="font-weight:600;color:var(--meta)">'+fmt(r.leadsFB)+'</td><td>'+(r.leadsFB>0?fmtE(r.spend/r.leadsFB):'—')+'</td><td style="font-weight:700">'+fmt(total)+'</td></tr>'}).join('');
 
   // Campaign breakdown
   var campMap={};
