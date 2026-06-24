@@ -34,7 +34,6 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-.energy-orb,.speed-line,.db-star,.chakra-p,.app-kunai{will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 
 /* ═══ PORTAL ═══ */
 .portal{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity .7s,transform .7s}
@@ -47,11 +46,10 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 
 /* Energy field */
 .energy-field{position:absolute;inset:0;pointer-events:none}
-.energy-field{position:absolute;inset:0;pointer-events:none}
-.energy-orb{position:absolute;border-radius:50%}
-.orb-kamehameha{width:500px;height:500px;top:-150px;right:-100px;background:radial-gradient(circle,rgba(79,195,247,.08),transparent 70%);animation:orbFloat 15s ease-in-out infinite}
-.orb-rasengan{width:400px;height:400px;bottom:-100px;left:-50px;background:radial-gradient(circle,rgba(79,195,247,.06),transparent 70%);animation:orbFloat 18s ease-in-out infinite reverse}
-.orb-ki{width:450px;height:450px;top:40%;left:45%;background:radial-gradient(circle,rgba(255,107,0,.06),transparent 70%);animation:orbFloat 20s ease-in-out infinite}
+.energy-orb{position:absolute;border-radius:50%;filter:blur(100px)}
+.orb-kamehameha{width:500px;height:500px;top:-150px;right:-100px;background:rgba(79,195,247,.08);animation:orbFloat 15s ease-in-out infinite}
+.orb-rasengan{width:400px;height:400px;bottom:-100px;left:-50px;background:rgba(79,195,247,.06);animation:orbFloat 18s ease-in-out infinite reverse}
+.orb-ki{width:450px;height:450px;top:40%;left:45%;background:rgba(255,107,0,.06);animation:orbFloat 20s ease-in-out infinite}
 @keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-40px) scale(1.1)}66%{transform:translate(-20px,25px) scale(.93)}}
 
 /* Dragon ball stars */
@@ -369,28 +367,22 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .footer::after{content:'';position:absolute;bottom:50%;font-size:12px;width:40px;height:2px;background:linear-gradient(90deg,rgba(255,107,0,.15),transparent);animation:narutoRun 8s linear infinite;animation-delay:-.2s;opacity:.4;transform:translateY(50%)}
 @keyframes narutoRun{0%{left:-30px}100%{left:calc(100% + 30px)}}
 
+/* Speed lines — diagonal across whole page */
+.main::before{content:'';position:fixed;top:0;left:0;width:200%;height:200%;pointer-events:none;z-index:0;opacity:.015;
+  background:repeating-linear-gradient(-45deg,transparent,transparent 30px,rgba(255,107,0,.3) 30px,rgba(255,107,0,.3) 31px);
+  animation:speedLinesDiag 20s linear infinite}
+@keyframes speedLinesDiag{0%{transform:translate(0,0)}100%{transform:translate(-50%,-50%)}}
+
+/* Ambient energy pulses */
+.app-bg::after{content:'';position:fixed;top:50%;left:50%;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,107,0,.03) 0%,transparent 70%);
+  transform:translate(-50%,-50%);pointer-events:none;
+  animation:ambientPulse 6s ease-in-out infinite}
+@keyframes ambientPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.5}50%{transform:translate(-50%,-50%) scale(1.4);opacity:1}}
 
 /* Grid entrance — stagger with bounce */
 .clients-grid .client-card{animation:cardEntrance .6s cubic-bezier(.34,1.56,.64,1) both}
 @keyframes cardEntrance{0%{opacity:0;transform:translateY(40px) scale(.9)}100%{opacity:1;transform:translateY(0) scale(1)}}
-
-/* Counter animation on stat values */
-.stat-val{transition:all .3s}
-
-/* Card entrance stagger */
-.client-card{opacity:0;transform:translateY(20px)}
-.client-card.visible{opacity:1;transform:translateY(0);transition:opacity .5s ease,transform .5s ease}
-
-/* Active dot pulse on sidebar */
-.sb-nav a.active .dot{animation:dotPulse 2s ease-in-out infinite}
-@keyframes dotPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,0,.3)}50%{box-shadow:0 0 0 4px rgba(255,107,0,.08)}}
-
-/* Search results highlight */
-.client-name mark{background:rgba(255,107,0,.15);color:var(--orange);padding:0 2px;border-radius:2px}
-
-/* Smooth page transitions */
-.app-wrapper.show .main{animation:mainIn .6s cubic-bezier(.22,1,.36,1)}
-@keyframes mainIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
 /* Animations */
 .animate-in{animation:fadeInUp .5s cubic-bezier(.25,.46,.45,.94) both}
@@ -491,6 +483,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 <div class="app-wrapper" id="app">
   <div class="app-bg"></div>
   <div id="appKunai"></div>
+  <div id="appSparkles" style="position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden"></div>
 
   <header class="header">
     <div class="header-left">
@@ -581,10 +574,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 
 /* ═══ Portal ═══ */
 function enterPortal(){
-  var p=document.getElementById('portal');
-  p.classList.add('hidden');
+  document.getElementById('portal').classList.add('hidden');
   setTimeout(function(){
-    p.style.display='none';
+    document.getElementById('portal').style.display='none';
     document.getElementById('app').classList.add('show');
   },600);
 }
@@ -671,17 +663,25 @@ const CLIENTS = [
     { id: 'olla', name: 'Olla', sector: 'Restauration healthy · Franchise', status: 'active', logo: 'https://static.wixstatic.com/media/5c7300_f92d9af83db0442cac12e7d8a2cb036c~mv2.png', logoBg: 'light', initials: null, color: '#1abc9c', links: [{ label: 'Dashboard Campagnes', type: 'dashboard', url: 'https://olla-dashboard.vercel.app/' }] },
     { id: 'ocargo', name: 'ÔCargo', sector: 'Food Court · Multi-villes', status: 'active', logo: 'https://www.ocargofoodcourt.com/wp-content/uploads/2024/12/300-min.png', initials: null, color: '#e67e22', links: [{ label: 'Dashboard Campagnes', type: 'dashboard', url: 'https://ocargo-dashboard.vercel.app/' }] },
     { id: 'sooner', name: 'Sooner', sector: 'Streaming VOD · SVOD/TVOD', status: 'active', logo: 'https://sooner-france.github.io/dashboard/sooner-logo-white.png', logoBg: 'dark', initials: null, color: '#6366f1', links: [{ label: 'Portail Sooner', type: 'dashboard', url: 'https://sooner-france.github.io/dashboard/' }] },
+    { id: 'impact-accelerator', name: 'Impact Accelerator', sector: 'Programme F&B · Quartiers populaires', status: 'active', logo: 'https://rejoindre.impact-accelerator.fr/wp-content/uploads/2025/08/LOGO_IMPACTACCELERATOR.png', logoBg: 'light', initials: null, color: '#f7b500', links: [{ label: 'Dashboard Marketing', type: 'dashboard', url: 'https://impact-accelerator.vercel.app/' }] },
     { id: 'franchise-board', name: 'Franchise Board', sector: 'Cabinet Conseil · Franchise', status: 'active', logo: 'https://www.franchise-board.fr/wp-content/uploads/2024/06/franchise-board-logo.svg', logoBg: 'light', initials: null, color: '#0ea5e9', links: [{ label: 'Dashboard Campagnes', type: 'dashboard', url: 'https://franchise-board.github.io/dashboard/' }] },
     { id: 'forum-des-images', name: 'Forum des Images', sector: 'Culture · Cinéma · Paris', status: 'active', logo: 'https://www.forumdesimages.fr/themes/custom/parasite/logo.svg', logoBg: 'light', initials: null, color: '#ec4899', links: [{ label: 'Dashboard Marketing', type: 'dashboard', url: 'https://forum-des-images-dashboard.vercel.app/' }] },
-    { id: 'mother-daughter', name: 'Mother & Daughter', sector: 'Bijoux de Créateurs · Franchise', status: 'active', logo: 'https://mother-daughter.fr/cdn/shop/files/LOGO-MD-Icone-Blanc.png?v=1688025827', logoBg: 'dark', initials: null, color: '#d66895', links: [{ label: 'Dashboard Marketing', type: 'dashboard', url: 'https://mother-daughter-dashboard.vercel.app/' }] },
-    { id: 'yujo-ramen', name: 'YUJO Ramen', sector: 'Restauration japonaise · Franchise', status: 'active', logo: 'https://www.yujoramen.com/media/images/logo.svg', initials: null, color: '#E8532E', links: [{ label: 'Dashboard LeadGen Franchise', type: 'dashboard', url: 'https://yujo-ramen.vercel.app/' }] }
+    { id: 'yujo-ramen', name: 'YUJO Ramen', sector: 'Restauration japonaise · Franchise', status: 'active', logo: 'https://www.yujoramen.com/media/images/logo.svg', initials: null, color: '#E8532E', links: [{ label: 'Dashboard LeadGen Franchise', type: 'dashboard', url: 'https://yujo-ramen.vercel.app/' }] },
+    {
+        id: 'everfruit', name: 'Everfruit Digital', sector: 'Agence Franchise · Rapports clients EVF', status: 'active',
+        logo: 'https://cdn.prod.website-files.com/65085826aaad7f0bca3ab725/650abd88b67689047249ec77_Everfruit%20fruits%201.svg', initials: null, color: '#34c759',
+        links: [
+            { label: 'Monceau Fleurs — Reporting EVF', type: 'report', section: 'Rapports clients', url: 'https://reporting-monceau.vercel.app/' },
+            { label: 'Bodyhit Saint-Lazare — Rapport de performance', type: 'report', section: 'Rapports clients', url: 'https://rapport-bodyhit.vercel.app/' }
+        ]
+    }
 ];
 
 /* Floating kunai in dashboard */
 (function(){
   var c=document.getElementById('appKunai');
-  var items=['🍥','🔥','⚡','🌀','💥','🎯'];
-  for(var i=0;i<6;i++){
+  var items=['🔪','⭐','🍥','💨','🔥','⚡','🌀','👊','💥','🎯'];
+  for(var i=0;i<15;i++){
     var k=document.createElement('div');k.className='app-kunai';
     k.textContent=items[Math.floor(Math.random()*items.length)];
     k.style.left=Math.random()*100+'%';
@@ -692,6 +692,28 @@ const CLIENTS = [
   }
 })();
 
+/* Energy sparkles */
+(function(){
+  var c=document.getElementById('appSparkles');if(!c)return;
+  var style=document.createElement('style');
+  style.textContent='.sparkle{position:absolute;width:3px;height:3px;border-radius:50%;pointer-events:none;animation:sparkleAnim linear infinite}@keyframes sparkleAnim{0%{opacity:0;transform:translate(0,0) scale(0)}20%{opacity:.6}50%{opacity:.8;transform:translate(var(--sx),var(--sy)) scale(1)}80%{opacity:.3}100%{opacity:0;transform:translate(calc(var(--sx)*2),calc(var(--sy)*2)) scale(0)}}';
+  document.head.appendChild(style);
+  var colors=['#FF6B00','#4FC3F7','#FF1744','#FFD600','#7C4DFF','#00E676'];
+  for(var i=0;i<30;i++){
+    var s=document.createElement('div');s.className='sparkle';
+    s.style.left=Math.random()*100+'%';
+    s.style.top=Math.random()*100+'%';
+    s.style.background=colors[Math.floor(Math.random()*colors.length)];
+    s.style.boxShadow='0 0 6px '+s.style.background;
+    s.style.setProperty('--sx',(Math.random()*60-30)+'px');
+    s.style.setProperty('--sy',(Math.random()*60-30)+'px');
+    s.style.animationDuration=(3+Math.random()*5)+'s';
+    s.style.animationDelay=(-Math.random()*8)+'s';
+    s.style.width=(2+Math.random()*3)+'px';
+    s.style.height=s.style.width;
+    c.appendChild(s);
+  }
+})();
 
 
 /* Clock */
@@ -760,36 +782,6 @@ document.getElementById('searchInput').addEventListener('input',function(){rende
 document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();document.getElementById('searchInput').focus()}if(e.key==='Escape'){document.getElementById('searchInput').value='';document.getElementById('searchInput').blur();renderClients()}});
 
 renderClients();
-
-/* Intersection Observer — cards appear on scroll */
-function observeCards(){
-  var cards=document.querySelectorAll('.client-card');
-  var obs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e,i){
-      if(e.isIntersecting){
-        setTimeout(function(){e.target.classList.add('visible')},i*60);
-        obs.unobserve(e.target);
-      }
-    });
-  },{threshold:.1});
-  cards.forEach(function(c){obs.observe(c)});
-}
-observeCards();
-
-/* Animated counter for stat values */
-function animateCounters(){
-  document.querySelectorAll('.stat-val').forEach(function(el){
-    var target=parseInt(el.textContent);
-    if(isNaN(target)||target===0)return;
-    var current=0;var step=Math.max(1,Math.ceil(target/30));
-    var interval=setInterval(function(){
-      current+=step;
-      if(current>=target){current=target;clearInterval(interval)}
-      el.textContent=current;
-    },30);
-  });
-}
-setTimeout(animateCounters,300);
 </script>
 </body>
 </html>
