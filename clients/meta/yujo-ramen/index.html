@@ -609,8 +609,9 @@ function normalizeRow(row){
 var out={};
 for(var k in row){
 if(!row.hasOwnProperty(k))continue;
-var nk=COLUMN_ALIASES[k]||k;
-out[nk]=row[k];
+out[k]=row[k];
+var nk=COLUMN_ALIASES[k];
+if(nk)out[nk]=row[k];
 }
 return out;
 }
