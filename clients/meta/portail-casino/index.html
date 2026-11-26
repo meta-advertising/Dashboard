@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Groupe Casino — Portail Enseignes Franchise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050708;--bg2:#0a0e10;--bg3:#10161a;
+  --text:#F0F2F5;--text2:#7A8A9A;--text3:#3E5060;
+  --border:rgba(255,255,255,.06);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
+  --ui:'Barlow',sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --casino-1:#006B37;--casino-2:#00A651;--casino-3:#D50C8B;
+  --spar-1:#157946;--spar-2:#EC1B24;
+  --vival-1:#00837B;--vival-2:#E4425D;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);overflow-x:hidden}
+
+/* GLOBAL LAYERS */
+canvas#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.ambient{position:fixed;inset:0;z-index:0;pointer-events:none;transition:background 1s ease}
+.ambient.casino{background:radial-gradient(ellipse at 50% 80%,rgba(0,107,55,.12),transparent 55%)}
+.ambient.spar{background:radial-gradient(ellipse at 50% 80%,rgba(236,27,36,.08),transparent 55%)}
+.ambient.vival{background:radial-gradient(ellipse at 50% 80%,rgba(0,131,123,.12),transparent 55%)}
+.ambient.none{background:none}
+.cursor-glow{position:fixed;width:400px;height:400px;border-radius:50%;pointer-events:none;z-index:0;transform:translate(-50%,-50%);filter:blur(100px);opacity:0;transition:background .6s,opacity .4s}
+.cursor-glow.casino{background:var(--casino-2);opacity:.07}
+.cursor-glow.spar{background:var(--spar-2);opacity:.06}
+.cursor-glow.vival{background:var(--vival-1);opacity:.07}
+
+/* FLOATING SHAPES */
+.float-shapes{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.float-shape{position:absolute;border:1.5px solid rgba(255,255,255,.05);animation:floatShape 12s ease-in-out infinite}
+.float-shape:nth-child(1){width:80px;height:80px;top:12%;left:6%;border-radius:16px;animation-duration:15s}
+.float-shape:nth-child(2){width:40px;height:40px;top:65%;left:4%;border-radius:50%;animation-duration:11s;animation-delay:2s;border-color:rgba(0,166,81,.08)}
+.float-shape:nth-child(3){width:60px;height:60px;top:20%;right:5%;border-radius:12px;animation-duration:17s;animation-delay:4s}
+.float-shape:nth-child(4){width:28px;height:28px;top:55%;right:8%;border-radius:50%;animation-duration:12s;animation-delay:1s;border-color:rgba(236,27,36,.07)}
+.float-shape:nth-child(5){width:65px;height:65px;top:78%;left:35%;border-radius:16px;animation-duration:19s;animation-delay:3s;border-color:rgba(0,131,123,.06)}
+.float-shape:nth-child(6){width:45px;height:45px;top:8%;right:25%;border-radius:50%;animation-duration:14s;animation-delay:5s;border-color:rgba(255,255,255,.04)}
+
+/* KEYFRAMES */
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes loaderBar{to{width:100%}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes arrowBounce{0%,100%{transform:translateY(0);opacity:.6}50%{transform:translateY(10px);opacity:1}}
+@keyframes arrowBurst{0%{transform:translateY(0) scale(1);opacity:.4}40%{transform:translateY(18px) scale(1.15);opacity:.8}60%{transform:translateY(24px) scale(.6);opacity:0}100%{transform:translateY(40px) scale(.3);opacity:0}}
+@keyframes arrowTrail{0%{transform:translateY(-8px);opacity:0}30%{opacity:.3}70%{opacity:.15}100%{transform:translateY(30px);opacity:0}}
+@keyframes shimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes dotOrbit1{to{transform:rotate(360deg)}}
+@keyframes dotOrbit2{to{transform:rotate(-360deg)}}
+@keyframes ringPulse{0%,100%{opacity:.05;transform:scale(1)}50%{opacity:.1;transform:scale(1.03)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes heroPulse{0%{opacity:.2;transform:translate(-50%,-50%) scale(.6)}100%{opacity:0;transform:translate(-50%,-50%) scale(2.8)}}
+@keyframes floatShape{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-35px) rotate(180deg)}}
+@keyframes spinBorder{to{transform:rotate(360deg)}}
+@keyframes sweepLight{0%{left:-40%}100%{left:130%}}
+@keyframes cardSlideUp{from{opacity:0;transform:translateY(80px)}to{opacity:1;transform:translateY(0)}}
+@keyframes glowPulse{0%,100%{opacity:.04;transform:translateX(-50%) scale(1)}50%{opacity:.1;transform:translateX(-50%) scale(1.05)}}
+@keyframes statPop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+
+/* LOADER */
+.loader{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);transition:opacity .8s var(--ease),visibility .8s}
+.loader.done{opacity:0;visibility:hidden;pointer-events:none}
+.loader-logo{height:40px;margin-bottom:24px;opacity:.5}
+.loader-bar-wrap{width:100px;height:2px;background:rgba(255,255,255,.04);border-radius:2px;overflow:hidden}
+.loader-bar{height:100%;width:0;background:linear-gradient(90deg,var(--casino-2),var(--spar-2),var(--vival-1));animation:loaderBar 1.8s var(--ease) forwards}
+
+/* PAGE */
+.page{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column}
+
+/* HERO */
+.hero{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(60px,10vh,100px) 24px clamp(32px,4vh,48px);position:relative;min-height:70vh}
+
+.hero-orbits{position:absolute;width:clamp(360px,55vw,600px);height:clamp(360px,55vw,600px);pointer-events:none;transition:transform .15s ease-out}
+.hero-orbit-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,255,255,.04);animation:ringPulse 5s ease infinite}
+.hero-orbit-ring:nth-child(2){inset:28px;animation-delay:1.7s;border-style:dashed;border-color:rgba(255,255,255,.03)}
+.hero-orbit-ring:nth-child(3){inset:56px;animation-delay:3.4s}
+.orbit-track{position:absolute;inset:0;animation:dotOrbit1 22s linear infinite}
+.orbit-track:nth-child(4){inset:28px;animation:dotOrbit2 18s linear infinite}
+.orbit-track:nth-child(5){inset:56px;animation:dotOrbit1 14s linear infinite}
+.orbit-track .odot{position:absolute;width:7px;height:7px;border-radius:50%;top:-3.5px;left:50%;transform:translateX(-50%)}
+.odot.c1{background:var(--casino-2);box-shadow:0 0 12px rgba(0,166,81,.6)}
+.odot.c2{background:var(--spar-2);box-shadow:0 0 12px rgba(236,27,36,.6)}
+.odot.c3{background:var(--vival-1);box-shadow:0 0 12px rgba(0,131,123,.6)}
+
+/* Hero pulse rings */
+.hero-pulse{position:absolute;top:50%;left:50%;width:300px;height:300px;border-radius:50%;border:1.5px solid rgba(255,255,255,.12);transform:translate(-50%,-50%) scale(.6);opacity:0;animation:heroPulse 3.5s ease-out infinite;pointer-events:none}
+.hero-pulse:nth-child(7){animation-delay:0s;border-color:rgba(0,166,81,.15)}
+.hero-pulse:nth-child(8){animation-delay:1.2s;border-color:rgba(236,27,36,.12)}
+.hero-pulse:nth-child(9){animation-delay:2.4s;border-color:rgba(0,131,123,.15)}
+
+.hero-logo{position:relative;z-index:2;height:clamp(90px,18vw,160px);margin-bottom:32px;animation:fadeUp .8s var(--ease) 2s backwards;filter:brightness(0) invert(1);opacity:.95;transition:transform .15s ease-out}
+.hero-overline{font-family:var(--ui);font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--text3);margin-bottom:16px;animation:fadeUp .8s var(--ease) 2.15s backwards}
+.hero h1{font-family:var(--serif);font-size:clamp(2rem,5vw,3.8rem);font-weight:900;line-height:1;letter-spacing:-.02em;animation:fadeUp .8s var(--ease) 2.3s backwards}
+.hero h1 em{font-style:italic;background:linear-gradient(135deg,var(--casino-2),var(--vival-1),var(--spar-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% 200%;animation:shimmer 5s ease infinite 3s}
+.hero-desc{font-size:15px;color:var(--text2);margin-top:16px;max-width:460px;line-height:1.7;animation:fadeUp .8s var(--ease) 2.5s backwards}
+.hero-scroll{margin-top:auto;padding-top:32px;display:flex;flex-direction:column;align-items:center;gap:8px;animation:fadeIn 1s var(--ease) 3s backwards;cursor:pointer}
+.hero-scroll span{font-family:var(--ui);font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--text3);transition:color .3s}
+.hero-scroll:hover span{color:var(--text2)}
+.hero-scroll-arrows{position:relative;width:24px;height:50px;display:flex;flex-direction:column;align-items:center}
+.hero-scroll-arrows svg{position:absolute;left:0;width:24px;height:24px;stroke:var(--text2);stroke-width:2;fill:none;opacity:.5}
+.hero-scroll-arrows svg:nth-child(1){top:0;animation:arrowBounce 2s ease-in-out infinite}
+.hero-scroll-arrows svg:nth-child(2){top:0;animation:arrowBurst 2s ease-out infinite;animation-delay:.3s}
+.hero-scroll-arrows svg:nth-child(3){top:0;animation:arrowBurst 2s ease-out infinite;animation-delay:.6s}
+.hero-scroll-trails{position:absolute;top:12px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.hero-scroll-trails span{display:block;width:2px;border-radius:1px;background:var(--text2);animation:arrowTrail 2s ease-out infinite}
+.hero-scroll-trails span:nth-child(1){height:8px;animation-delay:.35s}
+.hero-scroll-trails span:nth-child(2){height:5px;animation-delay:.5s}
+.hero-scroll-trails span:nth-child(3){height:3px;animation-delay:.65s}
+
+/* MARQUEE */
+.marquee-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 0}
+.marquee{display:flex;gap:56px;animation:marquee 22s linear infinite;width:max-content}
+.marquee-item{font-family:var(--ui);font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.06em;white-space:nowrap;display:flex;align-items:center;gap:10px}
+.marquee-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+
+/* ===================== CARDS ===================== */
+.cards-section{padding:clamp(48px,7vh,80px) clamp(24px,5vw,64px);max-width:1400px;width:100%;margin:0 auto}
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+
+/* Card wrapper — contains the spinning border */
+.card-wrap{position:relative;border-radius:24px;opacity:0;transform:translateY(80px)}
+.card-wrap.visible{animation:cardSlideUp .9s var(--ease) forwards}
+.card-wrap:nth-child(2).visible{animation-delay:.15s}
+.card-wrap:nth-child(3).visible{animation-delay:.3s}
+
+/* Spinning border glow — a real div that rotates */
+.card-border-spin{position:absolute;inset:-2px;border-radius:24px;overflow:hidden;opacity:0;transition:opacity .5s}
+.card-wrap:hover .card-border-spin{opacity:1}
+.card-border-spinner{position:absolute;inset:-50%;width:200%;height:200%;animation:spinBorder 3s linear infinite}
+.card-wrap.casino .card-border-spinner{background:conic-gradient(transparent 55%,var(--casino-2) 65%,var(--casino-3) 72%,transparent 82%)}
+.card-wrap.spar .card-border-spinner{background:conic-gradient(transparent 55%,var(--spar-1) 65%,var(--spar-2) 72%,transparent 82%)}
+.card-wrap.vival .card-border-spinner{background:conic-gradient(transparent 55%,var(--vival-1) 65%,var(--vival-2) 72%,transparent 82%)}
+
+/* Card body sits on top of spinning border */
+.brand-card{position:relative;z-index:2;border-radius:23px;overflow:hidden;background:var(--bg2);cursor:pointer;display:block;text-decoration:none;color:inherit;transition:box-shadow .5s var(--ease)}
+.card-wrap:hover .brand-card{box-shadow:0 40px 100px rgba(0,0,0,.5)}
+
+/* Sweep light */
+.card-sweep{position:absolute;inset:0;z-index:10;pointer-events:none;overflow:hidden}
+.card-sweep::after{content:'';position:absolute;top:-50%;left:-40%;width:30%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);transform:skewX(-20deg)}
+.card-wrap:hover .card-sweep::after{animation:sweepLight .6s .1s ease-out}
+
+/* Glow pulse */
+.card-glow{position:absolute;bottom:-20%;left:50%;width:70%;height:50%;transform:translateX(-50%);border-radius:50%;filter:blur(50px);pointer-events:none;z-index:0;animation:glowPulse 3s ease infinite}
+.card-wrap.casino .card-glow{background:var(--casino-2)}
+.card-wrap.spar .card-glow{background:var(--spar-2)}
+.card-wrap.vival .card-glow{background:var(--vival-1)}
+
+/* Header */
+.card-header{position:relative;padding:32px 32px 28px;display:flex;align-items:center;overflow:hidden}
+.card-header::before{content:'';position:absolute;inset:0;opacity:.07;transition:opacity .5s}
+.card-wrap.casino .card-header::before{background:linear-gradient(135deg,var(--casino-1),var(--casino-2))}
+.card-wrap.spar .card-header::before{background:linear-gradient(135deg,var(--spar-1),var(--spar-2))}
+.card-wrap.vival .card-header::before{background:linear-gradient(135deg,var(--vival-1),var(--vival-2))}
+.card-wrap:hover .card-header::before{opacity:.2}
+.card-header::after{content:'';position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;opacity:.03;transition:all .6s var(--ease)}
+.card-wrap.casino .card-header::after{background:var(--casino-2)}
+.card-wrap.spar .card-header::after{background:var(--spar-2)}
+.card-wrap.vival .card-header::after{background:var(--vival-1)}
+.card-wrap:hover .card-header::after{opacity:.12;transform:scale(1.2)}
+
+.card-logo{height:44px;position:relative;z-index:2;transition:transform .5s var(--ease);filter:brightness(0) invert(1);opacity:.9}
+.card-wrap.spar .card-logo{filter:none;height:34px;opacity:1}
+.card-wrap:hover .card-logo{transform:scale(1.1)}
+
+/* Body */
+.card-body{padding:24px 32px 32px;position:relative;z-index:2;display:flex;flex-direction:column;flex:1}
+.card-tagline{font-family:var(--serif);font-size:20px;font-weight:800;font-style:italic;margin-bottom:8px;transition:color .4s}
+.card-wrap.casino:hover .card-tagline{color:var(--casino-2)}
+.card-wrap.spar:hover .card-tagline{color:var(--spar-2)}
+.card-wrap.vival:hover .card-tagline{color:var(--vival-1)}
+.card-desc{font-size:13px;color:var(--text3);line-height:1.7;margin-bottom:24px}
+
+/* Sparkline */
+.card-sparkline{margin-bottom:24px;opacity:.25;transition:opacity .5s}
+.card-wrap:hover .card-sparkline{opacity:.7}
+
+/* Stats */
+.card-stats{display:flex;gap:8px;margin-bottom:24px}
+.card-stat{flex:1;padding:14px 12px;border-radius:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);text-align:center;transition:all .4s var(--ease)}
+.card-wrap:hover .card-stat{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+.card-stat-val{font-family:var(--ui);font-size:20px;font-weight:800;line-height:1;letter-spacing:-.02em}
+.card-wrap.casino .card-stat-val{color:var(--casino-2)}
+.card-wrap.spar .card-stat-val{color:var(--spar-2)}
+.card-wrap.vival .card-stat-val{color:var(--vival-1)}
+.card-stat-label{font-family:var(--ui);font-size:8px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-top:4px}
+
+/* CTA */
+.card-cta{display:flex;align-items:center;justify-content:center;gap:10px;font-family:var(--ui);font-size:13px;font-weight:700;letter-spacing:.04em;padding:14px 28px;border-radius:14px;border:1px solid rgba(255,255,255,.06);transition:all .4s var(--ease);margin-top:auto}
+.card-cta svg{width:16px;height:16px;transition:transform .4s var(--ease)}
+.card-wrap:hover .card-cta svg{transform:translateX(6px)}
+.card-wrap.casino:hover .card-cta{background:var(--casino-1);border-color:var(--casino-2);color:#fff;box-shadow:0 8px 32px rgba(0,107,55,.35)}
+.card-wrap.spar:hover .card-cta{background:var(--spar-2);border-color:var(--spar-2);color:#fff;box-shadow:0 8px 32px rgba(236,27,36,.3)}
+.card-wrap.vival:hover .card-cta{background:var(--vival-1);border-color:var(--vival-1);color:#fff;box-shadow:0 8px 32px rgba(0,131,123,.35)}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px 24px 32px;z-index:2;position:relative;display:flex;flex-direction:column;align-items:center;gap:10px}
+.footer-text{font-family:var(--ui);font-size:10px;color:var(--text3);letter-spacing:.04em}
+.footer-logo{height:28px;opacity:.45;transition:opacity .4s}
+.footer-logo:hover{opacity:.8}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .cards-grid{grid-template-columns:1fr;max-width:440px;margin:0 auto}
+  .hero{padding-top:100px}
+  .hero-orbits{width:clamp(280px,70vw,400px);height:clamp(280px,70vw,400px)}
+  .float-shape:nth-child(n+4){display:none}
+}
+@media(max-width:600px){
+  .hero{min-height:60vh;padding:clamp(40px,8vh,80px) 16px clamp(24px,3vh,32px)}
+  .hero-logo{height:clamp(60px,20vw,100px);margin-bottom:20px}
+  .hero-overline{font-size:8px;letter-spacing:.2em;margin-bottom:10px}
+  .hero h1{font-size:clamp(1.6rem,7vw,2.4rem)}
+  .hero-desc{font-size:13px;margin-top:12px;max-width:320px}
+  .hero-orbits{width:280px;height:280px}
+  .hero-pulse{width:200px;height:200px}
+  .hero-scroll span{font-size:8px}
+  .hero-scroll-arrows{height:36px}
+  .marquee-item{font-size:10px;gap:8px}
+  .marquee{gap:32px}
+  .cards-section{padding:clamp(32px,5vh,48px) 16px}
+  .cards-grid{gap:20px;max-width:100%}
+  .card-header{padding:24px 20px 20px}
+  .card-body{padding:20px 20px 24px}
+  .card-logo{height:32px}
+  .card-wrap.spar .card-logo{height:26px}
+  .card-tagline{font-size:17px}
+  .card-desc{font-size:12px;margin-bottom:16px}
+  .card-stats{flex-direction:column;gap:6px}
+  .card-stat{padding:10px;border-radius:10px}
+  .card-stat-val{font-size:16px}
+  .card-stat-label{font-size:7px}
+  .card-sparkline{margin-bottom:16px}
+  .card-cta{padding:12px 20px;font-size:12px;border-radius:10px}
+  .card-wrap{border-radius:18px}
+  .card-border-spin{border-radius:18px}
+  .brand-card{border-radius:17px}
+  .cursor-glow{display:none}
+  .float-shapes{display:none}
+  .footer{padding:20px 16px 24px}
+  .footer-logo{height:22px}
+  .footer-text{font-size:9px}
+}
+@media(hover:none){
+  .cursor-glow{display:none}
+  .card-border-spin{opacity:.4}
+  .card-wrap:hover .brand-card{box-shadow:none}
+}
+
+/* === SUMMARY BANNER === */
+.summary-banner{position:relative;z-index:2;max-width:1400px;width:100%;margin:0 auto;padding:0 clamp(24px,5vw,64px)}
+.summary-inner{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px;margin-top:-8px;margin-bottom:24px;opacity:0;animation:fadeUp .8s var(--ease) 3.2s forwards}
+.summary-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.summary-label{font-family:var(--ui);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--text3)}
+.summary-updated{font-family:var(--ui);font-size:10px;color:var(--text3);opacity:.6}
+.summary-totals{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.summary-total{text-align:center;padding:16px 8px;border-radius:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04)}
+.summary-total-val{font-family:var(--ui);font-size:22px;font-weight:800;line-height:1;letter-spacing:-.02em;color:var(--text);margin-bottom:4px}
+.summary-total-label{font-family:var(--ui);font-size:8px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3)}
+.summary-enseignes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.summary-enseigne{padding:16px;border-radius:14px;background:rgba(255,255,255,.015);border:1px solid rgba(255,255,255,.04);transition:border-color .3s}
+.summary-enseigne:hover{border-color:rgba(255,255,255,.1)}
+.se-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.se-name{font-family:var(--ui);font-size:12px;font-weight:700;letter-spacing:.04em}
+.se-name.casino-c{color:var(--casino-2)}
+.se-name.spar-c{color:var(--spar-2)}
+.se-name.vival-c{color:var(--vival-1)}
+.se-status{font-family:var(--ui);font-size:9px;font-weight:600;padding:3px 8px;border-radius:6px;letter-spacing:.04em}
+.se-status.active{background:rgba(0,166,81,.1);color:#00A651}
+.se-status.paused{background:rgba(245,158,11,.08);color:#F59E0B}
+.se-stats{display:flex;gap:12px;margin-bottom:10px}
+.se-stat-item{flex:1}
+.se-stat-val{font-family:var(--ui);font-size:14px;font-weight:700;line-height:1}
+.se-stat-label{font-family:var(--ui);font-size:7px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-top:2px}
+.se-bar{height:3px;border-radius:2px;background:rgba(255,255,255,.04);overflow:hidden}
+.se-bar-fill{height:100%;border-radius:2px;transition:width 1.5s var(--ease)}
+.se-bar-fill.casino-bg{background:var(--casino-2)}
+.se-bar-fill.spar-bg{background:var(--spar-2)}
+.se-bar-fill.vival-bg{background:var(--vival-1)}
+.summary-chart-wrap{height:48px;position:relative;border-radius:10px;overflow:hidden;background:rgba(255,255,255,.01)}
+@media(max-width:960px){
+  .summary-totals{grid-template-columns:repeat(2,1fr)}
+  .summary-enseignes{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .summary-inner{padding:20px 16px;border-radius:14px}
+  .summary-totals{gap:10px}
+  .summary-total{padding:12px 6px}
+  .summary-total-val{font-size:18px}
+  .se-stat-val{font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<div class="grain"></div>
+<div class="float-shapes"><div class="float-shape"></div><div class="float-shape"></div><div class="float-shape"></div><div class="float-shape"></div><div class="float-shape"></div><div class="float-shape"></div></div>
+<div class="ambient none" id="ambient"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<div class="loader" id="pageLoader">
+  <img src="https://upload.wikimedia.org/wikipedia/en/e/ec/Groupe_Casino_logo.svg" alt="" class="loader-logo">
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+</div>
+
+<div class="page">
+
+  <section class="hero">
+    <div class="hero-orbits" id="heroOrbits">
+      <div class="hero-orbit-ring"></div>
+      <div class="hero-orbit-ring"></div>
+      <div class="hero-orbit-ring"></div>
+      <div class="orbit-track"><div class="odot c1"></div></div>
+      <div class="orbit-track"><div class="odot c2"></div></div>
+      <div class="orbit-track"><div class="odot c3"></div></div>
+      <div class="hero-pulse"></div>
+      <div class="hero-pulse"></div>
+      <div class="hero-pulse"></div>
+    </div>
+    <img src="https://upload.wikimedia.org/wikipedia/en/e/ec/Groupe_Casino_logo.svg" alt="Groupe Casino" class="hero-logo" id="heroLogo">
+    <div class="hero-overline">Portail Enseignes · Recrutement Franchisés</div>
+    <h1>Trois enseignes, une <em>ambition.</em></h1>
+    <p class="hero-desc">Pilotez les campagnes de recrutement franchisés de vos enseignes de proximité depuis un point d'entrée unique.</p>
+    <div class="hero-scroll" onclick="document.querySelector('.marquee-wrap').scrollIntoView({behavior:'smooth'})">
+      <span>Explorer</span>
+      <div class="hero-scroll-arrows">
+        <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        <div class="hero-scroll-trails"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee-wrap">
+    <div class="marquee">
+      <span class="marquee-item"><span class="marquee-dot" style="background:var(--casino-2)"></span>Le Petit Casino · Le commerce des villes · 550+ magasins</span>
+      <span class="marquee-item"><span class="marquee-dot" style="background:var(--spar-2)"></span>Spar · Le commerce des vacances · 740 magasins · 50 pays</span>
+      <span class="marquee-item"><span class="marquee-dot" style="background:var(--vival-1)"></span>Vival · Le commerce des villages · 1 800 magasins</span>
+      <span class="marquee-item"><span class="marquee-dot" style="background:var(--text3)"></span>Groupe Casino · Depuis 1898 · 125 ans d'expertise</span>
+      <span class="marquee-item"><span class="marquee-dot" style="background:var(--casino-2)"></span>Le Petit Casino · Le commerce des villes · 550+ magasins</span>
+      <span class="marquee-item"><span class="marquee-dot" style="background:var(--spar-2)"></span>Spar · Le commerce des vacances · 740 magasins · 50 pays</span>
+      <span class="marquee-item"><span class="marquee-dot" style="background:var(--vival-1)"></span>Vival · Le commerce des villages · 1 800 magasins</span>
+      <span class="marquee-item"><span class="marquee-dot" style="background:var(--text3)"></span>Groupe Casino · Depuis 1898 · 125 ans d'expertise</span>
+    </div>
+  </div>
+
+  <div class="summary-banner">
+    <div class="summary-inner" id="summaryBanner" style="display:none">
+      <div class="summary-head">
+        <div class="summary-label">Vue d'ensemble Groupe</div>
+        <div class="summary-updated" id="summaryUpdated"></div>
+      </div>
+      <div class="summary-totals">
+        <div class="summary-total"><div class="summary-total-val" id="totalSpend">—</div><div class="summary-total-label">Budget consommé</div></div>
+        <div class="summary-total"><div class="summary-total-val" id="totalLeads">—</div><div class="summary-total-label">Leads générés</div></div>
+        <div class="summary-total"><div class="summary-total-val" id="totalCPL">—</div><div class="summary-total-label">CPL moyen</div></div>
+        <div class="summary-total"><div class="summary-total-val" id="totalZones">—</div><div class="summary-total-label">Zones actives</div></div>
+      </div>
+      <div class="summary-enseignes">
+        <div class="summary-enseigne" id="seCasino">
+          <div class="se-head"><span class="se-name casino-c">Casino</span><span class="se-status" id="seCasinoStatus">—</span></div>
+          <div class="se-stats">
+            <div class="se-stat-item"><div class="se-stat-val" id="seCasinoSpend">—</div><div class="se-stat-label">Dépensé</div></div>
+            <div class="se-stat-item"><div class="se-stat-val" id="seCasinoLeads">—</div><div class="se-stat-label">Leads</div></div>
+            <div class="se-stat-item"><div class="se-stat-val" id="seCasinoCPL">—</div><div class="se-stat-label">CPL</div></div>
+          </div>
+          <div class="se-bar"><div class="se-bar-fill casino-bg" id="seCasinoBar" style="width:0"></div></div>
+        </div>
+        <div class="summary-enseigne" id="seSpar">
+          <div class="se-head"><span class="se-name spar-c">SPAR</span><span class="se-status" id="seSparStatus">—</span></div>
+          <div class="se-stats">
+            <div class="se-stat-item"><div class="se-stat-val" id="seSparSpend">—</div><div class="se-stat-label">Dépensé</div></div>
+            <div class="se-stat-item"><div class="se-stat-val" id="seSparLeads">—</div><div class="se-stat-label">Leads</div></div>
+            <div class="se-stat-item"><div class="se-stat-val" id="seSparCPL">—</div><div class="se-stat-label">CPL</div></div>
+          </div>
+          <div class="se-bar"><div class="se-bar-fill spar-bg" id="seSparBar" style="width:0"></div></div>
+        </div>
+        <div class="summary-enseigne" id="seVival">
+          <div class="se-head"><span class="se-name vival-c">Vival</span><span class="se-status" id="seVivalStatus">—</span></div>
+          <div class="se-stats">
+            <div class="se-stat-item"><div class="se-stat-val" id="seVivalSpend">—</div><div class="se-stat-label">Dépensé</div></div>
+            <div class="se-stat-item"><div class="se-stat-val" id="seVivalLeads">—</div><div class="se-stat-label">Leads</div></div>
+            <div class="se-stat-item"><div class="se-stat-val" id="seVivalCPL">—</div><div class="se-stat-label">CPL</div></div>
+          </div>
+          <div class="se-bar"><div class="se-bar-fill vival-bg" id="seVivalBar" style="width:0"></div></div>
+        </div>
+      </div>
+      <div class="summary-chart-wrap"><canvas id="miniChart"></canvas></div>
+    </div>
+  </div>
+
+  <section class="cards-section">
+    <div class="cards-grid">
+
+      <div class="card-wrap casino" onmouseenter="setAmbient('casino')" onmouseleave="setAmbient('none')">
+        <div class="card-border-spin"><div class="card-border-spinner"></div></div>
+        <div class="card-glow"></div>
+        <a href="https://casino-dashboard-one.vercel.app" class="brand-card">
+          <div class="card-sweep"></div>
+          <div class="card-header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Le_Petit_Casino_logo.svg" alt="Le Petit Casino" class="card-logo">
+          </div>
+          <div class="card-body">
+            <div class="card-tagline">Le commerce des villes</div>
+            <p class="card-desc">Proximité urbaine depuis 1898. Épicerie moderne au cœur des quartiers.</p>
+            <svg class="card-sparkline" viewBox="0 0 200 32" fill="none"><path d="M0 28 Q20 26 40 22 T80 15 T120 18 T160 8 T200 4" stroke="#00A651" stroke-width="1.5" opacity=".6"/><path d="M0 28 Q20 26 40 22 T80 15 T120 18 T160 8 T200 4 V32 H0Z" fill="url(#gc)"/><defs><linearGradient id="gc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00A651" stop-opacity=".15"/><stop offset="1" stop-color="#00A651" stop-opacity="0"/></linearGradient></defs></svg>
+            <div class="card-stats">
+              <div class="card-stat"><div class="card-stat-val" data-val="550" data-suffix="+">0</div><div class="card-stat-label">Magasins</div></div>
+              <div class="card-stat"><div class="card-stat-val" data-val="65" data-suffix="%">0</div><div class="card-stat-label">Franchise</div></div>
+              <div class="card-stat"><div class="card-stat-val" data-val="5" data-suffix=" ans">0</div><div class="card-stat-label">Contrat</div></div>
+            </div>
+            <div class="card-cta">Accéder au dashboard <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </a>
+      </div>
+
+      <div class="card-wrap spar" onmouseenter="setAmbient('spar')" onmouseleave="setAmbient('none')">
+        <div class="card-border-spin"><div class="card-border-spinner"></div></div>
+        <div class="card-glow"></div>
+        <a href="https://spar-dashboard.vercel.app" class="brand-card">
+          <div class="card-sweep"></div>
+          <div class="card-header">
+            <svg class="card-logo" viewBox="0 0 1013.95 161.11" style="height:34px;width:auto;filter:none;opacity:1"><style>.ps0{fill:#EC1B24}.ps1{fill:#FFF}.ps2{fill:#157946}</style><path class="ps0" d="M0,3.09l810.16-0.01v154.84L0,157.93V3.09"/><path class="ps1" d="M575.91,30.93c6.97,0,11.29,2.57,17.81,10.9l48.48,69.37c2.58,3.63,2.33,9.42-2.12,13.18c-3.94,3.33-10.91,3.63-14.69-1.36l-11.6-16.05h-76.36l-11.59,16.35c-4.09,4.85-9.09,4.85-13.63,1.82c-4.72-3.15-5.92-9.24-3.03-13.48l48.93-69.82C564.33,33.2,569.25,30.93,575.91,30.93z M578.81,56.6c-1.28-1.87-1.75-2.05-3.11-2.05c-1.52,0-2.12,0.76-3.15,2.14c-1.67,2.23-21.11,30.88-21.33,30.88h49.09C600.21,87.57,581.52,60.61,578.81,56.6"/><path class="ps1" d="M245.25,31.05h69.84c17.33,0,18.92,19.94,18.92,19.94h-85.92c-4.25,0-8.2,3.21-8.2,8.8c0,6.37,4.84,9.4,7.9,9.4h60.72c12.03,0,29.15,10.02,29.15,27.32c0,22.46-19.89,30.44-26.81,30.44h-71.04c-21.11,0-19.94-20.13-19.94-20.13h88.05c3.52,0,8.71-3.49,8.71-8.71c0-4.98-4.55-8.8-7.9-8.8h-59.5c-16.88,0-29.96-12.53-29.96-29.53C219.24,40.66,235.65,31.05,245.25,31.05"/><path class="ps1" d="M692.88,30.92H765c10.93,0,27.88,8.93,27.88,30.29v1.36c0,11.37-7.12,21.36-17.12,26.2c0,0,0.72,1.09,16.21,22.11c2.01,2.72,2.12,9.24-2.27,13.18c-4.19,3.76-11.17,4.23-14.69,0.15c-4.92-5.69-10.61-13.18-26.21-33.01h-28.18c-8.03,0-18.93-6.37-18.93-20.45h60.9c3.31-0.14,8.61-3.31,8.61-9.53c0-5.75-5.1-9.7-8.64-9.7h-67.26l0.05,63.75c0.01,6.96-5.33,11.65-11.08,11.65c-5.46,0-10.9-4.84-10.9-11.36V50.61C673.35,39.69,684.86,30.92,692.88,30.92"/><path class="ps1" d="M395.66,31.08h72.12c10.93,0,27.88,8.94,27.88,30.29v1.36c0,11.38-7.12,21.36-17.12,26.2c0,0-5.17,1.67-10.02,2.28h-45.3c-8.03,0-18.33-6.51-18.33-20.6h60.29c3.31-0.14,8.78-3.01,8.78-9.23c0-5.75-5.1-9.7-8.64-9.7l-67.25-0.01l0.04,63.76c0.01,6.96-5.33,11.65-11.08,11.65c-5.46,0-10.9-4.84-10.9-11.36V50.77C376.12,39.85,387.63,31.08,395.66,31.08"/><path class="ps2" d="M848.77,82.59c0,29.71,14.96,56.32,41.32,69.34c24.77,12.24,57.78,12.24,82.62,0c24.5-12.07,41.24-39.62,41.24-69.34c0-45.45-36.36-82.59-82.59-82.59C884.91,0,848.77,36.85,848.77,82.59"/><path class="ps1" d="M931.4,21.41c-8.31,28.18-33.08,69.48-51.15,89.73h42.84l0.1,12.27c-0.1,6.96-5.63,14.18-13.68,14.08c-11.19-0.13-25.18-5.3-33.63-19.65c-6.16-10.47-10.63-18.72-10.63-35.25c0-36.13,29.1-66.06,66.12-66.06c36.61,0,66.12,30.81,66.12,66.06c0,16.54-7.72,30.84-10.27,34.96c-9.04,14.64-22.8,19.81-33.46,19.94c-7.35,0.09-14.12-5.3-14.12-14.12v-12.24h43.5C964.41,90.89,939.64,49.6,931.4,21.41"/></svg>
+          </div>
+          <div class="card-body">
+            <div class="card-tagline">Le commerce des vacances</div>
+            <p class="card-desc">Réseau international, 50 pays. Design Raymond Loewy, depuis 1932.</p>
+            <svg class="card-sparkline" viewBox="0 0 200 32" fill="none"><path d="M0 30 Q25 24 50 20 T100 12 T150 16 T200 6" stroke="#EC1B24" stroke-width="1.5" opacity=".6"/><path d="M0 30 Q25 24 50 20 T100 12 T150 16 T200 6 V32 H0Z" fill="url(#gs)"/><defs><linearGradient id="gs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EC1B24" stop-opacity=".15"/><stop offset="1" stop-color="#EC1B24" stop-opacity="0"/></linearGradient></defs></svg>
+            <div class="card-stats">
+              <div class="card-stat"><div class="card-stat-val" data-val="740" data-suffix="">0</div><div class="card-stat-label">France</div></div>
+              <div class="card-stat"><div class="card-stat-val" data-val="13500" data-suffix="" data-fmt="space">0</div><div class="card-stat-label">Mondial</div></div>
+              <div class="card-stat"><div class="card-stat-val" data-val="96" data-suffix="%">0</div><div class="card-stat-label">Franchise</div></div>
+            </div>
+            <div class="card-cta">Accéder au dashboard <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </a>
+      </div>
+
+      <div class="card-wrap vival" onmouseenter="setAmbient('vival')" onmouseleave="setAmbient('none')">
+        <div class="card-border-spin"><div class="card-border-spinner"></div></div>
+        <div class="card-glow"></div>
+        <a href="https://vival-dashboard.vercel.app" class="brand-card">
+          <div class="card-sweep"></div>
+          <div class="card-header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Vival_by_Casino_logo.png" alt="Vival" class="card-logo">
+          </div>
+          <div class="card-body">
+            <div class="card-tagline">Le commerce des villages</div>
+            <p class="card-desc">Leader du multiservices rural. Proximité en centres-bourgs et villages.</p>
+            <svg class="card-sparkline" viewBox="0 0 200 32" fill="none"><path d="M0 26 Q30 20 60 18 T120 10 T180 14 T200 2" stroke="#00837B" stroke-width="1.5" opacity=".6"/><path d="M0 26 Q30 20 60 18 T120 10 T180 14 T200 2 V32 H0Z" fill="url(#gv)"/><defs><linearGradient id="gv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00837B" stop-opacity=".15"/><stop offset="1" stop-color="#00837B" stop-opacity="0"/></linearGradient></defs></svg>
+            <div class="card-stats">
+              <div class="card-stat"><div class="card-stat-val" data-val="1800" data-suffix="" data-fmt="space">0</div><div class="card-stat-label">Magasins</div></div>
+              <div class="card-stat"><div class="card-stat-val" data-val="98" data-suffix="%">0</div><div class="card-stat-label">Franchise</div></div>
+              <div class="card-stat"><div class="card-stat-val" data-val="7" data-suffix=" ans">0</div><div class="card-stat-label">Contrat</div></div>
+            </div>
+            <div class="card-cta">Accéder au dashboard <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-text">Propulsé par</div>
+    <a href="https://koven.agency" target="_blank"><img src="https://koven.agency/wp-content/uploads/2025/11/LOGO-1-Blanc.svg" alt="Koven Agency" class="footer-logo"></a>
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script>
+window.addEventListener('load',function(){setTimeout(function(){document.getElementById('pageLoader').classList.add('done')},1800)});
+
+/* === GROUP SUMMARY DATA === */
+(function(){
+  var SHEET_BASE='https://docs.google.com/spreadsheets/d/e/2PACX-1vRiWc8yPpg7phWPVu5gl2kvhvtGyldz8reMO5MX6PbGz7iAtirz35vlJtez3JQgtO4Km0LMO6OOmn_9/pub?output=csv&gid=';
+  var META_URL=SHEET_BASE+'1832497913';
+  var ADSET_URL=SHEET_BASE+'588788238';
+  var CAMPAIGN_URL=SHEET_BASE+'1392306254';
+
+  function parseNum(v){if(!v)return 0;return parseFloat(String(v).replace(/"/g,'').replace(/,/g,'.').replace(/\s/g,''))||0}
+  function fmtDec(n,d){return n.toLocaleString('fr-FR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2})}
+  function fmtNum(n){return n.toLocaleString('fr-FR',{maximumFractionDigits:0})}
+
+  function splitRow(l){var r=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(ch==='"')q=!q;else if(ch===','&&!q){r.push(c.trim());c=''}else c+=ch}r.push(c.trim());return r}
+  function parseCSV(t){var lines=t.split('\n').filter(function(l){return l.trim()});if(lines.length<2)return[];var h=splitRow(lines[0]);var rows=[];for(var i=1;i<lines.length;i++){var v=splitRow(lines[i]);var row={};for(var j=0;j<h.length;j++)row[h[j]]=j<v.length?v[j]:'';rows.push(row)}return rows}
+
+  function parseCampaign(name){var m=(name||'').match(/^GC_(\w+?)_LEADS_(\w+?)_META/i);return m?{enseigne:m[1].toUpperCase(),zone:m[2].toUpperCase()}:null}
+  function parseAdSetEnseigne(adset){var m=(adset||'').match(/_(CASINO|SPAR|VIVAL)$/i);return m?m[1].toUpperCase():null}
+  function getEnseigne(camp,adset){
+    var p=parseCampaign(camp);if(!p)return null;
+    if(p.enseigne==='CASINO'||p.enseigne==='SPAR'||p.enseigne==='VIVAL')return p.enseigne;
+    if(p.enseigne==='GROUPE')return parseAdSetEnseigne(adset);
+    return null;
+  }
+  function getZone(camp){var p=parseCampaign(camp);return p?p.zone:null}
+
+  var ts='&_t='+Date.now();
+  Promise.all([
+    fetch(META_URL+ts).then(function(r){return r.text()}),
+    fetch(ADSET_URL+ts).then(function(r){return r.text()}),
+    fetch(CAMPAIGN_URL+ts).then(function(r){return r.text()})
+  ]).then(function(results){
+    var metaRows=parseCSV(results[0]);
+    var adsetRows=parseCSV(results[1]);
+
+    var enseignes={CASINO:{spend:0,leads:0,impressions:0,clicks:0,zones:{},hasActive:false},SPAR:{spend:0,leads:0,impressions:0,clicks:0,zones:{},hasActive:false},VIVAL:{spend:0,leads:0,impressions:0,clicks:0,zones:{},hasActive:false}};
+    var dailyTotals={};
+
+    metaRows.forEach(function(r){
+      var camp=r['Nom de la campagne']||'';
+      var adset=r["Nom de l'ensemble de publicités"]||'';
+      var ens=getEnseigne(camp,adset);
+      if(!ens||!enseignes[ens])return;
+      if(camp.toLowerCase().indexOf('test')>=0)return;
+      var spend=parseNum(r['Coût (EUR)']);
+      var leads=parseNum(r['Prospects sur Facebook']);
+      var clicks=parseNum(r['Clics (tous)']);
+      var impressions=parseNum(r['Impressions']);
+      var date=r['Date']||'';
+      var zone=getZone(camp);
+
+      enseignes[ens].spend+=spend;
+      enseignes[ens].leads+=leads;
+      enseignes[ens].impressions+=impressions;
+      enseignes[ens].clicks+=clicks;
+      if(zone)enseignes[ens].zones[zone]=true;
+
+      if(date){
+        if(!dailyTotals[date])dailyTotals[date]={spend:0,leads:0};
+        dailyTotals[date].spend+=spend;
+        dailyTotals[date].leads+=leads;
+      }
+    });
+
+    adsetRows.forEach(function(r){
+      var camp=r['Campaign name']||'';
+      var adset=r['Ad set name']||'';
+      var ens=getEnseigne(camp,adset);
+      if(!ens||!enseignes[ens])return;
+      var status=r['Ad set status (effective status)']||'';
+      if(status==='ACTIVE')enseignes[ens].hasActive=true;
+    });
+
+    var totalSpend=0,totalLeads=0,allZones={},activeZones=0;
+    ['CASINO','SPAR','VIVAL'].forEach(function(ens){
+      var e=enseignes[ens];
+      totalSpend+=e.spend;
+      totalLeads+=e.leads;
+      for(var z in e.zones)allZones[z]=true;
+    });
+    var totalCPL=totalLeads?totalSpend/totalLeads:0;
+    var zoneKeys=Object.keys(allZones);
+
+    adsetRows.forEach(function(r){
+      var status=r['Ad set status (effective status)']||'';
+      var camp=r['Campaign name']||'';
+      var zone=getZone(camp);
+      if(status==='ACTIVE'&&zone&&allZones[zone])activeZones++;
+    });
+    var uniqueActiveZones={};
+    adsetRows.forEach(function(r){
+      var status=r['Ad set status (effective status)']||'';
+      var camp=r['Campaign name']||'';
+      var zone=getZone(camp);
+      if(status==='ACTIVE'&&zone)uniqueActiveZones[zone]=true;
+    });
+
+    var banner=document.getElementById('summaryBanner');
+    banner.style.display='';
+
+    document.getElementById('totalSpend').textContent='€'+fmtDec(totalSpend);
+    document.getElementById('totalLeads').textContent=fmtNum(totalLeads);
+    document.getElementById('totalCPL').textContent=totalCPL?'€'+fmtDec(totalCPL):'—';
+    document.getElementById('totalZones').textContent=Object.keys(uniqueActiveZones).length+'/'+zoneKeys.length;
+
+    var now=new Date();
+    document.getElementById('summaryUpdated').textContent='Mis à jour '+now.toLocaleString('fr-FR',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'});
+
+    var maxSpend=Math.max(enseignes.CASINO.spend,enseignes.SPAR.spend,enseignes.VIVAL.spend)||1;
+
+    function renderEnseigne(prefix,ens,barClass){
+      var e=enseignes[ens];
+      var cpl=e.leads?e.spend/e.leads:0;
+      document.getElementById(prefix+'Spend').textContent='€'+fmtDec(e.spend);
+      document.getElementById(prefix+'Leads').textContent=fmtNum(e.leads);
+      document.getElementById(prefix+'CPL').textContent=cpl?'€'+fmtDec(cpl):'—';
+      var statusEl=document.getElementById(prefix+'Status');
+      if(e.hasActive){statusEl.textContent='Active';statusEl.className='se-status active'}
+      else{statusEl.textContent='En pause';statusEl.className='se-status paused'}
+      setTimeout(function(){document.getElementById(prefix+'Bar').style.width=Math.round(e.spend/maxSpend*100)+'%'},500);
+    }
+
+    renderEnseigne('seCasino','CASINO','casino-bg');
+    renderEnseigne('seSpar','SPAR','spar-bg');
+    renderEnseigne('seVival','VIVAL','vival-bg');
+
+    /* Mini chart */
+    var dates=Object.keys(dailyTotals).sort();
+    if(dates.length>1){
+      var minD=new Date(dates[0]+'T00:00:00'),maxD=new Date(dates[dates.length-1]+'T00:00:00');
+      var d=new Date(minD);
+      while(d<=maxD){var key=d.toISOString().slice(0,10);if(!dailyTotals[key])dailyTotals[key]={spend:0,leads:0};d.setDate(d.getDate()+1)}
+      dates=Object.keys(dailyTotals).sort();
+      var labels=dates.map(function(dt){var p=dt.split('-');return p[2]+'/'+p[1]});
+      var spendData=dates.map(function(dt){return dailyTotals[dt].spend});
+      var leadsData=dates.map(function(dt){return dailyTotals[dt].leads});
+
+      var el=document.getElementById('miniChart');
+      if(el){new Chart(el,{type:'bar',data:{labels:labels,datasets:[{label:'Dépenses €',data:spendData,type:'bar',backgroundColor:'rgba(0,166,81,.12)',borderColor:'rgba(0,166,81,.4)',borderWidth:1,borderRadius:3,yAxisID:'y',barPercentage:.6},{label:'Leads',data:leadsData,type:'line',borderColor:'rgba(213,12,139,.6)',borderWidth:1.5,pointRadius:0,tension:.4,yAxisID:'y1',fill:false}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(5,7,8,.92)',titleColor:'#F0F2F5',bodyColor:'#7A8A9A',borderColor:'rgba(255,255,255,.06)',borderWidth:1,cornerRadius:8,padding:10,bodyFont:{size:10},titleFont:{size:10}}},scales:{x:{display:false},y:{display:false},y1:{display:false}}}})}
+    }
+  }).catch(function(err){console.error('Portail summary error:',err)});
+})();
+
+var ambient=document.getElementById('ambient'),cursorGlow=document.getElementById('cursorGlow');
+function setAmbient(b){ambient.className='ambient '+b;cursorGlow.className='cursor-glow '+b}
+document.addEventListener('mousemove',function(e){cursorGlow.style.left=e.clientX+'px';cursorGlow.style.top=e.clientY+'px'});
+
+// 3D tilt on cards
+document.querySelectorAll('.card-wrap').forEach(function(wrap){
+  var card=wrap.querySelector('.brand-card');
+  wrap.addEventListener('mousemove',function(e){
+    var r=wrap.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+    wrap.style.transform='perspective(1000px) rotateY('+x*12+'deg) rotateX('+-y*10+'deg) scale(1.02)';
+  });
+  wrap.addEventListener('mouseleave',function(){wrap.style.transform='perspective(1000px) rotateY(0) rotateX(0) scale(1)';wrap.style.transition='transform .5s ease'});
+  wrap.addEventListener('mouseenter',function(){wrap.style.transition='none'});
+});
+
+// Staggered card reveal
+var cardObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');cardObs.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.card-wrap').forEach(function(c){cardObs.observe(c)});
+
+// Animated counters
+var counterDone=false;
+var counterObs=new IntersectionObserver(function(entries){entries.forEach(function(e){
+  if(e.isIntersecting&&!counterDone){counterDone=true;runCounters();counterObs.unobserve(e.target)}
+})},{threshold:.2});
+counterObs.observe(document.querySelector('.cards-section'));
+
+function runCounters(){
+  document.querySelectorAll('.card-stat-val').forEach(function(el,i){
+    var target=parseInt(el.dataset.val),suffix=el.dataset.suffix||'',fmt=el.dataset.fmt==='space',dur=1400,t0=null;
+    setTimeout(function(){
+      function step(ts){
+        if(!t0)t0=ts;
+        var p=Math.min((ts-t0)/dur,1);p=1-Math.pow(1-p,3);
+        var v=Math.round(target*p);
+        el.textContent=(fmt?v.toLocaleString('fr-FR'):v)+suffix;
+        if(p<1)requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    },i*80);
+  });
+}
+
+// Hero parallax on mouse
+var heroLogo=document.getElementById('heroLogo'),heroOrbits=document.getElementById('heroOrbits');
+document.addEventListener('mousemove',function(e){
+  var x=(e.clientX/window.innerWidth-.5)*2,y=(e.clientY/window.innerHeight-.5)*2;
+  heroLogo.style.transform='translate('+x*8+'px,'+y*5+'px)';
+  heroOrbits.style.transform='translate('+x*-10+'px,'+y*-8+'px)';
+});
+
+// Particles
+(function(){
+  var c=document.getElementById('particles'),ctx=c.getContext('2d'),W,H,P=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}
+  resize();window.addEventListener('resize',resize);
+  function Pt(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.r=Math.random()*1.3+.4;this.o=Math.random()*.14+.02;var cs=['rgba(0,166,81,','rgba(236,27,36,','rgba(0,131,123,','rgba(255,255,255,'];this.c=cs[Math.floor(Math.random()*cs.length)]}
+  for(var i=0;i<60;i++)P.push(new Pt());
+  (function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<P.length;i++){var p=P[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.28);ctx.fillStyle=p.c+p.o+')';ctx.fill();for(var j=i+1;j<P.length;j++){var q=P[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);if(d<150){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle='rgba(255,255,255,'+(1-d/150)*.04+')';ctx.lineWidth=.5;ctx.stroke()}}}
+    requestAnimationFrame(draw);
+  })();
+})();
+</script>
+</body>
+</html>
