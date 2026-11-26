@@ -407,6 +407,7 @@ canvas#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
           <div class="se-zones" id="seVivalZones"></div>
         </div>
       </div>
+      <div id="nantesGroupeLine" style="display:none;margin-bottom:16px;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.015);border:1px solid rgba(255,255,255,.04)"></div>
       <div class="summary-chart-wrap"><canvas id="miniChart"></canvas></div>
     </div>
   </div>
@@ -502,7 +503,7 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
   var CAMPAIGN_URL=SHEET_BASE+'1392306254';
 
   function parseNum(v){if(!v)return 0;return parseFloat(String(v).replace(/"/g,'').replace(/,/g,'.').replace(/\s/g,''))||0}
-  function fmtDec(n,d){return n.toLocaleString('fr-FR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2})}
+  function fmtDec(n,d){var digits=d===undefined?2:d;return n.toLocaleString('fr-FR',{minimumFractionDigits:digits,maximumFractionDigits:digits})}
   function fmtNum(n){return n.toLocaleString('fr-FR',{maximumFractionDigits:0})}
   function fmtEur(n){return fmtDec(n)+' €'}
   function dateToKey(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
@@ -511,6 +512,7 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
   function splitRow(l){var r=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(ch==='"')q=!q;else if(ch===','&&!q){r.push(c.trim());c=''}else c+=ch}r.push(c.trim());return r}
   function parseCSV(t){var lines=t.split('\n').filter(function(l){return l.trim()});if(lines.length<2)return[];var h=splitRow(lines[0]);var rows=[];for(var i=1;i<lines.length;i++){var v=splitRow(lines[i]);var row={};for(var j=0;j<h.length;j++)row[h[j]]=j<v.length?v[j]:'';rows.push(row)}return rows}
 
+  var PAUSE_DATES={ALLIER:'2026-11-25'};
   function parseCampaign(name){var m=(name||'').match(/^GC_(\w+?)_LEADS_(\w+?)_META/i);return m?{enseigne:m[1].toUpperCase(),zone:m[2].toUpperCase()}:null}
   function parseAdSetEnseigne(adset){var m=(adset||'').match(/_(CASINO|SPAR|VIVAL)$/i);return m?m[1].toUpperCase():null}
   function getEnseigne(camp,adset){
@@ -636,9 +638,10 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
       var zonesEl=document.getElementById(prefix+'Zones');
       if(!zonesEl)return;
       var html='';
-      for(var zk in zoneDetail){
-        var zd=zoneDetail[zk];
-        if(zd.enseigne!==ens)continue;
+      var zoneOrder=['ALLIER','NANTES'];
+      var ensZones=[];for(var zk in zoneDetail){if(zoneDetail[zk].enseigne===ens)ensZones.push(zoneDetail[zk])}
+      ensZones.sort(function(a,b){var ia=zoneOrder.indexOf(a.zone),ib=zoneOrder.indexOf(b.zone);if(ia<0)ia=99;if(ib<0)ib=99;return ia-ib});
+      ensZones.forEach(function(zd){
         var label=zd.zone.charAt(0)+zd.zone.slice(1).toLowerCase();
         var dotClass=zd.status==='ACTIVE'?'active':'paused';
         html+='<div class="se-zone-line"><span class="se-zone-dot '+dotClass+'"></span>';
@@ -648,19 +651,38 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
           if(zd.endDate)html+=' · fin le '+formatDate(zd.endDate);
           html+=' <div class="se-zone-pace"><div class="se-zone-pace-fill" style="width:'+Math.min(pct,100)+'%;background:'+accentColor+'"></div></div>';
         } else if(zd.status!=='ACTIVE'){
-          html+=label+' · En pause';
-          if(zd.lastSpendDate)html+=' depuis le '+formatDate(zd.lastSpendDate);
+          var pd=PAUSE_DATES[zd.zone];
+          html+=label+' · En pause'+(pd?' depuis le '+formatDate(pd):'');
         } else {
           html+=label+' · En cours · '+fmtEur(zd.dailyBudget)+'/jour';
         }
         html+='</div>';
-      }
+      });
       zonesEl.innerHTML=html;
     }
 
     renderEnseigne('seCasino','CASINO','var(--casino-2)');
     renderEnseigne('seSpar','SPAR','var(--spar-2)');
     renderEnseigne('seVival','VIVAL','var(--vival-1)');
+
+    /* Nantes Groupe summary */
+    (function(){
+      var nantesTotalSpend=0,nantesTotalBudget=0,nantesEndDate='',nantesActive=false;
+      for(var zk in zoneDetail){var zd=zoneDetail[zk];if(zd.zone!=='NANTES')continue;nantesTotalSpend+=zd.spend;if(zd.hasLifetime)nantesTotalBudget+=zd.lifetimeBudget;else nantesTotalBudget+=zd.dailyBudget*26;if(zd.endDate>nantesEndDate)nantesEndDate=zd.endDate;if(zd.status==='ACTIVE')nantesActive=true}
+      if(nantesTotalBudget>0){
+        var el=document.getElementById('nantesGroupeLine');if(!el)return;el.style.display='';
+        var pct=Math.round(nantesTotalSpend/nantesTotalBudget*100);
+        var h='<div style="display:flex;align-items:center;gap:10px;font-family:var(--ui);font-size:12px;color:var(--text)">';
+        h+='<span style="font-weight:700">Nantes · Groupe</span>';
+        h+='<span style="color:'+(nantesActive?'#00A651':'#F59E0B')+'">·</span>';
+        h+='<span style="color:var(--text2)">'+(nantesActive?'En cours':'En pause')+'</span>';
+        h+='<span style="color:var(--text2)">'+fmtEur(nantesTotalSpend)+' / '+fmtEur(nantesTotalBudget)+'</span>';
+        if(nantesEndDate)h+='<span style="color:var(--text3)">fin le '+formatDate(nantesEndDate)+'</span>';
+        h+='<div style="flex:1;max-width:80px;height:3px;border-radius:2px;background:rgba(255,255,255,.04);overflow:hidden"><div style="height:100%;width:'+Math.min(pct,100)+'%;border-radius:2px;background:linear-gradient(90deg,var(--casino-2),var(--spar-2),var(--vival-1))"></div></div>';
+        h+='</div>';
+        el.innerHTML=h;
+      }
+    })();
 
     /* Mini chart — #6 local dates, #15 last 30 days */
     var dates=Object.keys(dailyTotals).sort();
