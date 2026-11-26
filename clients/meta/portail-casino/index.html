@@ -288,6 +288,12 @@ canvas#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
 .se-bar-fill.casino-bg{background:var(--casino-2)}
 .se-bar-fill.spar-bg{background:var(--spar-2)}
 .se-bar-fill.vival-bg{background:var(--vival-1)}
+.se-zones{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.se-zone-line{display:flex;align-items:center;gap:8px;font-family:var(--ui);font-size:11px;color:var(--text2);line-height:1.4}
+.se-zone-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.se-zone-dot.active{background:#00A651}.se-zone-dot.paused{background:#F59E0B}
+.se-zone-pace{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.04);overflow:hidden;max-width:60px}
+.se-zone-pace-fill{height:100%;border-radius:2px;transition:width 1.5s var(--ease)}
 .summary-chart-wrap{height:48px;position:relative;border-radius:10px;overflow:hidden;background:rgba(255,255,255,.01)}
 @media(max-width:960px){
   .summary-totals{grid-template-columns:repeat(2,1fr)}
@@ -364,7 +370,7 @@ canvas#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
         <div class="summary-updated" id="summaryUpdated"></div>
       </div>
       <div class="summary-totals">
-        <div class="summary-total"><div class="summary-total-val" id="totalSpend">—</div><div class="summary-total-label">Budget consommé</div></div>
+        <div class="summary-total"><div class="summary-total-val" id="totalSpend">—</div><div class="summary-total-label">Dépensé</div></div>
         <div class="summary-total"><div class="summary-total-val" id="totalLeads">—</div><div class="summary-total-label">Leads générés</div></div>
         <div class="summary-total"><div class="summary-total-val" id="totalCPL">—</div><div class="summary-total-label">CPL moyen</div></div>
         <div class="summary-total"><div class="summary-total-val" id="totalZones">—</div><div class="summary-total-label">Zones actives</div></div>
@@ -378,6 +384,7 @@ canvas#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
             <div class="se-stat-item"><div class="se-stat-val" id="seCasinoCPL">—</div><div class="se-stat-label">CPL</div></div>
           </div>
           <div class="se-bar"><div class="se-bar-fill casino-bg" id="seCasinoBar" style="width:0"></div></div>
+          <div class="se-zones" id="seCasinoZones"></div>
         </div>
         <div class="summary-enseigne" id="seSpar">
           <div class="se-head"><span class="se-name spar-c">SPAR</span><span class="se-status" id="seSparStatus">—</span></div>
@@ -387,6 +394,7 @@ canvas#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
             <div class="se-stat-item"><div class="se-stat-val" id="seSparCPL">—</div><div class="se-stat-label">CPL</div></div>
           </div>
           <div class="se-bar"><div class="se-bar-fill spar-bg" id="seSparBar" style="width:0"></div></div>
+          <div class="se-zones" id="seSparZones"></div>
         </div>
         <div class="summary-enseigne" id="seVival">
           <div class="se-head"><span class="se-name vival-c">Vival</span><span class="se-status" id="seVivalStatus">—</span></div>
@@ -396,6 +404,7 @@ canvas#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
             <div class="se-stat-item"><div class="se-stat-val" id="seVivalCPL">—</div><div class="se-stat-label">CPL</div></div>
           </div>
           <div class="se-bar"><div class="se-bar-fill vival-bg" id="seVivalBar" style="width:0"></div></div>
+          <div class="se-zones" id="seVivalZones"></div>
         </div>
       </div>
       <div class="summary-chart-wrap"><canvas id="miniChart"></canvas></div>
@@ -495,6 +504,9 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
   function parseNum(v){if(!v)return 0;return parseFloat(String(v).replace(/"/g,'').replace(/,/g,'.').replace(/\s/g,''))||0}
   function fmtDec(n,d){return n.toLocaleString('fr-FR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2})}
   function fmtNum(n){return n.toLocaleString('fr-FR',{maximumFractionDigits:0})}
+  function fmtEur(n){return fmtDec(n)+' €'}
+  function dateToKey(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+  function formatDate(d){if(!d)return'—';var m=d.match(/^(\d{4})-(\d{2})-(\d{2})/);return m?m[3]+'/'+m[2]+'/'+m[1]:d}
 
   function splitRow(l){var r=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(ch==='"')q=!q;else if(ch===','&&!q){r.push(c.trim());c=''}else c+=ch}r.push(c.trim());return r}
   function parseCSV(t){var lines=t.split('\n').filter(function(l){return l.trim()});if(lines.length<2)return[];var h=splitRow(lines[0]);var rows=[];for(var i=1;i<lines.length;i++){var v=splitRow(lines[i]);var row={};for(var j=0;j<h.length;j++)row[h[j]]=j<v.length?v[j]:'';rows.push(row)}return rows}
@@ -547,6 +559,7 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
       }
     });
 
+    var zoneDetail={};
     adsetRows.forEach(function(r){
       var camp=r['Campaign name']||'';
       var adset=r['Ad set name']||'';
@@ -554,9 +567,31 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
       if(!ens||!enseignes[ens])return;
       var status=r['Ad set status (effective status)']||'';
       if(status==='ACTIVE')enseignes[ens].hasActive=true;
+      var zone=getZone(camp);
+      if(!zone)return;
+      var zk=ens+'_'+zone;
+      if(!zoneDetail[zk])zoneDetail[zk]={enseigne:ens,zone:zone,status:'PAUSED',spend:parseNum(r['Cost (EUR)']),lifetimeBudget:0,budgetRemaining:0,dailyBudget:0,hasLifetime:false,endDate:'',lastSpendDate:''};
+      else zoneDetail[zk].spend+=parseNum(r['Cost (EUR)']);
+      if(status==='ACTIVE')zoneDetail[zk].status='ACTIVE';
+      var lb=parseNum(r['Lifetime budget']);
+      if(lb>0){zoneDetail[zk].hasLifetime=true;zoneDetail[zk].lifetimeBudget+=lb;zoneDetail[zk].budgetRemaining+=parseNum(r['Budget remaining'])}
+      zoneDetail[zk].dailyBudget+=parseNum(r['Daily budget']);
+      var ed=r['End date']||'';if(ed>zoneDetail[zk].endDate)zoneDetail[zk].endDate=ed;
+    });
+    metaRows.forEach(function(r){
+      var camp=r['Nom de la campagne']||'';
+      var adset=r["Nom de l'ensemble de publicités"]||'';
+      var ens=getEnseigne(camp,adset);
+      if(!ens)return;
+      var zone=getZone(camp);if(!zone)return;
+      var zk=ens+'_'+zone;
+      if(!zoneDetail[zk])return;
+      var spend=parseNum(r['Coût (EUR)']);
+      var date=r['Date']||'';
+      if(spend>0&&date>zoneDetail[zk].lastSpendDate)zoneDetail[zk].lastSpendDate=date;
     });
 
-    var totalSpend=0,totalLeads=0,allZones={},activeZones=0;
+    var totalSpend=0,totalLeads=0,allZones={};
     ['CASINO','SPAR','VIVAL'].forEach(function(ens){
       var e=enseignes[ens];
       totalSpend+=e.spend;
@@ -566,12 +601,6 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
     var totalCPL=totalLeads?totalSpend/totalLeads:0;
     var zoneKeys=Object.keys(allZones);
 
-    adsetRows.forEach(function(r){
-      var status=r['Ad set status (effective status)']||'';
-      var camp=r['Campaign name']||'';
-      var zone=getZone(camp);
-      if(status==='ACTIVE'&&zone&&allZones[zone])activeZones++;
-    });
     var uniqueActiveZones={};
     adsetRows.forEach(function(r){
       var status=r['Ad set status (effective status)']||'';
@@ -583,9 +612,9 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
     var banner=document.getElementById('summaryBanner');
     banner.style.display='';
 
-    document.getElementById('totalSpend').textContent='€'+fmtDec(totalSpend);
+    document.getElementById('totalSpend').textContent=fmtEur(totalSpend);
     document.getElementById('totalLeads').textContent=fmtNum(totalLeads);
-    document.getElementById('totalCPL').textContent=totalCPL?'€'+fmtDec(totalCPL):'—';
+    document.getElementById('totalCPL').textContent=totalCPL?fmtEur(totalCPL):'—';
     document.getElementById('totalZones').textContent=Object.keys(uniqueActiveZones).length+'/'+zoneKeys.length;
 
     var now=new Date();
@@ -593,32 +622,58 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
 
     var maxSpend=Math.max(enseignes.CASINO.spend,enseignes.SPAR.spend,enseignes.VIVAL.spend)||1;
 
-    function renderEnseigne(prefix,ens,barClass){
+    function renderEnseigne(prefix,ens,accentColor){
       var e=enseignes[ens];
       var cpl=e.leads?e.spend/e.leads:0;
-      document.getElementById(prefix+'Spend').textContent='€'+fmtDec(e.spend);
+      document.getElementById(prefix+'Spend').textContent=fmtEur(e.spend);
       document.getElementById(prefix+'Leads').textContent=fmtNum(e.leads);
-      document.getElementById(prefix+'CPL').textContent=cpl?'€'+fmtDec(cpl):'—';
+      document.getElementById(prefix+'CPL').textContent=cpl?fmtEur(cpl):'—';
       var statusEl=document.getElementById(prefix+'Status');
       if(e.hasActive){statusEl.textContent='Active';statusEl.className='se-status active'}
       else{statusEl.textContent='En pause';statusEl.className='se-status paused'}
       setTimeout(function(){document.getElementById(prefix+'Bar').style.width=Math.round(e.spend/maxSpend*100)+'%'},500);
+
+      var zonesEl=document.getElementById(prefix+'Zones');
+      if(!zonesEl)return;
+      var html='';
+      for(var zk in zoneDetail){
+        var zd=zoneDetail[zk];
+        if(zd.enseigne!==ens)continue;
+        var label=zd.zone.charAt(0)+zd.zone.slice(1).toLowerCase();
+        var dotClass=zd.status==='ACTIVE'?'active':'paused';
+        html+='<div class="se-zone-line"><span class="se-zone-dot '+dotClass+'"></span>';
+        if(zd.status==='ACTIVE'&&zd.hasLifetime&&zd.lifetimeBudget>0){
+          var pct=Math.round(zd.spend/zd.lifetimeBudget*100);
+          html+=label+' · En cours · '+fmtEur(zd.spend)+' / '+fmtEur(zd.lifetimeBudget);
+          if(zd.endDate)html+=' · fin le '+formatDate(zd.endDate);
+          html+=' <div class="se-zone-pace"><div class="se-zone-pace-fill" style="width:'+Math.min(pct,100)+'%;background:'+accentColor+'"></div></div>';
+        } else if(zd.status!=='ACTIVE'){
+          html+=label+' · En pause';
+          if(zd.lastSpendDate)html+=' depuis le '+formatDate(zd.lastSpendDate);
+        } else {
+          html+=label+' · En cours · '+fmtEur(zd.dailyBudget)+'/jour';
+        }
+        html+='</div>';
+      }
+      zonesEl.innerHTML=html;
     }
 
-    renderEnseigne('seCasino','CASINO','casino-bg');
-    renderEnseigne('seSpar','SPAR','spar-bg');
-    renderEnseigne('seVival','VIVAL','vival-bg');
+    renderEnseigne('seCasino','CASINO','var(--casino-2)');
+    renderEnseigne('seSpar','SPAR','var(--spar-2)');
+    renderEnseigne('seVival','VIVAL','var(--vival-1)');
 
-    /* Mini chart */
+    /* Mini chart — #6 local dates, #15 last 30 days */
     var dates=Object.keys(dailyTotals).sort();
     if(dates.length>1){
-      var minD=new Date(dates[0]+'T00:00:00'),maxD=new Date(dates[dates.length-1]+'T00:00:00');
-      var d=new Date(minD);
-      while(d<=maxD){var key=d.toISOString().slice(0,10);if(!dailyTotals[key])dailyTotals[key]={spend:0,leads:0};d.setDate(d.getDate()+1)}
+      var minP=dates[0].split('-'),maxP=dates[dates.length-1].split('-');
+      var d=new Date(parseInt(minP[0]),parseInt(minP[1])-1,parseInt(minP[2]));
+      var maxD=new Date(parseInt(maxP[0]),parseInt(maxP[1])-1,parseInt(maxP[2]));
+      while(d<=maxD){var key=dateToKey(d);if(!dailyTotals[key])dailyTotals[key]={spend:0,leads:0};d.setDate(d.getDate()+1)}
       dates=Object.keys(dailyTotals).sort();
+      if(dates.length>30)dates=dates.slice(-30);
       var labels=dates.map(function(dt){var p=dt.split('-');return p[2]+'/'+p[1]});
-      var spendData=dates.map(function(dt){return dailyTotals[dt].spend});
-      var leadsData=dates.map(function(dt){return dailyTotals[dt].leads});
+      var spendData=dates.map(function(dt){return(dailyTotals[dt]||{spend:0}).spend});
+      var leadsData=dates.map(function(dt){return(dailyTotals[dt]||{leads:0}).leads});
 
       var el=document.getElementById('miniChart');
       if(el){new Chart(el,{type:'bar',data:{labels:labels,datasets:[{label:'Dépenses €',data:spendData,type:'bar',backgroundColor:'rgba(0,166,81,.12)',borderColor:'rgba(0,166,81,.4)',borderWidth:1,borderRadius:3,yAxisID:'y',barPercentage:.6},{label:'Leads',data:leadsData,type:'line',borderColor:'rgba(213,12,139,.6)',borderWidth:1.5,pointRadius:0,tension:.4,yAxisID:'y1',fill:false}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(5,7,8,.92)',titleColor:'#F0F2F5',bodyColor:'#7A8A9A',borderColor:'rgba(255,255,255,.06)',borderWidth:1,cornerRadius:8,padding:10,bodyFont:{size:10},titleFont:{size:10}}},scales:{x:{display:false},y:{display:false},y1:{display:false}}}})}
